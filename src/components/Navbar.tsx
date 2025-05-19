@@ -38,7 +38,7 @@ const Navbar = () => {
       <div className="container-custom py-4 flex items-center justify-between relative bg-[305037]">
         {/* Left Navigation */}
         <div className={`hidden md:flex items-center space-x-6 flex-1 justify-start`}>
-          <Link to="/roles" className={`${isActive('/roles')} font-mono uppercase text-white text-sm tracking-wider`}>
+          <Link to="/roles" className={`${isActive('/roles')} font-mono uppercase text-white text-sm tracking-wider hover:text-[#0aea3e] transition-colors`}>
             Explorar rolês
           </Link>
           <Link to="/market" className={`${isActive('/market')} font-mono uppercase text-white text-sm tracking-wider hover:text-[#0aea3e] transition-colors`}>
@@ -66,10 +66,10 @@ const Navbar = () => {
 
         {/* Right Navigation */}
         <div className={`hidden md:flex items-center space-x-6 flex-1 justify-end`}>
-          <Link to="/comunidade" className={`${isActive('/comunidade')} font-mono uppercase text-white text-sm tracking-wider`}>
+          <Link to="/comunidade" className={`${isActive('/comunidade')} font-mono uppercase text-white text-sm tracking-wider hover:text-[#0aea3e] transition-colors`}>
             Comunidade
           </Link>
-          <Link to="/sobre" className={`${isActive('/sobre')} font-mono uppercase text-white text-sm tracking-wider`}>
+          <Link to="/sobre" className={`${isActive('/sobre')} font-mono uppercase text-white text-sm tracking-wider hover:text-[#0aea3e] transition-colors`}>
             Sobre
           </Link>
         </div>
@@ -91,13 +91,13 @@ const Navbar = () => {
       {/* Mobile Menu */}
       {isOpen && <div className="md:hidden bg-nuflow-green border-t border-white/20 animate-slide-in">
           <div className="container-custom py-6 flex flex-col">
-            <Link to="/roles" className="py-3 px-4 text-white hover:bg-white/10 rounded-md font-mono uppercase text-sm tracking-wider" onClick={toggleMenu}>Explorar rolês</Link>
+            <Link to="/roles" className="py-3 px-4 text-white hover:text-[#0aea3e] transition-colors rounded-md font-mono uppercase text-sm tracking-wider" onClick={toggleMenu}>Explorar rolês</Link>
             <Link to="/market" className="py-3 px-4 text-white hover:text-[#0aea3e] transition-colors rounded-md font-mono uppercase text-sm tracking-wider" onClick={toggleMenu}>Comprar / Vender</Link>
-            <Link to="/comunidade" className="py-3 px-4 text-white hover:bg-white/10 rounded-md font-mono uppercase text-sm tracking-wider" onClick={toggleMenu}>Comunidade</Link>
-            <Link to="/sobre" className="py-3 px-4 text-white hover:bg-white/10 rounded-md font-mono uppercase text-sm tracking-wider" onClick={toggleMenu}>Sobre</Link>
+            <Link to="/comunidade" className="py-3 px-4 text-white hover:text-[#0aea3e] transition-colors rounded-md font-mono uppercase text-sm tracking-wider" onClick={toggleMenu}>Comunidade</Link>
+            <Link to="/sobre" className="py-3 px-4 text-white hover:text-[#0aea3e] transition-colors rounded-md font-mono uppercase text-sm tracking-wider" onClick={toggleMenu}>Sobre</Link>
             <hr className="my-2 border-white/10" />
-            <Link to="/login" className="py-3 px-4 text-white hover:bg-white/10 rounded-md font-mono uppercase text-sm tracking-wider" onClick={toggleMenu}>Entrar / Criar conta</Link>
-            <Link to="/cart" className="py-3 px-4 text-white hover:bg-white/10 rounded-md font-mono uppercase text-sm tracking-wider" onClick={toggleMenu}>
+            <Link to="/login" className="py-3 px-4 text-white hover:text-[#0aea3e] transition-colors rounded-md font-mono uppercase text-sm tracking-wider" onClick={toggleMenu}>Entrar / Criar conta</Link>
+            <Link to="/cart" className="py-3 px-4 text-white hover:text-[#0aea3e] transition-colors rounded-md font-mono uppercase text-sm tracking-wider" onClick={toggleMenu}>
               <span className="flex items-center">
                 <ShoppingCart size={18} className="mr-2" /> Carrinho
               </span>
