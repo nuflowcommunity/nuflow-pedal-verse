@@ -72,11 +72,13 @@ export default {
 					mineral: '#BAB5AB',   // Cinza mineral
                     neon: '#11f55c',      // Verde neon
                     carbon: '#282626',    // Cinza carvão atualizado
+                    green: '#497052',     // Verde adicional
 				}
 			},
 			fontFamily: {
 				sans: ['Inter', 'sans-serif'],
 				heading: ['Montserrat', 'sans-serif'],
+				mono: ['DM Mono', 'monospace'],
 			},
 			borderRadius: {
 				lg: 'var(--radius)',

@@ -37,38 +37,38 @@ const Navbar = () => {
   };
 
   return (
-    <nav className={`sticky top-0 z-50 transition-all duration-300 ${scrolled ? 'bg-nuflow-sand/95 backdrop-blur-sm shadow-sm' : 'bg-transparent'}`}>
+    <nav className={`sticky top-0 z-50 transition-all duration-300 bg-nuflow-green`}>
       <div className="container-custom py-4 flex items-center justify-between relative">
-        {/* Mobile Menu Button (Left) */}
-        <div className="md:hidden">
-          <button className="p-2 text-nuflow-moss" onClick={toggleMenu}>
-            {isOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
-        </div>
-
-        {/* Desktop Navigation (Left) */}
-        <div className="hidden md:flex items-center space-x-6">
-          <Link to="/roles" className={isActive('/roles')}>
+        {/* Left Navigation */}
+        <div className={`hidden md:flex items-center space-x-6 flex-1 justify-start`}>
+          <Link to="/roles" className={`${isActive('/roles')} font-mono uppercase text-white text-sm tracking-wider`}>
             Explorar rolês
           </Link>
-          <Link to="/market" className={isActive('/market')}>
+          <Link to="/market" className={`${isActive('/market')} font-mono uppercase text-white text-sm tracking-wider`}>
             Comprar / Vender
           </Link>
+        </div>
+
+        {/* Mobile Menu Button (Left) */}
+        <div className="md:hidden">
+          <button className="p-2 text-white" onClick={toggleMenu}>
+            {isOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
         </div>
 
         {/* Logo (Center) */}
         <div className="absolute left-1/2 transform -translate-x-1/2">
           <Link to="/" className="flex items-center">
-            <Mountain size={32} className="text-nuflow-moss hover:text-nuflow-lime transition-colors duration-300" />
+            <Mountain size={36} className="text-white hover:text-nuflow-lime transition-colors duration-300" />
           </Link>
         </div>
 
-        {/* Desktop Navigation (Right) */}
-        <div className="hidden md:flex items-center space-x-6">
-          <Link to="/comunidade" className={isActive('/comunidade')}>
+        {/* Right Navigation */}
+        <div className={`hidden md:flex items-center space-x-6 flex-1 justify-end`}>
+          <Link to="/comunidade" className={`${isActive('/comunidade')} font-mono uppercase text-white text-sm tracking-wider`}>
             Comunidade
           </Link>
-          <Link to="/sobre" className={isActive('/sobre')}>
+          <Link to="/sobre" className={`${isActive('/sobre')} font-mono uppercase text-white text-sm tracking-wider`}>
             Sobre
           </Link>
         </div>
@@ -76,17 +76,17 @@ const Navbar = () => {
         {/* User Actions (Right) */}
         <div className="flex items-center space-x-2">
           {!isMobile && (
-            <Link to="/cart" className="p-2 rounded-full hover:bg-nuflow-moss/10 transition-all">
-              <ShoppingCart size={20} className="text-nuflow-moss" />
+            <Link to="/cart" className="p-2 rounded-full hover:bg-white/10 transition-all">
+              <ShoppingCart size={20} className="text-white" />
             </Link>
           )}
-          <Link to="/login" className="p-2 rounded-full hover:bg-nuflow-moss/10 transition-all">
-            <User size={20} className="text-nuflow-moss" />
+          <Link to="/login" className="p-2 rounded-full hover:bg-white/10 transition-all">
+            <User size={20} className="text-white" />
           </Link>
           {!isMobile && (
             <Button
-              variant="default"
-              className="bg-nuflow-moss hover:bg-nuflow-lime hover:text-nuflow-moss transition-all duration-300 text-white rounded-full"
+              variant="outline"
+              className="border-white text-white hover:bg-white hover:text-nuflow-green transition-all duration-300 rounded-full font-mono uppercase text-sm tracking-wider"
               asChild
             >
               <Link to="/anunciar">Anunciar</Link>
@@ -97,22 +97,22 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="md:hidden bg-white border-t border-nuflow-mineral/20 animate-slide-in">
+        <div className="md:hidden bg-nuflow-green border-t border-white/20 animate-slide-in">
           <div className="container-custom py-6 flex flex-col">
-            <Link to="/roles" className="py-3 px-4 hover:bg-nuflow-sand rounded-md" onClick={toggleMenu}>Explorar rolês</Link>
-            <Link to="/market" className="py-3 px-4 hover:bg-nuflow-sand rounded-md" onClick={toggleMenu}>Comprar / Vender</Link>
-            <Link to="/comunidade" className="py-3 px-4 hover:bg-nuflow-sand rounded-md" onClick={toggleMenu}>Comunidade</Link>
-            <Link to="/sobre" className="py-3 px-4 hover:bg-nuflow-sand rounded-md" onClick={toggleMenu}>Sobre</Link>
-            <hr className="my-2 border-nuflow-mineral/20" />
-            <Link to="/login" className="py-3 px-4 hover:bg-nuflow-sand rounded-md" onClick={toggleMenu}>Entrar / Criar conta</Link>
-            <Link to="/cart" className="py-3 px-4 hover:bg-nuflow-sand rounded-md" onClick={toggleMenu}>
+            <Link to="/roles" className="py-3 px-4 text-white hover:bg-white/10 rounded-md font-mono uppercase text-sm tracking-wider" onClick={toggleMenu}>Explorar rolês</Link>
+            <Link to="/market" className="py-3 px-4 text-white hover:bg-white/10 rounded-md font-mono uppercase text-sm tracking-wider" onClick={toggleMenu}>Comprar / Vender</Link>
+            <Link to="/comunidade" className="py-3 px-4 text-white hover:bg-white/10 rounded-md font-mono uppercase text-sm tracking-wider" onClick={toggleMenu}>Comunidade</Link>
+            <Link to="/sobre" className="py-3 px-4 text-white hover:bg-white/10 rounded-md font-mono uppercase text-sm tracking-wider" onClick={toggleMenu}>Sobre</Link>
+            <hr className="my-2 border-white/20" />
+            <Link to="/login" className="py-3 px-4 text-white hover:bg-white/10 rounded-md font-mono uppercase text-sm tracking-wider" onClick={toggleMenu}>Entrar / Criar conta</Link>
+            <Link to="/cart" className="py-3 px-4 text-white hover:bg-white/10 rounded-md font-mono uppercase text-sm tracking-wider" onClick={toggleMenu}>
               <span className="flex items-center">
                 <ShoppingCart size={18} className="mr-2" /> Carrinho
               </span>
             </Link>
             <Button
-              variant="default"
-              className="mt-3 bg-nuflow-moss hover:bg-nuflow-lime hover:text-nuflow-moss transition-all duration-300 text-white rounded-full"
+              variant="outline"
+              className="mt-3 border-white text-white hover:bg-white hover:text-nuflow-green transition-all duration-300 rounded-full font-mono uppercase text-sm tracking-wider"
               onClick={toggleMenu}
               asChild
             >
