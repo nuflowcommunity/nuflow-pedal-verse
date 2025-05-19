@@ -2,10 +2,13 @@
 import React, { useEffect, useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+
 const phrases = ['Pedale.', 'Compre.', 'Conecte.'];
+
 const Hero = () => {
   const [currentPhrase, setCurrentPhrase] = useState(0);
   const [visible, setVisible] = useState(true);
+
   useEffect(() => {
     const interval = setInterval(() => {
       setVisible(false);
@@ -16,6 +19,7 @@ const Hero = () => {
     }, 3000);
     return () => clearInterval(interval);
   }, []);
+
   useEffect(() => {
     // Custom cursor effect
     const cursor = document.createElement('div');
@@ -31,6 +35,7 @@ const Hero = () => {
       document.body.removeChild(cursor);
     };
   }, []);
+
   return <div className="relative bg-[#1c2b1f] text-white overflow-hidden h-screen flex items-center">
       {/* Removed the background pattern with mountain silhouette */}
       <div className="absolute inset-0 opacity-10">
@@ -53,13 +58,14 @@ const Hero = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Button size="lg" className="transition-all duration-300 px-8 text-lg rounded-full group bg-[497052] bg-[#c5e7cf] text-[#2f302c] hover:text-[#0aea3e]">
+            <Button size="lg" className="transition-all duration-300 px-8 text-lg rounded-full group bg-[#497052] bg-[#c5e7cf] text-[#2f302c] hover:text-[#0aea3e]">
               Descobrir Rolês
               <ArrowRight size={18} className="ml-2 transition-transform duration-300 group-hover:translate-x-1" />
             </Button>
             
-            <Button size="lg" variant="outline" className="border-white transition-all duration-300 px-8 text-lg rounded-full bg-[#b8f4cd] text-[#141814] hover:text-[#0aea3e]">
+            <Button size="lg" className="transition-all duration-300 px-8 text-lg rounded-full group bg-[#497052] bg-[#c5e7cf] text-[#2f302c] hover:text-[#0aea3e]">
               Visitar Marketplace
+              <ArrowRight size={18} className="ml-2 transition-transform duration-300 group-hover:translate-x-1" />
             </Button>
           </div>
         </div>
@@ -72,4 +78,5 @@ const Hero = () => {
       </div>
     </div>;
 };
+
 export default Hero;
