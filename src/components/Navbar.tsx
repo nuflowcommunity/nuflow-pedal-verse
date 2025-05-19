@@ -1,16 +1,20 @@
+
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Menu, X, User, ShoppingCart, Mountain } from 'lucide-react';
+import { Menu, X, User, ShoppingCart } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
+
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
   const isMobile = useIsMobile();
+  
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
+  
   useEffect(() => {
     const handleScroll = () => {
       const offset = window.scrollY;
@@ -25,9 +29,11 @@ const Navbar = () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
+  
   const isActive = (path: string) => {
     return location.pathname === path ? 'nav-link-active' : 'nav-link';
   };
+  
   return <nav className={`sticky top-0 z-50 transition-all duration-300 bg-nuflow-green`}>
       <div className="container-custom py-4 flex items-center justify-between relative bg-[305037]">
         {/* Left Navigation */}
@@ -50,7 +56,11 @@ const Navbar = () => {
         {/* Logo (Center) */}
         <div className="absolute left-1/2 transform -translate-x-1/2">
           <Link to="/" className="flex items-center">
-            <Mountain size={36} className="text-white hover:text-nuflow-lime transition-colors duration-300" />
+            <img 
+              src="/lovable-uploads/8e443af4-7d5d-4249-87be-111d8ed58435.png" 
+              alt="Nuflow Logo" 
+              className="w-10 h-10 hover:opacity-80 transition-opacity duration-300" 
+            />
           </Link>
         </div>
 

@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Instagram, Facebook, Twitter, Mountain } from 'lucide-react';
+import { Instagram, Facebook, Twitter } from 'lucide-react';
 
 const Footer = () => {
   return (
@@ -11,7 +11,11 @@ const Footer = () => {
           {/* Logo and Description */}
           <div className="col-span-1 md:col-span-2 lg:col-span-1">
             <div className="flex items-center mb-4">
-              <Mountain size={24} className="text-nuflow-sand mr-2" />
+              <img 
+                src="/lovable-uploads/8e443af4-7d5d-4249-87be-111d8ed58435.png" 
+                alt="Nuflow Logo" 
+                className="w-6 h-6 mr-2" 
+              />
               <h2 className="text-2xl font-heading font-bold">NUFLOW</h2>
             </div>
             <p className="text-nuflow-sand/80 mb-6">
