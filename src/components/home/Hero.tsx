@@ -1,48 +1,36 @@
-
 import React, { useEffect, useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-
 const phrases = ['Pedale.', 'Compre.', 'Conecte.'];
-
 const Hero = () => {
   const [currentPhrase, setCurrentPhrase] = useState(0);
   const [visible, setVisible] = useState(true);
-
   useEffect(() => {
     const interval = setInterval(() => {
       setVisible(false);
-      
       setTimeout(() => {
-        setCurrentPhrase((prev) => (prev + 1) % phrases.length);
+        setCurrentPhrase(prev => (prev + 1) % phrases.length);
         setVisible(true);
       }, 500);
     }, 3000);
-
     return () => clearInterval(interval);
   }, []);
-
   useEffect(() => {
     // Custom cursor effect
     const cursor = document.createElement('div');
     cursor.classList.add('custom-cursor');
     document.body.appendChild(cursor);
-
     const moveCursor = (e: MouseEvent) => {
       cursor.style.left = `${e.clientX}px`;
       cursor.style.top = `${e.clientY}px`;
     };
-
     document.addEventListener('mousemove', moveCursor);
-
     return () => {
       document.removeEventListener('mousemove', moveCursor);
       document.body.removeChild(cursor);
     };
   }, []);
-
-  return (
-    <div className="relative bg-[#1c2b1f] text-white overflow-hidden h-screen flex items-center">
+  return <div className="relative bg-[#1c2b1f] text-white overflow-hidden h-screen flex items-center">
       {/* Removed the background pattern with mountain silhouette */}
       <div className="absolute inset-0 opacity-10">
         {/* Removed the textured background */}
@@ -50,13 +38,11 @@ const Hero = () => {
       
       <div className="container-custom relative z-10">
         <div className="max-w-3xl mx-auto text-center">
-          <div className="mb-4 text-nuflow-lime">Bem-vindo à Nuflow</div>
+          
           
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-heading font-bold mb-6 leading-tight flex flex-col md:flex-row items-center justify-center">
             <span className="mr-0 md:mr-4">Explore.</span>
-            <span 
-              className={`transition-opacity duration-500 ease-in-out ${visible ? 'opacity-100' : 'opacity-0'}`}
-            >
+            <span className={`transition-opacity duration-500 ease-in-out ${visible ? 'opacity-100' : 'opacity-0'}`}>
               {phrases[currentPhrase]}
             </span>
           </h1>
@@ -66,12 +52,12 @@ const Hero = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Button size="lg" className="bg-nuflow-lime text-nuflow-moss hover:bg-white hover:text-nuflow-moss transition-all duration-300 px-8 text-lg rounded-full group">
+            <Button size="lg" className="text-nuflow-moss hover:text-nuflow-moss transition-all duration-300 px-8 text-lg rounded-full group bg-[497052] bg-[#c5e7cf]">
               Descobrir Rolês
               <ArrowRight size={18} className="ml-2 transition-transform duration-300 group-hover:translate-x-1" />
             </Button>
             
-            <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-nuflow-moss transition-all duration-300 px-8 text-lg rounded-full">
+            <Button size="lg" variant="outline" className="border-white text-white hover:text-nuflow-moss transition-all duration-300 px-8 text-lg rounded-full bg-[#b8f4cd]">
               Visitar Marketplace
             </Button>
           </div>
@@ -83,8 +69,6 @@ const Hero = () => {
           <div className="w-1.5 h-3 bg-white/60 rounded-full mt-2 animate-scroll-down"></div>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default Hero;
