@@ -5,6 +5,8 @@ import { Filter, Search, ArrowRight, Tag } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import ProductCard from '@/components/cards/ProductCard';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import MarketHero from '@/components/market/MarketHero';
+import SortFilter from '@/components/market/SortFilter';
 
 // Sample data for products (combined bikes and parts)
 const products = [
@@ -155,12 +157,7 @@ const Products = () => {
                       Filtros
                     </Button>
                     
-                    <select className="px-4 py-2 border border-nuflow-mineral/30 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-nuflow-moss">
-                      <option value="">Ordenar por</option>
-                      <option value="recent">Mais recentes</option>
-                      <option value="price-asc">Menor preço</option>
-                      <option value="price-desc">Maior preço</option>
-                    </select>
+                    <SortFilter />
                   </div>
                 </div>
                 
