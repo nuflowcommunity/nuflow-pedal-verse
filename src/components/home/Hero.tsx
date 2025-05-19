@@ -58,7 +58,7 @@ const Hero = () => {
               <ArrowRight size={18} className="ml-2 transition-transform duration-300 group-hover:translate-x-1" />
             </Button>
             
-            <Button size="lg" variant="outline" className="border-white transition-all duration-300 px-8 text-lg rounded-full bg-[#b8f4cd] text-[#141814]">
+            <Button size="lg" variant="outline" className="border-white transition-all duration-300 px-8 text-lg rounded-full bg-[#b8f4cd] text-[#141814] hover:text-[#0aea3e]">
               Visitar Marketplace
             </Button>
           </div>
@@ -66,8 +66,8 @@ const Hero = () => {
       </div>
       
       <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-        <div className="w-8 h-12 border-2 border-white/60 rounded-full flex items-start justify-center">
-          <div className="w-1.5 h-3 bg-white/60 rounded-full mt-2 animate-scroll-down"></div>
+        <div className="w-8 h-12 border-2 border-white/60 rounded-full flex items-start justify-center hover:border-[#0aea3e]">
+          <div className="w-1.5 h-3 bg-white/60 rounded-full mt-2 animate-scroll-down hover:bg-[#0aea3e]"></div>
         </div>
       </div>
     </div>;

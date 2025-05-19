@@ -48,7 +48,7 @@ const Navbar = () => {
 
         {/* Mobile Menu Button (Left) */}
         <div className="md:hidden">
-          <button className="p-2 text-white" onClick={toggleMenu}>
+          <button className="p-2 text-white hover:text-[#0aea3e] transition-colors" onClick={toggleMenu}>
             {isOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
@@ -76,13 +76,13 @@ const Navbar = () => {
 
         {/* User Actions (Right) */}
         <div className="flex items-center space-x-2">
-          {!isMobile && <Link to="/cart" className="p-2 rounded-full hover:bg-white/10 transition-all">
+          {!isMobile && <Link to="/cart" className="p-2 rounded-full hover:bg-white/10 hover:text-[#0aea3e] transition-all">
               <ShoppingCart size={20} className="text-white" />
             </Link>}
-          <Link to="/login" className="p-2 rounded-full hover:bg-white/10 transition-all">
+          <Link to="/login" className="p-2 rounded-full hover:bg-white/10 hover:text-[#0aea3e] transition-all">
             <User size={20} className="text-white" />
           </Link>
-          {!isMobile && <Button variant="outline" className="border-white text-[#223526] hover:bg-white hover:text-nuflow-green transition-all duration-300 rounded-full font-mono uppercase text-sm tracking-wider" asChild>
+          {!isMobile && <Button variant="outline" className="border-white text-[#223526] hover:bg-white hover:text-[#0aea3e] transition-all duration-300 rounded-full font-mono uppercase text-sm tracking-wider" asChild>
               <Link to="/anunciar">Anunciar</Link>
             </Button>}
         </div>
@@ -102,7 +102,7 @@ const Navbar = () => {
                 <ShoppingCart size={18} className="mr-2" /> Carrinho
               </span>
             </Link>
-            <Button variant="outline" className="mt-3 border-white text-[#223526] hover:bg-white hover:text-nuflow-green transition-all duration-300 rounded-full font-mono uppercase text-sm tracking-wider" onClick={toggleMenu} asChild>
+            <Button variant="outline" className="mt-3 border-white text-[#223526] hover:bg-white hover:text-[#0aea3e] transition-all duration-300 rounded-full font-mono uppercase text-sm tracking-wider" onClick={toggleMenu} asChild>
               <Link to="/anunciar">Anunciar</Link>
             </Button>
           </div>
