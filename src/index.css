@@ -98,7 +98,7 @@
   }
   
   .btn-primary {
-    @apply bg-nuflow-moss text-white py-3 px-6 rounded-full hover:bg-[#11f55c] hover:text-nuflow-moss transition-all inline-flex items-center justify-center;
+    @apply bg-nuflow-moss text-white py-3 px-6 rounded-full hover:bg-nuflow-neon hover:text-nuflow-moss transition-all inline-flex items-center justify-center;
   }
   
   .btn-secondary {
@@ -110,20 +110,20 @@
   }
   
   .card-highlight {
-    @apply bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-[1.02] relative;
+    @apply bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg relative;
   }
   
   .card-tag {
-    @apply absolute top-4 left-4 bg-nuflow-lime text-nuflow-moss text-xs font-medium px-3 py-1 rounded-full;
+    @apply absolute top-4 left-4 bg-nuflow-lime text-nuflow-moss text-xs font-medium px-3 py-1 rounded-full z-10;
   }
 
   /* Nav styles */
   .nav-link {
-    @apply relative inline-block py-2 px-1 text-nuflow-moss font-medium hover:text-[#0aea3e] transition-colors duration-300;
+    @apply relative inline-block py-2 px-1 text-white font-medium hover:text-nuflow-neon transition-colors duration-300;
   }
 
   .nav-link::after {
-    @apply content-[''] absolute w-0 h-0.5 bg-[#0aea3e] left-0 -bottom-1 transition-all duration-300;
+    @apply content-[''] absolute w-0 h-0.5 bg-nuflow-neon left-0 -bottom-1 transition-all duration-300;
   }
 
   .nav-link:hover::after {
@@ -131,16 +131,34 @@
   }
 
   .nav-link-active {
-    @apply text-[#0aea3e] font-semibold;
+    @apply text-nuflow-neon font-semibold;
   }
 
   .nav-link-active::after {
-    @apply w-full bg-[#0aea3e];
+    @apply w-full bg-nuflow-neon;
   }
   
   /* Animation classes */
   .animate-scroll-down {
     animation: scrollDown 1.5s infinite;
+  }
+
+  /* Glass effect */
+  .glass {
+    @apply backdrop-blur-sm bg-white/10 border border-white/20;
+  }
+  
+  /* Hover effects */
+  .hover-scale {
+    @apply transition-transform hover:scale-105 duration-300;
+  }
+  
+  .hover-lift {
+    @apply transition-transform hover:-translate-y-1 duration-300;
+  }
+  
+  .hover-glow {
+    @apply transition-shadow hover:shadow-[0_0_8px_rgba(10,234,62,0.6)] duration-300;
   }
 }
 
@@ -168,5 +186,25 @@
   }
   100% {
     transform: translateY(0px);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

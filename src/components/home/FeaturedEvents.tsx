@@ -46,14 +46,17 @@ const events = [
 
 const FeaturedEvents = () => {
   return (
-    <section className="py-16 bg-nuflow-moss/5">
+    <section className="py-16 bg-nuflow-sand">
       <div className="container-custom">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10">
           <div>
             <h2 className="text-3xl font-heading font-bold mb-2">Próximos Rolês</h2>
             <p className="text-nuflow-charcoal/70">Descubra experiências incríveis para pedalar</p>
           </div>
-          <Link to="/roles" className="mt-4 md:mt-0 flex items-center text-nuflow-moss font-medium hover:text-[#0aea3e] transition-colors">
+          <Link 
+            to="/roles" 
+            className="mt-4 md:mt-0 group flex items-center font-medium text-nuflow-moss transition-colors hover:text-nuflow-neon"
+          >
             Ver todos os rolês
             <ArrowRight size={18} className="ml-2 transition-transform duration-300 group-hover:translate-x-1" />
           </Link>
