@@ -2,6 +2,7 @@
 import React from 'react';
 import { Calendar, MapPin } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface EventCardProps {
   id: string;
@@ -19,9 +20,12 @@ const EventCard = ({ id, title, image, date, location, price, category }: EventC
     ? `/eventos/${id}` 
     : `/roles/${id}`;
   
+  const isMobile = useIsMobile();
+  
   return (
-    <div className="card-highlight group bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg relative">
-      <Link to={linkPath}>
+    <div className={`card-highlight group bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 
+                     hover:shadow-lg relative ${isMobile ? 'animate-mobile-scale' : ''}`}>
+      <Link to={linkPath} className="block">
         <div className="card-tag absolute top-4 left-4 z-10 bg-nuflow-lime text-nuflow-moss text-xs font-medium px-3 py-1 rounded-full">
           {category}
         </div>
@@ -29,11 +33,16 @@ const EventCard = ({ id, title, image, date, location, price, category }: EventC
           <img 
             src={image} 
             alt={title} 
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            className={`w-full h-full object-cover transition-transform duration-500
+                      ${isMobile ? 'active:scale-110' : 'group-hover:scale-105'}`}
           />
         </div>
         <div className="p-5">
-          <h3 className="font-heading font-semibold text-lg mb-2 line-clamp-1 group-hover:text-nuflow-neon transition-colors">{title}</h3>
+          <h3 className={`font-heading font-semibold text-lg mb-2 line-clamp-1 
+                         ${isMobile ? 'active:text-nuflow-neon' : 'group-hover:text-nuflow-neon'} 
+                         transition-colors`}>
+            {title}
+          </h3>
           
           <div className="flex items-center text-sm text-nuflow-charcoal/70 mb-2">
             <Calendar size={16} className="mr-1" />
@@ -47,7 +56,9 @@ const EventCard = ({ id, title, image, date, location, price, category }: EventC
           
           <div className="flex items-center justify-between mt-4">
             <span className="font-semibold text-nuflow-moss">{price}</span>
-            <button className="py-2 px-4 rounded-full bg-nuflow-moss text-white hover:bg-nuflow-neon hover:text-nuflow-moss transition-all">
+            <button className={`py-2 px-4 rounded-full bg-nuflow-moss text-white 
+                              ${isMobile ? 'active:bg-nuflow-neon active:text-nuflow-moss' : 'hover:bg-nuflow-neon hover:text-nuflow-moss'} 
+                              transition-all`}>
               Agendar
             </button>
           </div>

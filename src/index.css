@@ -1,3 +1,4 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700&family=DM+Mono:wght@300;400;500&display=swap');
 
 @tailwind base;
@@ -45,6 +46,7 @@
     @apply bg-nuflow-sand text-nuflow-charcoal font-sans;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden; /* Prevent horizontal overflow on mobile */
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -67,6 +69,13 @@
   
   ::-webkit-scrollbar-thumb:hover {
     background: #0aea3e;
+  }
+
+  /* Touch-friendly tap targets for mobile */
+  @media (max-width: 768px) {
+    button, a {
+      @apply min-h-[44px] min-w-[44px]; /* Minimum touch target size */
+    }
   }
 }
 
@@ -121,6 +130,36 @@
     animation: scrollDown 1.5s infinite;
   }
 
+  .animate-fadeIn {
+    animation: fadeIn 0.8s ease-out forwards;
+  }
+
+  .animate-slideIn {
+    animation: slideIn 0.8s ease-out forwards;
+  }
+
+  .animate-hover-scale {
+    @apply transition-transform duration-200;
+  }
+  .animate-hover-scale:active {
+    @apply scale-95;
+  }
+
+  /* Mobile-specific animations */
+  @media (max-width: 768px) {
+    .animate-mobile-scale {
+      @apply transform transition-transform duration-200 active:scale-95;
+    }
+    
+    .animate-mobile-pulse {
+      animation: mobilePulse 2s infinite;
+    }
+    
+    .animate-mobile-bounce {
+      animation: mobileBounce 1s ease-in-out infinite;
+    }
+  }
+
   /* Glass effect */
   .glass {
     @apply backdrop-blur-sm bg-white/10 border border-white/20;
@@ -137,6 +176,22 @@
   
   .hover-glow {
     @apply transition-shadow hover:shadow-[0_0_8px_rgba(10,234,62,0.6)] duration-300;
+  }
+
+  /* Card animations for mobile */
+  @media (max-width: 768px) {
+    .card-highlight {
+      @apply active:scale-98 transition-all;
+    }
+  }
+
+  /* Mobile menu animations */
+  .mobile-menu-enter {
+    animation: slideInFromRight 0.3s forwards;
+  }
+  
+  .mobile-menu-exit {
+    animation: slideOutToRight 0.3s forwards;
   }
 }
 
@@ -184,5 +239,57 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Mobile-specific animations */
+@keyframes mobilePulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.03);
+  }
+}
+
+@keyframes mobileBounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes slideInFromRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutToRight {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
   }
 }
