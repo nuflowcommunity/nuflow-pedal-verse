@@ -123,7 +123,8 @@ export const filterAndSortEvents = async (
       const validCategories: EventCategory[] = ["MTB", "Speed", "Gravel", "Urbano", "Outro"];
       // Check if the category is valid before using it in the query
       if (validCategories.includes(category as EventCategory)) {
-        query = query.eq("category", category);
+        // Type assertion to EventCategory to ensure type safety
+        query = query.eq("category", category as EventCategory);
       }
     }
     
