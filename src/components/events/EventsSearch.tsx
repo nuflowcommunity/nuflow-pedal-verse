@@ -5,6 +5,7 @@ import { DateRange } from "react-day-picker";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import DateRangeFilter from './DateRangeFilter';
+import EventsSortFilter from './EventsSortFilter';
 
 interface EventsSearchProps {
   searchQuery: string;
@@ -13,6 +14,7 @@ interface EventsSearchProps {
   setDateRange: (dateRange: DateRange | undefined) => void;
   onFilterByDate: () => void;
   onClearDateFilter: () => void;
+  onSortChange: (value: string) => void;
 }
 
 const EventsSearch = ({ 
@@ -21,7 +23,8 @@ const EventsSearch = ({
   dateRange, 
   setDateRange, 
   onFilterByDate, 
-  onClearDateFilter 
+  onClearDateFilter,
+  onSortChange
 }: EventsSearchProps) => {
   return (
     <section className="py-6 bg-white border-b border-nuflow-mineral/20">
@@ -72,12 +75,15 @@ const EventsSearch = ({
               />
             </div>
             
-            <DateRangeFilter
-              dateRange={dateRange}
-              setDateRange={setDateRange}
-              onFilterByDate={onFilterByDate}
-              onClearDateFilter={onClearDateFilter}
-            />
+            <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+              <EventsSortFilter onSortChange={onSortChange} />
+              <DateRangeFilter
+                dateRange={dateRange}
+                setDateRange={setDateRange}
+                onFilterByDate={onFilterByDate}
+                onClearDateFilter={onClearDateFilter}
+              />
+            </div>
           </div>
         </div>
       </div>

@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { DateRange } from "react-day-picker";
-import { isWithinInterval } from "date-fns";
+import { isWithinInterval, parse, compareAsc, compareDesc } from "date-fns";
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import EventsHero from '@/components/events/EventsHero';
@@ -19,6 +19,11 @@ const parseEventDate = (dateStr: string): Date => {
     'Jul': 6, 'Ago': 7, 'Set': 8, 'Out': 9, 'Nov': 10, 'Dez': 11
   };
   return new Date(parseInt(year), monthMap[month], parseInt(day));
+};
+
+// Helper function to parse price string to number
+const parsePriceToNumber = (priceStr: string): number => {
+  return parseFloat(priceStr.replace('R$ ', '').replace(',', '.'));
 };
 
 // Sample data for events
@@ -114,11 +119,12 @@ const EventsCalendar = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [dateRange, setDateRange] = useState<DateRange | undefined>(undefined);
   const [filteredEvents, setFilteredEvents] = useState<Event[]>(events);
+  const [sortOption, setSortOption] = useState('');
 
   // Filter events based on all active filters
   useEffect(() => {
     filterEvents();
-  }, [activeCategory, searchQuery]);
+  }, [activeCategory, searchQuery, sortOption]);
 
   const filterEvents = () => {
     let result = events.filter(event => {
@@ -149,7 +155,35 @@ const EventsCalendar = () => {
       return matchesCategory && matchesSearch && matchesDateRange;
     });
     
+    // Apply sorting
+    if (sortOption) {
+      result = sortEvents(result, sortOption);
+    }
+    
     setFilteredEvents(result);
+  };
+
+  // Function to sort events based on the selected option
+  const sortEvents = (eventsToSort: Event[], option: string) => {
+    const sortedEvents = [...eventsToSort];
+    
+    switch (option) {
+      case 'date-asc':
+        return sortedEvents.sort((a, b) => compareAsc(parseEventDate(a.date), parseEventDate(b.date)));
+      case 'date-desc':
+        return sortedEvents.sort((a, b) => compareDesc(parseEventDate(a.date), parseEventDate(b.date)));
+      case 'price-asc':
+        return sortedEvents.sort((a, b) => parsePriceToNumber(a.price) - parsePriceToNumber(b.price));
+      case 'price-desc':
+        return sortedEvents.sort((a, b) => parsePriceToNumber(b.price) - parsePriceToNumber(a.price));
+      default:
+        return sortedEvents;
+    }
+  };
+
+  // Function to handle sort option change
+  const handleSortChange = (value: string) => {
+    setSortOption(value);
   };
 
   // Function to apply date filter
@@ -179,6 +213,7 @@ const EventsCalendar = () => {
           setDateRange={setDateRange}
           onFilterByDate={handleFilterByDate}
           onClearDateFilter={handleClearDateFilter}
+          onSortChange={handleSortChange}
         />
         <EventsCategoryFilter 
           categories={categories} 
