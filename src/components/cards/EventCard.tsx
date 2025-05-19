@@ -47,7 +47,7 @@ const EventCard = ({ id, title, image, date, location, price, category }: EventC
           
           <div className="flex items-center justify-between mt-4">
             <span className="font-semibold text-nuflow-moss">{price}</span>
-            <button className="btn-primary py-2 px-4 rounded-full bg-nuflow-moss text-white hover:bg-nuflow-neon hover:text-nuflow-moss transition-all">
+            <button className="py-2 px-4 rounded-full bg-nuflow-moss text-white hover:bg-nuflow-neon hover:text-nuflow-moss transition-all">
               Agendar
             </button>
           </div>

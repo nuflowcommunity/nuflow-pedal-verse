@@ -10,6 +10,8 @@ import EventsCalendar from "./pages/EventsCalendar";
 import EventDetail from "./pages/EventDetail";
 import Market from "./pages/Market";
 import Comunidade from "./pages/Comunidade";
+import Sobre from "./pages/Sobre";
+import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -28,8 +30,8 @@ const App = () => (
           <Route path="/eventos/:eventId" element={<EventDetail />} />
           <Route path="/market" element={<Market />} />
           <Route path="/comunidade" element={<Comunidade />} />
-          <Route path="/sobre" element={<NotFound />} />
-          <Route path="/login" element={<NotFound />} />
+          <Route path="/sobre" element={<Sobre />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/anunciar" element={<NotFound />} />
           <Route path="/cart" element={<NotFound />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
