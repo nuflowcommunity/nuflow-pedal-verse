@@ -9,6 +9,9 @@ import Roles from "./pages/Roles";
 import EventsCalendar from "./pages/EventsCalendar";
 import EventDetail from "./pages/EventDetail";
 import Market from "./pages/Market";
+import Bikes from "./pages/Bikes";
+import Products from "./pages/Products";
+import NewAnnounce from "./pages/NewAnnounce";
 import Comunidade from "./pages/Comunidade";
 import Sobre from "./pages/Sobre";
 import Login from "./pages/Login";
@@ -29,10 +32,12 @@ const App = () => (
           <Route path="/eventos" element={<EventsCalendar />} />
           <Route path="/eventos/:eventId" element={<EventDetail />} />
           <Route path="/market" element={<Market />} />
+          <Route path="/market/bikes" element={<Bikes />} />
+          <Route path="/market/products" element={<Products />} />
+          <Route path="/anunciar" element={<NewAnnounce />} />
           <Route path="/comunidade" element={<Comunidade />} />
           <Route path="/sobre" element={<Sobre />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/anunciar" element={<NotFound />} />
           <Route path="/cart" element={<NotFound />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />

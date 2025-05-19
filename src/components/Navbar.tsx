@@ -89,7 +89,7 @@ const Navbar = () => {
           <Link to="/login" className="p-2 rounded-full hover:bg-white/10 hover:text-nuflow-neon transition-all">
             <User size={20} className="text-white" />
           </Link>
-          {!isMobile && <Button variant="outline" className="border-white text-white hover:bg-white hover:text-nuflow-neon transition-all duration-300 rounded-full font-mono uppercase text-sm tracking-wider" asChild>
+          {!isMobile && <Button variant="outline" className="border-white text-white hover:bg-white hover:text-nuflow-moss transition-all duration-300 rounded-full font-mono uppercase text-sm tracking-wider" asChild>
               <Link to="/anunciar">Anunciar</Link>
             </Button>}
         </div>
@@ -113,9 +113,9 @@ const Navbar = () => {
                 <ShoppingCart size={18} className="mr-2" /> Carrinho
               </span>
             </Link>
-            <Button variant="outline" className="mt-3 border-white text-white hover:bg-white hover:text-nuflow-neon transition-all duration-300 rounded-full font-mono uppercase text-sm tracking-wider" onClick={toggleMenu} asChild>
-              <Link to="/anunciar">Anunciar</Link>
-            </Button>
+            <Link to="/anunciar" className="mt-3 border border-white text-white hover:bg-white hover:text-nuflow-moss transition-all duration-300 rounded-full font-mono uppercase text-sm tracking-wider py-3 px-6 flex items-center justify-center" onClick={toggleMenu}>
+              Anunciar
+            </Link>
           </div>
         </div>}
     </nav>
