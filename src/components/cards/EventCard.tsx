@@ -14,9 +14,14 @@ interface EventCardProps {
 }
 
 const EventCard = ({ id, title, image, date, location, price, category }: EventCardProps) => {
+  // Determine the correct link based on the current URL structure
+  const linkPath = window.location.pathname.includes('/eventos') 
+    ? `/eventos/${id}` 
+    : `/roles/${id}`;
+  
   return (
     <div className="card-highlight group bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg relative">
-      <Link to={`/roles/${id}`}>
+      <Link to={linkPath}>
         <div className="card-tag absolute top-4 left-4 z-10 bg-nuflow-lime text-nuflow-moss text-xs font-medium px-3 py-1 rounded-full">
           {category}
         </div>

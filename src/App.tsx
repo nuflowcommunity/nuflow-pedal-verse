@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import Roles from "./pages/Roles";
 import EventsCalendar from "./pages/EventsCalendar";
+import EventDetail from "./pages/EventDetail";
 import Market from "./pages/Market";
 import Comunidade from "./pages/Comunidade";
 import NotFound from "./pages/NotFound";
@@ -22,7 +23,9 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/roles" element={<Roles />} />
+          <Route path="/roles/:eventId" element={<EventDetail />} />
           <Route path="/eventos" element={<EventsCalendar />} />
+          <Route path="/eventos/:eventId" element={<EventDetail />} />
           <Route path="/market" element={<Market />} />
           <Route path="/comunidade" element={<Comunidade />} />
           <Route path="/sobre" element={<NotFound />} />
