@@ -70,6 +70,8 @@ export default {
 					lime: '#B8C671',      // Verde limão queimado
 					charcoal: '#1A1A1A',  // Cinza carvão
 					mineral: '#BAB5AB',   // Cinza mineral
+                    neon: '#11f55c',      // Verde neon
+                    carbon: '#282626',    // Cinza carvão atualizado
 				}
 			},
 			fontFamily: {
@@ -97,13 +99,25 @@ export default {
 				'slide-in': {
 					'0%': { transform: 'translateX(-100%)' },
 					'100%': { transform: 'translateX(0)' }
-				}
+				},
+                'scroll-down': {
+                    '0%': { transform: 'translateY(0)', opacity: '1' },
+                    '50%': { transform: 'translateY(6px)', opacity: '0.5' },
+                    '100%': { transform: 'translateY(0)', opacity: '1' }
+                },
+                'float': {
+                    '0%': { transform: 'translateY(0px)' },
+                    '50%': { transform: 'translateY(-10px)' },
+                    '100%': { transform: 'translateY(0px)' }
+                }
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out',
 				'fade-in': 'fade-in 0.6s ease-out',
-				'slide-in': 'slide-in 0.4s ease-out'
+				'slide-in': 'slide-in 0.4s ease-out',
+                'scroll-down': 'scroll-down 1.5s infinite',
+                'float': 'float 6s ease-in-out infinite'
 			}
 		}
 	},

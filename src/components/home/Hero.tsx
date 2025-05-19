@@ -1,34 +1,86 @@
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
+const phrases = ['Pedale.', 'Compre.', 'Conecte.'];
+
 const Hero = () => {
+  const [currentPhrase, setCurrentPhrase] = useState(0);
+  const [visible, setVisible] = useState(true);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setVisible(false);
+      
+      setTimeout(() => {
+        setCurrentPhrase((prev) => (prev + 1) % phrases.length);
+        setVisible(true);
+      }, 500);
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    // Custom cursor effect
+    const cursor = document.createElement('div');
+    cursor.classList.add('custom-cursor');
+    document.body.appendChild(cursor);
+
+    const moveCursor = (e: MouseEvent) => {
+      cursor.style.left = `${e.clientX}px`;
+      cursor.style.top = `${e.clientY}px`;
+    };
+
+    document.addEventListener('mousemove', moveCursor);
+
+    return () => {
+      document.removeEventListener('mousemove', moveCursor);
+      document.body.removeChild(cursor);
+    };
+  }, []);
+
   return (
-    <div className="relative bg-nuflow-moss text-white overflow-hidden">
-      {/* Background pattern */}
+    <div className="relative bg-nuflow-moss text-white overflow-hidden h-screen flex items-center">
+      {/* Background pattern with mountain silhouette */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC40Ij48cGF0aCBkPSJNMzYgMzBoLTYgdi02aDZ2NnptMCAxMmgtNnY2aDZ2LTZ6Ii8+PC9nPjwvZz48L3N2Zz4=')]"></div>
       </div>
       
-      <div className="container-custom py-28 md:py-36 relative z-10">
+      <div className="container-custom relative z-10">
         <div className="max-w-3xl mx-auto text-center">
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-heading font-bold mb-6 leading-tight">
-            Explore. Pedale. Conecte.
+          <div className="mb-4 text-nuflow-lime">Bem-vindo à Nuflow</div>
+          
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-heading font-bold mb-6 leading-tight flex flex-col md:flex-row items-center justify-center">
+            <span className="mr-0 md:mr-4">Explore.</span>
+            <span 
+              className={`transition-opacity duration-500 ease-in-out ${visible ? 'opacity-100' : 'opacity-0'}`}
+            >
+              {phrases[currentPhrase]}
+            </span>
           </h1>
-          <p className="text-xl md:text-2xl text-white/80 mb-8 max-w-2xl mx-auto">
-            Sua jornada no ciclismo começa aqui. Encontre experiências, 
-            equipamentos e uma comunidade apaixonada em um só lugar.
+          
+          <p className="text-xl md:text-2xl text-white/80 mb-10 max-w-2xl mx-auto">
+            Encontre experiências, compre bikes, viva a cultura da bike em um só lugar.
           </p>
+          
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Button size="lg" className="bg-nuflow-lime text-nuflow-moss hover:bg-nuflow-lime/90 px-8 text-lg">
+            <Button size="lg" className="bg-nuflow-lime text-nuflow-moss hover:bg-white hover:text-nuflow-moss transition-all duration-300 px-8 text-lg rounded-full group">
               Descobrir Rolês
-              <ArrowRight size={18} className="ml-2" />
+              <ArrowRight size={18} className="ml-2 transition-transform duration-300 group-hover:translate-x-1" />
             </Button>
-            <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-nuflow-moss px-8 text-lg">
+            
+            <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-nuflow-moss transition-all duration-300 px-8 text-lg rounded-full">
               Visitar Marketplace
             </Button>
           </div>
+        </div>
+      </div>
+      
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+        <div className="w-8 h-12 border-2 border-white/60 rounded-full flex items-start justify-center">
+          <div className="w-1.5 h-3 bg-white/60 rounded-full mt-2 animate-scroll-down"></div>
         </div>
       </div>
     </div>
