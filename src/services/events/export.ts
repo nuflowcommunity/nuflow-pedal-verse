@@ -1,52 +1,64 @@
 
-import { Event } from "@/types/events";
+import { Event } from '@/types/events';
+import { ExportFormat } from './types';
 
-// Export event data to CSV
-export const exportEventsToCSV = (events: Event[]): string => {
-  const headers = 'ID,Título,Data,Local,Preço,Categoria,Status\n';
-  const csvContent = headers + events.map(event => 
-    `${event.id},"${event.title}","${event.date}","${event.location}","${event.price}","${event.category}","${event.status || ''}"`
-  ).join('\n');
+/**
+ * Downloads event data in the specified format
+ * @param events Array of events to export
+ * @param format Format to export (csv, pdf, xlsx)
+ */
+export const downloadEvents = (events: Event[], format: ExportFormat): void => {
+  // In a real application, this would handle the actual export logic
+  // For now, we'll create a simple CSV export as a demonstration
   
-  return csvContent;
-};
-
-// Export event data to XLS (simplified - in a real app we'd use a library like xlsx)
-export const exportEventsToXLS = (events: Event[]): Blob => {
-  // This is a simplified version for demonstration
-  // In a real app, use a library like xlsx to create a proper Excel file
-  const csvContent = exportEventsToCSV(events);
-  return new Blob([csvContent], { type: 'application/vnd.ms-excel' });
-};
-
-// Download events as CSV or XLS
-export const downloadEvents = (events: Event[], format: 'csv' | 'xls'): void => {
-  try {
-    let content: string | Blob;
-    let mimeType: string;
-    let extension: string;
+  if (format === 'csv') {
+    // Convert events to CSV format
+    const headers = ['id', 'title', 'date', 'location', 'category', 'price', 'description'];
     
-    if (format === 'csv') {
-      content = exportEventsToCSV(events);
-      mimeType = 'text/csv';
-      extension = 'csv';
-    } else {
-      content = exportEventsToXLS(events);
-      mimeType = 'application/vnd.ms-excel';
-      extension = 'xls';
-    }
+    const csvContent = [
+      // Add headers
+      headers.join(','),
+      
+      // Add event rows
+      ...events.map(event => {
+        return [
+          event.id,
+          `"${event.title}"`,
+          new Date(event.date).toISOString().split('T')[0],
+          `"${event.location}"`,
+          event.category,
+          event.price,
+          `"${event.description?.replace(/"/g, '""') || ''}"`
+        ].join(',');
+      })
+    ].join('\n');
     
-    const blob = content instanceof Blob ? content : new Blob([content], { type: mimeType });
+    // Create a Blob and download
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
-    
-    link.href = url;
-    link.download = `eventos-nuflow-${new Date().toISOString().split('T')[0]}.${extension}`;
+    link.setAttribute('href', url);
+    link.setAttribute('download', `eventos_${new Date().toISOString().slice(0,10)}.csv`);
+    link.style.visibility = 'hidden';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
-  } catch (error) {
-    console.error(`Error exporting events to ${format.toUpperCase()}:`, error);
+    
+    return;
+  }
+  
+  if (format === 'pdf') {
+    // In a real application, you would use a library like jsPDF to generate PDFs
+    console.log('PDF export would be implemented here with a library like jsPDF');
+    alert('PDF export simulado (em um app real usaria jsPDF ou outra biblioteca)');
+    return;
+  }
+  
+  if (format === 'xlsx') {
+    // In a real application, you would use a library like exceljs or xlsx to generate Excel files
+    console.log('Excel export would be implemented here with a library like exceljs');
+    alert('Excel export simulado (em um app real usaria exceljs ou outra biblioteca)');
+    return;
   }
 };
