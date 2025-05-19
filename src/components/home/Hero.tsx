@@ -57,7 +57,7 @@ const Hero = () => {
               <ArrowRight size={18} className="ml-2 transition-transform duration-300 group-hover:translate-x-1" />
             </Button>
             
-            <Button size="lg" variant="outline" className="border-white text-white hover:text-nuflow-moss transition-all duration-300 px-8 text-lg rounded-full bg-[#b8f4cd]">
+            <Button size="lg" variant="outline" className="border-white transition-all duration-300 px-8 text-lg rounded-full bg-[#b8f4cd] text-[#141814]">
               Visitar Marketplace
             </Button>
           </div>
