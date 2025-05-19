@@ -42,10 +42,10 @@ const Hero = () => {
   }, []);
 
   return (
-    <div className="relative bg-nuflow-moss text-white overflow-hidden h-screen flex items-center">
-      {/* Background pattern with mountain silhouette */}
+    <div className="relative bg-[#35513b] text-white overflow-hidden h-screen flex items-center">
+      {/* Removed the background pattern with mountain silhouette */}
       <div className="absolute inset-0 opacity-10">
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC40Ij48cGF0aCBkPSJNMzYgMzBoLTYgdi02aDZ2NnptMCAxMmgtNnY2aDZ2LTZ6Ii8+PC9nPjwvZz48L3N2Zz4=')]"></div>
+        {/* Removed the textured background */}
       </div>
       
       <div className="container-custom relative z-10">
