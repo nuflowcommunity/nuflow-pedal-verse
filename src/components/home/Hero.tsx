@@ -52,7 +52,7 @@ const Hero = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Button size="lg" className="text-nuflow-moss hover:text-nuflow-moss transition-all duration-300 px-8 text-lg rounded-full group bg-[497052] bg-[#c5e7cf]">
+            <Button size="lg" className="transition-all duration-300 px-8 text-lg rounded-full group bg-[497052] bg-[#c5e7cf] text-[#2f302c]">
               Descobrir Rolês
               <ArrowRight size={18} className="ml-2 transition-transform duration-300 group-hover:translate-x-1" />
             </Button>
