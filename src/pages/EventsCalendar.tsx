@@ -1,6 +1,5 @@
-
 import React, { useState } from 'react';
-import { Calendar as CalendarIcon, Filter, Grid, List, Map, Search } from 'lucide-react';
+import { Calendar as CalendarIcon, Filter, Grid, List, Map, Search, MapPin } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { 
   Card, 
@@ -258,7 +257,7 @@ const EventsCalendar = () => {
                         </CardHeader>
                         <CardContent className="p-0 py-4">
                           <div className="flex items-center text-sm">
-                            <Calendar size={14} className="mr-1" />
+                            <CalendarIcon size={14} className="mr-1" />
                             <span>{event.date}</span>
                           </div>
                         </CardContent>
