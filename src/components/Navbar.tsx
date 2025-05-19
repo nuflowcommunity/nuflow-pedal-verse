@@ -1,20 +1,16 @@
-
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Menu, X, User, ShoppingCart, Mountain } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
-
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
   const isMobile = useIsMobile();
-
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
-
   useEffect(() => {
     const handleScroll = () => {
       const offset = window.scrollY;
@@ -24,21 +20,16 @@ const Navbar = () => {
         setScrolled(false);
       }
     };
-
     window.addEventListener('scroll', handleScroll);
-
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
-
   const isActive = (path: string) => {
     return location.pathname === path ? 'nav-link-active' : 'nav-link';
   };
-
-  return (
-    <nav className={`sticky top-0 z-50 transition-all duration-300 bg-nuflow-green`}>
-      <div className="container-custom py-4 flex items-center justify-between relative">
+  return <nav className={`sticky top-0 z-50 transition-all duration-300 bg-nuflow-green`}>
+      <div className="container-custom py-4 flex items-center justify-between relative bg-[305037]">
         {/* Left Navigation */}
         <div className={`hidden md:flex items-center space-x-6 flex-1 justify-start`}>
           <Link to="/roles" className={`${isActive('/roles')} font-mono uppercase text-white text-sm tracking-wider`}>
@@ -75,29 +66,20 @@ const Navbar = () => {
 
         {/* User Actions (Right) */}
         <div className="flex items-center space-x-2">
-          {!isMobile && (
-            <Link to="/cart" className="p-2 rounded-full hover:bg-white/10 transition-all">
+          {!isMobile && <Link to="/cart" className="p-2 rounded-full hover:bg-white/10 transition-all">
               <ShoppingCart size={20} className="text-white" />
-            </Link>
-          )}
+            </Link>}
           <Link to="/login" className="p-2 rounded-full hover:bg-white/10 transition-all">
             <User size={20} className="text-white" />
           </Link>
-          {!isMobile && (
-            <Button
-              variant="outline"
-              className="border-white text-white hover:bg-white hover:text-nuflow-green transition-all duration-300 rounded-full font-mono uppercase text-sm tracking-wider"
-              asChild
-            >
+          {!isMobile && <Button variant="outline" className="border-white text-white hover:bg-white hover:text-nuflow-green transition-all duration-300 rounded-full font-mono uppercase text-sm tracking-wider" asChild>
               <Link to="/anunciar">Anunciar</Link>
-            </Button>
-          )}
+            </Button>}
         </div>
       </div>
 
       {/* Mobile Menu */}
-      {isOpen && (
-        <div className="md:hidden bg-nuflow-green border-t border-white/20 animate-slide-in">
+      {isOpen && <div className="md:hidden bg-nuflow-green border-t border-white/20 animate-slide-in">
           <div className="container-custom py-6 flex flex-col">
             <Link to="/roles" className="py-3 px-4 text-white hover:bg-white/10 rounded-md font-mono uppercase text-sm tracking-wider" onClick={toggleMenu}>Explorar rolês</Link>
             <Link to="/market" className="py-3 px-4 text-white hover:bg-white/10 rounded-md font-mono uppercase text-sm tracking-wider" onClick={toggleMenu}>Comprar / Vender</Link>
@@ -110,19 +92,11 @@ const Navbar = () => {
                 <ShoppingCart size={18} className="mr-2" /> Carrinho
               </span>
             </Link>
-            <Button
-              variant="outline"
-              className="mt-3 border-white text-white hover:bg-white hover:text-nuflow-green transition-all duration-300 rounded-full font-mono uppercase text-sm tracking-wider"
-              onClick={toggleMenu}
-              asChild
-            >
+            <Button variant="outline" className="mt-3 border-white text-white hover:bg-white hover:text-nuflow-green transition-all duration-300 rounded-full font-mono uppercase text-sm tracking-wider" onClick={toggleMenu} asChild>
               <Link to="/anunciar">Anunciar</Link>
             </Button>
           </div>
-        </div>
-      )}
-    </nav>
-  );
+        </div>}
+    </nav>;
 };
-
 export default Navbar;
