@@ -42,7 +42,7 @@ const Hero = () => {
   }, []);
 
   return (
-    <div className="relative bg-[#35513b] text-white overflow-hidden h-screen flex items-center">
+    <div className="relative bg-[#1c2b1f] text-white overflow-hidden h-screen flex items-center">
       {/* Removed the background pattern with mountain silhouette */}
       <div className="absolute inset-0 opacity-10">
         {/* Removed the textured background */}
