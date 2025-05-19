@@ -5,22 +5,43 @@ import { Tabs, TabsContent } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import EventCard from '@/components/cards/EventCard';
 import { CalendarIcon, MapPin, ShoppingBag } from 'lucide-react';
-
-interface Event {
-  id: string;
-  title: string;
-  image: string;
-  date: string;
-  location: string;
-  price: string;
-  category: string;
-}
+import { Event } from '@/types/events';
+import { Skeleton } from '@/components/ui/skeleton';
 
 interface EventsGridProps {
   events: Event[];
+  isLoading?: boolean;
 }
 
-const EventsGrid = ({ events }: EventsGridProps) => {
+const EventsGrid = ({ events, isLoading = false }: EventsGridProps) => {
+  if (isLoading) {
+    return (
+      <section className="py-12 bg-nuflow-sand">
+        <div className="container-custom">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {Array.from({ length: 8 }).map((_, index) => (
+              <Card key={index} className="overflow-hidden">
+                <Skeleton className="h-48 w-full" />
+                <div className="p-4">
+                  <Skeleton className="h-6 w-3/4 mb-2" />
+                  <Skeleton className="h-4 w-1/2 mb-1" />
+                  <Skeleton className="h-4 w-2/3 mb-4" />
+                  <div className="flex justify-between items-center">
+                    <Skeleton className="h-5 w-1/4" />
+                    <div className="flex space-x-2">
+                      <Skeleton className="h-8 w-16" />
+                      <Skeleton className="h-8 w-20" />
+                    </div>
+                  </div>
+                </div>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="py-12 bg-nuflow-sand">
       <div className="container-custom">
@@ -38,7 +59,7 @@ const EventsGrid = ({ events }: EventsGridProps) => {
               {events.map((event) => (
                 <Card key={event.id} className="flex flex-col md:flex-row overflow-hidden hover:shadow-md transition-shadow">
                   <div className="md:w-1/4 h-48 md:h-auto">
-                    <img src={event.image} alt={event.title} className="w-full h-full object-cover" />
+                    <img src={event.image || event.image_url} alt={event.title} className="w-full h-full object-cover" />
                   </div>
                   <div className="flex-1 p-6">
                     <CardHeader className="p-0 pb-2">
@@ -86,7 +107,7 @@ const EventsGrid = ({ events }: EventsGridProps) => {
           </TabsContent>
         </Tabs>
         
-        {events.length === 0 && (
+        {events.length === 0 && !isLoading && (
           <div className="text-center py-12">
             <h3 className="text-2xl font-heading font-semibold mb-2">Nenhum evento encontrado</h3>
             <p className="text-nuflow-charcoal/70">Tente ajustar seus filtros ou faça uma nova busca.</p>

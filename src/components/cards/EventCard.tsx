@@ -8,21 +8,35 @@ import { Button } from '@/components/ui/button';
 interface EventCardProps {
   id: string;
   title: string;
-  image: string;
+  image?: string;
+  image_url?: string;
   date: string;
   location: string;
   price: string;
   category: string;
+  status?: string;
   showBuyButton?: boolean;
 }
 
-const EventCard = ({ id, title, image, date, location, price, category, showBuyButton = false }: EventCardProps) => {
+const EventCard = ({ 
+  id, 
+  title, 
+  image, 
+  image_url, 
+  date, 
+  location, 
+  price, 
+  category, 
+  showBuyButton = false 
+}: EventCardProps) => {
+  const imageUrl = image || image_url || 'https://placehold.co/600x400?text=Sem+Imagem';
+  
   return (
     <Card className="overflow-hidden hover:shadow-md transition-shadow">
       <div className="relative">
         <Link to={`/eventos/${id}`}>
           <img 
-            src={image} 
+            src={imageUrl} 
             alt={title} 
             className="h-48 w-full object-cover"
           />

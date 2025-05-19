@@ -9,16 +9,280 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      event_images: {
+        Row: {
+          created_at: string
+          event_id: string
+          id: string
+          image_url: string
+          is_primary: boolean | null
+        }
+        Insert: {
+          created_at?: string
+          event_id: string
+          id?: string
+          image_url: string
+          is_primary?: boolean | null
+        }
+        Update: {
+          created_at?: string
+          event_id?: string
+          id?: string
+          image_url?: string
+          is_primary?: boolean | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "event_images_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      event_inclusions: {
+        Row: {
+          created_at: string
+          description: string
+          event_id: string
+          id: string
+        }
+        Insert: {
+          created_at?: string
+          description: string
+          event_id: string
+          id?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string
+          event_id?: string
+          id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "event_inclusions_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      event_registrations: {
+        Row: {
+          created_at: string
+          event_id: string
+          id: string
+          payment_id: string | null
+          payment_status: string | null
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          event_id: string
+          id?: string
+          payment_id?: string | null
+          payment_status?: string | null
+          status?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          event_id?: string
+          id?: string
+          payment_id?: string | null
+          payment_status?: string | null
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "event_registrations_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      event_requirements: {
+        Row: {
+          created_at: string
+          description: string
+          event_id: string
+          id: string
+        }
+        Insert: {
+          created_at?: string
+          description: string
+          event_id: string
+          id?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string
+          event_id?: string
+          id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "event_requirements_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      events: {
+        Row: {
+          category: Database["public"]["Enums"]["event_category"]
+          city: string | null
+          created_at: string
+          created_by: string | null
+          date: string
+          description: string | null
+          difficulty: string | null
+          distance: string | null
+          elevation: string | null
+          end_date: string | null
+          google_maps_url: string | null
+          id: string
+          image_url: string | null
+          location: string
+          max_participants: number | null
+          meeting_point: string | null
+          organizer: string | null
+          price: number | null
+          short_description: string | null
+          state: string | null
+          status: Database["public"]["Enums"]["event_status"]
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          category: Database["public"]["Enums"]["event_category"]
+          city?: string | null
+          created_at?: string
+          created_by?: string | null
+          date: string
+          description?: string | null
+          difficulty?: string | null
+          distance?: string | null
+          elevation?: string | null
+          end_date?: string | null
+          google_maps_url?: string | null
+          id?: string
+          image_url?: string | null
+          location: string
+          max_participants?: number | null
+          meeting_point?: string | null
+          organizer?: string | null
+          price?: number | null
+          short_description?: string | null
+          state?: string | null
+          status?: Database["public"]["Enums"]["event_status"]
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          category?: Database["public"]["Enums"]["event_category"]
+          city?: string | null
+          created_at?: string
+          created_by?: string | null
+          date?: string
+          description?: string | null
+          difficulty?: string | null
+          distance?: string | null
+          elevation?: string | null
+          end_date?: string | null
+          google_maps_url?: string | null
+          id?: string
+          image_url?: string | null
+          location?: string
+          max_participants?: number | null
+          meeting_point?: string | null
+          organizer?: string | null
+          price?: number | null
+          short_description?: string | null
+          state?: string | null
+          status?: Database["public"]["Enums"]["event_status"]
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_past_events: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          category: Database["public"]["Enums"]["event_category"]
+          city: string | null
+          created_at: string
+          created_by: string | null
+          date: string
+          description: string | null
+          difficulty: string | null
+          distance: string | null
+          elevation: string | null
+          end_date: string | null
+          google_maps_url: string | null
+          id: string
+          image_url: string | null
+          location: string
+          max_participants: number | null
+          meeting_point: string | null
+          organizer: string | null
+          price: number | null
+          short_description: string | null
+          state: string | null
+          status: Database["public"]["Enums"]["event_status"]
+          title: string
+          updated_at: string
+        }[]
+      }
+      get_upcoming_events: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          category: Database["public"]["Enums"]["event_category"]
+          city: string | null
+          created_at: string
+          created_by: string | null
+          date: string
+          description: string | null
+          difficulty: string | null
+          distance: string | null
+          elevation: string | null
+          end_date: string | null
+          google_maps_url: string | null
+          id: string
+          image_url: string | null
+          location: string
+          max_participants: number | null
+          meeting_point: string | null
+          organizer: string | null
+          price: number | null
+          short_description: string | null
+          state: string | null
+          status: Database["public"]["Enums"]["event_status"]
+          title: string
+          updated_at: string
+        }[]
+      }
     }
     Enums: {
-      [_ in never]: never
+      event_category: "MTB" | "Speed" | "Gravel" | "Urbano" | "Outro"
+      event_status: "active" | "cancelled" | "completed" | "draft"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -133,6 +397,9 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      event_category: ["MTB", "Speed", "Gravel", "Urbano", "Outro"],
+      event_status: ["active", "cancelled", "completed", "draft"],
+    },
   },
 } as const

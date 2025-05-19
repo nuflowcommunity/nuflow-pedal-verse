@@ -1,7 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
 import { DateRange } from "react-day-picker";
-import { isWithinInterval, parse, compareAsc, compareDesc } from "date-fns";
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import EventsHero from '@/components/events/EventsHero';
@@ -11,202 +10,186 @@ import EventsCategoryFilter from '@/components/events/EventsCategoryFilter';
 import EventsGrid from '@/components/events/EventsGrid';
 import BackToTopButton from '@/components/BackToTopButton';
 import { Button } from '@/components/ui/button';
+import { Event } from '@/types/events';
+import { 
+  getAllEvents, 
+  filterAndSortEvents,
+  getUpcomingEvents,
+  getPastEvents,
+  downloadEvents
+} from '@/services/eventService';
+import { useToast } from '@/components/ui/use-toast';
 
-// Helper function to parse date strings into Date objects
-const parseEventDate = (dateStr: string): Date => {
-  const [day, month, year] = dateStr.split(' ')[0].split(',')[0].split(' ');
-  const monthMap: Record<string, number> = {
-    'Jan': 0, 'Fev': 1, 'Mar': 2, 'Abr': 3, 'Mai': 4, 'Jun': 5,
-    'Jul': 6, 'Ago': 7, 'Set': 8, 'Out': 9, 'Nov': 10, 'Dez': 11
-  };
-  return new Date(parseInt(year), monthMap[month], parseInt(day));
-};
-
-// Helper function to parse price string to number
-const parsePriceToNumber = (priceStr: string): number => {
-  return parseFloat(priceStr.replace('R$ ', '').replace(',', '.'));
-};
-
-// Sample data for events
-const events = [
-  {
-    id: '1',
-    title: 'Circuito Mantiqueira',
-    image: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=600',
-    date: '27 Mai, 2024',
-    location: 'Serra da Mantiqueira, SP',
-    price: 'R$ 180',
-    category: 'MTB',
-    status: 'active'
-  },
-  {
-    id: '2',
-    title: 'Pedal Costeiro Santos',
-    image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600',
-    date: '03 Jun, 2024',
-    location: 'Santos, SP',
-    price: 'R$ 120',
-    category: 'Speed',
-    status: 'active'
-  },
-  {
-    id: '3',
-    title: 'Aurora Trail Experience',
-    image: 'https://images.unsplash.com/photo-1500673922987-e212871fec22?auto=format&fit=crop&w=600',
-    date: '15 Jun, 2024',
-    location: 'Campos do Jordão, SP',
-    price: 'R$ 220',
-    category: 'Gravel',
-    status: 'active'
-  },
-  {
-    id: '4',
-    title: 'São Paulo Night Ride',
-    image: 'https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?auto=format&fit=crop&w=600',
-    date: '22 Jun, 2024',
-    location: 'São Paulo, SP',
-    price: 'R$ 90',
-    category: 'Urbano',
-    status: 'active'
-  },
-  {
-    id: '5',
-    title: 'Vale do Paraíba Tour',
-    image: 'https://images.unsplash.com/photo-1518495973542-4542c06a5843?auto=format&fit=crop&w=600',
-    date: '05 Jul, 2024',
-    location: 'Vale do Paraíba, SP',
-    price: 'R$ 160',
-    category: 'Gravel',
-    status: 'active'
-  },
-  {
-    id: '6',
-    title: 'Trilhas de Itatiaia',
-    image: 'https://images.unsplash.com/photo-1482938289607-e9573fc25ebb?auto=format&fit=crop&w=600',
-    date: '12 Jul, 2024',
-    location: 'Itatiaia, RJ',
-    price: 'R$ 200',
-    category: 'MTB',
-    status: 'active'
-  },
-  {
-    id: '7',
-    title: 'Cicloturismo Litoral Norte',
-    image: 'https://images.unsplash.com/photo-1523712999610-f77fbcfc3843?auto=format&fit=crop&w=600',
-    date: '19 Jul, 2024',
-    location: 'Ubatuba, SP',
-    price: 'R$ 280',
-    category: 'Speed',
-    status: 'active'
-  },
-  {
-    id: '8',
-    title: 'Serra do Mar Adventure',
-    image: 'https://images.unsplash.com/photo-1426604966848-d7adac402bff?auto=format&fit=crop&w=600',
-    date: '26 Jul, 2024',
-    location: 'Cubatão, SP',
-    price: 'R$ 190',
-    category: 'MTB',
-    status: 'active'
-  }
-];
-
-const categories = ['Todos', 'MTB', 'Speed', 'Gravel', 'Urbano'];
-
-interface Event {
-  id: string;
-  title: string;
-  image: string;
-  date: string;
-  location: string;
-  price: string;
-  category: string;
-  status?: string;
-}
+const categories = ['Todos', 'MTB', 'Speed', 'Gravel', 'Urbano', 'Outro'];
 
 const EventsCalendar = () => {
   const [activeCategory, setActiveCategory] = useState('Todos');
   const [searchQuery, setSearchQuery] = useState('');
   const [dateRange, setDateRange] = useState<DateRange | undefined>(undefined);
-  const [filteredEvents, setFilteredEvents] = useState<Event[]>(events);
+  const [filteredEvents, setFilteredEvents] = useState<Event[]>([]);
+  const [allEvents, setAllEvents] = useState<Event[]>([]);
   const [sortOption, setSortOption] = useState('');
   const [viewMode, setViewMode] = useState<'all' | 'upcoming' | 'past'>('all');
+  const [isLoading, setIsLoading] = useState(true);
+  const { toast } = useToast();
 
-  // Filter events based on all active filters
+  // Fetch all events on component mount
   useEffect(() => {
-    filterEvents();
-  }, [activeCategory, searchQuery, sortOption, viewMode]);
+    fetchEvents();
+  }, []);
 
-  const filterEvents = () => {
-    let result = events.filter(event => {
+  // Apply filters and view mode when they change
+  useEffect(() => {
+    applyFilters();
+  }, [activeCategory, searchQuery, sortOption, viewMode, dateRange, allEvents]);
+
+  // Fetch events based on view mode
+  const fetchEvents = async () => {
+    setIsLoading(true);
+    try {
+      let events: Event[];
+      
+      switch (viewMode) {
+        case 'upcoming':
+          events = await getUpcomingEvents();
+          break;
+        case 'past':
+          events = await getPastEvents();
+          break;
+        default:
+          events = await getAllEvents();
+      }
+      
+      setAllEvents(events);
+      setFilteredEvents(events);
+    } catch (error) {
+      console.error("Error fetching events:", error);
+      toast({
+        title: "Erro ao carregar eventos",
+        description: "Houve um problema ao buscar os eventos. Por favor, tente novamente.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Apply filters to events
+  const applyFilters = async () => {
+    // If no events loaded yet, don't try to filter
+    if (allEvents.length === 0 && !isLoading) return;
+    
+    setIsLoading(true);
+    
+    try {
+      // If we have all events loaded locally, filter in-memory
+      let results = [...allEvents];
+      
       // Filter by category
-      const matchesCategory = activeCategory === 'Todos' || event.category === activeCategory;
+      if (activeCategory !== 'Todos') {
+        results = results.filter(event => event.category === activeCategory);
+      }
       
       // Filter by search query
-      const matchesSearch = event.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                           event.location.toLowerCase().includes(searchQuery.toLowerCase());
-      
-      // Filter by date range if applicable
-      let matchesDateRange = true;
-      if (dateRange && dateRange.from) {
-        const eventDate = parseEventDate(event.date);
-        
-        if (dateRange.to) {
-          // If we have both from and to dates
-          matchesDateRange = isWithinInterval(eventDate, { 
-            start: dateRange.from, 
-            end: dateRange.to 
-          });
-        } else {
-          // If we only have a from date
-          matchesDateRange = eventDate >= dateRange.from;
-        }
+      if (searchQuery) {
+        const query = searchQuery.toLowerCase();
+        results = results.filter(event => 
+          event.title.toLowerCase().includes(query) || 
+          event.location.toLowerCase().includes(query)
+        );
       }
-
-      // Filter by view mode (past/upcoming)
-      let matchesViewMode = true;
+      
+      // Filter by date range
+      if (dateRange && dateRange.from) {
+        results = results.filter(event => {
+          const eventDate = new Date(parseEventDate(event.date));
+          
+          if (dateRange.to) {
+            return eventDate >= dateRange.from && eventDate <= dateRange.to;
+          } else {
+            return eventDate >= dateRange.from;
+          }
+        });
+      }
+      
+      // Apply view mode filter
       if (viewMode !== 'all') {
-        const eventDate = parseEventDate(event.date);
         const today = new Date();
         
         if (viewMode === 'upcoming') {
-          matchesViewMode = eventDate >= today;
+          results = results.filter(event => {
+            const eventDate = new Date(parseEventDate(event.date));
+            return eventDate >= today;
+          });
         } else if (viewMode === 'past') {
-          matchesViewMode = eventDate < today;
+          results = results.filter(event => {
+            const eventDate = new Date(parseEventDate(event.date));
+            return eventDate < today;
+          });
         }
       }
       
-      return matchesCategory && matchesSearch && matchesDateRange && matchesViewMode;
-    });
-    
-    // Apply sorting
-    if (sortOption) {
-      result = sortEvents(result, sortOption);
+      // Apply sorting if needed
+      if (sortOption) {
+        results = sortEvents(results, sortOption);
+      }
+      
+      setFilteredEvents(results);
+    } catch (error) {
+      console.error("Error applying filters:", error);
+      toast({
+        title: "Erro ao filtrar eventos",
+        description: "Houve um problema ao aplicar os filtros. Por favor, tente novamente.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
     }
-    
-    setFilteredEvents(result);
   };
 
-  // Function to sort events based on the selected option
-  const sortEvents = (eventsToSort: Event[], option: string) => {
-    const sortedEvents = [...eventsToSort];
+  // Function to sort events based on selected option
+  const sortEvents = (eventsToSort: Event[], option: string): Event[] => {
+    const sorted = [...eventsToSort];
     
     switch (option) {
       case 'date-asc':
-        return sortedEvents.sort((a, b) => compareAsc(parseEventDate(a.date), parseEventDate(b.date)));
+        return sorted.sort((a, b) => {
+          const dateA = new Date(parseEventDate(a.date));
+          const dateB = new Date(parseEventDate(b.date));
+          return dateA.getTime() - dateB.getTime();
+        });
       case 'date-desc':
-        return sortedEvents.sort((a, b) => compareDesc(parseEventDate(a.date), parseEventDate(b.date)));
+        return sorted.sort((a, b) => {
+          const dateA = new Date(parseEventDate(a.date));
+          const dateB = new Date(parseEventDate(b.date));
+          return dateB.getTime() - dateA.getTime();
+        });
       case 'price-asc':
-        return sortedEvents.sort((a, b) => parsePriceToNumber(a.price) - parsePriceToNumber(b.price));
+        return sorted.sort((a, b) => parsePriceToNumber(a.price) - parsePriceToNumber(b.price));
       case 'price-desc':
-        return sortedEvents.sort((a, b) => parsePriceToNumber(b.price) - parsePriceToNumber(a.price));
+        return sorted.sort((a, b) => parsePriceToNumber(b.price) - parsePriceToNumber(a.price));
       case 'name-asc':
-        return sortedEvents.sort((a, b) => a.title.localeCompare(b.title));
+        return sorted.sort((a, b) => a.title.localeCompare(b.title));
       case 'name-desc':
-        return sortedEvents.sort((a, b) => b.title.localeCompare(a.title));
+        return sorted.sort((a, b) => b.title.localeCompare(a.title));
       default:
-        return sortedEvents;
+        return sorted;
     }
+  };
+
+  // Helper function to parse date strings
+  const parseEventDate = (dateStr: string): Date => {
+    const [day, month, year] = dateStr.split(' ')[0].split(',')[0].split(' ');
+    const monthMap: Record<string, number> = {
+      'Jan': 0, 'Fev': 1, 'Mar': 2, 'Abr': 3, 'Mai': 4, 'Jun': 5,
+      'Jul': 6, 'Ago': 7, 'Set': 8, 'Out': 9, 'Nov': 10, 'Dez': 11
+    };
+    return new Date(parseInt(year), monthMap[month], parseInt(day));
+  };
+
+  // Helper function to parse price string to number
+  const parsePriceToNumber = (priceStr: string): number => {
+    return parseFloat(priceStr.replace('R$ ', '').replace(',', '.'));
   };
 
   // Function to handle sort option change
@@ -216,38 +199,37 @@ const EventsCalendar = () => {
 
   // Function to apply date filter
   const handleFilterByDate = () => {
-    filterEvents();
+    applyFilters();
   };
 
   // Function to clear date filter
   const handleClearDateFilter = () => {
     setDateRange(undefined);
-    setTimeout(() => {
-      filterEvents();
-    }, 0);
+  };
+
+  // Function to handle view mode change
+  const handleViewModeChange = (mode: 'all' | 'upcoming' | 'past') => {
+    setViewMode(mode);
+    // We'll re-fetch events based on the new mode
+    fetchEvents();
   };
 
   // Function to export events to CSV or XLS
   const handleExport = (format: 'csv' | 'xls') => {
-    // This would be implemented with a real export library
-    // For now we'll just show an alert
-    alert(`Exportando eventos para ${format.toUpperCase()}...`);
-    
-    // In a real implementation, we'd use a library like xlsx or create a CSV string
-    // and trigger a download
-    
-    // Example for CSV:
-    // const headers = 'ID,Title,Date,Location,Price,Category\n';
-    // const csvContent = headers + filteredEvents.map(event => 
-    //   `${event.id},"${event.title}",${event.date},"${event.location}",${event.price},${event.category}`
-    // ).join('\n');
-    // 
-    // const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-    // const url = URL.createObjectURL(blob);
-    // const link = document.createElement('a');
-    // link.setAttribute('href', url);
-    // link.setAttribute('download', `events-export-${new Date().toISOString().split('T')[0]}.csv`);
-    // link.click();
+    try {
+      downloadEvents(filteredEvents, format);
+      toast({
+        title: "Download iniciado",
+        description: `Os eventos foram exportados para ${format.toUpperCase()}.`,
+      });
+    } catch (error) {
+      console.error(`Error exporting to ${format}:`, error);
+      toast({
+        title: "Erro ao exportar eventos",
+        description: "Houve um problema ao exportar os eventos. Por favor, tente novamente.",
+        variant: "destructive",
+      });
+    }
   };
 
   return (
@@ -268,7 +250,7 @@ const EventsCalendar = () => {
                   className={viewMode === 'all' ? 
                     "bg-nuflow-lime text-nuflow-moss hover:bg-nuflow-lime/90" : 
                     "border-white text-white hover:bg-white/10"}
-                  onClick={() => setViewMode('all')}
+                  onClick={() => handleViewModeChange('all')}
                 >
                   Todos
                 </Button>
@@ -277,7 +259,7 @@ const EventsCalendar = () => {
                   className={viewMode === 'upcoming' ? 
                     "bg-nuflow-lime text-nuflow-moss hover:bg-nuflow-lime/90" : 
                     "border-white text-white hover:bg-white/10"}
-                  onClick={() => setViewMode('upcoming')}
+                  onClick={() => handleViewModeChange('upcoming')}
                 >
                   Próximos eventos
                 </Button>
@@ -286,7 +268,7 @@ const EventsCalendar = () => {
                   className={viewMode === 'past' ? 
                     "bg-nuflow-lime text-nuflow-moss hover:bg-nuflow-lime/90" : 
                     "border-white text-white hover:bg-white/10"}
-                  onClick={() => setViewMode('past')}
+                  onClick={() => handleViewModeChange('past')}
                 >
                   Eventos passados
                 </Button>
@@ -312,7 +294,11 @@ const EventsCalendar = () => {
           setActiveCategory={setActiveCategory} 
         />
         
-        <EventsGrid events={filteredEvents} />
+        <EventsGrid 
+          events={filteredEvents} 
+          isLoading={isLoading} 
+        />
+        
         <BackToTopButton />
       </main>
       

@@ -1,8 +1,6 @@
 
 import React from 'react';
 import SortFilter from '../market/SortFilter';
-import { Button } from '@/components/ui/button';
-import { Filter, Search } from 'lucide-react';
 
 interface EventsSortFilterProps {
   onSortChange: (value: string) => void;
