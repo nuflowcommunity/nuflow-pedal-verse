@@ -16,8 +16,9 @@ import {
   filterAndSortEvents,
   getUpcomingEvents,
   getPastEvents,
-  downloadEvents
-} from '@/services/eventService';
+  downloadEvents,
+  parseEventDate
+} from '@/services/events';
 import { useToast } from '@/components/ui/use-toast';
 
 const categories = ['Todos', 'MTB', 'Speed', 'Gravel', 'Urbano', 'Outro'];
