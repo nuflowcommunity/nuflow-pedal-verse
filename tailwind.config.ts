@@ -120,7 +120,10 @@ export default {
 				'slide-in': 'slide-in 0.4s ease-out',
                 'scroll-down': 'scroll-down 1.5s infinite',
                 'float': 'float 6s ease-in-out infinite'
-			}
+			},
+			scale: {
+				'98': '0.98',
+			},
 		}
 	},
 	plugins: [require("tailwindcss-animate")],
