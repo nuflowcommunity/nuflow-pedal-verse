@@ -1,5 +1,7 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { DateRange } from "react-day-picker";
+import { isWithinInterval } from "date-fns";
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import EventsHero from '@/components/events/EventsHero';
@@ -8,6 +10,16 @@ import EventsSearch from '@/components/events/EventsSearch';
 import EventsCategoryFilter from '@/components/events/EventsCategoryFilter';
 import EventsGrid from '@/components/events/EventsGrid';
 import BackToTopButton from '@/components/BackToTopButton';
+
+// Helper function to parse date strings into Date objects
+const parseEventDate = (dateStr: string): Date => {
+  const [day, month, year] = dateStr.split(' ')[0].split(',')[0].split(' ');
+  const monthMap: Record<string, number> = {
+    'Jan': 0, 'Fev': 1, 'Mar': 2, 'Abr': 3, 'Mai': 4, 'Jun': 5,
+    'Jul': 6, 'Ago': 7, 'Set': 8, 'Out': 9, 'Nov': 10, 'Dez': 11
+  };
+  return new Date(parseInt(year), monthMap[month], parseInt(day));
+};
 
 // Sample data for events
 const events = [
@@ -87,17 +99,71 @@ const events = [
 
 const categories = ['Todos', 'MTB', 'Speed', 'Gravel', 'Urbano'];
 
+interface Event {
+  id: string;
+  title: string;
+  image: string;
+  date: string;
+  location: string;
+  price: string;
+  category: string;
+}
+
 const EventsCalendar = () => {
   const [activeCategory, setActiveCategory] = useState('Todos');
   const [searchQuery, setSearchQuery] = useState('');
+  const [dateRange, setDateRange] = useState<DateRange | undefined>(undefined);
+  const [filteredEvents, setFilteredEvents] = useState<Event[]>(events);
 
-  // Filter events based on active category and search query
-  const filteredEvents = events.filter(event => {
-    const matchesCategory = activeCategory === 'Todos' || event.category === activeCategory;
-    const matchesSearch = event.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                         event.location.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesCategory && matchesSearch;
-  });
+  // Filter events based on all active filters
+  useEffect(() => {
+    filterEvents();
+  }, [activeCategory, searchQuery]);
+
+  const filterEvents = () => {
+    let result = events.filter(event => {
+      // Filter by category
+      const matchesCategory = activeCategory === 'Todos' || event.category === activeCategory;
+      
+      // Filter by search query
+      const matchesSearch = event.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                           event.location.toLowerCase().includes(searchQuery.toLowerCase());
+      
+      // Filter by date range if applicable
+      let matchesDateRange = true;
+      if (dateRange && dateRange.from) {
+        const eventDate = parseEventDate(event.date);
+        
+        if (dateRange.to) {
+          // If we have both from and to dates
+          matchesDateRange = isWithinInterval(eventDate, { 
+            start: dateRange.from, 
+            end: dateRange.to 
+          });
+        } else {
+          // If we only have a from date
+          matchesDateRange = eventDate >= dateRange.from;
+        }
+      }
+      
+      return matchesCategory && matchesSearch && matchesDateRange;
+    });
+    
+    setFilteredEvents(result);
+  };
+
+  // Function to apply date filter
+  const handleFilterByDate = () => {
+    filterEvents();
+  };
+
+  // Function to clear date filter
+  const handleClearDateFilter = () => {
+    setDateRange(undefined);
+    setTimeout(() => {
+      filterEvents();
+    }, 0);
+  };
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -106,7 +172,14 @@ const EventsCalendar = () => {
       <main className="flex-grow">
         <EventsHero />
         <EventsBreadcrumb />
-        <EventsSearch searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+        <EventsSearch 
+          searchQuery={searchQuery} 
+          setSearchQuery={setSearchQuery}
+          dateRange={dateRange}
+          setDateRange={setDateRange}
+          onFilterByDate={handleFilterByDate}
+          onClearDateFilter={handleClearDateFilter}
+        />
         <EventsCategoryFilter 
           categories={categories} 
           activeCategory={activeCategory} 

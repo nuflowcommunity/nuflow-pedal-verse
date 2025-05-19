@@ -1,15 +1,28 @@
 
 import React from 'react';
 import { Search } from 'lucide-react';
+import { DateRange } from "react-day-picker";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import DateRangeFilter from './DateRangeFilter';
 
 interface EventsSearchProps {
   searchQuery: string;
   setSearchQuery: (query: string) => void;
+  dateRange: DateRange | undefined;
+  setDateRange: (dateRange: DateRange | undefined) => void;
+  onFilterByDate: () => void;
+  onClearDateFilter: () => void;
 }
 
-const EventsSearch = ({ searchQuery, setSearchQuery }: EventsSearchProps) => {
+const EventsSearch = ({ 
+  searchQuery, 
+  setSearchQuery, 
+  dateRange, 
+  setDateRange, 
+  onFilterByDate, 
+  onClearDateFilter 
+}: EventsSearchProps) => {
   return (
     <section className="py-6 bg-white border-b border-nuflow-mineral/20">
       <div className="container-custom">
@@ -47,14 +60,23 @@ const EventsSearch = ({ searchQuery, setSearchQuery }: EventsSearchProps) => {
             </TabsList>
           </Tabs>
           
-          <div className="relative w-full md:w-auto flex-grow">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-nuflow-charcoal/50" size={20} />
-            <Input 
-              type="text" 
-              placeholder="Buscar rolês..." 
-              className="pl-10 pr-4 py-6 w-full border border-nuflow-mineral/30 focus:ring-2 focus:ring-nuflow-neon focus:border-transparent"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+          <div className="flex flex-col md:flex-row items-center gap-3 w-full md:w-auto">
+            <div className="relative w-full md:w-auto flex-grow">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-nuflow-charcoal/50" size={20} />
+              <Input 
+                type="text" 
+                placeholder="Buscar rolês..." 
+                className="pl-10 pr-4 py-6 w-full border border-nuflow-mineral/30 focus:ring-2 focus:ring-nuflow-neon focus:border-transparent"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+            </div>
+            
+            <DateRangeFilter
+              dateRange={dateRange}
+              setDateRange={setDateRange}
+              onFilterByDate={onFilterByDate}
+              onClearDateFilter={onClearDateFilter}
             />
           </div>
         </div>
