@@ -1,7 +1,8 @@
 
 import { supabase } from "@/integrations/supabase/client";
 import { Event, SupabaseEvent, mapSupabaseEventToEvent } from "@/types/events";
-import { EventCategory } from "./types";
+import { EventCategory, SortOption } from "./types";
+import { sortEvents } from "./utils";
 
 // Get all events
 export const getAllEvents = async (): Promise<Event[]> => {
@@ -120,6 +121,7 @@ export const filterAndSortEvents = async (
     // Apply category filter if specified
     if (category && category !== 'Todos') {
       const validCategories: EventCategory[] = ["MTB", "Speed", "Gravel", "Urbano", "Outro"];
+      // Check if the category is valid before using it in the query
       if (validCategories.includes(category as EventCategory)) {
         query = query.eq("category", category);
       }
@@ -152,7 +154,7 @@ export const filterAndSortEvents = async (
     
     // Apply sorting
     if (sortOption) {
-      events = sortEvents(events, sortOption);
+      events = sortEvents(events, sortOption as SortOption);
     }
     
     return events;

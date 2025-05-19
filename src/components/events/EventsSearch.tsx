@@ -1,12 +1,13 @@
 
 import React, { useState } from 'react';
-import { Search, Download, Filter } from 'lucide-react';
+import { Search, Filter } from 'lucide-react';
 import { DateRange } from "react-day-picker";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from '@/components/ui/button';
 import DateRangeFilter from './DateRangeFilter';
 import EventsSortFilter from './EventsSortFilter';
+import { ExportFormat } from '@/services/events/types';
 
 interface EventsSearchProps {
   searchQuery: string;
@@ -16,7 +17,8 @@ interface EventsSearchProps {
   onFilterByDate: () => void;
   onClearDateFilter: () => void;
   onSortChange: (value: string) => void;
-  onExport?: (format: 'csv' | 'xls') => void;
+  onExport?: (format: ExportFormat) => void;
+  renderExportButtons?: () => React.ReactNode;
 }
 
 const EventsSearch = ({ 
@@ -27,7 +29,8 @@ const EventsSearch = ({
   onFilterByDate, 
   onClearDateFilter,
   onSortChange,
-  onExport
+  onExport,
+  renderExportButtons
 }: EventsSearchProps) => {
   const [showAdvancedFilters, setShowAdvancedFilters] = useState(false);
 
@@ -69,26 +72,7 @@ const EventsSearch = ({
           </Tabs>
           
           <div className="flex gap-2 ml-auto">
-            {onExport && (
-              <>
-                <Button 
-                  variant="outline" 
-                  className="flex items-center gap-2 border-nuflow-mineral/30"
-                  onClick={() => onExport('csv')}
-                >
-                  <Download size={18} />
-                  CSV
-                </Button>
-                <Button 
-                  variant="outline" 
-                  className="flex items-center gap-2 border-nuflow-mineral/30"
-                  onClick={() => onExport('xls')}
-                >
-                  <Download size={18} />
-                  XLS
-                </Button>
-              </>
-            )}
+            {renderExportButtons && renderExportButtons()}
           </div>
         </div>
 

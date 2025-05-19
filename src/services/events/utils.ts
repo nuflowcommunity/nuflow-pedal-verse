@@ -1,8 +1,9 @@
 
 import { Event } from "@/types/events";
+import { SortOption } from "./types";
 
 // Helper function to sort events
-export const sortEvents = (events: Event[], sortOption: string): Event[] => {
+export const sortEvents = (events: Event[], sortOption: SortOption): Event[] => {
   const sortedEvents = [...events];
   
   switch (sortOption) {
@@ -26,6 +27,9 @@ export const sortEvents = (events: Event[], sortOption: string): Event[] => {
       return sortedEvents.sort((a, b) => a.title.localeCompare(b.title));
     case 'name-desc':
       return sortedEvents.sort((a, b) => b.title.localeCompare(a.title));
+    case 'popularity':
+      // Placeholder for popularity sorting
+      return sortedEvents;
     default:
       return sortedEvents;
   }
