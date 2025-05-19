@@ -15,7 +15,8 @@ export const getAllEvents = async (): Promise<Event[]> => {
       return [];
     }
     
-    return (data as SupabaseEvent[]).map(mapSupabaseEventToEvent);
+    // Use type assertion to handle data returned from Supabase
+    return (data as unknown as SupabaseEvent[]).map(mapSupabaseEventToEvent);
   } catch (error) {
     console.error("Unexpected error fetching events:", error);
     return [];
@@ -33,7 +34,8 @@ export const getUpcomingEvents = async (): Promise<Event[]> => {
       return [];
     }
     
-    return (data as SupabaseEvent[]).map(mapSupabaseEventToEvent);
+    // Use type assertion to handle data returned from Supabase
+    return (data as unknown as SupabaseEvent[]).map(mapSupabaseEventToEvent);
   } catch (error) {
     console.error("Unexpected error fetching upcoming events:", error);
     return [];
@@ -51,7 +53,8 @@ export const getPastEvents = async (): Promise<Event[]> => {
       return [];
     }
     
-    return (data as SupabaseEvent[]).map(mapSupabaseEventToEvent);
+    // Use type assertion to handle data returned from Supabase
+    return (data as unknown as SupabaseEvent[]).map(mapSupabaseEventToEvent);
   } catch (error) {
     console.error("Unexpected error fetching past events:", error);
     return [];
@@ -79,7 +82,8 @@ export const getEventById = async (id: string): Promise<Event | null> => {
     
     if (!data) return null;
     
-    const event = mapSupabaseEventToEvent(data);
+    // Use type assertion for data returned from Supabase
+    const event = mapSupabaseEventToEvent(data as unknown as SupabaseEvent);
     
     // Add additional data
     if (data.event_requirements) {
@@ -114,7 +118,12 @@ export const filterAndSortEvents = async (
     
     // Apply category filter if specified
     if (category && category !== 'Todos') {
-      query = query.eq("category", category);
+      // Only apply the category filter if it matches one of the allowed categories
+      // This will handle the type issue with the category filter
+      const validCategories = ["MTB", "Speed", "Gravel", "Urbano", "Outro"];
+      if (validCategories.includes(category)) {
+        query = query.eq("category", category);
+      }
     }
     
     // Apply search query if specified
@@ -139,8 +148,8 @@ export const filterAndSortEvents = async (
       return [];
     }
     
-    // Map to Event objects
-    let events = (data as SupabaseEvent[]).map(mapSupabaseEventToEvent);
+    // Map to Event objects using type assertion
+    let events = (data as unknown as SupabaseEvent[]).map(mapSupabaseEventToEvent);
     
     // Apply sorting
     if (sortOption) {

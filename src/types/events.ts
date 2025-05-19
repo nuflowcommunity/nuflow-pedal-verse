@@ -30,7 +30,8 @@ export interface SupabaseEvent {
   id: string;
   title: string;
   image_url?: string;
-  date: Date;
+  date: string; // Changed from Date to string
+  end_date?: string; // Changed from Date to string
   location: string;
   price: number;
   category: string;
@@ -46,10 +47,9 @@ export interface SupabaseEvent {
   google_maps_url?: string;
   city?: string;
   state?: string;
-  created_at: Date;
-  updated_at: Date;
+  created_at: string; // Changed from Date to string
+  updated_at: string; // Changed from Date to string
   created_by?: string;
-  end_date?: Date;
 }
 
 // Converter Supabase Event to UI Event
