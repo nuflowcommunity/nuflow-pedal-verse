@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import EventCard from '@/components/cards/EventCard';
-import { CalendarIcon, MapPin } from 'lucide-react';
+import { CalendarIcon, MapPin, ShoppingBag } from 'lucide-react';
 
 interface Event {
   id: string;
@@ -28,7 +28,7 @@ const EventsGrid = ({ events }: EventsGridProps) => {
           <TabsContent value="grid" className="mt-0">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {events.map((event) => (
-                <EventCard key={event.id} {...event} />
+                <EventCard key={event.id} {...event} showBuyButton={true} />
               ))}
             </div>
           </TabsContent>
@@ -63,9 +63,15 @@ const EventsGrid = ({ events }: EventsGridProps) => {
                     </CardContent>
                     <CardFooter className="flex justify-between items-center p-0 pt-2">
                       <span className="font-semibold text-nuflow-moss">{event.price}</span>
-                      <Button className="bg-nuflow-moss text-white hover:bg-nuflow-neon hover:text-nuflow-moss transition-all">
-                        Agendar
-                      </Button>
+                      <div className="flex space-x-2">
+                        <Button className="bg-nuflow-moss text-white hover:bg-nuflow-neon hover:text-nuflow-moss transition-all">
+                          Agendar
+                        </Button>
+                        <Button className="bg-[#11C76F] hover:bg-[#0EA55A] text-white flex items-center gap-1">
+                          <ShoppingBag size={16} />
+                          Comprar
+                        </Button>
+                      </div>
                     </CardFooter>
                   </div>
                 </Card>

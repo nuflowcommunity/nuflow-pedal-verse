@@ -10,6 +10,7 @@ import EventsSearch from '@/components/events/EventsSearch';
 import EventsCategoryFilter from '@/components/events/EventsCategoryFilter';
 import EventsGrid from '@/components/events/EventsGrid';
 import BackToTopButton from '@/components/BackToTopButton';
+import { Button } from '@/components/ui/button';
 
 // Helper function to parse date strings into Date objects
 const parseEventDate = (dateStr: string): Date => {
@@ -35,7 +36,8 @@ const events = [
     date: '27 Mai, 2024',
     location: 'Serra da Mantiqueira, SP',
     price: 'R$ 180',
-    category: 'MTB'
+    category: 'MTB',
+    status: 'active'
   },
   {
     id: '2',
@@ -44,7 +46,8 @@ const events = [
     date: '03 Jun, 2024',
     location: 'Santos, SP',
     price: 'R$ 120',
-    category: 'Speed'
+    category: 'Speed',
+    status: 'active'
   },
   {
     id: '3',
@@ -53,7 +56,8 @@ const events = [
     date: '15 Jun, 2024',
     location: 'Campos do Jordão, SP',
     price: 'R$ 220',
-    category: 'Gravel'
+    category: 'Gravel',
+    status: 'active'
   },
   {
     id: '4',
@@ -62,7 +66,8 @@ const events = [
     date: '22 Jun, 2024',
     location: 'São Paulo, SP',
     price: 'R$ 90',
-    category: 'Urbano'
+    category: 'Urbano',
+    status: 'active'
   },
   {
     id: '5',
@@ -71,7 +76,8 @@ const events = [
     date: '05 Jul, 2024',
     location: 'Vale do Paraíba, SP',
     price: 'R$ 160',
-    category: 'Gravel'
+    category: 'Gravel',
+    status: 'active'
   },
   {
     id: '6',
@@ -80,7 +86,8 @@ const events = [
     date: '12 Jul, 2024',
     location: 'Itatiaia, RJ',
     price: 'R$ 200',
-    category: 'MTB'
+    category: 'MTB',
+    status: 'active'
   },
   {
     id: '7',
@@ -89,7 +96,8 @@ const events = [
     date: '19 Jul, 2024',
     location: 'Ubatuba, SP',
     price: 'R$ 280',
-    category: 'Speed'
+    category: 'Speed',
+    status: 'active'
   },
   {
     id: '8',
@@ -98,7 +106,8 @@ const events = [
     date: '26 Jul, 2024',
     location: 'Cubatão, SP',
     price: 'R$ 190',
-    category: 'MTB'
+    category: 'MTB',
+    status: 'active'
   }
 ];
 
@@ -112,6 +121,7 @@ interface Event {
   location: string;
   price: string;
   category: string;
+  status?: string;
 }
 
 const EventsCalendar = () => {
@@ -120,11 +130,12 @@ const EventsCalendar = () => {
   const [dateRange, setDateRange] = useState<DateRange | undefined>(undefined);
   const [filteredEvents, setFilteredEvents] = useState<Event[]>(events);
   const [sortOption, setSortOption] = useState('');
+  const [viewMode, setViewMode] = useState<'all' | 'upcoming' | 'past'>('all');
 
   // Filter events based on all active filters
   useEffect(() => {
     filterEvents();
-  }, [activeCategory, searchQuery, sortOption]);
+  }, [activeCategory, searchQuery, sortOption, viewMode]);
 
   const filterEvents = () => {
     let result = events.filter(event => {
@@ -151,8 +162,21 @@ const EventsCalendar = () => {
           matchesDateRange = eventDate >= dateRange.from;
         }
       }
+
+      // Filter by view mode (past/upcoming)
+      let matchesViewMode = true;
+      if (viewMode !== 'all') {
+        const eventDate = parseEventDate(event.date);
+        const today = new Date();
+        
+        if (viewMode === 'upcoming') {
+          matchesViewMode = eventDate >= today;
+        } else if (viewMode === 'past') {
+          matchesViewMode = eventDate < today;
+        }
+      }
       
-      return matchesCategory && matchesSearch && matchesDateRange;
+      return matchesCategory && matchesSearch && matchesDateRange && matchesViewMode;
     });
     
     // Apply sorting
@@ -176,6 +200,10 @@ const EventsCalendar = () => {
         return sortedEvents.sort((a, b) => parsePriceToNumber(a.price) - parsePriceToNumber(b.price));
       case 'price-desc':
         return sortedEvents.sort((a, b) => parsePriceToNumber(b.price) - parsePriceToNumber(a.price));
+      case 'name-asc':
+        return sortedEvents.sort((a, b) => a.title.localeCompare(b.title));
+      case 'name-desc':
+        return sortedEvents.sort((a, b) => b.title.localeCompare(a.title));
       default:
         return sortedEvents;
     }
@@ -199,6 +227,29 @@ const EventsCalendar = () => {
     }, 0);
   };
 
+  // Function to export events to CSV or XLS
+  const handleExport = (format: 'csv' | 'xls') => {
+    // This would be implemented with a real export library
+    // For now we'll just show an alert
+    alert(`Exportando eventos para ${format.toUpperCase()}...`);
+    
+    // In a real implementation, we'd use a library like xlsx or create a CSV string
+    // and trigger a download
+    
+    // Example for CSV:
+    // const headers = 'ID,Title,Date,Location,Price,Category\n';
+    // const csvContent = headers + filteredEvents.map(event => 
+    //   `${event.id},"${event.title}",${event.date},"${event.location}",${event.price},${event.category}`
+    // ).join('\n');
+    // 
+    // const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    // const url = URL.createObjectURL(blob);
+    // const link = document.createElement('a');
+    // link.setAttribute('href', url);
+    // link.setAttribute('download', `events-export-${new Date().toISOString().split('T')[0]}.csv`);
+    // link.click();
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
@@ -206,6 +257,44 @@ const EventsCalendar = () => {
       <main className="flex-grow">
         <EventsHero />
         <EventsBreadcrumb />
+        
+        <div className="py-4 bg-nuflow-moss text-white">
+          <div className="container-custom">
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <h2 className="text-xl font-medium">Visualizar:</h2>
+              <div className="flex gap-2">
+                <Button 
+                  variant={viewMode === 'all' ? "default" : "outline"}
+                  className={viewMode === 'all' ? 
+                    "bg-nuflow-lime text-nuflow-moss hover:bg-nuflow-lime/90" : 
+                    "border-white text-white hover:bg-white/10"}
+                  onClick={() => setViewMode('all')}
+                >
+                  Todos
+                </Button>
+                <Button 
+                  variant={viewMode === 'upcoming' ? "default" : "outline"}
+                  className={viewMode === 'upcoming' ? 
+                    "bg-nuflow-lime text-nuflow-moss hover:bg-nuflow-lime/90" : 
+                    "border-white text-white hover:bg-white/10"}
+                  onClick={() => setViewMode('upcoming')}
+                >
+                  Próximos eventos
+                </Button>
+                <Button 
+                  variant={viewMode === 'past' ? "default" : "outline"}
+                  className={viewMode === 'past' ? 
+                    "bg-nuflow-lime text-nuflow-moss hover:bg-nuflow-lime/90" : 
+                    "border-white text-white hover:bg-white/10"}
+                  onClick={() => setViewMode('past')}
+                >
+                  Eventos passados
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
         <EventsSearch 
           searchQuery={searchQuery} 
           setSearchQuery={setSearchQuery}
@@ -214,12 +303,15 @@ const EventsCalendar = () => {
           onFilterByDate={handleFilterByDate}
           onClearDateFilter={handleClearDateFilter}
           onSortChange={handleSortChange}
+          onExport={handleExport}
         />
+        
         <EventsCategoryFilter 
           categories={categories} 
           activeCategory={activeCategory} 
           setActiveCategory={setActiveCategory} 
         />
+        
         <EventsGrid events={filteredEvents} />
         <BackToTopButton />
       </main>
