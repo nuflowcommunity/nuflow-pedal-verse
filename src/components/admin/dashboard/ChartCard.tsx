@@ -171,7 +171,7 @@ const ChartCard = ({
       <CardContent className="pt-6">
         <div className="h-[300px] w-full">
           <ChartContainer config={chartConfig}>
-            <ResponsiveContainer>
+            <ResponsiveContainer width="100%" height="100%">
               {renderChart()}
             </ResponsiveContainer>
             <ChartLegend>
