@@ -12,7 +12,14 @@ import {
   LogOut,
   TrendingUp,
   Search,
-  Facebook 
+  Facebook,
+  DollarSign,
+  Receipt,
+  Wallet,
+  CreditCard,
+  FileText,
+  BarChart,
+  PieChart
 } from 'lucide-react';
 import { 
   Sidebar, 
@@ -86,6 +93,45 @@ const marketingItems = [
   }
 ];
 
+// Financial menu items
+const financeItems = [
+  {
+    title: 'Visão Financeira',
+    path: '/admin/financeiro',
+    icon: DollarSign
+  },
+  {
+    title: 'Fluxo de Caixa',
+    path: '/admin/financeiro/fluxo-caixa',
+    icon: Wallet
+  },
+  {
+    title: 'Receitas',
+    path: '/admin/financeiro/receitas',
+    icon: BarChart
+  },
+  {
+    title: 'Despesas',
+    path: '/admin/financeiro/despesas',
+    icon: CreditCard
+  },
+  {
+    title: 'Contas',
+    path: '/admin/financeiro/contas',
+    icon: Receipt
+  },
+  {
+    title: 'Relatórios',
+    path: '/admin/financeiro/relatorios',
+    icon: PieChart
+  },
+  {
+    title: 'Contabilidade',
+    path: '/admin/financeiro/contabilidade',
+    icon: FileText
+  }
+];
+
 const AdminSidebar = () => {
   const location = useLocation();
   const currentPath = location.pathname;
@@ -127,6 +173,29 @@ const AdminSidebar = () => {
               <SidebarMenuButton 
                 asChild 
                 isActive={currentPath === item.path}
+                tooltip={item.title}
+              >
+                <Link to={item.path} className="w-full">
+                  <item.icon />
+                  <span>{item.title}</span>
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          ))}
+        </SidebarMenu>
+        
+        {/* Finance Section Separator */}
+        <div className="py-2">
+          <SidebarSeparator />
+          <SidebarGroupLabel className="px-2 py-1 mt-2">Financeiro</SidebarGroupLabel>
+        </div>
+        
+        <SidebarMenu>
+          {financeItems.map((item) => (
+            <SidebarMenuItem key={item.title}>
+              <SidebarMenuButton 
+                asChild 
+                isActive={currentPath === item.path || currentPath.startsWith(item.path + '/')}
                 tooltip={item.title}
               >
                 <Link to={item.path} className="w-full">

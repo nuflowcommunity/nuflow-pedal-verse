@@ -24,6 +24,15 @@ import MarketingAdmin from "./pages/admin/MarketingAdmin";
 import GoogleAdsPage from "./pages/admin/marketing/GoogleAdsPage";
 import MetaAdsPage from "./pages/admin/marketing/MetaAdsPage";
 
+// Financial pages
+import FinanceOverview from "./pages/admin/finance/FinanceOverview";
+import CashFlow from "./pages/admin/finance/CashFlow";
+import Income from "./pages/admin/finance/Income";
+import Expenses from "./pages/admin/finance/Expenses";
+import AccountsPage from "./pages/admin/finance/AccountsPage";
+import FinancialReports from "./pages/admin/finance/FinancialReports";
+import Accounting from "./pages/admin/finance/Accounting";
+
 function App() {
   return (
     <Routes>
@@ -51,6 +60,15 @@ function App() {
         <Route path="marketing/meta-ads" element={<MetaAdsPage />} />
         <Route path="relatorios" element={<ReportsAdmin />} />
         <Route path="configuracoes" element={<SettingsAdmin />} />
+        
+        {/* Financial Routes */}
+        <Route path="financeiro" element={<FinanceOverview />} />
+        <Route path="financeiro/fluxo-caixa" element={<CashFlow />} />
+        <Route path="financeiro/receitas" element={<Income />} />
+        <Route path="financeiro/despesas" element={<Expenses />} />
+        <Route path="financeiro/contas" element={<AccountsPage />} />
+        <Route path="financeiro/relatorios" element={<FinancialReports />} />
+        <Route path="financeiro/contabilidade" element={<Accounting />} />
       </Route>
 
       <Route path="*" element={<NotFound />} />
