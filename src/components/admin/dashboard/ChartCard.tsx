@@ -65,6 +65,24 @@ const ChartCard = ({
     ])
   );
 
+  const CustomTooltip = ({ active, payload, label }: any) => {
+    if (active && payload && payload.length) {
+      return (
+        <div className="bg-white p-3 border border-gray-200 shadow-md rounded-md">
+          <p className="text-gray-600 font-medium">{label}</p>
+          {payload.map((entry: any, index: number) => (
+            <div key={`item-${index}`} className="flex items-center gap-2 mt-1">
+              <div className="w-3 h-3 rounded-full" style={{ backgroundColor: entry.color }} />
+              <span className="text-gray-700">{labels?.[entry.dataKey] || entry.dataKey}: </span>
+              <span className="text-gray-900 font-medium">{entry.value}</span>
+            </div>
+          ))}
+        </div>
+      );
+    }
+    return null;
+  };
+
   const renderChart = () => {
     switch (type) {
       case 'area':
@@ -128,24 +146,6 @@ const ChartCard = ({
     }
   };
 
-  const CustomTooltip = ({ active, payload, label }: any) => {
-    if (active && payload && payload.length) {
-      return (
-        <div className="bg-white p-3 border border-gray-200 shadow-md rounded-md">
-          <p className="text-gray-600 font-medium">{label}</p>
-          {payload.map((entry: any, index: number) => (
-            <div key={`item-${index}`} className="flex items-center gap-2 mt-1">
-              <div className="w-3 h-3 rounded-full" style={{ backgroundColor: entry.color }} />
-              <span className="text-gray-700">{labels?.[entry.dataKey] || entry.dataKey}: </span>
-              <span className="text-gray-900 font-medium">{entry.value}</span>
-            </div>
-          ))}
-        </div>
-      );
-    }
-    return null;
-  };
-
   return (
     <Card className={className}>
       <CardHeader className="pb-0">
@@ -174,9 +174,6 @@ const ChartCard = ({
             <ResponsiveContainer width="100%" height="100%">
               {renderChart()}
             </ResponsiveContainer>
-            <ChartLegend>
-              <ChartLegendContent />
-            </ChartLegend>
           </ChartContainer>
         </div>
       </CardContent>
