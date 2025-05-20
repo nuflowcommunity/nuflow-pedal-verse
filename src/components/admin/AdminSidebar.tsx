@@ -10,7 +10,9 @@ import {
   BarChart2, 
   Settings, 
   LogOut,
-  TrendingUp 
+  TrendingUp,
+  Search,
+  Facebook 
 } from 'lucide-react';
 import { 
   Sidebar, 
@@ -19,12 +21,14 @@ import {
   SidebarFooter,
   SidebarMenu, 
   SidebarMenuItem, 
-  SidebarMenuButton
+  SidebarMenuButton,
+  SidebarSeparator,
+  SidebarGroupLabel
 } from '@/components/ui/sidebar';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
+// Main menu items
 const menuItems = [
   { 
     title: 'Dashboard', 
@@ -52,11 +56,6 @@ const menuItems = [
     icon: MessageSquare 
   },
   { 
-    title: 'Marketing', 
-    path: '/admin/marketing', 
-    icon: TrendingUp 
-  },
-  { 
     title: 'Relatórios', 
     path: '/admin/relatorios', 
     icon: BarChart2 
@@ -66,6 +65,25 @@ const menuItems = [
     path: '/admin/configuracoes', 
     icon: Settings 
   },
+];
+
+// Marketing menu items
+const marketingItems = [
+  {
+    title: 'Marketing',
+    path: '/admin/marketing',
+    icon: TrendingUp
+  },
+  {
+    title: 'Google Ads',
+    path: '/admin/marketing/google-ads',
+    icon: Search
+  },
+  {
+    title: 'Meta Ads',
+    path: '/admin/marketing/meta-ads',
+    icon: Facebook
+  }
 ];
 
 const AdminSidebar = () => {
@@ -82,6 +100,29 @@ const AdminSidebar = () => {
       <SidebarContent className="py-4">
         <SidebarMenu>
           {menuItems.map((item) => (
+            <SidebarMenuItem key={item.title}>
+              <SidebarMenuButton 
+                asChild 
+                isActive={currentPath === item.path}
+                tooltip={item.title}
+              >
+                <Link to={item.path} className="w-full">
+                  <item.icon />
+                  <span>{item.title}</span>
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          ))}
+        </SidebarMenu>
+        
+        {/* Marketing Section Separator */}
+        <div className="py-2">
+          <SidebarSeparator />
+          <SidebarGroupLabel className="px-2 py-1 mt-2">Marketing</SidebarGroupLabel>
+        </div>
+        
+        <SidebarMenu>
+          {marketingItems.map((item) => (
             <SidebarMenuItem key={item.title}>
               <SidebarMenuButton 
                 asChild 

@@ -45,7 +45,9 @@ const MarketingChart: React.FC<MarketingChartProps> = ({ data, config, dataKeys 
             axisLine={{ stroke: '#e2e8f0' }}
             tickLine={{ stroke: '#e2e8f0' }}
           />
-          <Tooltip content={<ChartTooltipContent />} />
+          <Tooltip content={({payload, label}) => (
+            <ChartTooltipContent payload={payload} label={label} />
+          )} />
           <Legend 
             verticalAlign="top" 
             height={40} 

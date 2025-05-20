@@ -21,6 +21,8 @@ import ReportsAdmin from "./pages/admin/ReportsAdmin";
 import SettingsAdmin from "./pages/admin/SettingsAdmin";
 import OrdersAdmin from "./pages/admin/OrdersAdmin";
 import MarketingAdmin from "./pages/admin/MarketingAdmin";
+import GoogleAdsPage from "./pages/admin/marketing/GoogleAdsPage";
+import MetaAdsPage from "./pages/admin/marketing/MetaAdsPage";
 
 function App() {
   return (
@@ -45,6 +47,8 @@ function App() {
         <Route path="usuarios" element={<UsersAdmin />} />
         <Route path="mensagens" element={<MessagesAdmin />} />
         <Route path="marketing" element={<MarketingAdmin />} />
+        <Route path="marketing/google-ads" element={<GoogleAdsPage />} />
+        <Route path="marketing/meta-ads" element={<MetaAdsPage />} />
         <Route path="relatorios" element={<ReportsAdmin />} />
         <Route path="configuracoes" element={<SettingsAdmin />} />
       </Route>
