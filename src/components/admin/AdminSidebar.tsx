@@ -9,7 +9,8 @@ import {
   MessageSquare, 
   BarChart2, 
   Settings, 
-  LogOut 
+  LogOut,
+  TrendingUp 
 } from 'lucide-react';
 import { 
   Sidebar, 
@@ -49,6 +50,11 @@ const menuItems = [
     title: 'Mensagens', 
     path: '/admin/mensagens', 
     icon: MessageSquare 
+  },
+  { 
+    title: 'Marketing', 
+    path: '/admin/marketing', 
+    icon: TrendingUp 
   },
   { 
     title: 'Relatórios', 
