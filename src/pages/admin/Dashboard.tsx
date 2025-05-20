@@ -4,7 +4,7 @@ import { Calendar, ShoppingCart, Users, MessageSquare, Plus, Download, UserPlus 
 import { Button } from '@/components/ui/button';
 import StatCard from '@/components/admin/dashboard/StatCard';
 import ChartCard from '@/components/admin/dashboard/ChartCard';
-import RecentActivitiesTable from '@/components/admin/dashboard/RecentActivitiesTable';
+import RecentActivitiesTable, { Activity } from '@/components/admin/dashboard/RecentActivitiesTable';
 
 // Mock data
 const salesData = [
@@ -27,7 +27,7 @@ const engagementData = [
   { name: 'Jul', visitantes: 3580, visualizacoes: 4300, interacoes: 4300 },
 ];
 
-const recentActivities = [
+const recentActivities: Activity[] = [
   { id: '1', type: 'evento', title: 'Novo Evento: Pedal na Serra', status: 'ativo', date: '12/05/2025', user: 'Ricardo Almeida' },
   { id: '2', type: 'pedido', title: 'Inscrição #1234', status: 'concluído', date: '11/05/2025', value: 150.00, user: 'Maria Santos' },
   { id: '3', type: 'pedido', title: 'Inscrição #1233', status: 'cancelado', date: '10/05/2025', value: 80.00, user: 'João Silva' },

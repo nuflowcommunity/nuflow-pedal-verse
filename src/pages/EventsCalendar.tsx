@@ -62,7 +62,7 @@ const EventsCalendar = () => {
           renderExportButtons={() => (
             <>
               <ExportEventsButton events={filteredEvents} format="csv" />
-              <ExportEventsButton events={filteredEvents} format="xls" />
+              <ExportEventsButton events={filteredEvents} format="xlsx" />
             </>
           )}
         />

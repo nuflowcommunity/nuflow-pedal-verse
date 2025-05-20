@@ -1,3 +1,4 @@
+
 // Event category type that matches the database enum
 export type EventCategory = "MTB" | "Speed" | "Gravel" | "Urbano" | "Outro";
 
