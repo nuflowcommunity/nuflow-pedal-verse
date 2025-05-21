@@ -19,7 +19,8 @@ import {
   CreditCard,
   FileText,
   BarChart,
-  PieChart
+  PieChart,
+  Package2
 } from 'lucide-react';
 import { 
   Sidebar, 
@@ -46,6 +47,11 @@ const menuItems = [
     title: 'Eventos', 
     path: '/admin/eventos', 
     icon: Calendar 
+  },
+  {
+    title: 'Entidades',
+    path: '/admin/entidades',
+    icon: Package2
   },
   { 
     title: 'Pedidos', 

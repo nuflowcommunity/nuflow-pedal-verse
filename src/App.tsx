@@ -23,6 +23,7 @@ import OrdersAdmin from "./pages/admin/OrdersAdmin";
 import MarketingAdmin from "./pages/admin/MarketingAdmin";
 import GoogleAdsPage from "./pages/admin/marketing/GoogleAdsPage";
 import MetaAdsPage from "./pages/admin/marketing/MetaAdsPage";
+import EntidadesAdmin from "./pages/admin/EntidadesAdmin";
 
 // Financial pages
 import FinanceOverview from "./pages/admin/finance/FinanceOverview";
@@ -58,6 +59,7 @@ function App() {
         <Route path="marketing" element={<MarketingAdmin />} />
         <Route path="marketing/google-ads" element={<GoogleAdsPage />} />
         <Route path="marketing/meta-ads" element={<MetaAdsPage />} />
+        <Route path="entidades" element={<EntidadesAdmin />} />
         <Route path="relatorios" element={<ReportsAdmin />} />
         <Route path="configuracoes" element={<SettingsAdmin />} />
         
