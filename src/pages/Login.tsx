@@ -1,12 +1,12 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useAuth } from '@/contexts/AuthContext';
-import { useToast } from '@/hooks/use-toast';
+import { toast } from '@/hooks/use-toast';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -14,10 +14,9 @@ const Login = () => {
   const [rememberMe, setRememberMe] = useState(false);
   const { signIn, isLoading, user } = useAuth();
   const navigate = useNavigate();
-  const { toast } = useToast();
 
   // If already authenticated, redirect to admin
-  React.useEffect(() => {
+  useEffect(() => {
     if (user) {
       navigate('/admin');
     }
