@@ -15,6 +15,7 @@ interface FinanceSummaryCardProps {
   variant?: 'default' | 'income' | 'expense' | 'profit' | 'pending';
   subtext?: string;
   className?: string;
+  onClick?: () => void;
 }
 
 export const FinanceSummaryCard = ({
@@ -25,6 +26,7 @@ export const FinanceSummaryCard = ({
   variant = 'default',
   subtext,
   className,
+  onClick,
 }: FinanceSummaryCardProps) => {
   const getBgColor = () => {
     switch (variant) {
@@ -72,7 +74,15 @@ export const FinanceSummaryCard = ({
   };
 
   return (
-    <Card className={cn('overflow-hidden border', getBgColor(), className)}>
+    <Card 
+      className={cn(
+        'overflow-hidden border', 
+        getBgColor(), 
+        onClick ? 'cursor-pointer transition-transform hover:scale-[1.02] hover:shadow-md' : '',
+        className
+      )}
+      onClick={onClick}
+    >
       <CardContent className="p-6">
         <div className="flex items-center justify-between">
           <div>

@@ -13,6 +13,7 @@ interface StatCardProps {
     isPositive: boolean;
   };
   className?: string;
+  onClick?: () => void;
 }
 
 const StatCard = ({ 
@@ -21,10 +22,18 @@ const StatCard = ({
   icon, 
   description, 
   trend, 
-  className 
+  className,
+  onClick
 }: StatCardProps) => {
   return (
-    <Card className={cn("overflow-hidden", className)}>
+    <Card 
+      className={cn(
+        "overflow-hidden", 
+        onClick ? "cursor-pointer transition-transform hover:scale-[1.02] hover:shadow-md" : "", 
+        className
+      )}
+      onClick={onClick}
+    >
       <CardContent className="p-6">
         <div className="flex items-start justify-between">
           <div>

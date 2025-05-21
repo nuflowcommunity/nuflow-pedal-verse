@@ -36,6 +36,11 @@ import AccountsPage from "./pages/admin/finance/AccountsPage";
 import FinancialReports from "./pages/admin/finance/FinancialReports";
 import Accounting from "./pages/admin/finance/Accounting";
 
+// Finance Dashboard pages
+import Last24HoursDashboard from "./pages/admin/finance/dashboard/Last24HoursDashboard";
+import MonthlyDashboard from "./pages/admin/finance/dashboard/MonthlyDashboard";
+import TotalSalesDashboard from "./pages/admin/finance/dashboard/TotalSalesDashboard";
+
 import Unauthorized from "./pages/Unauthorized";
 
 function App() {
@@ -77,6 +82,11 @@ function App() {
           <Route path="financeiro/contas" element={<AccountsPage />} />
           <Route path="financeiro/relatorios" element={<FinancialReports />} />
           <Route path="financeiro/contabilidade" element={<Accounting />} />
+          
+          {/* Detailed Sales Dashboards */}
+          <Route path="financeiro/dashboard/last-24h" element={<Last24HoursDashboard />} />
+          <Route path="financeiro/dashboard/monthly" element={<MonthlyDashboard />} />
+          <Route path="financeiro/dashboard/total" element={<TotalSalesDashboard />} />
         </Route>
 
         <Route path="*" element={<NotFound />} />

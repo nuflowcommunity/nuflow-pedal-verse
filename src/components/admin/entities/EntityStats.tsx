@@ -4,6 +4,7 @@ import { Activity, CheckCircle, AlertTriangle, DollarSign, CalendarDays, PiggyBa
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { useNavigate } from 'react-router-dom';
 import { EntityType, Entity } from './types';
 import { entityTypeIcons } from './EntityIcons';
 import { FinanceSummaryCard } from '@/components/admin/finance/FinanceSummaryCard';
@@ -27,6 +28,8 @@ interface EntityStatsProps {
 }
 
 export const EntityStats: React.FC<EntityStatsProps> = ({ stats, onViewIssues }) => {
+  const navigate = useNavigate();
+  
   // Format currency values
   const formatCurrency = (value: number) => {
     return new Intl.NumberFormat('pt-BR', {
@@ -45,6 +48,7 @@ export const EntityStats: React.FC<EntityStatsProps> = ({ stats, onViewIssues })
           icon={<DollarSign className="h-5 w-5" />}
           variant="income"
           subtext="Valor total de vendas nas últimas 24 horas"
+          onClick={() => navigate('/admin/financeiro/dashboard/last-24h')}
         />
         
         <FinanceSummaryCard 
@@ -53,6 +57,7 @@ export const EntityStats: React.FC<EntityStatsProps> = ({ stats, onViewIssues })
           icon={<CalendarDays className="h-5 w-5" />}
           variant="profit"
           subtext="Valor acumulado no mês atual"
+          onClick={() => navigate('/admin/financeiro/dashboard/monthly')}
         />
         
         <FinanceSummaryCard 
@@ -61,6 +66,7 @@ export const EntityStats: React.FC<EntityStatsProps> = ({ stats, onViewIssues })
           icon={<PiggyBank className="h-5 w-5" />}
           variant="default"
           subtext="Valor acumulado desde o início"
+          onClick={() => navigate('/admin/financeiro/dashboard/total')}
         />
       </div>
 
