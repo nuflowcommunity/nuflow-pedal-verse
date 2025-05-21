@@ -1,5 +1,6 @@
-
 import { Routes, Route } from "react-router-dom";
+import { AuthProvider } from "./contexts/AuthContext";
+import { Toaster } from "./components/ui/toaster";
 import Index from "./pages/Index";
 import EventsCalendar from "./pages/EventsCalendar";
 import NotFound from "./pages/NotFound";
@@ -34,47 +35,53 @@ import AccountsPage from "./pages/admin/finance/AccountsPage";
 import FinancialReports from "./pages/admin/finance/FinancialReports";
 import Accounting from "./pages/admin/finance/Accounting";
 
+import Unauthorized from "./pages/Unauthorized";
+
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Index />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/eventos" element={<EventsCalendar />} />
-      <Route path="/eventos/:id" element={<EventDetail />} />
-      <Route path="/comunidade" element={<Comunidade />} />
-      <Route path="/bikes" element={<Bikes />} />
-      <Route path="/mercado" element={<Market />} />
-      <Route path="/mercado/produtos" element={<Products />} />
-      <Route path="/mercado/novo-anuncio" element={<NewAnnounce />} />
-      <Route path="/sobre" element={<Sobre />} />
-      <Route path="/roles" element={<Roles />} />
+    <AuthProvider>
+      <Routes>
+        <Route path="/" element={<Index />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/eventos" element={<EventsCalendar />} />
+        <Route path="/eventos/:id" element={<EventDetail />} />
+        <Route path="/comunidade" element={<Comunidade />} />
+        <Route path="/bikes" element={<Bikes />} />
+        <Route path="/mercado" element={<Market />} />
+        <Route path="/mercado/produtos" element={<Products />} />
+        <Route path="/mercado/novo-anuncio" element={<NewAnnounce />} />
+        <Route path="/sobre" element={<Sobre />} />
+        <Route path="/roles" element={<Roles />} />
+        <Route path="/unauthorized" element={<Unauthorized />} />
 
-      {/* Admin Routes */}
-      <Route path="/admin" element={<AdminLayout />}>
-        <Route index element={<Dashboard />} />
-        <Route path="eventos" element={<EventsAdmin />} />
-        <Route path="pedidos" element={<OrdersAdmin />} />
-        <Route path="usuarios" element={<UsersAdmin />} />
-        <Route path="mensagens" element={<MessagesAdmin />} />
-        <Route path="marketing" element={<MarketingAdmin />} />
-        <Route path="marketing/google-ads" element={<GoogleAdsPage />} />
-        <Route path="marketing/meta-ads" element={<MetaAdsPage />} />
-        <Route path="entidades" element={<EntidadesAdmin />} />
-        <Route path="relatorios" element={<ReportsAdmin />} />
-        <Route path="configuracoes" element={<SettingsAdmin />} />
-        
-        {/* Financial Routes */}
-        <Route path="financeiro" element={<FinanceOverview />} />
-        <Route path="financeiro/fluxo-caixa" element={<CashFlow />} />
-        <Route path="financeiro/receitas" element={<Income />} />
-        <Route path="financeiro/despesas" element={<Expenses />} />
-        <Route path="financeiro/contas" element={<AccountsPage />} />
-        <Route path="financeiro/relatorios" element={<FinancialReports />} />
-        <Route path="financeiro/contabilidade" element={<Accounting />} />
-      </Route>
+        {/* Admin Routes */}
+        <Route path="/admin" element={<AdminLayout />}>
+          <Route index element={<Dashboard />} />
+          <Route path="eventos" element={<EventsAdmin />} />
+          <Route path="pedidos" element={<OrdersAdmin />} />
+          <Route path="usuarios" element={<UsersAdmin />} />
+          <Route path="mensagens" element={<MessagesAdmin />} />
+          <Route path="marketing" element={<MarketingAdmin />} />
+          <Route path="marketing/google-ads" element={<GoogleAdsPage />} />
+          <Route path="marketing/meta-ads" element={<MetaAdsPage />} />
+          <Route path="entidades" element={<EntidadesAdmin />} />
+          <Route path="relatorios" element={<ReportsAdmin />} />
+          <Route path="configuracoes" element={<SettingsAdmin />} />
+          
+          {/* Financial Routes */}
+          <Route path="financeiro" element={<FinanceOverview />} />
+          <Route path="financeiro/fluxo-caixa" element={<CashFlow />} />
+          <Route path="financeiro/receitas" element={<Income />} />
+          <Route path="financeiro/despesas" element={<Expenses />} />
+          <Route path="financeiro/contas" element={<AccountsPage />} />
+          <Route path="financeiro/relatorios" element={<FinancialReports />} />
+          <Route path="financeiro/contabilidade" element={<Accounting />} />
+        </Route>
 
-      <Route path="*" element={<NotFound />} />
-    </Routes>
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+      <Toaster />
+    </AuthProvider>
   );
 }
 

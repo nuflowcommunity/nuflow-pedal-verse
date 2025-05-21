@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { 
@@ -35,6 +34,7 @@ import {
 } from '@/components/ui/sidebar';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { useAuth } from '@/contexts/AuthContext';
 
 // Main menu items
 const menuItems = [
@@ -141,6 +141,7 @@ const financeItems = [
 const AdminSidebar = () => {
   const location = useLocation();
   const currentPath = location.pathname;
+  const { signOut } = useAuth();
   
   return (
     <Sidebar>
@@ -215,7 +216,7 @@ const AdminSidebar = () => {
       </SidebarContent>
       <SidebarFooter className="mt-auto pb-4">
         <div className="flex flex-col items-center gap-2 px-2">
-          <Button variant="outline" className="w-full gap-2">
+          <Button variant="outline" className="w-full gap-2" onClick={() => signOut()}>
             <LogOut size={18} />
             <span>Sair</span>
           </Button>

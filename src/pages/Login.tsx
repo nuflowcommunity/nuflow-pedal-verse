@@ -1,11 +1,47 @@
 
-import React from 'react';
+import React, { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { Input } from '@/components/ui/input';
+import { useAuth } from '@/contexts/AuthContext';
+import { useToast } from '@/hooks/use-toast';
 
 const Login = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [rememberMe, setRememberMe] = useState(false);
+  const { signIn, isLoading, user } = useAuth();
+  const navigate = useNavigate();
+  const { toast } = useToast();
+
+  // If already authenticated, redirect to admin
+  React.useEffect(() => {
+    if (user) {
+      navigate('/admin');
+    }
+  }, [user, navigate]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!email || !password) {
+      toast({
+        title: "Campos obrigatórios",
+        description: "Por favor preencha o email e a senha.",
+        variant: "destructive"
+      });
+      return;
+    }
+    
+    try {
+      await signIn(email, password);
+    } catch (error) {
+      console.error('Login error:', error);
+    }
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
@@ -15,12 +51,14 @@ const Login = () => {
           <div className="max-w-md mx-auto bg-white p-8 rounded-lg shadow-md">
             <h1 className="text-2xl font-heading font-bold mb-6 text-center">Entrar na sua conta</h1>
             
-            <form className="space-y-4">
+            <form className="space-y-4" onSubmit={handleSubmit}>
               <div>
                 <label htmlFor="email" className="block text-sm font-medium mb-1">Email</label>
-                <input
+                <Input
                   type="email"
                   id="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   className="w-full p-3 border border-nuflow-mineral/30 rounded-md focus:outline-none focus:ring-2 focus:ring-nuflow-moss"
                   placeholder="seu@email.com"
                 />
@@ -28,9 +66,11 @@ const Login = () => {
               
               <div>
                 <label htmlFor="password" className="block text-sm font-medium mb-1">Senha</label>
-                <input
+                <Input
                   type="password"
                   id="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   className="w-full p-3 border border-nuflow-mineral/30 rounded-md focus:outline-none focus:ring-2 focus:ring-nuflow-moss"
                   placeholder="••••••••"
                 />
@@ -41,6 +81,8 @@ const Login = () => {
                   <input
                     id="remember"
                     type="checkbox"
+                    checked={rememberMe}
+                    onChange={(e) => setRememberMe(e.target.checked)}
                     className="h-4 w-4 text-nuflow-moss focus:ring-nuflow-moss border-nuflow-mineral/30 rounded"
                   />
                   <label htmlFor="remember" className="ml-2 block text-sm">
@@ -53,8 +95,17 @@ const Login = () => {
                 </a>
               </div>
               
-              <Button type="submit" className="w-full bg-nuflow-moss text-white hover:bg-nuflow-neon hover:text-nuflow-moss">
-                Entrar
+              <Button 
+                type="submit" 
+                className="w-full bg-nuflow-moss text-white hover:bg-nuflow-neon hover:text-nuflow-moss"
+                disabled={isLoading}
+              >
+                {isLoading ? (
+                  <span className="flex items-center">
+                    <span className="animate-spin mr-2">○</span>
+                    Entrando...
+                  </span>
+                ) : 'Entrar'}
               </Button>
             </form>
             
