@@ -50,7 +50,7 @@ export const getEventColumns = (): FinanceTableColumn<Entity>[] => [
   {
     id: 'date',
     header: 'Data',
-    accessorKey: 'date',
+    accessorKey: 'type' as keyof Entity, // Use a valid key from Entity
     cell: (item: Entity) => {
       if (item.type !== 'evento') return '-';
       const eventoItem = item as EventoEntity;
@@ -60,7 +60,7 @@ export const getEventColumns = (): FinanceTableColumn<Entity>[] => [
   {
     id: 'capacity',
     header: 'Capacidade',
-    accessorKey: 'capacity',
+    accessorKey: 'type' as keyof Entity, // Use a valid key from Entity
     cell: (item: Entity) => {
       if (item.type !== 'evento') return '-';
       const eventoItem = item as EventoEntity;
@@ -87,7 +87,7 @@ export const getMensalidadeColumns = (): FinanceTableColumn<Entity>[] => [
   {
     id: 'duration',
     header: 'Duração',
-    accessorKey: 'duration',
+    accessorKey: 'type' as keyof Entity, // Use a valid key from Entity
     cell: (item: Entity) => {
       if (item.type !== 'mensalidade') return '-';
       const mensalidadeItem = item as MensalidadeEntity;
@@ -97,7 +97,7 @@ export const getMensalidadeColumns = (): FinanceTableColumn<Entity>[] => [
   {
     id: 'renewalDate',
     header: 'Renovação',
-    accessorKey: 'renewalDate',
+    accessorKey: 'type' as keyof Entity, // Use a valid key from Entity
     cell: (item: Entity) => {
       if (item.type !== 'mensalidade') return '-';
       const mensalidadeItem = item as MensalidadeEntity;
@@ -107,7 +107,7 @@ export const getMensalidadeColumns = (): FinanceTableColumn<Entity>[] => [
   {
     id: 'includedCredits',
     header: 'Créditos Incluídos',
-    accessorKey: 'includedCredits',
+    accessorKey: 'type' as keyof Entity, // Use a valid key from Entity
     cell: (item: Entity) => {
       if (item.type !== 'mensalidade') return '-';
       const mensalidadeItem = item as MensalidadeEntity;
@@ -122,7 +122,7 @@ export const getDayUseColumns = (): FinanceTableColumn<Entity>[] => [
   {
     id: 'validFor',
     header: 'Validade',
-    accessorKey: 'validFor',
+    accessorKey: 'type' as keyof Entity, // Use a valid key from Entity
     cell: (item: Entity) => {
       if (item.type !== 'dayUse') return '-';
       const dayUseItem = item as DayUseEntity;
@@ -132,7 +132,7 @@ export const getDayUseColumns = (): FinanceTableColumn<Entity>[] => [
   {
     id: 'accessDate',
     header: 'Data de Acesso',
-    accessorKey: 'accessDate',
+    accessorKey: 'type' as keyof Entity, // Use a valid key from Entity
     cell: (item: Entity) => {
       if (item.type !== 'dayUse') return '-';
       const dayUseItem = item as DayUseEntity;
@@ -147,7 +147,7 @@ export const getCreditColumns = (): FinanceTableColumn<Entity>[] => [
   {
     id: 'totalCredits',
     header: 'Total de Créditos',
-    accessorKey: 'totalCredits',
+    accessorKey: 'type' as keyof Entity, // Use a valid key from Entity
     cell: (item: Entity) => {
       if (item.type !== 'credito') return '-';
       const creditoItem = item as CreditoEntity;
@@ -157,7 +157,7 @@ export const getCreditColumns = (): FinanceTableColumn<Entity>[] => [
   {
     id: 'usedCredits',
     header: 'Créditos Usados',
-    accessorKey: 'usedCredits',
+    accessorKey: 'type' as keyof Entity, // Use a valid key from Entity
     cell: (item: Entity) => {
       if (item.type !== 'credito') return '-';
       const creditoItem = item as CreditoEntity;
@@ -180,7 +180,7 @@ export const getCreditColumns = (): FinanceTableColumn<Entity>[] => [
   {
     id: 'expiryDate',
     header: 'Validade',
-    accessorKey: 'expiryDate',
+    accessorKey: 'type' as keyof Entity, // Use a valid key from Entity
     cell: (item: Entity) => {
       if (item.type !== 'credito') return '-';
       const creditoItem = item as CreditoEntity;
@@ -190,7 +190,7 @@ export const getCreditColumns = (): FinanceTableColumn<Entity>[] => [
   {
     id: 'validationStatus',
     header: 'Validação',
-    accessorKey: 'validationStatus',
+    accessorKey: 'type' as keyof Entity, // Use a valid key from Entity
     cell: (item: Entity) => {
       if (item.type !== 'credito') return '-';
       const creditoItem = item as CreditoEntity;
