@@ -1,7 +1,7 @@
 
 import React, { useState, useMemo } from 'react';
 import { useToast } from '@/hooks/use-toast';
-import { TabsContent } from '@/components/ui/tabs';
+import { Tabs, TabsContent } from '@/components/ui/tabs';
 import { Package2 } from 'lucide-react';
 import { FinanceTable } from '@/components/admin/finance/FinanceTable';
 
@@ -135,45 +135,48 @@ const EntidadesAdmin = () => {
       {/* Summary statistics cards */}
       <EntityStats stats={stats} onViewIssues={handleViewIssues} />
 
-      {/* Entity type tabs */}
-      <EntityTypesTabs activeTab={activeTab} setActiveTab={setActiveTab} />
+      {/* Make sure the entire tabs structure is wrapped in a Tabs component */}
+      <Tabs value={activeTab} onValueChange={setActiveTab}>
+        {/* Entity type tabs */}
+        <EntityTypesTabs activeTab={activeTab} setActiveTab={setActiveTab} />
 
-      {/* Tab content with filters and entity table */}
-      <TabsContent value={activeTab} className="mt-6">
-        {/* Filter bar */}
-        <EntityFilterBar 
-          searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
-          partnerFilter={partnerFilter}
-          setPartnerFilter={setPartnerFilter}
-          typeFilter={typeFilter}
-          setTypeFilter={setTypeFilter}
-          statusFilter={statusFilter}
-          setStatusFilter={setStatusFilter}
-          validationFilter={validationFilter}
-          setValidationFilter={setValidationFilter}
-          activeTab={activeTab}
-          clearFilters={clearFilters}
-          partners={partners}
-        />
+        {/* Tab content with filters and entity table */}
+        <TabsContent value={activeTab} className="mt-6">
+          {/* Filter bar */}
+          <EntityFilterBar 
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            partnerFilter={partnerFilter}
+            setPartnerFilter={setPartnerFilter}
+            typeFilter={typeFilter}
+            setTypeFilter={setTypeFilter}
+            statusFilter={statusFilter}
+            setStatusFilter={setStatusFilter}
+            validationFilter={validationFilter}
+            setValidationFilter={setValidationFilter}
+            activeTab={activeTab}
+            clearFilters={clearFilters}
+            partners={partners}
+          />
 
-        {/* Entity table */}
-        <FinanceTable
-          title={`Entidades ${activeTab !== 'todos' ? '- ' + entityTypeLabels[activeTab as keyof typeof entityTypeLabels] : ''}`}
-          columns={typeSpecificColumns}
-          data={filteredEntities}
-          actions={tableActions}
-          onRowClick={handleViewEntity}
-          pagination={
-            <EntityPagination 
-              currentPage={currentPage} 
-              setCurrentPage={setCurrentPage} 
-              totalPages={3} 
-            />
-          }
-          emptyState={<EntityEmptyState />}
-        />
-      </TabsContent>
+          {/* Entity table */}
+          <FinanceTable
+            title={`Entidades ${activeTab !== 'todos' ? '- ' + entityTypeLabels[activeTab as keyof typeof entityTypeLabels] : ''}`}
+            columns={typeSpecificColumns}
+            data={filteredEntities}
+            actions={tableActions}
+            onRowClick={handleViewEntity}
+            pagination={
+              <EntityPagination 
+                currentPage={currentPage} 
+                setCurrentPage={setCurrentPage} 
+                totalPages={3} 
+              />
+            }
+            emptyState={<EntityEmptyState />}
+          />
+        </TabsContent>
+      </Tabs>
       
       {/* Entity detail drawer */}
       <EntityDetailDrawer 
