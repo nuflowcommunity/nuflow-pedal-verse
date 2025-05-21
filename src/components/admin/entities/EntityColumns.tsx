@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Badge } from '@/components/ui/badge';
 import { FinanceTableColumn } from '@/components/admin/finance/FinanceTable';
@@ -6,6 +5,16 @@ import { Entity, EntityType, EventoEntity, MensalidadeEntity, DayUseEntity, Cred
 import { entityTypeIcons, getValidationStatusIcon } from './EntityIcons';
 import { entityTypeLabels } from './types';
 import { getStatusBadge } from '@/components/admin/finance/FinanceTable';
+import { DollarSign, CalendarDays, PiggyBank } from 'lucide-react';
+
+// Currency formatter
+const formatCurrency = (value: number | undefined) => {
+  if (value === undefined) return '-';
+  return new Intl.NumberFormat('pt-BR', {
+    style: 'currency',
+    currency: 'BRL'
+  }).format(value);
+};
 
 // Base columns for all entity types
 export const getBaseColumns = (): FinanceTableColumn<Entity>[] => [
@@ -41,6 +50,40 @@ export const getBaseColumns = (): FinanceTableColumn<Entity>[] => [
     header: 'Preço',
     accessorKey: 'price',
     cell: (item: Entity) => item.price ? `R$ ${item.price.toFixed(2)}` : '-',
+  },
+  // New financial columns
+  {
+    id: 'salesLast24h',
+    header: 'Venda das últimas 24h',
+    accessorKey: 'salesLast24h',
+    cell: (item: Entity) => (
+      <div className="flex items-center">
+        <DollarSign className="h-4 w-4 mr-1 text-green-500" />
+        <span>{formatCurrency(item.salesLast24h)}</span>
+      </div>
+    ),
+  },
+  {
+    id: 'salesMonthly',
+    header: 'Venda do total mensal',
+    accessorKey: 'salesMonthly',
+    cell: (item: Entity) => (
+      <div className="flex items-center">
+        <CalendarDays className="h-4 w-4 mr-1 text-blue-500" />
+        <span>{formatCurrency(item.salesMonthly)}</span>
+      </div>
+    ),
+  },
+  {
+    id: 'salesTotal',
+    header: 'Somando tudo',
+    accessorKey: 'salesTotal',
+    cell: (item: Entity) => (
+      <div className="flex items-center">
+        <PiggyBank className="h-4 w-4 mr-1 text-purple-500" />
+        <span>{formatCurrency(item.salesTotal)}</span>
+      </div>
+    ),
   }
 ];
 

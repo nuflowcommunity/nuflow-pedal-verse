@@ -1,4 +1,3 @@
-
 import React, { useState, useMemo } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { Tabs, TabsContent } from '@/components/ui/tabs';
@@ -49,6 +48,48 @@ const isWithinDateRange = (date: string, startDate?: Date, endDate?: Date) => {
   return itemDate >= start && itemDate <= end;
 };
 
+// Generate mock sales data for each entity
+const generateMockSalesData = (entities: Entity[]) => {
+  const currentDate = new Date();
+  const lastMonth = new Date(currentDate);
+  lastMonth.setMonth(lastMonth.getMonth() - 1);
+  
+  return entities.map(entity => {
+    // Generate random sales data
+    // For simplicity, sales are generated as a percentage of the entity price
+    // with some variation based on entity type and creation date
+    const basePrice = entity.price || 100;
+    const ageFactor = (new Date().getTime() - new Date(entity.createdAt).getTime()) / (1000 * 3600 * 24);
+    const typeFactor = entity.type === 'evento' ? 2.5 : 
+                       entity.type === 'mensalidade' ? 1.2 : 
+                       entity.type === 'dayUse' ? 0.8 : 0.5;
+    
+    // Sales for last 24 hours (lower for older items)
+    const last24hFactor = Math.max(0.1, 1 - (ageFactor / 100));
+    const salesLast24h = entity.status === 'cancelado' ? 0 : 
+                         Math.round(basePrice * typeFactor * last24hFactor * Math.random() * 10) / 10;
+    
+    // Monthly sales (higher for subscription types)
+    const monthlyFactor = entity.type === 'mensalidade' ? 20 : 
+                          entity.type === 'credito' ? 5 : 
+                          entity.type === 'dayUse' ? 8 : 12;
+    const salesMonthly = entity.status === 'cancelado' ? salesLast24h : 
+                         salesLast24h + Math.round(basePrice * typeFactor * monthlyFactor * Math.random() * 10) / 10;
+    
+    // Total sales (accumulated over time)
+    const totalFactor = Math.max(1, ageFactor / 15) * (entity.type === 'mensalidade' ? 5 : 2);
+    const salesTotal = entity.status === 'cancelado' ? salesMonthly : 
+                       salesMonthly + Math.round(basePrice * typeFactor * totalFactor * Math.random() * 100) / 10;
+    
+    return {
+      ...entity,
+      salesLast24h,
+      salesMonthly,
+      salesTotal
+    };
+  });
+};
+
 const EntidadesAdmin = () => {
   // States for filters
   const [searchQuery, setSearchQuery] = useState('');
@@ -68,8 +109,13 @@ const EntidadesAdmin = () => {
   // Hook for toasts
   const { toast } = useToast();
   
+  // Apply mock sales data to entities
+  const entitiesWithSalesData = useMemo(() => {
+    return generateMockSalesData(mockEntities);
+  }, [mockEntities]);
+  
   // List of partners for the filter (derived from the mock data)
-  const partners = Array.from(new Set(mockEntities.map(entity => entity.partner)));
+  const partners = Array.from(new Set(entitiesWithSalesData.map(entity => entity.partner)));
   
   // Date filter handlers
   const handleDateChange = (start: Date | undefined, end: Date | undefined) => {
@@ -99,20 +145,20 @@ const EntidadesAdmin = () => {
   const stats = useMemo(() => {
     // Filter entities by date range if set
     const dateFilteredEntities = startDate && endDate
-      ? mockEntities.filter(e => isWithinDateRange(e.createdAt, startDate, endDate))
-      : mockEntities;
+      ? entitiesWithSalesData.filter(e => isWithinDateRange(e.createdAt, startDate, endDate))
+      : entitiesWithSalesData;
     
     // Calculate sales metrics
-    const salesLast24h = mockEntities
+    const salesLast24h = entitiesWithSalesData
       .filter(e => isWithinLast24Hours(e.createdAt))
-      .reduce((total, entity) => total + (entity.price || 0), 0);
+      .reduce((total, entity) => total + (entity.salesLast24h || 0), 0);
     
-    const salesCurrentMonth = mockEntities
+    const salesCurrentMonth = entitiesWithSalesData
       .filter(e => isWithinCurrentMonth(e.createdAt))
-      .reduce((total, entity) => total + (entity.price || 0), 0);
+      .reduce((total, entity) => total + (entity.salesMonthly || 0), 0);
     
-    const salesTotal = mockEntities
-      .reduce((total, entity) => total + (entity.price || 0), 0);
+    const salesTotal = entitiesWithSalesData
+      .reduce((total, entity) => total + (entity.salesTotal || 0), 0);
     
     return {
       total: dateFilteredEntities.length,
@@ -130,11 +176,11 @@ const EntidadesAdmin = () => {
       salesCurrentMonth,
       salesTotal
     };
-  }, [mockEntities, startDate, endDate]);
+  }, [entitiesWithSalesData, startDate, endDate]);
   
   // Filter entities based on applied filters
   const filteredEntities = useMemo(() => {
-    return mockEntities.filter(entity => {
+    return entitiesWithSalesData.filter(entity => {
       // Text search filter
       const matchesSearch = !searchQuery || 
         entity.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
@@ -168,7 +214,7 @@ const EntidadesAdmin = () => {
              matchesTab && 
              matchesDateRange;
     });
-  }, [searchQuery, partnerFilter, typeFilter, statusFilter, validationFilter, activeTab, startDate, endDate]);
+  }, [searchQuery, partnerFilter, typeFilter, statusFilter, validationFilter, activeTab, startDate, endDate, entitiesWithSalesData]);
 
   // Get columns for the current entity type
   const typeSpecificColumns = useMemo(() => getTypeSpecificColumns(activeTab), [activeTab]);

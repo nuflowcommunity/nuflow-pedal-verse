@@ -13,6 +13,9 @@ export interface BaseEntity {
   status: EntityStatus;
   createdAt: string;
   price?: number;
+  salesLast24h?: number;
+  salesMonthly?: number;
+  salesTotal?: number;
 }
 
 // Type-specific entity interfaces
