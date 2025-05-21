@@ -1,5 +1,4 @@
-
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import {
   Table,
@@ -10,7 +9,7 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Eye, FileDown, Filter } from 'lucide-react';
+import { Eye, FileDown, Filter, ArrowUp, ArrowDown } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 
@@ -19,6 +18,7 @@ export interface FinanceTableColumn<T> {
   header: string;
   accessorKey: keyof T;
   cell?: (item: T) => React.ReactNode;
+  sortable?: boolean;
 }
 
 interface FinanceTableProps<T> {
@@ -49,6 +49,9 @@ interface FinanceTableProps<T> {
   pagination?: React.ReactNode;
   emptyState?: React.ReactNode;
   className?: string;
+  onSort?: (field: keyof T, direction: 'asc' | 'desc') => void;
+  defaultSortField?: keyof T;
+  defaultSortDirection?: 'asc' | 'desc';
 }
 
 export function FinanceTable<T extends Record<string, any>>({
@@ -61,7 +64,54 @@ export function FinanceTable<T extends Record<string, any>>({
   pagination,
   emptyState,
   className,
+  onSort,
+  defaultSortField,
+  defaultSortDirection = 'asc',
 }: FinanceTableProps<T>) {
+  const [sortField, setSortField] = useState<keyof T | undefined>(defaultSortField);
+  const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>(defaultSortDirection);
+
+  // Handle column header click for sorting
+  const handleSort = (column: FinanceTableColumn<T>) => {
+    if (!column.sortable) return;
+    
+    const field = column.accessorKey;
+    const direction = sortField === field && sortDirection === 'asc' ? 'desc' : 'asc';
+    
+    setSortField(field);
+    setSortDirection(direction);
+    
+    if (onSort) {
+      onSort(field, direction);
+    }
+  };
+
+  // Sort data locally if no external sort handler is provided
+  const sortedData = React.useMemo(() => {
+    if (!sortField || !onSort) {
+      return data;
+    }
+    
+    return [...data].sort((a, b) => {
+      const aValue = a[sortField];
+      const bValue = b[sortField];
+      
+      if (aValue === undefined || aValue === null) return sortDirection === 'asc' ? -1 : 1;
+      if (bValue === undefined || bValue === null) return sortDirection === 'asc' ? 1 : -1;
+      
+      // Handle different data types
+      if (typeof aValue === 'string' && typeof bValue === 'string') {
+        return sortDirection === 'asc' 
+          ? aValue.localeCompare(bValue) 
+          : bValue.localeCompare(aValue);
+      }
+      
+      return sortDirection === 'asc' 
+        ? (aValue > bValue ? 1 : -1) 
+        : (aValue > bValue ? -1 : 1);
+    });
+  }, [data, sortField, sortDirection, onSort]);
+
   return (
     <Card className={cn('w-full', className)}>
       <CardHeader className="pb-3">
@@ -88,16 +138,27 @@ export function FinanceTable<T extends Record<string, any>>({
             <TableHeader>
               <TableRow>
                 {columns.map((column) => (
-                  <TableHead key={column.id.toString()}>
-                    {column.header}
+                  <TableHead 
+                    key={column.id.toString()}
+                    className={column.sortable ? 'cursor-pointer hover:bg-muted/50' : ''}
+                    onClick={() => column.sortable && handleSort(column)}
+                  >
+                    <div className="flex items-center space-x-1">
+                      <span>{column.header}</span>
+                      {column.sortable && sortField === column.accessorKey && (
+                        sortDirection === 'asc' 
+                          ? <ArrowUp className="h-3 w-3 ml-1" /> 
+                          : <ArrowDown className="h-3 w-3 ml-1" />
+                      )}
+                    </div>
                   </TableHead>
                 ))}
                 {actions && <TableHead>Ações</TableHead>}
               </TableRow>
             </TableHeader>
             <TableBody>
-              {data.length > 0 ? (
-                data.map((item, index) => (
+              {sortedData.length > 0 ? (
+                sortedData.map((item, index) => (
                   <TableRow
                     key={index}
                     className={onRowClick ? 'cursor-pointer' : ''}

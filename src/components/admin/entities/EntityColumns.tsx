@@ -28,30 +28,35 @@ export const getBaseColumns = (): FinanceTableColumn<Entity>[] => [
         <span>{entityTypeLabels[item.type]}</span>
       </div>
     ),
+    sortable: true,
   },
   {
     id: 'partner',
     header: 'Parceiro',
     accessorKey: 'partner',
+    sortable: true,
   },
   {
     id: 'name',
     header: 'Nome',
     accessorKey: 'name',
+    sortable: true,
   },
   {
     id: 'status',
     header: 'Status',
     accessorKey: 'status',
     cell: (item: Entity) => getStatusBadge(item.status === 'ativo' ? 'Ativo' : item.status === 'pendente' ? 'Pendente' : 'Cancelado'),
+    sortable: true,
   },
   {
     id: 'price',
     header: 'Preço',
     accessorKey: 'price',
     cell: (item: Entity) => item.price ? `R$ ${item.price.toFixed(2)}` : '-',
+    sortable: true,
   },
-  // New financial columns
+  // Enhanced financial columns with sorting
   {
     id: 'salesLast24h',
     header: 'Venda das últimas 24h',
@@ -62,6 +67,7 @@ export const getBaseColumns = (): FinanceTableColumn<Entity>[] => [
         <span>{formatCurrency(item.salesLast24h)}</span>
       </div>
     ),
+    sortable: true,
   },
   {
     id: 'salesMonthly',
@@ -73,6 +79,7 @@ export const getBaseColumns = (): FinanceTableColumn<Entity>[] => [
         <span>{formatCurrency(item.salesMonthly)}</span>
       </div>
     ),
+    sortable: true,
   },
   {
     id: 'salesTotal',
@@ -84,6 +91,7 @@ export const getBaseColumns = (): FinanceTableColumn<Entity>[] => [
         <span>{formatCurrency(item.salesTotal)}</span>
       </div>
     ),
+    sortable: true,
   }
 ];
 

@@ -106,6 +106,10 @@ const EntidadesAdmin = () => {
   const [startDate, setStartDate] = useState<Date | undefined>(undefined);
   const [endDate, setEndDate] = useState<Date | undefined>(undefined);
   
+  // Sorting states
+  const [sortField, setSortField] = useState<keyof Entity | undefined>(undefined);
+  const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc');
+  
   // Hook for toasts
   const { toast } = useToast();
   
@@ -178,9 +182,15 @@ const EntidadesAdmin = () => {
     };
   }, [entitiesWithSalesData, startDate, endDate]);
   
+  // Handle sorting
+  const handleSort = (field: keyof Entity, direction: 'asc' | 'desc') => {
+    setSortField(field);
+    setSortDirection(direction);
+  };
+  
   // Filter entities based on applied filters
   const filteredEntities = useMemo(() => {
-    return entitiesWithSalesData.filter(entity => {
+    let filtered = entitiesWithSalesData.filter(entity => {
       // Text search filter
       const matchesSearch = !searchQuery || 
         entity.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
@@ -214,7 +224,33 @@ const EntidadesAdmin = () => {
              matchesTab && 
              matchesDateRange;
     });
-  }, [searchQuery, partnerFilter, typeFilter, statusFilter, validationFilter, activeTab, startDate, endDate, entitiesWithSalesData]);
+
+    // Sort the filtered entities if sort field is specified
+    if (sortField) {
+      filtered = [...filtered].sort((a, b) => {
+        const aValue = a[sortField];
+        const bValue = b[sortField];
+        
+        // Handle undefined or null values
+        if (aValue === undefined || aValue === null) return sortDirection === 'asc' ? -1 : 1;
+        if (bValue === undefined || bValue === null) return sortDirection === 'asc' ? 1 : -1;
+        
+        // Compare based on data type
+        if (typeof aValue === 'string' && typeof bValue === 'string') {
+          return sortDirection === 'asc' 
+            ? aValue.localeCompare(bValue) 
+            : bValue.localeCompare(aValue);
+        }
+        
+        return sortDirection === 'asc' 
+          ? (aValue > bValue ? 1 : -1) 
+          : (aValue > bValue ? -1 : 1);
+      });
+    }
+    
+    return filtered;
+  }, [searchQuery, partnerFilter, typeFilter, statusFilter, validationFilter, activeTab, 
+      startDate, endDate, entitiesWithSalesData, sortField, sortDirection]);
 
   // Get columns for the current entity type
   const typeSpecificColumns = useMemo(() => getTypeSpecificColumns(activeTab), [activeTab]);
@@ -299,7 +335,7 @@ const EntidadesAdmin = () => {
             onFilterAllTime={filterAllTime}
           />
 
-          {/* Entity table */}
+          {/* Entity table with sorting */}
           <FinanceTable
             title={`Entidades ${activeTab !== 'todos' ? '- ' + entityTypeLabels[activeTab as keyof typeof entityTypeLabels] : ''}`}
             columns={typeSpecificColumns}
@@ -314,6 +350,9 @@ const EntidadesAdmin = () => {
               />
             }
             emptyState={<EntityEmptyState />}
+            defaultSortField="salesLast24h"
+            defaultSortDirection="desc"
+            onSort={handleSort}
           />
         </TabsContent>
       </Tabs>
