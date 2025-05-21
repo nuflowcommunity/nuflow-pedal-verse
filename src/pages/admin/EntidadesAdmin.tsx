@@ -89,29 +89,29 @@ const EntidadesAdmin = () => {
     {
       id: 'type',
       header: 'Tipo',
-      accessorKey: 'type',
+      accessorKey: 'type' as keyof Entity,
       cell: (item: Entity) => entityTypeLabels[item.type],
     },
     {
       id: 'partner',
       header: 'Parceiro',
-      accessorKey: 'partner',
+      accessorKey: 'partner' as keyof Entity,
     },
     {
       id: 'name',
       header: 'Nome',
-      accessorKey: 'name',
+      accessorKey: 'name' as keyof Entity,
     },
     {
       id: 'status',
       header: 'Status',
-      accessorKey: 'status',
+      accessorKey: 'status' as keyof Entity,
       cell: (item: Entity) => getStatusBadge(item.status === 'ativo' ? 'Ativo' : item.status === 'pendente' ? 'Pendente' : 'Cancelado'),
     },
     {
       id: 'price',
       header: 'Preço',
-      accessorKey: 'price',
+      accessorKey: 'price' as keyof Entity,
       cell: (item: Entity) => item.price ? `R$ ${item.price.toFixed(2)}` : '-',
     }
   ];
@@ -183,20 +183,22 @@ const EntidadesAdmin = () => {
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
                 <div className="col-span-1 md:col-span-2">
-                  <Input
-                    placeholder="Buscar por nome ou parceiro..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full"
-                    icon={<Search className="h-4 w-4 opacity-50" />}
-                  />
+                  <div className="relative">
+                    <Input
+                      placeholder="Buscar por nome ou parceiro..."
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      className="pl-9 w-full"
+                    />
+                    <Search className="absolute top-3 left-3 h-4 w-4 opacity-50" />
+                  </div>
                 </div>
                 <Select value={partnerFilter} onValueChange={setPartnerFilter}>
                   <SelectTrigger>
                     <SelectValue placeholder="Parceiro" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">Todos os parceiros</SelectItem>
+                    <SelectItem value="_all">Todos os parceiros</SelectItem>
                     {partners.map(partner => (
                       <SelectItem key={partner} value={partner}>{partner}</SelectItem>
                     ))}
@@ -207,7 +209,7 @@ const EntidadesAdmin = () => {
                     <SelectValue placeholder="Tipo" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">Todos os tipos</SelectItem>
+                    <SelectItem value="_all">Todos os tipos</SelectItem>
                     <SelectItem value="evento">Evento</SelectItem>
                     <SelectItem value="mensalidade">Mensalidade</SelectItem>
                     <SelectItem value="dayUse">Day Use</SelectItem>
@@ -219,7 +221,7 @@ const EntidadesAdmin = () => {
                     <SelectValue placeholder="Status" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">Todos os status</SelectItem>
+                    <SelectItem value="_all">Todos os status</SelectItem>
                     <SelectItem value="ativo">Ativo</SelectItem>
                     <SelectItem value="pendente">Pendente</SelectItem>
                     <SelectItem value="cancelado">Cancelado</SelectItem>
