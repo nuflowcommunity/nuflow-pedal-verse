@@ -34,7 +34,16 @@ interface FinanceTableProps<T> {
       icon: React.ReactNode;
       onClick: (item: T) => void;
     }>;
-  };
+  } | ((item: T) => {
+    view?: boolean;
+    edit?: boolean;
+    delete?: boolean;
+    custom?: Array<{
+      label: string;
+      icon: React.ReactNode;
+      onClick: (item: T) => void;
+    }>;
+  });
   onRowClick?: (item: T) => void;
   filters?: React.ReactNode;
   pagination?: React.ReactNode;
@@ -104,27 +113,53 @@ export function FinanceTable<T extends Record<string, any>>({
                     {actions && (
                       <TableCell>
                         <div className="flex items-center gap-2">
-                          {actions.view && (
-                            <Button variant="ghost" size="sm">
-                              <Eye className="h-4 w-4" />
-                              <span className="sr-only">Ver</span>
-                            </Button>
+                          {typeof actions === 'function' ? (
+                            <>
+                              {actions(item).view && (
+                                <Button variant="ghost" size="sm">
+                                  <Eye className="h-4 w-4" />
+                                  <span className="sr-only">Ver</span>
+                                </Button>
+                              )}
+                              {actions(item).custom && actions(item).custom?.map((action, i) => (
+                                <Button
+                                  key={i}
+                                  variant="ghost"
+                                  size="sm"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    action.onClick(item);
+                                  }}
+                                >
+                                  {action.icon}
+                                  <span className="sr-only">{action.label}</span>
+                                </Button>
+                              ))}
+                            </>
+                          ) : (
+                            <>
+                              {actions.view && (
+                                <Button variant="ghost" size="sm">
+                                  <Eye className="h-4 w-4" />
+                                  <span className="sr-only">Ver</span>
+                                </Button>
+                              )}
+                              {actions.custom && actions.custom.map((action, i) => (
+                                <Button
+                                  key={i}
+                                  variant="ghost"
+                                  size="sm"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    action.onClick(item);
+                                  }}
+                                >
+                                  {action.icon}
+                                  <span className="sr-only">{action.label}</span>
+                                </Button>
+                              ))}
+                            </>
                           )}
-                          {actions.custom &&
-                            actions.custom.map((action, i) => (
-                              <Button
-                                key={i}
-                                variant="ghost"
-                                size="sm"
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  action.onClick(item);
-                                }}
-                              >
-                                {action.icon}
-                                <span className="sr-only">{action.label}</span>
-                              </Button>
-                            ))}
                         </div>
                       </TableCell>
                     )}

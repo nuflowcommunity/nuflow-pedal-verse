@@ -1,4 +1,3 @@
-
 import React, { useState, useMemo } from 'react';
 import { Package2, Filter, Plus, Search, Calendar, CreditCard, Clock, Users, AlertTriangle, CheckCircle, XCircle, Activity } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -548,11 +547,11 @@ const EntidadesAdmin = () => {
     }
   };
   
-  // Configuração das ações para a tabela
-  const tableActions = {
+  // Configuração das ações para a tabela - passing a function that returns the configuration
+  const tableActions = (item: Entity) => ({
     view: true,
-    custom: (item: Entity) => getTypeSpecificActions(item)
-  };
+    custom: getTypeSpecificActions(item)
+  });
   
   // Handler para abrir detalhes da entidade
   const handleViewEntity = (entity: Entity) => {
@@ -1163,4 +1162,3 @@ const EntidadesAdmin = () => {
 };
 
 export default EntidadesAdmin;
-
