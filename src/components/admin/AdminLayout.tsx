@@ -8,6 +8,7 @@ import { ProtectedRoute } from '@/components/auth/ProtectedRoute';
 
 const AdminLayout = () => {
   return (
+    // Using ProtectedRoute but it now bypasses authentication checks
     <ProtectedRoute>
       <SidebarProvider>
         <div className="flex min-h-screen w-full bg-[#f9f9f9]">

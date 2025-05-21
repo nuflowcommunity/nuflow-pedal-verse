@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Navigate, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 
 interface ProtectedRouteProps {
@@ -9,9 +9,15 @@ interface ProtectedRouteProps {
 }
 
 export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ 
-  children, 
-  requiredRole 
+  children
 }) => {
+  // For development purposes, we're bypassing authentication checks
+  // and allowing all access to protected routes
+  
+  return <>{children}</>;
+  
+  // Original protected route logic (commented out for now)
+  /*
   const { user, userRole, isLoading } = useAuth();
   const location = useLocation();
 
@@ -36,4 +42,5 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
 
   // If all checks pass, render the children
   return <>{children}</>;
+  */
 };

@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -12,15 +12,13 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
-  const { signIn, isLoading, user } = useAuth();
+  const { signIn, isLoading } = useAuth();
   const navigate = useNavigate();
 
-  // If already authenticated, redirect to admin
-  useEffect(() => {
-    if (user) {
-      navigate('/admin');
-    }
-  }, [user, navigate]);
+  // For development purposes, provide a direct access button
+  const handleDirectAccess = () => {
+    navigate('/admin');
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -105,6 +103,15 @@ const Login = () => {
                     Entrando...
                   </span>
                 ) : 'Entrar'}
+              </Button>
+
+              {/* Added direct access button for development */}
+              <Button 
+                type="button" 
+                className="w-full mt-4 bg-blue-500 text-white hover:bg-blue-600"
+                onClick={handleDirectAccess}
+              >
+                Acessar Diretamente (Modo Desenvolvimento)
               </Button>
             </form>
             
