@@ -40,13 +40,7 @@ export const getBaseColumns = (): FinanceTableColumn<Entity>[] => [
     cell: (item: Entity) => getStatusBadge(item.status === 'ativo' ? 'Ativo' : item.status === 'pendente' ? 'Pendente' : 'Cancelado'),
     sortable: true,
   },
-  {
-    id: 'price',
-    header: 'Preço',
-    accessorKey: 'price',
-    cell: (item: Entity) => item.price ? `R$ ${item.price.toFixed(2)}` : '-',
-    sortable: true,
-  },
+  // Price column removed
   // Enhanced financial columns with sorting
   {
     id: 'salesLast24h',

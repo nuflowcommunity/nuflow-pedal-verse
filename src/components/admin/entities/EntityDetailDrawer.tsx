@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -44,10 +43,6 @@ export const EntityDetailDrawer: React.FC<EntityDetailDrawerProps> = ({
         <div>
           <h4 className="text-sm font-medium text-gray-500">Status</h4>
           <p>{getStatusBadge(entity.status === 'ativo' ? 'Ativo' : entity.status === 'pendente' ? 'Pendente' : 'Cancelado')}</p>
-        </div>
-        <div>
-          <h4 className="text-sm font-medium text-gray-500">Preço</h4>
-          <p>{entity.price ? `R$ ${entity.price.toFixed(2)}` : '-'}</p>
         </div>
         <div>
           <h4 className="text-sm font-medium text-gray-500">Criado em</h4>
