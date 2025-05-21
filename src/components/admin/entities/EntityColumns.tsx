@@ -1,5 +1,5 @@
 
-import { FinanceTableColumn } from '@/components/admin/finance/FinanceTable';
+import { FinanceTableColumn } from '@/components/admin/finance/table/FinanceTableTypes';
 import { Entity } from './types';
 import { getBaseColumns } from './table/BaseColumns';
 import { getEventColumns } from './table/EventColumns';

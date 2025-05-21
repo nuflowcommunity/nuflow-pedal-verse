@@ -1,10 +1,10 @@
 
 import React from 'react';
-import { FinanceTableColumn } from '@/components/admin/finance/FinanceTable';
+import { FinanceTableColumn } from '@/components/admin/finance/table/FinanceTableTypes';
 import { Entity } from '../types';
 import { entityTypeIcons } from '../EntityIcons';
 import { entityTypeLabels } from '../types';
-import { getStatusBadge } from '@/components/admin/finance/FinanceTable';
+import { getStatusBadge } from '@/components/admin/finance/table/StatusBadge';
 import { renderSalesLast24hCell, renderSalesMonthlyhCell, renderSalesTotalCell } from './FormatUtils';
 
 // Base columns for all entity types
