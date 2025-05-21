@@ -45,116 +45,157 @@ export const getBaseColumns = (): FinanceTableColumn<Entity>[] => [
 ];
 
 // Event-specific columns
-export const getEventColumns = (): FinanceTableColumn<EventoEntity>[] => [
+export const getEventColumns = (): FinanceTableColumn<Entity>[] => [
   ...getBaseColumns(),
   {
     id: 'date',
     header: 'Data',
     accessorKey: 'date',
-    cell: (item: EventoEntity) => item.date || '-',
+    cell: (item: Entity) => {
+      if (item.type !== 'evento') return '-';
+      const eventoItem = item as EventoEntity;
+      return eventoItem.date || '-';
+    },
   },
   {
     id: 'capacity',
     header: 'Capacidade',
     accessorKey: 'capacity',
-    cell: (item: EventoEntity) => {
-      if (item.capacity && item.registrations) {
-        const percentage = (item.registrations / item.capacity) * 100;
+    cell: (item: Entity) => {
+      if (item.type !== 'evento') return '-';
+      const eventoItem = item as EventoEntity;
+      
+      if (eventoItem.capacity && eventoItem.registrations) {
+        const percentage = (eventoItem.registrations / eventoItem.capacity) * 100;
         return (
           <div className="flex items-center">
-            <span className="mr-2">{`${item.registrations}/${item.capacity}`}</span>
+            <span className="mr-2">{`${eventoItem.registrations}/${eventoItem.capacity}`}</span>
             <Badge className={`${percentage > 80 ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800'}`}>
               {`${Math.round(percentage)}%`}
             </Badge>
           </div>
         );
       }
-      return item.capacity || '-';
+      return eventoItem.capacity || '-';
     }
   }
 ];
 
 // Subscription-specific columns
-export const getMensalidadeColumns = (): FinanceTableColumn<MensalidadeEntity>[] => [
+export const getMensalidadeColumns = (): FinanceTableColumn<Entity>[] => [
   ...getBaseColumns(),
   {
     id: 'duration',
     header: 'Duração',
     accessorKey: 'duration',
-    cell: (item: MensalidadeEntity) => item.duration || '-',
+    cell: (item: Entity) => {
+      if (item.type !== 'mensalidade') return '-';
+      const mensalidadeItem = item as MensalidadeEntity;
+      return mensalidadeItem.duration || '-';
+    },
   },
   {
     id: 'renewalDate',
     header: 'Renovação',
     accessorKey: 'renewalDate',
-    cell: (item: MensalidadeEntity) => item.renewalDate || '-',
+    cell: (item: Entity) => {
+      if (item.type !== 'mensalidade') return '-';
+      const mensalidadeItem = item as MensalidadeEntity;
+      return mensalidadeItem.renewalDate || '-';
+    },
   },
   {
     id: 'includedCredits',
     header: 'Créditos Incluídos',
     accessorKey: 'includedCredits',
-    cell: (item: MensalidadeEntity) => item.includedCredits !== undefined ? item.includedCredits : '-',
+    cell: (item: Entity) => {
+      if (item.type !== 'mensalidade') return '-';
+      const mensalidadeItem = item as MensalidadeEntity;
+      return mensalidadeItem.includedCredits !== undefined ? mensalidadeItem.includedCredits : '-';
+    }
   }
 ];
 
 // Day Use specific columns
-export const getDayUseColumns = (): FinanceTableColumn<DayUseEntity>[] => [
+export const getDayUseColumns = (): FinanceTableColumn<Entity>[] => [
   ...getBaseColumns(),
   {
     id: 'validFor',
     header: 'Validade',
     accessorKey: 'validFor',
-    cell: (item: DayUseEntity) => item.validFor || '-',
+    cell: (item: Entity) => {
+      if (item.type !== 'dayUse') return '-';
+      const dayUseItem = item as DayUseEntity;
+      return dayUseItem.validFor || '-';
+    },
   },
   {
     id: 'accessDate',
     header: 'Data de Acesso',
     accessorKey: 'accessDate',
-    cell: (item: DayUseEntity) => item.accessDate || '-',
+    cell: (item: Entity) => {
+      if (item.type !== 'dayUse') return '-';
+      const dayUseItem = item as DayUseEntity;
+      return dayUseItem.accessDate || '-';
+    }
   }
 ];
 
 // Credit-specific columns
-export const getCreditColumns = (): FinanceTableColumn<CreditoEntity>[] => [
+export const getCreditColumns = (): FinanceTableColumn<Entity>[] => [
   ...getBaseColumns(),
   {
     id: 'totalCredits',
     header: 'Total de Créditos',
     accessorKey: 'totalCredits',
-    cell: (item: CreditoEntity) => item.totalCredits !== undefined ? item.totalCredits : '-',
+    cell: (item: Entity) => {
+      if (item.type !== 'credito') return '-';
+      const creditoItem = item as CreditoEntity;
+      return creditoItem.totalCredits !== undefined ? creditoItem.totalCredits : '-';
+    },
   },
   {
     id: 'usedCredits',
     header: 'Créditos Usados',
     accessorKey: 'usedCredits',
-    cell: (item: CreditoEntity) => {
-      if (item.totalCredits !== undefined && item.usedCredits !== undefined) {
-        const remaining = item.totalCredits - item.usedCredits;
-        const percentage = (item.usedCredits / item.totalCredits) * 100;
+    cell: (item: Entity) => {
+      if (item.type !== 'credito') return '-';
+      const creditoItem = item as CreditoEntity;
+      
+      if (creditoItem.totalCredits !== undefined && creditoItem.usedCredits !== undefined) {
+        const remaining = creditoItem.totalCredits - creditoItem.usedCredits;
+        const percentage = (creditoItem.usedCredits / creditoItem.totalCredits) * 100;
         return (
           <div className="flex items-center">
-            <span className="mr-2">{`${item.usedCredits}/${item.totalCredits}`}</span>
+            <span className="mr-2">{`${creditoItem.usedCredits}/${creditoItem.totalCredits}`}</span>
             <Badge className={`${percentage > 80 ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800'}`}>
               {`${remaining} restantes`}
             </Badge>
           </div>
         );
       }
-      return item.usedCredits !== undefined ? item.usedCredits : '-';
+      return creditoItem.usedCredits !== undefined ? creditoItem.usedCredits : '-';
     }
   },
   {
     id: 'expiryDate',
     header: 'Validade',
     accessorKey: 'expiryDate',
-    cell: (item: CreditoEntity) => item.expiryDate || '-',
+    cell: (item: Entity) => {
+      if (item.type !== 'credito') return '-';
+      const creditoItem = item as CreditoEntity;
+      return creditoItem.expiryDate || '-';
+    },
   },
   {
     id: 'validationStatus',
     header: 'Validação',
     accessorKey: 'validationStatus',
-    cell: (item: CreditoEntity) => {
-      const status = item.validationStatus;
+    cell: (item: Entity) => {
+      if (item.type !== 'credito') return '-';
+      const creditoItem = item as CreditoEntity;
+      const status = creditoItem.validationStatus;
+      
       if (!status) return '-';
       
       const statusLabels = {
