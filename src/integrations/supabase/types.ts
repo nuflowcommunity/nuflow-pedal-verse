@@ -319,6 +319,50 @@ export type Database = {
           },
         ]
       }
+      event_custom_questions: {
+        Row: {
+          created_at: string
+          event_id: string
+          id: string
+          is_required: boolean
+          placeholder_text: string | null
+          question_text: string
+          question_type: Database["public"]["Enums"]["question_type"]
+          sort_order: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          event_id: string
+          id?: string
+          is_required?: boolean
+          placeholder_text?: string | null
+          question_text: string
+          question_type?: Database["public"]["Enums"]["question_type"]
+          sort_order?: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          event_id?: string
+          id?: string
+          is_required?: boolean
+          placeholder_text?: string | null
+          question_text?: string
+          question_type?: Database["public"]["Enums"]["question_type"]
+          sort_order?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "event_custom_questions_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       event_images: {
         Row: {
           created_at: string
@@ -376,6 +420,159 @@ export type Database = {
             columns: ["event_id"]
             isOneToOne: false
             referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      event_notifications: {
+        Row: {
+          created_at: string
+          event_id: string
+          id: string
+          is_read: boolean
+          message: string
+          notification_type: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          event_id: string
+          id?: string
+          is_read?: boolean
+          message: string
+          notification_type: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          event_id?: string
+          id?: string
+          is_read?: boolean
+          message?: string
+          notification_type?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "event_notifications_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      event_payment_settings: {
+        Row: {
+          allow_installments: boolean
+          created_at: string
+          event_id: string
+          id: string
+          max_installments: number
+          min_installment_amount: number | null
+          updated_at: string
+        }
+        Insert: {
+          allow_installments?: boolean
+          created_at?: string
+          event_id: string
+          id?: string
+          max_installments?: number
+          min_installment_amount?: number | null
+          updated_at?: string
+        }
+        Update: {
+          allow_installments?: boolean
+          created_at?: string
+          event_id?: string
+          id?: string
+          max_installments?: number
+          min_installment_amount?: number | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "event_payment_settings_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: true
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      event_question_options: {
+        Row: {
+          created_at: string
+          id: string
+          option_text: string
+          option_value: string
+          question_id: string
+          sort_order: number
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          option_text: string
+          option_value: string
+          question_id: string
+          sort_order?: number
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          option_text?: string
+          option_value?: string
+          question_id?: string
+          sort_order?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "event_question_options_question_id_fkey"
+            columns: ["question_id"]
+            isOneToOne: false
+            referencedRelation: "event_custom_questions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      event_registration_answers: {
+        Row: {
+          answer_text: string | null
+          created_at: string
+          id: string
+          question_id: string
+          registration_id: string
+          selected_options: Json | null
+        }
+        Insert: {
+          answer_text?: string | null
+          created_at?: string
+          id?: string
+          question_id: string
+          registration_id: string
+          selected_options?: Json | null
+        }
+        Update: {
+          answer_text?: string | null
+          created_at?: string
+          id?: string
+          question_id?: string
+          registration_id?: string
+          selected_options?: Json | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "event_registration_answers_question_id_fkey"
+            columns: ["question_id"]
+            isOneToOne: false
+            referencedRelation: "event_custom_questions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "event_registration_answers_registration_id_fkey"
+            columns: ["registration_id"]
+            isOneToOne: false
+            referencedRelation: "event_registrations"
             referencedColumns: ["id"]
           },
         ]
@@ -452,6 +649,9 @@ export type Database = {
       }
       events: {
         Row: {
+          admin_notes: string | null
+          approved_at: string | null
+          approved_by: string | null
           category: Database["public"]["Enums"]["event_category"]
           city: string | null
           created_at: string
@@ -470,6 +670,7 @@ export type Database = {
           meeting_point: string | null
           organizer: string | null
           price: number | null
+          rejection_reason: string | null
           short_description: string | null
           state: string | null
           status: Database["public"]["Enums"]["event_status"]
@@ -477,6 +678,9 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          admin_notes?: string | null
+          approved_at?: string | null
+          approved_by?: string | null
           category: Database["public"]["Enums"]["event_category"]
           city?: string | null
           created_at?: string
@@ -495,6 +699,7 @@ export type Database = {
           meeting_point?: string | null
           organizer?: string | null
           price?: number | null
+          rejection_reason?: string | null
           short_description?: string | null
           state?: string | null
           status?: Database["public"]["Enums"]["event_status"]
@@ -502,6 +707,9 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          admin_notes?: string | null
+          approved_at?: string | null
+          approved_by?: string | null
           category?: Database["public"]["Enums"]["event_category"]
           city?: string | null
           created_at?: string
@@ -520,6 +728,7 @@ export type Database = {
           meeting_point?: string | null
           organizer?: string | null
           price?: number | null
+          rejection_reason?: string | null
           short_description?: string | null
           state?: string | null
           status?: Database["public"]["Enums"]["event_status"]
@@ -1329,6 +1538,9 @@ export type Database = {
       get_past_events: {
         Args: Record<PropertyKey, never>
         Returns: {
+          admin_notes: string | null
+          approved_at: string | null
+          approved_by: string | null
           category: Database["public"]["Enums"]["event_category"]
           city: string | null
           created_at: string
@@ -1347,6 +1559,7 @@ export type Database = {
           meeting_point: string | null
           organizer: string | null
           price: number | null
+          rejection_reason: string | null
           short_description: string | null
           state: string | null
           status: Database["public"]["Enums"]["event_status"]
@@ -1357,6 +1570,9 @@ export type Database = {
       get_upcoming_events: {
         Args: Record<PropertyKey, never>
         Returns: {
+          admin_notes: string | null
+          approved_at: string | null
+          approved_by: string | null
           category: Database["public"]["Enums"]["event_category"]
           city: string | null
           created_at: string
@@ -1375,6 +1591,7 @@ export type Database = {
           meeting_point: string | null
           organizer: string | null
           price: number | null
+          rejection_reason: string | null
           short_description: string | null
           state: string | null
           status: Database["public"]["Enums"]["event_status"]
@@ -1407,7 +1624,15 @@ export type Database = {
       entity_status: "ativo" | "pendente" | "cancelado"
       entity_type: "evento" | "mensalidade" | "dayUse" | "credito"
       event_category: "MTB" | "Speed" | "Gravel" | "Urbano" | "Outro"
-      event_status: "active" | "cancelled" | "completed" | "draft"
+      event_status:
+        | "active"
+        | "cancelled"
+        | "completed"
+        | "draft"
+        | "pending"
+        | "approved"
+        | "rejected"
+      question_type: "text" | "textarea" | "select" | "radio" | "checkbox"
       transaction_category: "receita" | "despesa" | "transferencia"
       validation_status: "validated" | "pending" | "failed"
     }
@@ -1530,7 +1755,16 @@ export const Constants = {
       entity_status: ["ativo", "pendente", "cancelado"],
       entity_type: ["evento", "mensalidade", "dayUse", "credito"],
       event_category: ["MTB", "Speed", "Gravel", "Urbano", "Outro"],
-      event_status: ["active", "cancelled", "completed", "draft"],
+      event_status: [
+        "active",
+        "cancelled",
+        "completed",
+        "draft",
+        "pending",
+        "approved",
+        "rejected",
+      ],
+      question_type: ["text", "textarea", "select", "radio", "checkbox"],
       transaction_category: ["receita", "despesa", "transferencia"],
       validation_status: ["validated", "pending", "failed"],
     },
