@@ -75,7 +75,7 @@ function App() {
                 <Route
                   path="/admin"
                   element={
-                    <ProtectedRoute allowedRoles={["Admin"]}>
+                    <ProtectedRoute requiredRole="Admin">
                       <Dashboard />
                     </ProtectedRoute>
                   }
@@ -83,7 +83,7 @@ function App() {
                 <Route
                   path="/admin/entidades"
                   element={
-                    <ProtectedRoute allowedRoles={["Admin"]}>
+                    <ProtectedRoute requiredRole="Admin">
                       <EntidadesAdminContainer />
                     </ProtectedRoute>
                   }
@@ -91,7 +91,7 @@ function App() {
                 <Route
                   path="/admin/users"
                   element={
-                    <ProtectedRoute allowedRoles={["Admin"]}>
+                    <ProtectedRoute requiredRole="Admin">
                       <UsersAdmin />
                     </ProtectedRoute>
                   }
@@ -99,7 +99,7 @@ function App() {
                 <Route
                   path="/admin/events"
                   element={
-                    <ProtectedRoute allowedRoles={["Admin"]}>
+                    <ProtectedRoute requiredRole="Admin">
                       <EventsAdmin />
                     </ProtectedRoute>
                   }
@@ -107,7 +107,7 @@ function App() {
                 <Route
                   path="/admin/messages"
                   element={
-                    <ProtectedRoute allowedRoles={["Admin"]}>
+                    <ProtectedRoute requiredRole="Admin">
                       <MessagesAdmin />
                     </ProtectedRoute>
                   }
@@ -115,7 +115,7 @@ function App() {
                 <Route
                   path="/admin/marketing"
                   element={
-                    <ProtectedRoute allowedRoles={["Admin"]}>
+                    <ProtectedRoute requiredRole="Admin">
                       <MarketingAdmin />
                     </ProtectedRoute>
                   }
@@ -123,7 +123,7 @@ function App() {
                 <Route
                   path="/admin/marketing/google-ads"
                   element={
-                    <ProtectedRoute allowedRoles={["Admin"]}>
+                    <ProtectedRoute requiredRole="Admin">
                       <GoogleAdsPage />
                     </ProtectedRoute>
                   }
@@ -131,7 +131,7 @@ function App() {
                 <Route
                   path="/admin/marketing/meta-ads"
                   element={
-                    <ProtectedRoute allowedRoles={["Admin"]}>
+                    <ProtectedRoute requiredRole="Admin">
                       <MetaAdsPage />
                     </ProtectedRoute>
                   }
@@ -139,7 +139,7 @@ function App() {
                 <Route
                   path="/admin/settings"
                   element={
-                    <ProtectedRoute allowedRoles={["Admin"]}>
+                    <ProtectedRoute requiredRole="Admin">
                       <SettingsAdmin />
                     </ProtectedRoute>
                   }
@@ -147,7 +147,7 @@ function App() {
                 <Route
                   path="/admin/orders"
                   element={
-                    <ProtectedRoute allowedRoles={["Admin"]}>
+                    <ProtectedRoute requiredRole="Admin">
                       <OrdersAdmin />
                     </ProtectedRoute>
                   }
@@ -155,7 +155,7 @@ function App() {
                 <Route
                   path="/admin/reports"
                   element={
-                    <ProtectedRoute allowedRoles={["Admin"]}>
+                    <ProtectedRoute requiredRole="Admin">
                       <ReportsAdmin />
                     </ProtectedRoute>
                   }
@@ -165,7 +165,7 @@ function App() {
                 <Route
                   path="/admin/finance"
                   element={
-                    <ProtectedRoute allowedRoles={["Admin"]}>
+                    <ProtectedRoute requiredRole="Admin">
                       <FinanceOverview />
                     </ProtectedRoute>
                   }
@@ -173,7 +173,7 @@ function App() {
                 <Route
                   path="/admin/finance/dashboard/total-sales"
                   element={
-                    <ProtectedRoute allowedRoles={["Admin"]}>
+                    <ProtectedRoute requiredRole="Admin">
                       <TotalSalesDashboard />
                     </ProtectedRoute>
                   }
@@ -181,7 +181,7 @@ function App() {
                 <Route
                   path="/admin/finance/dashboard/monthly"
                   element={
-                    <ProtectedRoute allowedRoles={["Admin"]}>
+                    <ProtectedRoute requiredRole="Admin">
                       <MonthlyDashboard />
                     </ProtectedRoute>
                   }
@@ -189,7 +189,7 @@ function App() {
                 <Route
                   path="/admin/finance/dashboard/last-24-hours"
                   element={
-                    <ProtectedRoute allowedRoles={["Admin"]}>
+                    <ProtectedRoute requiredRole="Admin">
                       <Last24HoursDashboard />
                     </ProtectedRoute>
                   }
@@ -197,7 +197,7 @@ function App() {
                 <Route
                   path="/admin/finance/accounting"
                   element={
-                    <ProtectedRoute allowedRoles={["Admin"]}>
+                    <ProtectedRoute requiredRole="Admin">
                       <Accounting />
                     </ProtectedRoute>
                   }
@@ -205,7 +205,7 @@ function App() {
                 <Route
                   path="/admin/finance/cashflow"
                   element={
-                    <ProtectedRoute allowedRoles={["Admin"]}>
+                    <ProtectedRoute requiredRole="Admin">
                       <CashFlow />
                     </ProtectedRoute>
                   }
@@ -213,7 +213,7 @@ function App() {
                 <Route
                   path="/admin/finance/income"
                   element={
-                    <ProtectedRoute allowedRoles={["Admin"]}>
+                    <ProtectedRoute requiredRole="Admin">
                       <Income />
                     </ProtectedRoute>
                   }
@@ -221,7 +221,7 @@ function App() {
                 <Route
                   path="/admin/finance/expenses"
                   element={
-                    <ProtectedRoute allowedRoles={["Admin"]}>
+                    <ProtectedRoute requiredRole="Admin">
                       <Expenses />
                     </ProtectedRoute>
                   }
@@ -229,7 +229,7 @@ function App() {
                 <Route
                   path="/admin/finance/reports"
                   element={
-                    <ProtectedRoute allowedRoles={["Admin"]}>
+                    <ProtectedRoute requiredRole="Admin">
                       <FinancialReports />
                     </ProtectedRoute>
                   }
@@ -237,7 +237,7 @@ function App() {
                 <Route
                   path="/admin/finance/accounts"
                   element={
-                    <ProtectedRoute allowedRoles={["Admin"]}>
+                    <ProtectedRoute requiredRole="Admin">
                       <AccountsPage />
                     </ProtectedRoute>
                   }

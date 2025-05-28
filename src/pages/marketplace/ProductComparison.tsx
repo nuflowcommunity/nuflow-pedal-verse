@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, X, Heart, MessageCircle, GitCompare } from 'lucide-react';
@@ -46,6 +47,11 @@ const ProductComparison = () => {
           {value.charAt(0).toUpperCase() + value.slice(1)}
         </Badge>
       );
+    }
+    
+    // Handle complex data types that shouldn't be displayed directly
+    if (Array.isArray(value) || typeof value === 'object') {
+      return <span className="text-gray-400">-</span>;
     }
     
     if (typeof value === 'string' || typeof value === 'number') {
@@ -224,12 +230,12 @@ const ProductComparison = () => {
                 <div className="grid grid-cols-2 gap-3 mb-4">
                   {comparisonFields.slice(2).map((field) => {
                     const value = product[field.key as keyof typeof product];
-                    if (!value) return null;
+                    if (!value || Array.isArray(value) || typeof value === 'object') return null;
                     
                     return (
                       <div key={field.key}>
                         <span className="text-sm text-gray-600">{field.label}</span>
-                        <p className="font-medium text-gray-900">{value}</p>
+                        <p className="font-medium text-gray-900">{String(value)}</p>
                       </div>
                     );
                   })}
