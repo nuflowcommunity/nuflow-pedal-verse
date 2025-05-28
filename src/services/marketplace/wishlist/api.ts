@@ -3,7 +3,7 @@ import { supabase } from '@/integrations/supabase/client';
 import type { Wishlist, WishlistItem, CreateWishlistData, UpdateWishlistData } from './types';
 
 // Fetch user's wishlists
-export const fetchUserWishlists = async () => {
+export const fetchUserWishlists = async (): Promise<Wishlist[]> => {
   const { data, error } = await supabase
     .from('wishlists')
     .select(`
@@ -17,14 +17,14 @@ export const fetchUserWishlists = async () => {
     throw error;
   }
 
-  return data?.map(wishlist => ({
+  return data?.map((wishlist: any) => ({
     ...wishlist,
     item_count: wishlist.wishlist_items?.[0]?.count || 0
   })) || [];
 };
 
 // Fetch single wishlist with items
-export const fetchWishlistById = async (id: string) => {
+export const fetchWishlistById = async (id: string): Promise<Wishlist> => {
   const { data, error } = await supabase
     .from('wishlists')
     .select(`
@@ -58,7 +58,7 @@ export const fetchWishlistById = async (id: string) => {
 };
 
 // Fetch wishlist by share token
-export const fetchWishlistByToken = async (token: string) => {
+export const fetchWishlistByToken = async (token: string): Promise<any> => {
   const { data, error } = await supabase
     .from('wishlists')
     .select(`
@@ -95,7 +95,7 @@ export const fetchWishlistByToken = async (token: string) => {
 };
 
 // Create new wishlist
-export const createWishlist = async (data: CreateWishlistData) => {
+export const createWishlist = async (data: CreateWishlistData): Promise<Wishlist> => {
   const { data: { user } } = await supabase.auth.getUser();
   
   if (!user) {
@@ -120,7 +120,7 @@ export const createWishlist = async (data: CreateWishlistData) => {
 };
 
 // Update wishlist
-export const updateWishlist = async (id: string, data: UpdateWishlistData) => {
+export const updateWishlist = async (id: string, data: UpdateWishlistData): Promise<Wishlist> => {
   const { data: wishlist, error } = await supabase
     .from('wishlists')
     .update(data)
@@ -137,7 +137,7 @@ export const updateWishlist = async (id: string, data: UpdateWishlistData) => {
 };
 
 // Delete wishlist
-export const deleteWishlist = async (id: string) => {
+export const deleteWishlist = async (id: string): Promise<boolean> => {
   const { error } = await supabase
     .from('wishlists')
     .delete()
@@ -152,7 +152,7 @@ export const deleteWishlist = async (id: string) => {
 };
 
 // Add product to wishlist
-export const addToWishlist = async (wishlistId: string, productId: string, notes?: string) => {
+export const addToWishlist = async (wishlistId: string, productId: string, notes?: string): Promise<WishlistItem> => {
   const { data, error } = await supabase
     .from('wishlist_items')
     .insert({
@@ -172,7 +172,7 @@ export const addToWishlist = async (wishlistId: string, productId: string, notes
 };
 
 // Remove product from wishlist
-export const removeFromWishlist = async (wishlistId: string, productId: string) => {
+export const removeFromWishlist = async (wishlistId: string, productId: string): Promise<boolean> => {
   const { error } = await supabase
     .from('wishlist_items')
     .delete()
@@ -188,11 +188,11 @@ export const removeFromWishlist = async (wishlistId: string, productId: string) 
 };
 
 // Check if product is in any wishlist
-export const checkProductInWishlist = async (productId: string) => {
+export const checkProductInWishlist = async (productId: string): Promise<any[]> => {
   const { data: { user } } = await supabase.auth.getUser();
   
   if (!user) {
-    return null;
+    return [];
   }
 
   const { data, error } = await supabase
@@ -206,14 +206,14 @@ export const checkProductInWishlist = async (productId: string) => {
 
   if (error && error.code !== 'PGRST116') {
     console.error('Error checking wishlist status:', error);
-    return null;
+    return [];
   }
 
   return data || [];
 };
 
 // Share wishlist
-export const shareWishlist = async (wishlistId: string, email?: string) => {
+export const shareWishlist = async (wishlistId: string, email?: string): Promise<Wishlist> => {
   // Update wishlist to be shared and get share token
   const { data: wishlist, error: updateError } = await supabase
     .from('wishlists')
@@ -261,7 +261,7 @@ export const shareWishlist = async (wishlistId: string, email?: string) => {
 };
 
 // Get public wishlists
-export const fetchPublicWishlists = async (limit = 12) => {
+export const fetchPublicWishlists = async (limit = 12): Promise<any[]> => {
   const { data, error } = await supabase
     .from('wishlists')
     .select(`
@@ -278,7 +278,7 @@ export const fetchPublicWishlists = async (limit = 12) => {
     throw error;
   }
 
-  return data?.map(wishlist => ({
+  return data?.map((wishlist: any) => ({
     ...wishlist,
     owner: wishlist.profiles,
     item_count: wishlist.wishlist_items?.[0]?.count || 0
