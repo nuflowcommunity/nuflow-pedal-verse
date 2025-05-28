@@ -33,12 +33,12 @@ export const shareWishlist = async (wishlistId: string, email?: string) => {
     
     const { error: shareError } = await supabase
       .from('wishlist_shares')
-      .insert({
+      .insert([{
         wishlist_id: wishlistId,
         shared_with_user_id: profile.id,
         shared_by_user_id: user?.id,
-        access_level: 'view' as const
-      });
+        access_level: 'view'
+      }]);
 
     if (shareError) {
       console.error('Error creating share:', shareError);
