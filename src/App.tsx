@@ -7,6 +7,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import BackToTopButton from "./components/BackToTopButton";
+import LoadingTransition from "./components/ui/loading-transition";
 
 // Lazy load components
 const Market = lazy(() => import("./pages/Market"));
@@ -58,7 +59,7 @@ function App() {
       <TooltipProvider>
         <Toaster />
         <Sonner />
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<LoadingTransition />}>
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/marketplace" element={<Market />} />

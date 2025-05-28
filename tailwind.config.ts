@@ -111,6 +111,41 @@ export default {
                     '0%': { transform: 'translateY(0px)' },
                     '50%': { transform: 'translateY(-10px)' },
                     '100%': { transform: 'translateY(0px)' }
+                },
+                'logo-pulse': {
+                    '0%, 100%': { transform: 'scale(1)', opacity: '1' },
+                    '50%': { transform: 'scale(1.05)', opacity: '0.8' }
+                },
+                'pulse-gentle': {
+                    '0%, 100%': { opacity: '0.1', transform: 'scale(1)' },
+                    '50%': { opacity: '0.2', transform: 'scale(1.1)' }
+                },
+                'fade-in-delayed': {
+                    '0%': { opacity: '0', transform: 'translateY(10px)' },
+                    '60%': { opacity: '0', transform: 'translateY(10px)' },
+                    '100%': { opacity: '1', transform: 'translateY(0)' }
+                },
+                'float-slow': {
+                    '0%': { transform: 'translateY(0px)' },
+                    '50%': { transform: 'translateY(-20px)' },
+                    '100%': { transform: 'translateY(0px)' }
+                },
+                'float-reverse': {
+                    '0%': { transform: 'translateY(-10px)' },
+                    '50%': { transform: 'translateY(10px)' },
+                    '100%': { transform: 'translateY(-10px)' }
+                },
+                'dot-bounce-1': {
+                    '0%, 80%, 100%': { transform: 'scale(0.8)', opacity: '0.5' },
+                    '40%': { transform: 'scale(1)', opacity: '1' }
+                },
+                'dot-bounce-2': {
+                    '0%, 80%, 100%': { transform: 'scale(0.8)', opacity: '0.5' },
+                    '40%': { transform: 'scale(1)', opacity: '1' }
+                },
+                'dot-bounce-3': {
+                    '0%, 80%, 100%': { transform: 'scale(0.8)', opacity: '0.5' },
+                    '40%': { transform: 'scale(1)', opacity: '1' }
                 }
 			},
 			animation: {
@@ -119,7 +154,15 @@ export default {
 				'fade-in': 'fade-in 0.6s ease-out',
 				'slide-in': 'slide-in 0.4s ease-out',
                 'scroll-down': 'scroll-down 1.5s infinite',
-                'float': 'float 6s ease-in-out infinite'
+                'float': 'float 6s ease-in-out infinite',
+                'logo-pulse': 'logo-pulse 3s ease-in-out infinite',
+                'pulse-gentle': 'pulse-gentle 4s ease-in-out infinite',
+                'fade-in-delayed': 'fade-in-delayed 1.2s ease-out forwards',
+                'float-slow': 'float-slow 8s ease-in-out infinite',
+                'float-reverse': 'float-reverse 6s ease-in-out infinite',
+                'dot-bounce-1': 'dot-bounce-1 1.4s infinite ease-in-out',
+                'dot-bounce-2': 'dot-bounce-2 1.4s infinite ease-in-out 0.2s',
+                'dot-bounce-3': 'dot-bounce-3 1.4s infinite ease-in-out 0.4s'
 			},
 			scale: {
 				'98': '0.98',
