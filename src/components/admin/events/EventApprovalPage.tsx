@@ -5,7 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { useEventApproval } from '@/hooks/useEventApproval';
 import { EventApprovalTable } from './EventApprovalTable';
-import { LoadingSpinner } from '@/components/ui/loading-transition';
+import LoadingTransition from '@/components/ui/loading-transition';
 
 const statusConfig = {
   pending: { label: 'Pendentes', color: 'bg-yellow-100 text-yellow-800', count: 0 },
@@ -31,7 +31,7 @@ export const EventApprovalPage: React.FC = () => {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <LoadingSpinner />
+        <LoadingTransition />
       </div>
     );
   }

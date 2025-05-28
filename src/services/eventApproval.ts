@@ -18,7 +18,7 @@ export class EventApprovalService {
       .order('created_at', { ascending: false });
 
     if (status && status !== 'all') {
-      query = query.eq('status', status);
+      query = query.eq('status', status as any);
     }
 
     const { data, error } = await query;
@@ -122,19 +122,26 @@ export class EventApprovalService {
 
   // Atualizar ordem das perguntas
   static async updateQuestionsOrder(questions: { id: string; sort_order: number }[]) {
-    const updates = questions.map(q => ({
-      id: q.id,
-      sort_order: q.sort_order,
-      updated_at: new Date().toISOString(),
-    }));
+    // Atualizar cada pergunta individualmente
+    const updatePromises = questions.map(question => 
+      supabase
+        .from('event_custom_questions')
+        .update({ 
+          sort_order: question.sort_order,
+          updated_at: new Date().toISOString()
+        })
+        .eq('id', question.id)
+    );
 
-    const { data, error } = await supabase
-      .from('event_custom_questions')
-      .upsert(updates)
-      .select();
+    const results = await Promise.all(updatePromises);
+    
+    // Verificar se alguma atualização falhou
+    const errors = results.filter(result => result.error);
+    if (errors.length > 0) {
+      throw errors[0].error;
+    }
 
-    if (error) throw error;
-    return data;
+    return true;
   }
 
   // Buscar notificações de eventos
