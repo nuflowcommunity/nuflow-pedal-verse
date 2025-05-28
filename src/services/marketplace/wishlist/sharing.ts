@@ -31,17 +31,15 @@ export const shareWishlist = async (wishlistId: string, email?: string) => {
 
     const { data: { user } } = await supabase.auth.getUser();
     
-    // Simplify the insert operation to avoid complex type inference
-    const shareData = {
-      wishlist_id: wishlistId,
-      shared_with_user_id: profile.id,
-      shared_by_user_id: user?.id,
-      access_level: 'view'
-    };
-
+    // Use explicit typing to avoid type inference issues
     const { error: shareError } = await supabase
       .from('wishlist_shares')
-      .insert(shareData);
+      .insert({
+        wishlist_id: wishlistId,
+        shared_with_user_id: profile.id,
+        shared_by_user_id: user?.id || '',
+        access_level: 'view' as const
+      });
 
     if (shareError) {
       console.error('Error creating share:', shareError);
