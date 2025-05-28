@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { X, SlidersHorizontal } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -137,7 +138,7 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({
         <h3 className="text-lg font-semibold text-gray-900">Filtros</h3>
         <div className="flex items-center gap-2">
           {getActiveFiltersCount() > 0 && (
-            <Badge variant="secondary" className="text-xs">
+            <Badge variant="secondary" className="text-xs bg-nuflow-mint text-nuflow-forest">
               {getActiveFiltersCount()} ativo{getActiveFiltersCount() > 1 ? 's' : ''}
             </Badge>
           )}
@@ -145,14 +146,14 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({
             variant="ghost"
             size="sm"
             onClick={clearAllFilters}
-            className="text-xs text-nuflow-forest hover:text-nuflow-darkForest"
+            className="text-xs text-nuflow-forest hover:text-nuflow-darkForest hover:bg-nuflow-mint/50"
           >
             Limpar tudo
           </Button>
         </div>
       </div>
 
-      <Separator />
+      <Separator className="bg-gray-200" />
 
       {/* Featured Products */}
       <div className="space-y-3">
@@ -170,7 +171,7 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({
         </div>
       </div>
 
-      <Separator />
+      <Separator className="bg-gray-200" />
 
       {/* Price Range */}
       <div className="space-y-3">
@@ -192,7 +193,7 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({
         </div>
       </div>
 
-      <Separator />
+      <Separator className="bg-gray-200" />
 
       {/* Categories */}
       <div className="space-y-3">
@@ -205,7 +206,7 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({
                 checked={filters.category === category}
                 onCheckedChange={(checked) => handleCategoryChange(category, checked as boolean)}
               />
-              <Label htmlFor={`category-${category}`} className="text-sm cursor-pointer text-gray-700">
+              <Label htmlFor={`category-${category}`} className="text-sm cursor-pointer text-gray-700 hover:text-gray-900">
                 {category}
               </Label>
             </div>
@@ -213,7 +214,7 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({
         </div>
       </div>
 
-      <Separator />
+      <Separator className="bg-gray-200" />
 
       {/* Brands */}
       <div className="space-y-3">
@@ -226,7 +227,7 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({
                 checked={filters.brand === brand}
                 onCheckedChange={(checked) => handleBrandChange(brand, checked as boolean)}
               />
-              <Label htmlFor={`brand-${brand}`} className="text-sm cursor-pointer text-gray-700">
+              <Label htmlFor={`brand-${brand}`} className="text-sm cursor-pointer text-gray-700 hover:text-gray-900">
                 {brand}
               </Label>
             </div>
@@ -234,7 +235,7 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({
         </div>
       </div>
 
-      <Separator />
+      <Separator className="bg-gray-200" />
 
       {/* Condition */}
       <div className="space-y-3">
@@ -247,7 +248,7 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({
                 checked={filters.condition === condition.value}
                 onCheckedChange={(checked) => handleConditionChange(condition.value, checked as boolean)}
               />
-              <Label htmlFor={`condition-${condition.value}`} className="text-sm cursor-pointer text-gray-700">
+              <Label htmlFor={`condition-${condition.value}`} className="text-sm cursor-pointer text-gray-700 hover:text-gray-900">
                 {condition.label}
               </Label>
             </div>
@@ -255,7 +256,7 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({
         </div>
       </div>
 
-      <Separator />
+      <Separator className="bg-gray-200" />
 
       {/* Location */}
       <div className="space-y-3">
@@ -268,7 +269,7 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({
                 checked={filters.location === location}
                 onCheckedChange={(checked) => handleLocationChange(location, checked as boolean)}
               />
-              <Label htmlFor={`location-${location}`} className="text-sm cursor-pointer text-gray-700">
+              <Label htmlFor={`location-${location}`} className="text-sm cursor-pointer text-gray-700 hover:text-gray-900">
                 {location}
               </Label>
             </div>
@@ -289,19 +290,25 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({
 
       {/* Mobile Sheet */}
       <Sheet open={isOpen} onOpenChange={onClose}>
-        <SheetContent side="left" className="w-80 p-0 lg:hidden">
-          <SheetHeader className="p-6 border-b">
+        <SheetContent side="left" className="w-80 p-0 lg:hidden bg-white border-r border-gray-200">
+          <SheetHeader className="p-6 border-b border-gray-200 bg-white">
             <div className="flex items-center justify-between">
-              <SheetTitle className="flex items-center gap-2">
+              <SheetTitle className="flex items-center gap-2 text-gray-900">
                 <SlidersHorizontal size={20} />
                 Filtros
               </SheetTitle>
-              <Button variant="ghost" size="sm" onClick={onClose} aria-label="Fechar filtros">
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                onClick={onClose} 
+                aria-label="Fechar filtros"
+                className="hover:bg-gray-100"
+              >
                 <X size={18} />
               </Button>
             </div>
           </SheetHeader>
-          <div className="p-6 overflow-y-auto">
+          <div className="p-6 overflow-y-auto bg-white">
             <FilterContent />
           </div>
         </SheetContent>

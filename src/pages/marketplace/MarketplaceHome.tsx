@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Search, Filter, Grid, List, SlidersHorizontal } from 'lucide-react';
 import Navbar from '@/components/Navbar';
@@ -74,14 +75,15 @@ const MarketplaceHome = () => {
       <Navbar />
       
       <main className="flex-grow">
-        {/* Hero Section */}
-        <section className="bg-gradient-to-r from-nuflow-moss to-nuflow-charcoal text-white py-16">
-          <div className="container-custom">
+        {/* Hero Section - Fixed contrast with strong gradient */}
+        <section className="bg-gradient-to-br from-nuflow-darkForest via-nuflow-forest to-nuflow-charcoal text-white py-16 relative">
+          <div className="absolute inset-0 bg-gradient-to-br from-black/20 to-black/40"></div>
+          <div className="container-custom relative z-10">
             <div className="max-w-4xl mx-auto text-center">
-              <h1 className="text-4xl md:text-6xl font-heading font-bold mb-6">
+              <h1 className="text-4xl md:text-6xl font-heading font-bold mb-6 text-white drop-shadow-lg">
                 Marketplace
               </h1>
-              <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
+              <p className="text-xl text-white/95 mb-8 max-w-2xl mx-auto drop-shadow-md">
                 Encontre a bike dos seus sonhos ou venda a sua com segurança na maior comunidade de ciclistas do Brasil
               </p>
               
@@ -94,7 +96,7 @@ const MarketplaceHome = () => {
                     placeholder="Buscar por marca, modelo, categoria..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="pl-12 pr-4 py-4 text-lg rounded-full border-0 shadow-lg text-gray-900"
+                    className="pl-12 pr-4 py-4 text-lg rounded-full border-0 shadow-lg text-gray-900 bg-white"
                     aria-label="Buscar produtos no marketplace"
                   />
                 </div>
@@ -219,7 +221,7 @@ const MarketplaceHome = () => {
                         <SelectTrigger className="w-48" aria-label="Ordenar produtos">
                           <SelectValue />
                         </SelectTrigger>
-                        <SelectContent className="dropdown-content">
+                        <SelectContent className="bg-white border border-gray-300 shadow-lg z-50">
                           <SelectItem value="newest">Mais recentes</SelectItem>
                           <SelectItem value="oldest">Mais antigos</SelectItem>
                           <SelectItem value="price-low">Menor preço</SelectItem>

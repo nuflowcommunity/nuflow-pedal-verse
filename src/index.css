@@ -21,6 +21,15 @@
   --nuflow-charcoal: #2C3E2D;
 }
 
+/* Remove all outlines globally */
+*,
+*:focus,
+*:focus-visible,
+*:active {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
 /* Accessibility CSS */
 .sr-only {
   position: absolute;
@@ -32,14 +41,6 @@
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
-}
-
-/* Focus styles for better accessibility */
-body.keyboard-navigation *:focus,
-body.focus-visible *:focus-visible {
-  outline: 2px solid #11C76F;
-  outline-offset: 2px;
-  border-radius: 4px;
 }
 
 /* High contrast mode */
@@ -87,25 +88,24 @@ body.reduced-motion *::after {
 
 /* Card components with proper contrast */
 .card-highlight {
-  @apply bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1 hover:border-nuflow-emerald/30;
+  @apply bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden transition-all duration-300 hover:shadow-lg hover:scale-[1.02] hover:border-nuflow-emerald/30;
 }
 
 .card-tag {
   @apply absolute top-3 left-3 z-10 bg-nuflow-forest text-white px-3 py-1 rounded-full text-xs font-medium shadow-sm;
 }
 
-/* Button styles with proper contrast and no outlines */
+/* Button styles with sophisticated animations - NO OUTLINES */
 .btn-primary {
-  @apply bg-nuflow-forest text-white px-4 py-2 rounded-lg font-medium transition-all duration-300 hover:bg-nuflow-darkForest hover:scale-105 hover:shadow-lg focus:outline-none focus:bg-nuflow-darkForest focus:scale-105 focus:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:shadow-none;
+  @apply bg-nuflow-forest text-white px-4 py-2 rounded-lg font-medium transition-all duration-300 hover:bg-nuflow-darkForest hover:scale-[1.02] hover:shadow-lg focus:bg-nuflow-darkForest focus:scale-[1.02] focus:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:shadow-none;
 }
 
 .btn-secondary {
-  @apply bg-white text-nuflow-forest border-0 px-4 py-2 rounded-lg font-medium transition-all duration-300 hover:bg-nuflow-mint hover:scale-105 hover:shadow-lg focus:outline-none focus:bg-nuflow-mint focus:scale-105 focus:shadow-lg;
-  box-shadow: inset 0 0 0 1px var(--nuflow-forest);
+  @apply bg-white text-nuflow-forest border border-nuflow-forest px-4 py-2 rounded-lg font-medium transition-all duration-300 hover:bg-nuflow-mint hover:scale-[1.02] hover:shadow-lg focus:bg-nuflow-mint focus:scale-[1.02] focus:shadow-lg;
 }
 
 .btn-ghost {
-  @apply text-nuflow-forest px-4 py-2 rounded-lg font-medium transition-all duration-300 hover:bg-nuflow-mint/50 hover:scale-105 focus:outline-none focus:bg-nuflow-mint/50 focus:scale-105;
+  @apply text-nuflow-forest px-4 py-2 rounded-lg font-medium transition-all duration-300 hover:bg-nuflow-mint/50 hover:scale-[1.02] focus:bg-nuflow-mint/50 focus:scale-[1.02];
 }
 
 /* Typography improvements with better contrast */
@@ -133,11 +133,11 @@ body {
   background-color: #ffffff;
 }
 
-/* Improved link accessibility with better contrast */
+/* Improved link accessibility with sophisticated animations */
 a {
   color: var(--nuflow-forest);
   text-decoration: none;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
 }
 
 a:hover {
@@ -145,13 +145,7 @@ a:hover {
   transform: translateY(-1px);
 }
 
-a:focus {
-  outline: 2px solid var(--nuflow-emerald);
-  outline-offset: 2px;
-  border-radius: 4px;
-}
-
-/* Form accessibility improvements */
+/* Form accessibility improvements - NO OUTLINES */
 label {
   display: block;
   margin-bottom: 0.5rem;
@@ -171,7 +165,7 @@ select {
   border-radius: 6px;
   padding: 0.75rem;
   font-size: 1rem;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
   background-color: white;
 }
 
@@ -179,21 +173,18 @@ input:focus,
 textarea:focus,
 select:focus {
   border-color: var(--nuflow-forest);
-  box-shadow: 0 0 0 3px rgba(17, 199, 111, 0.1);
-  outline: none;
-  transform: translateY(-1px);
+  transform: scale(1.01);
+  box-shadow: 0 4px 12px rgba(17, 199, 111, 0.15);
 }
 
-/* Button focus improvements without outlines */
-button:focus-visible,
-a:focus-visible,
-input:focus-visible,
-textarea:focus-visible,
-select:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(17, 199, 111, 0.3);
-  border-radius: 6px;
-  transform: translateY(-1px);
+/* Sophisticated focus effects without outlines */
+button:focus,
+a:focus,
+input:focus,
+textarea:focus,
+select:focus {
+  transform: scale(1.02);
+  box-shadow: 0 4px 12px rgba(17, 199, 111, 0.2);
 }
 
 /* Error states with better contrast */
@@ -204,7 +195,7 @@ select:focus-visible {
 
 .error:focus {
   border-color: #dc2626;
-  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.2);
 }
 
 /* Success states */
@@ -215,7 +206,7 @@ select:focus-visible {
 
 .success:focus {
   border-color: #16a34a;
-  box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.1);
+  box-shadow: 0 4px 12px rgba(22, 163, 74, 0.2);
 }
 
 /* Loading states */
@@ -227,7 +218,7 @@ select:focus-visible {
   @apply animate-spin rounded-full h-8 w-8 border-b-2 border-nuflow-forest;
 }
 
-/* Dropdown improvements with proper background and z-index */
+/* Dropdown improvements with solid background and high z-index */
 .dropdown-content {
   @apply bg-white border border-gray-200 rounded-lg shadow-lg z-50 min-w-max;
 }
@@ -249,7 +240,7 @@ select:focus-visible {
     transform: scale(1);
   }
   to {
-    transform: scale(1.05);
+    transform: scale(1.02);
   }
 }
 
@@ -279,8 +270,17 @@ select:focus-visible {
     opacity: 1;
   }
   50% {
-    transform: scale(1.02);
-    opacity: 0.95;
+    transform: scale(1.01);
+    opacity: 0.98;
+  }
+}
+
+@keyframes softPulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(17, 199, 111, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 4px rgba(17, 199, 111, 0.1);
   }
 }
 
@@ -293,7 +293,7 @@ select:focus-visible {
 }
 
 .animate-hover-scale:hover {
-  transform: scale(1.05);
+  transform: scale(1.02);
 }
 
 .animate-scroll-down {
@@ -302,6 +302,10 @@ select:focus-visible {
 
 .animate-breathe {
   animation: breathe 3s ease-in-out infinite;
+}
+
+.animate-soft-pulse {
+  animation: softPulse 2s ease-in-out infinite;
 }
 
 /* Utility classes for consistent spacing */
