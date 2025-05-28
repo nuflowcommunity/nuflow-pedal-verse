@@ -38,6 +38,10 @@ const EventFilters: React.FC<EventFiltersProps> = ({
     { value: 'Triathlon', label: 'Triathlon' },
     { value: 'Caminhada', label: 'Caminhada' },
     { value: 'Trail', label: 'Trail' },
+    { value: 'MTB', label: 'MTB' },
+    { value: 'Speed', label: 'Speed' },
+    { value: 'Gravel', label: 'Gravel' },
+    { value: 'Urbano', label: 'Urbano' },
     { value: 'Outros', label: 'Outros' }
   ];
 
@@ -50,6 +54,14 @@ const EventFilters: React.FC<EventFiltersProps> = ({
     { value: 'completed', label: 'Concluído', color: 'bg-purple-100 text-purple-800' },
     { value: 'draft', label: 'Rascunho', color: 'bg-gray-100 text-gray-600' }
   ];
+
+  const handleStatusChange = (value: string) => {
+    onFilterChange({ status: value === 'all' ? undefined : value });
+  };
+
+  const handleEventTypeChange = (value: string) => {
+    onFilterChange({ event_type: value === 'all' ? undefined : value });
+  };
 
   return (
     <Card className="mb-6">
@@ -69,14 +81,14 @@ const EventFilters: React.FC<EventFiltersProps> = ({
           {/* Filtros em linha */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
             <Select
-              value={filters.status || ''}
-              onValueChange={(value) => onFilterChange({ status: value || undefined })}
+              value={filters.status || 'all'}
+              onValueChange={handleStatusChange}
             >
               <SelectTrigger>
                 <SelectValue placeholder="Status" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">Todos os status</SelectItem>
+                <SelectItem value="all">Todos os status</SelectItem>
                 {statusOptions.map((status) => (
                   <SelectItem key={status.value} value={status.value}>
                     <div className="flex items-center gap-2">
@@ -89,14 +101,14 @@ const EventFilters: React.FC<EventFiltersProps> = ({
             </Select>
 
             <Select
-              value={filters.event_type || ''}
-              onValueChange={(value) => onFilterChange({ event_type: value || undefined })}
+              value={filters.event_type || 'all'}
+              onValueChange={handleEventTypeChange}
             >
               <SelectTrigger>
                 <SelectValue placeholder="Categoria" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">Todas as categorias</SelectItem>
+                <SelectItem value="all">Todas as categorias</SelectItem>
                 {eventTypes.map((type) => (
                   <SelectItem key={type.value} value={type.value}>
                     {type.label}
@@ -109,14 +121,14 @@ const EventFilters: React.FC<EventFiltersProps> = ({
               type="date"
               placeholder="Data inicial"
               value={filters.date_from || ''}
-              onChange={(e) => onFilterChange({ date_from: e.target.value })}
+              onChange={(e) => onFilterChange({ date_from: e.target.value || undefined })}
             />
 
             <Input
               type="date"
               placeholder="Data final"
               value={filters.date_to || ''}
-              onChange={(e) => onFilterChange({ date_to: e.target.value })}
+              onChange={(e) => onFilterChange({ date_to: e.target.value || undefined })}
             />
 
             <Button
