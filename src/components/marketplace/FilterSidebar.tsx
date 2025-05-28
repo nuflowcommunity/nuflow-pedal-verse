@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { X, SlidersHorizontal } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -53,7 +52,7 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({
     'Scott',
     'Merida',
     'Caloi',
-    'Oggi'
+    'Hoje'
   ];
 
   const conditions = [
@@ -135,7 +134,7 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({
     <div className="space-y-6">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <h3 className="text-lg font-semibold text-high-contrast">Filtros</h3>
+        <h3 className="text-lg font-semibold text-gray-900">Filtros</h3>
         <div className="flex items-center gap-2">
           {getActiveFiltersCount() > 0 && (
             <Badge variant="secondary" className="text-xs">
@@ -157,7 +156,7 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({
 
       {/* Featured Products */}
       <div className="space-y-3">
-        <Label className="text-sm font-medium text-high-contrast">Especiais</Label>
+        <Label className="text-sm font-medium text-gray-900">Especiais</Label>
         <div className="flex items-center space-x-2">
           <Checkbox
             id="featured"
@@ -165,7 +164,7 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({
             onCheckedChange={handleFeaturedChange}
             aria-describedby="featured-description"
           />
-          <Label htmlFor="featured" className="text-sm cursor-pointer">
+          <Label htmlFor="featured" className="text-sm cursor-pointer text-gray-700">
             Apenas produtos em destaque
           </Label>
         </div>
@@ -175,7 +174,7 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({
 
       {/* Price Range */}
       <div className="space-y-3">
-        <Label className="text-sm font-medium text-high-contrast">
+        <Label className="text-sm font-medium text-gray-900">
           Faixa de Preço: R$ {priceRange[0].toLocaleString()} - R$ {priceRange[1].toLocaleString()}
         </Label>
         <Slider
@@ -187,7 +186,7 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({
           className="w-full"
           aria-label="Faixa de preço"
         />
-        <div className="flex justify-between text-xs text-low-contrast">
+        <div className="flex justify-between text-xs text-gray-600">
           <span>R$ 0</span>
           <span>R$ 10.000+</span>
         </div>
@@ -197,7 +196,7 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({
 
       {/* Categories */}
       <div className="space-y-3">
-        <Label className="text-sm font-medium text-high-contrast">Categorias</Label>
+        <Label className="text-sm font-medium text-gray-900">Categorias</Label>
         <div className="space-y-2 max-h-40 overflow-y-auto">
           {categories.map((category) => (
             <div key={category} className="flex items-center space-x-2">
@@ -206,7 +205,7 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({
                 checked={filters.category === category}
                 onCheckedChange={(checked) => handleCategoryChange(category, checked as boolean)}
               />
-              <Label htmlFor={`category-${category}`} className="text-sm cursor-pointer">
+              <Label htmlFor={`category-${category}`} className="text-sm cursor-pointer text-gray-700">
                 {category}
               </Label>
             </div>
@@ -218,7 +217,7 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({
 
       {/* Brands */}
       <div className="space-y-3">
-        <Label className="text-sm font-medium text-high-contrast">Marcas</Label>
+        <Label className="text-sm font-medium text-gray-900">Marcas</Label>
         <div className="space-y-2 max-h-40 overflow-y-auto">
           {brands.map((brand) => (
             <div key={brand} className="flex items-center space-x-2">
@@ -227,7 +226,7 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({
                 checked={filters.brand === brand}
                 onCheckedChange={(checked) => handleBrandChange(brand, checked as boolean)}
               />
-              <Label htmlFor={`brand-${brand}`} className="text-sm cursor-pointer">
+              <Label htmlFor={`brand-${brand}`} className="text-sm cursor-pointer text-gray-700">
                 {brand}
               </Label>
             </div>
@@ -239,7 +238,7 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({
 
       {/* Condition */}
       <div className="space-y-3">
-        <Label className="text-sm font-medium text-high-contrast">Condição</Label>
+        <Label className="text-sm font-medium text-gray-900">Condição</Label>
         <div className="space-y-2">
           {conditions.map((condition) => (
             <div key={condition.value} className="flex items-center space-x-2">
@@ -248,7 +247,7 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({
                 checked={filters.condition === condition.value}
                 onCheckedChange={(checked) => handleConditionChange(condition.value, checked as boolean)}
               />
-              <Label htmlFor={`condition-${condition.value}`} className="text-sm cursor-pointer">
+              <Label htmlFor={`condition-${condition.value}`} className="text-sm cursor-pointer text-gray-700">
                 {condition.label}
               </Label>
             </div>
@@ -260,7 +259,7 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({
 
       {/* Location */}
       <div className="space-y-3">
-        <Label className="text-sm font-medium text-high-contrast">Localização</Label>
+        <Label className="text-sm font-medium text-gray-900">Localização</Label>
         <div className="space-y-2 max-h-40 overflow-y-auto">
           {locations.map((location) => (
             <div key={location} className="flex items-center space-x-2">
@@ -269,7 +268,7 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({
                 checked={filters.location === location}
                 onCheckedChange={(checked) => handleLocationChange(location, checked as boolean)}
               />
-              <Label htmlFor={`location-${location}`} className="text-sm cursor-pointer">
+              <Label htmlFor={`location-${location}`} className="text-sm cursor-pointer text-gray-700">
                 {location}
               </Label>
             </div>

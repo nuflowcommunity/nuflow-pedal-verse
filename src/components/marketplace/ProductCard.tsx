@@ -42,10 +42,10 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
   const getConditionColor = (condition: string) => {
     switch (condition.toLowerCase()) {
-      case 'novo': return 'bg-green-100 text-green-800 border-green-200';
-      case 'usado': return 'bg-blue-100 text-blue-800 border-blue-200';
-      case 'seminovo': return 'bg-yellow-100 text-yellow-800 border-yellow-200';
-      default: return 'bg-gray-100 text-gray-800 border-gray-200';
+      case 'novo': return 'bg-green-600 text-white border-green-600';
+      case 'usado': return 'bg-blue-600 text-white border-blue-600';
+      case 'seminovo': return 'bg-amber-600 text-white border-amber-600';
+      default: return 'bg-gray-600 text-white border-gray-600';
     }
   };
 
@@ -121,7 +121,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
         {/* Header */}
         <div className="flex-1">
           <Link to={`/marketplace/${product.id}`} className="block group/link">
-            <h3 className="font-heading font-semibold text-lg text-high-contrast mb-2 line-clamp-2 group-hover/link:text-nuflow-forest transition-colors">
+            <h3 className="font-heading font-semibold text-lg text-gray-900 mb-2 line-clamp-2 group-hover/link:text-nuflow-forest transition-colors">
               {product.title}
             </h3>
           </Link>
@@ -150,21 +150,21 @@ const ProductCard: React.FC<ProductCardProps> = ({
                   />
                 ))}
               </div>
-              <span className="text-sm text-medium-contrast ml-1">
+              <span className="text-sm text-gray-700 ml-1">
                 ({product.reviews?.length})
               </span>
             </div>
           )}
           
           {/* Location */}
-          <div className="flex items-center text-sm text-medium-contrast mb-3">
+          <div className="flex items-center text-sm text-gray-700 mb-3">
             <MapPin size={16} className="mr-1 flex-shrink-0" aria-hidden="true" />
             <span className="line-clamp-1">{product.location}</span>
           </div>
           
           {/* Views */}
           {product.views && (
-            <div className="flex items-center text-xs text-low-contrast mb-3">
+            <div className="flex items-center text-xs text-gray-600 mb-3">
               <Eye size={14} className="mr-1" aria-hidden="true" />
               <span>{product.views} visualizações</span>
             </div>

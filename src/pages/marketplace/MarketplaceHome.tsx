@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Search, Filter, Grid, List, SlidersHorizontal } from 'lucide-react';
 import Navbar from '@/components/Navbar';
@@ -147,7 +146,7 @@ const MarketplaceHome = () => {
                     {/* Left: Results count and active filters */}
                     <div className="flex-1">
                       <div className="flex items-center gap-4 mb-2">
-                        <h2 id="products-heading" className="text-lg font-semibold text-high-contrast">
+                        <h2 id="products-heading" className="text-lg font-semibold text-gray-900">
                           {loading ? 'Carregando...' : `${sortedProducts.length} produtos encontrados`}
                         </h2>
                         <Button
@@ -165,7 +164,7 @@ const MarketplaceHome = () => {
                       {/* Active Filters */}
                       {hasActiveFilters && (
                         <div className="flex flex-wrap items-center gap-2" role="list" aria-label="Filtros ativos">
-                          <span className="text-sm text-medium-contrast">Filtros ativos:</span>
+                          <span className="text-sm text-gray-700">Filtros ativos:</span>
                           {searchQuery && (
                             <Badge variant="secondary" className="flex items-center gap-1" role="listitem">
                               Busca: "{searchQuery}"
@@ -269,10 +268,10 @@ const MarketplaceHome = () => {
                       <div className="w-16 h-16 bg-red-100 rounded-full mx-auto mb-4 flex items-center justify-center">
                         <span className="text-red-500 text-2xl" aria-hidden="true">⚠️</span>
                       </div>
-                      <h3 className="text-lg font-semibold text-high-contrast mb-2">
+                      <h3 className="text-lg font-semibold text-gray-900 mb-2">
                         Erro ao carregar produtos
                       </h3>
-                      <p className="text-medium-contrast mb-4">{error}</p>
+                      <p className="text-gray-700 mb-4">{error}</p>
                       <Button onClick={() => window.location.reload()} className="btn-primary">
                         Tentar novamente
                       </Button>
@@ -284,10 +283,10 @@ const MarketplaceHome = () => {
                       <div className="w-16 h-16 bg-gray-100 rounded-full mx-auto mb-4 flex items-center justify-center">
                         <Search size={24} className="text-gray-400" aria-hidden="true" />
                       </div>
-                      <h3 className="text-lg font-semibold text-high-contrast mb-2">
+                      <h3 className="text-lg font-semibold text-gray-900 mb-2">
                         Nenhum produto encontrado
                       </h3>
-                      <p className="text-medium-contrast mb-4">
+                      <p className="text-gray-700 mb-4">
                         Tente ajustar os filtros ou fazer uma nova busca
                       </p>
                       {hasActiveFilters && (

@@ -229,19 +229,6 @@ select:focus-visible {
   @apply bg-white border border-gray-200 rounded-lg shadow-lg z-50 min-w-max;
 }
 
-/* Text utilities for better readability */
-.text-high-contrast {
-  @apply text-gray-900;
-}
-
-.text-medium-contrast {
-  @apply text-gray-700;
-}
-
-.text-low-contrast {
-  @apply text-gray-600;
-}
-
 /* Animation utilities */
 @keyframes fadeIn {
   from {
