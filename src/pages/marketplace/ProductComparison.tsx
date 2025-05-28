@@ -1,7 +1,6 @@
-
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, X, Heart, MessageCircle } from 'lucide-react';
+import { ArrowLeft, X, Heart, MessageCircle, GitCompare } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
@@ -28,6 +27,32 @@ const ProductComparison = () => {
       case 'seminovo': return 'bg-amber-600 text-white';
       default: return 'bg-gray-700 text-white';
     }
+  };
+
+  const renderFieldValue = (value: any, field: any) => {
+    if (!value) return <span className="text-gray-400">-</span>;
+    
+    if (field.isPrice && typeof value === 'number') {
+      return (
+        <span className="font-bold text-nuflow-moss text-lg">
+          {formatPrice(value)}
+        </span>
+      );
+    }
+    
+    if (field.isBadge && typeof value === 'string') {
+      return (
+        <Badge className={cn("text-xs", getConditionColor(value))}>
+          {value.charAt(0).toUpperCase() + value.slice(1)}
+        </Badge>
+      );
+    }
+    
+    if (typeof value === 'string' || typeof value === 'number') {
+      return <span className="text-gray-900">{value}</span>;
+    }
+    
+    return <span className="text-gray-400">-</span>;
   };
 
   if (comparisonProducts.length === 0) {
@@ -150,19 +175,7 @@ const ProductComparison = () => {
                         const value = product[field.key as keyof typeof product];
                         return (
                           <td key={product.id} className="p-4 text-center">
-                            {field.isPrice && typeof value === 'number' ? (
-                              <span className="font-bold text-nuflow-moss text-lg">
-                                {formatPrice(value)}
-                              </span>
-                            ) : field.isBadge && value ? (
-                              <Badge className={cn("text-xs", getConditionColor(value as string))}>
-                                {(value as string).charAt(0).toUpperCase() + (value as string).slice(1)}
-                              </Badge>
-                            ) : value ? (
-                              <span className="text-gray-900">{value}</span>
-                            ) : (
-                              <span className="text-gray-400">-</span>
-                            )}
+                            {renderFieldValue(value, field)}
                           </td>
                         );
                       })}

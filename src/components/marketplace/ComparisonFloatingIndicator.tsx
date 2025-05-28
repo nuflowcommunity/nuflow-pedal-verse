@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Compare, X } from 'lucide-react';
+import { GitCompare, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useComparison } from '@/contexts/ComparisonContext';
@@ -20,7 +20,7 @@ const ComparisonFloatingIndicator = () => {
       <div className="bg-white rounded-lg shadow-lg border border-gray-200 p-4 min-w-72">
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2">
-            <Compare size={20} className="text-blue-600" />
+            <GitCompare size={20} className="text-blue-600" />
             <span className="font-semibold text-gray-900">Comparar produtos</span>
             <Badge variant="secondary" className="bg-blue-100 text-blue-800">
               {comparisonProducts.length}
@@ -72,7 +72,7 @@ const ComparisonFloatingIndicator = () => {
             className="flex-1 bg-blue-600 hover:bg-blue-700 text-white"
             disabled={comparisonProducts.length < 2}
           >
-            <Compare size={16} className="mr-1" />
+            <GitCompare size={16} className="mr-1" />
             Comparar
           </Button>
         </div>

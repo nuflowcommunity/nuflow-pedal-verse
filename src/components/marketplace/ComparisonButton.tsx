@@ -3,7 +3,7 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { useComparison } from '@/contexts/ComparisonContext';
 import { Product } from '@/services/marketplace/types';
-import { Compare } from 'lucide-react';
+import { GitCompare } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface ComparisonButtonProps {
@@ -45,7 +45,7 @@ const ComparisonButton: React.FC<ComparisonButtonProps> = ({
       )}
       aria-label={inComparison ? "Remover da comparação" : "Adicionar à comparação"}
     >
-      <Compare size={16} className="mr-1" />
+      <GitCompare size={16} className="mr-1" />
       {inComparison ? "Na comparação" : "Comparar"}
     </Button>
   );

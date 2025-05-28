@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -41,7 +42,7 @@ import MonthlyDashboard from "./pages/admin/finance/dashboard/MonthlyDashboard";
 import Last24HoursDashboard from "./pages/admin/finance/dashboard/Last24HoursDashboard";
 import GoogleAdsPage from "./pages/admin/marketing/GoogleAdsPage";
 import MetaAdsPage from "./pages/admin/marketing/MetaAdsPage";
-import ProtectedRoute from "./components/auth/ProtectedRoute";
+import { ProtectedRoute } from "./components/auth/ProtectedRoute";
 import ComparisonFloatingIndicator from "./components/marketplace/ComparisonFloatingIndicator";
 
 const queryClient = new QueryClient();

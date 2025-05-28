@@ -6,20 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import LazyImage from '@/components/ui/lazy-image';
 import ComparisonButton from './ComparisonButton';
-
-interface Product {
-  id: string;
-  title: string;
-  brand?: string;
-  price: number;
-  original_price?: number;
-  condition: string;
-  location: string;
-  images?: Array<{ id: string; image_url: string }>;
-  views?: number;
-  featured?: boolean;
-  reviews?: Array<{ rating: number }>;
-}
+import { Product } from '@/services/marketplace/types';
 
 interface ProductCardProps {
   product: Product;
