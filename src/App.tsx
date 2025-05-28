@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -17,6 +16,8 @@ import AdminLayout from '@/components/admin/AdminLayout';
 // Pages
 import Index from '@/pages/Index';
 import Login from '@/pages/Login';
+import AdminLogin from '@/pages/auth/AdminLogin';
+import PartnerLogin from '@/pages/auth/PartnerLogin';
 import Sobre from '@/pages/Sobre';
 import Products from '@/pages/Products';
 import Bikes from '@/pages/Bikes';
@@ -100,6 +101,8 @@ function App() {
                 {/* Public Routes */}
                 <Route path="/" element={<Index />} />
                 <Route path="/login" element={<Login />} />
+                <Route path="/admin/login" element={<AdminLogin />} />
+                <Route path="/partner/login" element={<PartnerLogin />} />
                 <Route path="/sobre" element={<Sobre />} />
                 <Route path="/produtos" element={<Products />} />
                 <Route path="/bikes" element={<Bikes />} />
@@ -114,6 +117,8 @@ function App() {
                 <Route path="/shared/:token" element={<SharedWishlist />} />
                 <Route path="/unauthorized" element={<Unauthorized />} />
                 <Route path="/auth/reset-password" element={<ResetPassword />} />
+                <Route path="/admin/reset-password" element={<ResetPassword />} />
+                <Route path="/partner/reset-password" element={<ResetPassword />} />
                 
                 {/* Marketplace Routes */}
                 <Route path="/marketplace" element={<MarketplaceHome />} />

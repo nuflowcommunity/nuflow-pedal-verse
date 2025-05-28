@@ -22,12 +22,20 @@ const ResetPassword = () => {
 
   const accessToken = searchParams.get('access_token');
   const refreshToken = searchParams.get('refresh_token');
+  const type = searchParams.get('type');
+
+  // Detectar o tipo de usuário baseado na URL de origem
+  const userType = window.location.pathname.includes('/admin/') ? 'admin' : 
+                   window.location.pathname.includes('/partner/') ? 'partner' : 'user';
 
   useEffect(() => {
     if (!accessToken || !refreshToken) {
-      navigate('/login?error=invalid_reset_link');
+      const redirectUrl = userType === 'admin' ? '/admin/login?error=invalid_reset_link' :
+                         userType === 'partner' ? '/partner/login?error=invalid_reset_link' :
+                         '/login?error=invalid_reset_link';
+      navigate(redirectUrl);
     }
-  }, [accessToken, refreshToken, navigate]);
+  }, [accessToken, refreshToken, navigate, userType]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -48,7 +56,10 @@ const ResetPassword = () => {
     if (success) {
       setPasswordReset(true);
       setTimeout(() => {
-        navigate('/login?message=password_reset_success');
+        const redirectUrl = userType === 'admin' ? '/admin/login?message=password_reset_success' :
+                           userType === 'partner' ? '/partner/login?message=password_reset_success' :
+                           '/login?message=password_reset_success';
+        navigate(redirectUrl);
       }, 3000);
     }
   };
@@ -66,6 +77,32 @@ const ResetPassword = () => {
   const isValidPassword = password.length >= 6;
   const passwordsMatch = password === confirmPassword && confirmPassword.length > 0;
 
+  const getUserTypeConfig = () => {
+    const configs = {
+      admin: {
+        label: 'Administrador',
+        color: 'text-red-600',
+        bgColor: 'bg-red-100',
+        buttonColor: 'bg-red-600 hover:bg-red-700'
+      },
+      partner: {
+        label: 'Parceiro',
+        color: 'text-blue-600',
+        bgColor: 'bg-blue-100',
+        buttonColor: 'bg-blue-600 hover:bg-blue-700'
+      },
+      user: {
+        label: 'Usuário',
+        color: 'text-nuflow-forest',
+        bgColor: 'bg-nuflow-emerald/10',
+        buttonColor: 'bg-nuflow-forest hover:bg-nuflow-darkForest'
+      }
+    };
+    return configs[userType];
+  };
+
+  const config = getUserTypeConfig();
+
   if (passwordReset) {
     return (
       <>
@@ -76,14 +113,14 @@ const ResetPassword = () => {
         />
         
         <div className="min-h-screen flex flex-col">
-          <Navbar />
+          {userType === 'user' && <Navbar />}
           
           <main className="flex-grow flex items-center justify-center py-16 bg-nuflow-sand">
             <div className="container-custom">
               <div className="max-w-md mx-auto bg-white p-8 rounded-lg shadow-md text-center space-y-6">
                 <div className="flex justify-center">
-                  <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center">
-                    <CheckCircle className="w-8 h-8 text-green-600" />
+                  <div className={`w-16 h-16 ${config.bgColor} rounded-full flex items-center justify-center`}>
+                    <CheckCircle className={`w-8 h-8 ${config.color}`} />
                   </div>
                 </div>
                 
@@ -92,13 +129,19 @@ const ResetPassword = () => {
                     Senha redefinida!
                   </h1>
                   <p className="text-sm text-nuflow-charcoal/70">
-                    Sua senha foi redefinida com sucesso. Você será redirecionado para a página de login em alguns segundos.
+                    Sua senha de {config.label.toLowerCase()} foi redefinida com sucesso. 
+                    Você será redirecionado para a página de login em alguns segundos.
                   </p>
                 </div>
                 
                 <Button
-                  onClick={() => navigate('/login')}
-                  className="w-full bg-nuflow-forest text-white hover:bg-nuflow-darkForest"
+                  onClick={() => {
+                    const redirectUrl = userType === 'admin' ? '/admin/login' :
+                                       userType === 'partner' ? '/partner/login' :
+                                       '/login';
+                    navigate(redirectUrl);
+                  }}
+                  className={`w-full text-white ${config.buttonColor}`}
                 >
                   Ir para o login
                 </Button>
@@ -106,7 +149,7 @@ const ResetPassword = () => {
             </div>
           </main>
           
-          <Footer />
+          {userType === 'user' && <Footer />}
         </div>
       </>
     );
@@ -115,26 +158,29 @@ const ResetPassword = () => {
   return (
     <>
       <SEOHead
-        title="Redefinir senha"
-        description="Redefina sua senha para acessar sua conta."
+        title={`Redefinir senha - ${config.label}`}
+        description={`Redefina sua senha de ${config.label.toLowerCase()} para acessar sua conta.`}
         noIndex={true}
       />
       
       <div className="min-h-screen flex flex-col">
-        <Navbar />
+        {userType === 'user' && <Navbar />}
         
         <main className="flex-grow flex items-center justify-center py-16 bg-nuflow-sand">
           <div className="container-custom">
             <div className="max-w-md mx-auto bg-white p-8 rounded-lg shadow-md">
               <div className="text-center space-y-2 mb-6">
                 <div className="flex justify-center">
-                  <div className="w-16 h-16 bg-nuflow-emerald/10 rounded-full flex items-center justify-center">
-                    <Lock className="w-8 h-8 text-nuflow-forest" />
+                  <div className={`w-16 h-16 ${config.bgColor} rounded-full flex items-center justify-center`}>
+                    <Lock className={`w-8 h-8 ${config.color}`} />
                   </div>
                 </div>
                 <h1 className="text-2xl font-heading font-bold text-nuflow-charcoal">
                   Redefinir senha
                 </h1>
+                <div className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium ${config.bgColor} ${config.color} border border-current`}>
+                  {config.label}
+                </div>
                 <p className="text-sm text-nuflow-charcoal/70">
                   Digite sua nova senha abaixo.
                 </p>
@@ -241,7 +287,7 @@ const ResetPassword = () => {
                 
                 <Button 
                   type="submit" 
-                  className="w-full bg-nuflow-forest text-white hover:bg-nuflow-darkForest"
+                  className={`w-full text-white ${config.buttonColor}`}
                   disabled={isLoading || !isValidPassword || !passwordsMatch}
                 >
                   {isLoading ? (
@@ -261,7 +307,7 @@ const ResetPassword = () => {
           </div>
         </main>
         
-        <Footer />
+        {userType === 'user' && <Footer />}
       </div>
     </>
   );
