@@ -67,7 +67,16 @@ const EntidadesAdminContainer: React.FC = () => {
     partners = hookData.partners || [];
     loading = hookData.loading;
     supabaseStats = hookData.stats || supabaseStats;
-    supabaseFilters = hookData.filters || supabaseFilters;
+    // Ensure we properly merge the filters with defaults
+    supabaseFilters = {
+      ...supabaseFilters,
+      ...hookData.filters,
+      // Ensure these properties always exist
+      startDate: hookData.filters?.startDate || undefined,
+      endDate: hookData.filters?.endDate || undefined,
+      activeTab: hookData.filters?.activeTab || 'todos',
+      sortDirection: hookData.filters?.sortDirection || 'desc',
+    };
     supabaseFilterActions = hookData.filterActions || supabaseFilterActions;
     refreshData = hookData.refreshData || refreshData;
   } catch (error) {
@@ -91,7 +100,7 @@ const EntidadesAdminContainer: React.FC = () => {
     validationIssues: supabaseStats.validationIssues
   };
 
-  // Transform supabase filters to match expected interface
+  // Transform supabase filters to match expected interface - ensure all properties exist
   const filters = {
     searchQuery: supabaseFilters.searchQuery,
     partnerFilter: supabaseFilters.partnerFilter,
@@ -99,7 +108,9 @@ const EntidadesAdminContainer: React.FC = () => {
     statusFilter: supabaseFilters.statusFilter,
     validationFilter: supabaseFilters.validationFilter,
     startDate: supabaseFilters.startDate,
-    endDate: supabaseFilters.endDate
+    endDate: supabaseFilters.endDate,
+    activeTab: supabaseFilters.activeTab,
+    sortDirection: supabaseFilters.sortDirection
   };
 
   // Transform filter actions to match expected interface
