@@ -31,7 +31,7 @@ export class EventManagementService {
     let query = supabase.from('events').select('*');
 
     if (filters.status) {
-      query = query.eq('status', filters.status);
+      query = query.eq('status', filters.status as any);
     }
 
     if (filters.search) {
@@ -43,7 +43,7 @@ export class EventManagementService {
     }
 
     if (filters.event_type) {
-      query = query.eq('category', filters.event_type);
+      query = query.eq('category', filters.event_type as any);
     }
 
     if (filters.date_from) {
@@ -131,7 +131,7 @@ export class EventManagementService {
       difficulty: originalEvent.difficulty,
       meeting_point: originalEvent.meeting_point,
       google_maps_url: originalEvent.google_maps_url,
-      status: 'draft',
+      status: 'draft' as any,
     };
 
     const { data: newEvent, error: createError } = await supabase
@@ -148,7 +148,7 @@ export class EventManagementService {
   static async deactivateEvent(eventId: string): Promise<void> {
     const { error } = await supabase
       .from('events')
-      .update({ status: 'cancelled' })
+      .update({ status: 'cancelled' as any })
       .eq('id', eventId);
 
     if (error) throw error;
@@ -160,7 +160,7 @@ export class EventManagementService {
       description: eventData.description,
       short_description: eventData.short_description,
       image_url: eventData.image_url,
-      category: eventData.category,
+      category: eventData.category as any,
       location: eventData.location,
       city: eventData.city,
       state: eventData.state,
@@ -181,7 +181,7 @@ export class EventManagementService {
         .update({
           ...baseEventData,
           updated_at: new Date().toISOString()
-        })
+        } as any)
         .eq('id', eventId);
 
       if (error) throw error;
@@ -191,8 +191,8 @@ export class EventManagementService {
         .from('events')
         .insert({
           ...baseEventData,
-          status: 'pending'
-        })
+          status: 'pending' as any
+        } as any)
         .select()
         .single();
 
