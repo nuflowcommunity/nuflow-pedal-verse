@@ -25,15 +25,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const location = useLocation();
 
   useEffect(() => {
+    let mounted = true;
+
     // First set up the auth state listener
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, currentSession) => {
+      async (event, currentSession) => {
+        if (!mounted) return;
+        
         setSession(currentSession);
         setUser(currentSession?.user ?? null);
         
-        // Use setTimeout to fetch profile to avoid potential deadlocks
         if (currentSession?.user) {
-          setTimeout(() => fetchUserProfile(currentSession.user.id), 0);
+          await fetchUserProfile(currentSession.user.id);
         } else {
           setUserRole(null);
         }
@@ -46,6 +49,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const initializeAuth = async () => {
       try {
         const { data: { session: initialSession } } = await supabase.auth.getSession();
+        if (!mounted) return;
+        
         setSession(initialSession);
         setUser(initialSession?.user ?? null);
         
@@ -55,13 +60,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       } catch (error) {
         console.error('Error checking auth session:', error);
       } finally {
-        setIsLoading(false);
+        if (mounted) {
+          setIsLoading(false);
+        }
       }
     };
 
     initializeAuth();
 
     return () => {
+      mounted = false;
       subscription.unsubscribe();
     };
   }, []);

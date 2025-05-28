@@ -42,7 +42,7 @@ const Navbar = () => {
           <Link to="/roles" className={`${isActive('/roles')} font-mono uppercase text-white text-sm tracking-wider hover:text-nuflow-emerald transition-colors`}>
             Explorar rolês
           </Link>
-          <Link to="/eventos" className={`${isActive('/eventos')} font-mono uppercase text-white text-sm tracking-wider hover:text-nuflow-emerald transition-colors`}>
+          <Link to="/events" className={`${isActive('/events')} font-mono uppercase text-white text-sm tracking-wider hover:text-nuflow-emerald transition-colors`}>
             <span className="flex items-center">
               <Calendar size={16} className="mr-1" />
               Calendário
@@ -99,7 +99,7 @@ const Navbar = () => {
       {isOpen && <div className="md:hidden bg-nuflow-forest border-t border-white/20 animate-slide-in">
           <div className="container-custom py-6 flex flex-col">
             <Link to="/roles" className="py-3 px-4 text-white hover:text-nuflow-emerald transition-colors rounded-md font-mono uppercase text-sm tracking-wider" onClick={toggleMenu}>Explorar rolês</Link>
-            <Link to="/eventos" className="py-3 px-4 text-white hover:text-nuflow-emerald transition-colors rounded-md font-mono uppercase text-sm tracking-wider flex items-center" onClick={toggleMenu}>
+            <Link to="/events" className="py-3 px-4 text-white hover:text-nuflow-emerald transition-colors rounded-md font-mono uppercase text-sm tracking-wider flex items-center" onClick={toggleMenu}>
               <Calendar size={16} className="mr-2" />
               Calendário
             </Link>

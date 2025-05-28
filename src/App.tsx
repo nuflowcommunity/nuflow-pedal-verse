@@ -1,5 +1,6 @@
+
 import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "sonner";
+import { Toaster as SonnerToaster } from "sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Routes, Route } from "react-router-dom";
@@ -55,7 +56,7 @@ function App() {
           <TooltipProvider>
             <ErrorBoundary>
               <Toaster />
-              <Sonner />
+              <SonnerToaster />
               <Routes>
                 <Route path="/" element={<Index />} />
                 <Route path="/products" element={<Products />} />
@@ -70,13 +71,6 @@ function App() {
                 <Route path="/anunciar" element={<NewAnnounce />} />
                 <Route path="*" element={<NotFound />} />
                 <Route path="/unauthorized" element={<Unauthorized />} />
-
-                {/* Temporarily comment out wishlist routes to isolate the issue */}
-                {/* 
-                <Route path="/wishlists" element={<Wishlists />} />
-                <Route path="/wishlists/:id" element={<WishlistDetail />} />
-                <Route path="/shared-wishlist/:token" element={<SharedWishlist />} />
-                */}
 
                 {/* Admin Routes */}
                 <Route

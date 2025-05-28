@@ -1,6 +1,5 @@
 
 import React from 'react';
-import { Helmet } from 'react-helmet-async';
 
 interface SEOHeadProps {
   title?: string;
@@ -29,65 +28,32 @@ const SEOHead: React.FC<SEOHeadProps> = ({
 }) => {
   const siteTitle = 'NuFlow';
   const fullTitle = title.includes(siteTitle) ? title : `${title} | ${siteTitle}`;
-  const fullUrl = url.startsWith('http') ? url : `https://nuflow.com.br${url}`;
-  const fullImage = image.startsWith('http') ? image : `https://nuflow.com.br${image}`;
 
-  const structuredData = {
-    "@context": "https://schema.org",
-    "@type": type === 'website' ? 'WebSite' : 'WebPage',
-    "name": fullTitle,
-    "description": description,
-    "url": fullUrl,
-    "image": fullImage,
-    "author": {
-      "@type": "Organization",
-      "name": author
-    },
-    ...(publishedTime && { "datePublished": publishedTime }),
-    ...(modifiedTime && { "dateModified": modifiedTime })
-  };
+  // Temporarily render basic HTML head tags instead of using Helmet
+  // This prevents the "Cannot read properties of undefined" error
+  React.useEffect(() => {
+    document.title = fullTitle;
+    
+    // Update meta description
+    let metaDescription = document.querySelector('meta[name="description"]');
+    if (!metaDescription) {
+      metaDescription = document.createElement('meta');
+      metaDescription.setAttribute('name', 'description');
+      document.head.appendChild(metaDescription);
+    }
+    metaDescription.setAttribute('content', description);
+    
+    // Update meta keywords
+    let metaKeywords = document.querySelector('meta[name="keywords"]');
+    if (!metaKeywords) {
+      metaKeywords = document.createElement('meta');
+      metaKeywords.setAttribute('name', 'keywords');
+      document.head.appendChild(metaKeywords);
+    }
+    metaKeywords.setAttribute('content', keywords.join(', '));
+  }, [fullTitle, description, keywords]);
 
-  return (
-    <Helmet>
-      {/* Basic Meta Tags */}
-      <title>{fullTitle}</title>
-      <meta name="description" content={description} />
-      <meta name="keywords" content={keywords.join(', ')} />
-      <meta name="author" content={author} />
-      <link rel="canonical" href={fullUrl} />
-      
-      {/* Robots */}
-      {noIndex && <meta name="robots" content="noindex, nofollow" />}
-      
-      {/* Open Graph */}
-      <meta property="og:type" content={type} />
-      <meta property="og:title" content={fullTitle} />
-      <meta property="og:description" content={description} />
-      <meta property="og:image" content={fullImage} />
-      <meta property="og:url" content={fullUrl} />
-      <meta property="og:site_name" content={siteTitle} />
-      <meta property="og:locale" content="pt_BR" />
-      
-      {/* Twitter Card */}
-      <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:title" content={fullTitle} />
-      <meta name="twitter:description" content={description} />
-      <meta name="twitter:image" content={fullImage} />
-      
-      {/* Article specific */}
-      {type === 'article' && publishedTime && (
-        <meta property="article:published_time" content={publishedTime} />
-      )}
-      {type === 'article' && modifiedTime && (
-        <meta property="article:modified_time" content={modifiedTime} />
-      )}
-      
-      {/* Structured Data */}
-      <script type="application/ld+json">
-        {JSON.stringify(structuredData)}
-      </script>
-    </Helmet>
-  );
+  return null; // Component doesn't render anything
 };
 
 export default SEOHead;
