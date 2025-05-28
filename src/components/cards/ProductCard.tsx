@@ -2,6 +2,7 @@
 import React from 'react';
 import { MapPin, MessageSquare } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import LazyImage from '@/components/ui/lazy-image';
 
 interface ProductCardProps {
   id: string;
@@ -19,10 +20,11 @@ const ProductCard = ({ id, title, image, price, location, condition, brand }: Pr
       <Link to={`/market/${id}`}>
         <div className="card-tag">{brand}</div>
         <div className="h-48 overflow-hidden">
-          <img 
+          <LazyImage 
             src={image} 
             alt={title} 
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            containerClassName="h-full"
           />
         </div>
         <div className="p-5">

@@ -5,6 +5,7 @@ import { MapPin, Heart, Eye, Star } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
+import LazyImage from '@/components/ui/lazy-image';
 
 interface Product {
   id: string;
@@ -70,11 +71,11 @@ const ProductCard: React.FC<ProductCardProps> = ({
         isListView ? "w-64 flex-shrink-0" : "aspect-[4/3]"
       )}>
         <Link to={`/marketplace/${product.id}`} className="block h-full">
-          <img 
+          <LazyImage
             src={mainImage}
             alt={`${product.title} - ${product.brand}`}
             className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-            loading="lazy"
+            containerClassName="h-full"
           />
         </Link>
         

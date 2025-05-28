@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { 
@@ -20,6 +19,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import LazyImage from '@/components/ui/lazy-image';
 import { useProduct } from '@/hooks/marketplace/useProducts';
 
 const ProductDetail = () => {
@@ -119,10 +119,11 @@ const ProductDetail = () => {
             <div className="space-y-4">
               {/* Main Image */}
               <div className="relative aspect-[4/3] bg-white rounded-lg overflow-hidden shadow-sm border">
-                <img
+                <LazyImage
                   src={currentImage.image_url}
                   alt={product.title}
                   className="w-full h-full object-cover"
+                  containerClassName="h-full"
                 />
                 
                 {/* Navigation arrows */}
@@ -164,10 +165,11 @@ const ProductDetail = () => {
                           : 'border-gray-200 hover:border-gray-300'
                       }`}
                     >
-                      <img
+                      <LazyImage
                         src={image.image_url}
                         alt={`${product.title} - ${index + 1}`}
                         className="w-full h-full object-cover"
+                        containerClassName="h-full"
                       />
                     </button>
                   ))}
