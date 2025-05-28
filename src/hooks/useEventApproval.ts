@@ -3,12 +3,12 @@ import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { EventApprovalService } from '@/services/eventApproval';
 import { EventApprovalAction } from '@/types/eventApproval';
-import { useToast } from '@/hooks/use-toast';
+import { useFeedback } from '@/hooks/useFeedback';
 
 export const useEventApproval = () => {
   const [selectedStatus, setSelectedStatus] = useState<string>('pending');
   const queryClient = useQueryClient();
-  const { toast } = useToast();
+  const { feedback } = useFeedback();
 
   // Query para buscar eventos por status
   const {
@@ -19,26 +19,32 @@ export const useEventApproval = () => {
   } = useQuery({
     queryKey: ['events-approval', selectedStatus],
     queryFn: () => EventApprovalService.getEventsByStatus(selectedStatus),
+    meta: {
+      onError: () => {
+        feedback.networkError();
+      }
+    }
   });
 
   // Mutation para aprovar/rejeitar evento
   const approveRejectMutation = useMutation({
     mutationFn: (action: EventApprovalAction) => 
       EventApprovalService.approveOrRejectEvent(action),
+    onMutate: () => {
+      feedback.processing();
+    },
     onSuccess: (_, variables) => {
-      toast({
-        title: "Sucesso!",
-        description: variables.action === 'approve' 
-          ? "Evento aprovado com sucesso!" 
-          : "Evento rejeitado com sucesso!",
-      });
+      if (variables.action === 'approve') {
+        feedback.eventApproved();
+      } else {
+        feedback.eventRejected();
+      }
       queryClient.invalidateQueries({ queryKey: ['events-approval'] });
     },
     onError: (error) => {
-      toast({
-        title: "Erro",
-        description: "Erro ao processar ação do evento.",
-        variant: "destructive",
+      feedback.showError({
+        title: "Erro ao processar evento",
+        description: "Não foi possível processar a ação do evento. Tente novamente.",
       });
       console.error('Error approving/rejecting event:', error);
     },
@@ -48,19 +54,15 @@ export const useEventApproval = () => {
   const updatePaymentMutation = useMutation({
     mutationFn: ({ eventId, settings }: { eventId: string; settings: any }) =>
       EventApprovalService.updatePaymentSettings(eventId, settings),
+    onMutate: () => {
+      feedback.saving();
+    },
     onSuccess: () => {
-      toast({
-        title: "Sucesso!",
-        description: "Configurações de pagamento atualizadas!",
-      });
+      feedback.saveSuccess("Configurações de pagamento");
       queryClient.invalidateQueries({ queryKey: ['events-approval'] });
     },
     onError: (error) => {
-      toast({
-        title: "Erro",
-        description: "Erro ao atualizar configurações de pagamento.",
-        variant: "destructive",
-      });
+      feedback.saveError("configurações de pagamento");
       console.error('Error updating payment settings:', error);
     },
   });

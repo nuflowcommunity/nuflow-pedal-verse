@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
-import { Button } from '@/components/ui/button';
+import { LoadingButton } from '@/components/ui/loading-button';
+import { StatusBadge } from '@/components/ui/status-badge';
 import { Badge } from '@/components/ui/badge';
 import { 
   Table, 
@@ -32,6 +33,7 @@ import { useEventApproval } from '@/hooks/useEventApproval';
 import { EventApprovalDialog } from './EventApprovalDialog';
 import { EventPaymentSettingsDialog } from './EventPaymentSettingsDialog';
 import { EventCustomQuestionsDialog } from './EventCustomQuestionsDialog';
+import { useFeedback } from '@/hooks/useFeedback';
 
 interface EventApprovalTableProps {
   events: ExtendedEvent[];
@@ -40,18 +42,24 @@ interface EventApprovalTableProps {
 
 export const EventApprovalTable: React.FC<EventApprovalTableProps> = ({ events, status }) => {
   const { approveEvent, rejectEvent, isProcessing } = useEventApproval();
+  const { feedback } = useFeedback();
   const [selectedEvent, setSelectedEvent] = useState<ExtendedEvent | null>(null);
   const [dialogType, setDialogType] = useState<'approval' | 'payment' | 'questions' | null>(null);
+  const [processingEventId, setProcessingEventId] = useState<string | null>(null);
 
-  const getStatusBadge = (eventStatus: string) => {
-    const configs = {
-      pending: 'bg-yellow-100 text-yellow-800',
-      approved: 'bg-green-100 text-green-800',
-      rejected: 'bg-red-100 text-red-800',
-      active: 'bg-blue-100 text-blue-800',
-      draft: 'bg-gray-100 text-gray-800',
-    };
-    return configs[eventStatus as keyof typeof configs] || 'bg-gray-100 text-gray-800';
+  const getStatusBadgeType = (eventStatus: string) => {
+    switch (eventStatus) {
+      case 'pending':
+        return 'pending';
+      case 'approved':
+        return 'success';
+      case 'rejected':
+        return 'error';
+      case 'active':
+        return 'success';
+      default:
+        return 'pending';
+    }
   };
 
   const formatDate = (dateString: string) => {
@@ -72,8 +80,13 @@ export const EventApprovalTable: React.FC<EventApprovalTableProps> = ({ events, 
     }).format(price);
   };
 
-  const handleQuickApprove = (event: ExtendedEvent) => {
-    approveEvent(event.id);
+  const handleQuickApprove = async (event: ExtendedEvent) => {
+    setProcessingEventId(event.id);
+    try {
+      await approveEvent(event.id);
+    } finally {
+      setProcessingEventId(null);
+    }
   };
 
   const handleQuickReject = (event: ExtendedEvent) => {
@@ -137,9 +150,10 @@ export const EventApprovalTable: React.FC<EventApprovalTableProps> = ({ events, 
                 </TableCell>
                 <TableCell>{formatPrice(event.price)}</TableCell>
                 <TableCell>
-                  <Badge className={getStatusBadge(event.status)}>
-                    {event.status}
-                  </Badge>
+                  <StatusBadge 
+                    status={getStatusBadgeType(event.status)} 
+                    text={event.status}
+                  />
                 </TableCell>
                 <TableCell>
                   <div className="flex items-center space-x-2">
@@ -153,32 +167,34 @@ export const EventApprovalTable: React.FC<EventApprovalTableProps> = ({ events, 
                   <div className="flex items-center space-x-2">
                     {event.status === 'pending' && (
                       <>
-                        <Button
+                        <LoadingButton
                           size="sm"
                           variant="outline"
                           onClick={() => handleQuickApprove(event)}
-                          disabled={isProcessing}
+                          loading={processingEventId === event.id && isProcessing}
+                          loadingText="Aprovando..."
                           className="text-green-600 hover:text-green-700"
+                          icon={<Check className="h-4 w-4" />}
                         >
-                          <Check className="h-4 w-4" />
-                        </Button>
-                        <Button
+                          {processingEventId === event.id && isProcessing ? '' : ''}
+                        </LoadingButton>
+                        <LoadingButton
                           size="sm"
                           variant="outline"
                           onClick={() => handleQuickReject(event)}
                           disabled={isProcessing}
                           className="text-red-600 hover:text-red-700"
+                          icon={<X className="h-4 w-4" />}
                         >
-                          <X className="h-4 w-4" />
-                        </Button>
+                        </LoadingButton>
                       </>
                     )}
                     
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="sm">
+                        <LoadingButton variant="ghost" size="sm">
                           <MoreHorizontal className="h-4 w-4" />
-                        </Button>
+                        </LoadingButton>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
                         <DropdownMenuItem onClick={() => openDialog(event, 'approval')}>

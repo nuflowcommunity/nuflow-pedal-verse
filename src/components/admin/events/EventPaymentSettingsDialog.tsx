@@ -6,12 +6,15 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
+import { LoadingButton } from '@/components/ui/loading-button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { ExtendedEvent } from '@/types/eventApproval';
 import { useEventApproval } from '@/hooks/useEventApproval';
+import { useFeedback } from '@/hooks/useFeedback';
+import { FormFeedback } from '@/components/ui/form-feedback';
+import { Settings } from 'lucide-react';
 
 interface EventPaymentSettingsDialogProps {
   event: ExtendedEvent;
@@ -25,13 +28,34 @@ export const EventPaymentSettingsDialog: React.FC<EventPaymentSettingsDialogProp
   onClose,
 }) => {
   const { updatePaymentSettings, isProcessing } = useEventApproval();
+  const { feedback } = useFeedback();
   const [settings, setSettings] = useState({
     allow_installments: event.payment_settings?.allow_installments || false,
     max_installments: event.payment_settings?.max_installments || 1,
     min_installment_amount: event.payment_settings?.min_installment_amount || undefined,
   });
+  const [validationError, setValidationError] = useState<string | null>(null);
+
+  const validateSettings = () => {
+    if (settings.allow_installments && settings.min_installment_amount && event.price) {
+      const maxPossibleInstallments = Math.floor(event.price / settings.min_installment_amount);
+      if (settings.max_installments > maxPossibleInstallments) {
+        setValidationError(
+          `Com o valor mínimo definido, são possíveis no máximo ${maxPossibleInstallments} parcelas.`
+        );
+        return false;
+      }
+    }
+    setValidationError(null);
+    return true;
+  };
 
   const handleSave = () => {
+    if (!validateSettings()) {
+      feedback.validationError("configurações de parcelamento");
+      return;
+    }
+
     updatePaymentSettings({
       eventId: event.id,
       settings: settings,
@@ -41,11 +65,18 @@ export const EventPaymentSettingsDialog: React.FC<EventPaymentSettingsDialogProp
 
   const installmentOptions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
+  useEffect(() => {
+    validateSettings();
+  }, [settings, event.price]);
+
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-2xl">
         <DialogHeader>
-          <DialogTitle>Configurações de Pagamento</DialogTitle>
+          <DialogTitle className="flex items-center gap-2">
+            <Settings className="h-5 w-5" />
+            Configurações de Pagamento
+          </DialogTitle>
           <p className="text-sm text-gray-600">
             Configure as opções de parcelamento para o evento "{event.title}"
           </p>
@@ -132,12 +163,20 @@ export const EventPaymentSettingsDialog: React.FC<EventPaymentSettingsDialogProp
                     Se definido, limitará o parcelamento para não ter parcelas menores que este valor
                   </p>
                 </div>
+
+                {validationError && (
+                  <FormFeedback
+                    type="warning"
+                    message={validationError}
+                    title="Configuração inválida"
+                  />
+                )}
               </>
             )}
           </div>
 
           {/* Preview das opções */}
-          {settings.allow_installments && event.price && (
+          {settings.allow_installments && event.price && !validationError && (
             <div className="bg-blue-50 p-4 rounded-lg">
               <h5 className="font-medium text-blue-900 mb-2">
                 Preview das Opções de Pagamento
@@ -184,16 +223,22 @@ export const EventPaymentSettingsDialog: React.FC<EventPaymentSettingsDialogProp
 
           {/* Ações */}
           <div className="flex justify-end space-x-3 pt-4 border-t">
-            <Button variant="outline" onClick={onClose}>
-              Cancelar
-            </Button>
-            <Button 
-              onClick={handleSave}
+            <LoadingButton 
+              variant="outline" 
+              onClick={onClose}
               disabled={isProcessing}
+            >
+              Cancelar
+            </LoadingButton>
+            <LoadingButton 
+              onClick={handleSave}
+              loading={isProcessing}
+              loadingText="Salvando..."
+              disabled={!!validationError}
               className="bg-nuflow-forest hover:bg-nuflow-darkForest"
             >
-              {isProcessing ? 'Salvando...' : 'Salvar Configurações'}
-            </Button>
+              Salvar Configurações
+            </LoadingButton>
           </div>
         </div>
       </DialogContent>
