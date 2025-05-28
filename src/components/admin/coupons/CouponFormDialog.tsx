@@ -29,7 +29,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { useCoupons } from '@/hooks/useCoupons';
-import { Coupon } from '@/types/coupons';
+import { Coupon, CreateCouponData } from '@/types/coupons';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 

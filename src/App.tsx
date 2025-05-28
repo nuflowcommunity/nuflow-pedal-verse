@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -6,10 +5,10 @@ import { Toaster } from '@/components/ui/toaster';
 import { AuthProvider } from '@/contexts/AuthContext';
 import { ComparisonProvider } from '@/contexts/ComparisonContext';
 import { AccessibilityProvider } from '@/components/accessibility/AccessibilityProvider';
-import { SkipLinks } from '@/components/accessibility/SkipLinks';
-import { ErrorBoundary } from '@/components/error/ErrorBoundary';
-import { BackToTopButton } from '@/components/BackToTopButton';
-import { SEOHead } from '@/components/seo/SEOHead';
+import SkipLinks from '@/components/accessibility/SkipLinks';
+import ErrorBoundary from '@/components/error/ErrorBoundary';
+import BackToTopButton from '@/components/BackToTopButton';
+import SEOHead from '@/components/seo/SEOHead';
 
 // Layouts
 import AdminLayout from '@/components/admin/AdminLayout';
