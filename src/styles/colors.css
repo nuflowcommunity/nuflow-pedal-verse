@@ -1,0 +1,17 @@
+
+/* Color scheme - padronizado */
+:root {
+  --nuflow-forest: #2D5D31;
+  --nuflow-darkForest: #1E3A20;
+  --nuflow-deepGreen: #0F2A11;
+  --nuflow-moss: #4A7C59;
+  --nuflow-sage: #7BA05B;
+  --nuflow-lime: #A8D982;
+  --nuflow-mint: #C8E6C9;
+  --nuflow-emerald: #11C76F;
+  --nuflow-neon: #66FF91;
+  --nuflow-cream: #F5F7F5;
+  --nuflow-sand: #F0F2E8;
+  --nuflow-mineral: #8D9B87;
+  --nuflow-charcoal: #2C3E2D;
+}

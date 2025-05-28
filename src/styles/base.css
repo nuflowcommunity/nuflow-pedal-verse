@@ -1,0 +1,46 @@
+
+/* Base styles */
+* {
+  box-sizing: border-box;
+}
+
+/* Remove all outlines globally */
+*,
+*:focus,
+*:focus-visible,
+*:active {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  line-height: 1.6;
+  color: var(--nuflow-charcoal);
+  background-color: #ffffff;
+}
+
+/* Typography improvements with better contrast */
+.font-heading {
+  font-family: 'Poppins', sans-serif;
+}
+
+.font-body {
+  font-family: 'Inter', sans-serif;
+}
+
+/* Improved link accessibility with sophisticated animations */
+a {
+  color: var(--nuflow-forest);
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+a:hover {
+  color: var(--nuflow-emerald);
+  transform: translateY(-1px);
+}
