@@ -35,6 +35,17 @@ interface TabValidation {
   warnings: string[];
 }
 
+interface EventFormData {
+  title?: string;
+  description?: string;
+  short_description?: string;
+  image_url?: string;
+  location?: string;
+  date?: string;
+  meeting_point?: string;
+  [key: string]: any;
+}
+
 export const TabbedEventDialog: React.FC<TabbedEventDialogProps> = ({
   event,
   isOpen,
@@ -42,7 +53,7 @@ export const TabbedEventDialog: React.FC<TabbedEventDialogProps> = ({
   mode
 }) => {
   const [activeTab, setActiveTab] = useState('basic');
-  const [formData, setFormData] = useState(event || {});
+  const [formData, setFormData] = useState<EventFormData>(event || {});
 
   const tabs = [
     {

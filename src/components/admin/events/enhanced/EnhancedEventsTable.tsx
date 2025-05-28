@@ -1,26 +1,8 @@
 
-import React, { useState } from 'react';
-import { 
-  Eye, 
-  Edit, 
-  Check, 
-  X, 
-  Copy, 
-  Power, 
-  Users, 
-  Calendar, 
-  MapPin, 
-  Clock,
-  MoreVertical,
-  ChevronDown,
-  ArrowUpDown
-} from 'lucide-react';
+import React, { useRef, useEffect } from 'react';
+import { MoreHorizontal, Eye, Edit, Users, Archive, Copy, Trash2, Check, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
-import { Card, CardContent } from '@/components/ui/card';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { 
   DropdownMenu, 
   DropdownMenuContent, 
@@ -28,14 +10,16 @@ import {
   DropdownMenuSeparator, 
   DropdownMenuTrigger 
 } from '@/components/ui/dropdown-menu';
+import { 
+  Table, 
+  TableBody, 
+  TableCell, 
+  TableHead, 
+  TableHeader, 
+  TableRow 
+} from '@/components/ui/table';
+import { Checkbox } from '@/components/ui/checkbox';
 import { ExtendedEventForManagement } from '@/types/eventManagement';
-
-interface Column {
-  id: string;
-  label: string;
-  sortable: boolean;
-  width?: string;
-}
 
 interface EnhancedEventsTableProps {
   events: ExtendedEventForManagement[];
@@ -55,18 +39,6 @@ interface EnhancedEventsTableProps {
   isLoading?: boolean;
 }
 
-const defaultColumns: Column[] = [
-  { id: 'select', label: '', sortable: false, width: '50px' },
-  { id: 'event', label: 'Evento', sortable: true },
-  { id: 'type', label: 'Tipo', sortable: true, width: '120px' },
-  { id: 'organizer', label: 'Organizador', sortable: true, width: '150px' },
-  { id: 'status', label: 'Status', sortable: true, width: '120px' },
-  { id: 'date', label: 'Data', sortable: true, width: '180px' },
-  { id: 'location', label: 'Local', sortable: true, width: '200px' },
-  { id: 'participants', label: 'Participantes', sortable: true, width: '120px' },
-  { id: 'actions', label: 'Ações', sortable: false, width: '120px' },
-];
-
 export const EnhancedEventsTable: React.FC<EnhancedEventsTableProps> = ({
   events,
   selectedEvents,
@@ -82,362 +54,280 @@ export const EnhancedEventsTable: React.FC<EnhancedEventsTableProps> = ({
   onView,
   onEdit,
   onManageRegistrations,
-  isLoading
+  isLoading = false
 }) => {
-  const [visibleColumns, setVisibleColumns] = useState(defaultColumns.map(c => c.id));
-  const [expandedRow, setExpandedRow] = useState<string | null>(null);
-
-  const getStatusBadge = (status: string) => {
-    const statusConfig = {
-      pending: { label: 'Pendente', className: 'bg-yellow-100 text-yellow-800' },
-      approved: { label: 'Aprovado', className: 'bg-green-100 text-green-800' },
-      rejected: { label: 'Rejeitado', className: 'bg-red-100 text-red-800' },
-      active: { label: 'Ativo', className: 'bg-blue-100 text-blue-800' },
-      cancelled: { label: 'Cancelado', className: 'bg-gray-100 text-gray-800' },
-      completed: { label: 'Concluído', className: 'bg-purple-100 text-purple-800' },
-      draft: { label: 'Rascunho', className: 'bg-gray-100 text-gray-600' }
-    };
-
-    const config = statusConfig[status as keyof typeof statusConfig] || statusConfig.draft;
-    return <Badge className={config.className}>{config.label}</Badge>;
-  };
-
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('pt-BR', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric'
-    });
-  };
-
-  const formatDateTime = (dateString: string) => {
-    return new Date(dateString).toLocaleString('pt-BR', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
-    });
-  };
+  const selectAllRef = useRef<HTMLButtonElement>(null);
 
   const allSelected = selectedEvents.length === events.length && events.length > 0;
   const someSelected = selectedEvents.length > 0 && selectedEvents.length < events.length;
+
+  // Update the select all checkbox appearance
+  useEffect(() => {
+    if (selectAllRef.current) {
+      if (allSelected) {
+        selectAllRef.current.setAttribute('data-state', 'checked');
+      } else if (someSelected) {
+        selectAllRef.current.setAttribute('data-state', 'indeterminate');
+      } else {
+        selectAllRef.current.setAttribute('data-state', 'unchecked');
+      }
+    }
+  }, [allSelected, someSelected]);
 
   const handleSelectAll = () => {
     onSelectAll(!allSelected);
   };
 
-  const getSortIcon = (columnId: string) => {
-    if (sortBy !== columnId) {
-      return <ArrowUpDown className="h-4 w-4 text-gray-400" />;
-    }
-    return sortOrder === 'asc' ? 
-      <ArrowUpDown className="h-4 w-4 text-blue-600 rotate-180" /> : 
-      <ArrowUpDown className="h-4 w-4 text-blue-600" />;
+  const getStatusBadge = (status: string) => {
+    const statusConfig = {
+      pending: { variant: 'secondary' as const, label: 'Pendente' },
+      approved: { variant: 'default' as const, label: 'Aprovado' },
+      active: { variant: 'default' as const, label: 'Ativo' },
+      rejected: { variant: 'destructive' as const, label: 'Rejeitado' },
+      cancelled: { variant: 'outline' as const, label: 'Cancelado' },
+      draft: { variant: 'outline' as const, label: 'Rascunho' }
+    };
+
+    const config = statusConfig[status as keyof typeof statusConfig] || statusConfig.pending;
+    return <Badge variant={config.variant}>{config.label}</Badge>;
   };
 
-  const toggleRowExpansion = (eventId: string) => {
-    setExpandedRow(expandedRow === eventId ? null : eventId);
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString('pt-BR');
   };
+
+  const formatPrice = (price: number | string) => {
+    const numPrice = typeof price === 'string' ? parseFloat(price) : price;
+    return new Intl.NumberFormat('pt-BR', {
+      style: 'currency',
+      currency: 'BRL'
+    }).format(numPrice);
+  };
+
+  const SortableHeader = ({ column, children }: { column: string; children: React.ReactNode }) => (
+    <TableHead 
+      className="cursor-pointer hover:bg-gray-50 transition-colors"
+      onClick={() => onSort(column)}
+    >
+      <div className="flex items-center gap-2">
+        {children}
+        {sortBy === column && (
+          <span className="text-xs">
+            {sortOrder === 'asc' ? '↑' : '↓'}
+          </span>
+        )}
+      </div>
+    </TableHead>
+  );
 
   if (isLoading) {
     return (
-      <Card>
-        <CardContent className="p-6">
-          <div className="text-center text-gray-500">Carregando eventos...</div>
-        </CardContent>
-      </Card>
+      <div className="border rounded-lg">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead className="w-12">
+                <Checkbox disabled />
+              </TableHead>
+              <TableHead>Evento</TableHead>
+              <TableHead>Status</TableHead>
+              <TableHead>Data</TableHead>
+              <TableHead>Parceiro</TableHead>
+              <TableHead>Inscritos</TableHead>
+              <TableHead>Valor</TableHead>
+              <TableHead className="w-12"></TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {Array.from({ length: 5 }).map((_, index) => (
+              <TableRow key={index}>
+                <TableCell><div className="h-4 bg-gray-200 rounded animate-pulse" /></TableCell>
+                <TableCell><div className="h-4 bg-gray-200 rounded animate-pulse w-48" /></TableCell>
+                <TableCell><div className="h-6 bg-gray-200 rounded animate-pulse w-20" /></TableCell>
+                <TableCell><div className="h-4 bg-gray-200 rounded animate-pulse w-24" /></TableCell>
+                <TableCell><div className="h-4 bg-gray-200 rounded animate-pulse w-32" /></TableCell>
+                <TableCell><div className="h-4 bg-gray-200 rounded animate-pulse w-16" /></TableCell>
+                <TableCell><div className="h-4 bg-gray-200 rounded animate-pulse w-20" /></TableCell>
+                <TableCell><div className="h-8 bg-gray-200 rounded animate-pulse w-8" /></TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
     );
   }
 
   if (events.length === 0) {
     return (
-      <Card>
-        <CardContent className="p-6">
-          <div className="text-center text-gray-500">Nenhum evento encontrado</div>
-        </CardContent>
-      </Card>
+      <div className="border rounded-lg p-12 text-center">
+        <div className="max-w-md mx-auto">
+          <div className="w-16 h-16 bg-gray-100 rounded-full mx-auto mb-4 flex items-center justify-center">
+            <span className="text-gray-400 text-2xl">📅</span>
+          </div>
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">
+            Nenhum evento encontrado
+          </h3>
+          <p className="text-gray-600">
+            Não há eventos que correspondam aos filtros atuais.
+          </p>
+        </div>
+      </div>
     );
   }
 
   return (
-    <Card>
-      <CardContent className="p-0">
-        <div className="overflow-x-auto">
-          <TooltipProvider>
-            <Table>
-              <TableHeader>
-                <TableRow className="bg-gray-50">
-                  {defaultColumns.filter(col => visibleColumns.includes(col.id)).map((column) => (
-                    <TableHead 
-                      key={column.id} 
-                      className={`${column.width ? `w-[${column.width}]` : ''} relative`}
-                    >
-                      {column.id === 'select' ? (
-                        <Checkbox
-                          checked={allSelected}
-                          ref={(el) => {
-                            if (el) el.indeterminate = someSelected && !allSelected;
-                          }}
-                          onCheckedChange={handleSelectAll}
-                          aria-label="Selecionar todos"
-                        />
-                      ) : column.sortable ? (
-                        <Button
-                          variant="ghost"
-                          onClick={() => onSort(column.id)}
-                          className="h-auto p-0 font-medium hover:bg-transparent"
+    <div className="border rounded-lg overflow-hidden">
+      <Table>
+        <TableHeader>
+          <TableRow className="bg-gray-50">
+            <TableHead className="w-12">
+              <Checkbox
+                ref={selectAllRef}
+                checked={allSelected}
+                onCheckedChange={handleSelectAll}
+                aria-label="Selecionar todos os eventos"
+              />
+            </TableHead>
+            <SortableHeader column="title">Evento</SortableHeader>
+            <SortableHeader column="status">Status</SortableHeader>
+            <SortableHeader column="date">Data</SortableHeader>
+            <SortableHeader column="partner_name">Parceiro</SortableHeader>
+            <SortableHeader column="registrations">Inscritos</SortableHeader>
+            <SortableHeader column="price">Valor</SortableHeader>
+            <TableHead className="w-12">Ações</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {events.map((event) => (
+            <TableRow 
+              key={event.id}
+              className={`hover:bg-gray-50 transition-colors ${
+                selectedEvents.includes(event.id) ? 'bg-blue-50' : ''
+              }`}
+            >
+              <TableCell>
+                <Checkbox
+                  checked={selectedEvents.includes(event.id)}
+                  onCheckedChange={(checked) => 
+                    onSelectEvent(event.id, checked as boolean)
+                  }
+                  aria-label={`Selecionar evento ${event.title}`}
+                />
+              </TableCell>
+              
+              <TableCell className="max-w-xs">
+                <div>
+                  <div className="font-medium text-gray-900 truncate">
+                    {event.title}
+                  </div>
+                  <div className="text-sm text-gray-500 truncate">
+                    {event.location}
+                  </div>
+                </div>
+              </TableCell>
+              
+              <TableCell>
+                {getStatusBadge(event.status)}
+              </TableCell>
+              
+              <TableCell className="text-sm">
+                {formatDate(event.date)}
+              </TableCell>
+              
+              <TableCell className="text-sm">
+                {event.partner_name || 'N/A'}
+              </TableCell>
+              
+              <TableCell className="text-sm">
+                <div className="flex flex-col">
+                  <span>{event.current_registrations || 0}</span>
+                  {event.max_participants && (
+                    <span className="text-xs text-gray-500">
+                      de {event.max_participants}
+                    </span>
+                  )}
+                </div>
+              </TableCell>
+              
+              <TableCell className="text-sm font-medium">
+                {event.price ? formatPrice(event.price) : 'Gratuito'}
+              </TableCell>
+              
+              <TableCell>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                      <MoreHorizontal className="h-4 w-4" />
+                      <span className="sr-only">Abrir menu de ações</span>
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-48">
+                    <DropdownMenuItem onClick={() => onView(event.id)}>
+                      <Eye className="h-4 w-4 mr-2" />
+                      Visualizar
+                    </DropdownMenuItem>
+                    
+                    <DropdownMenuItem onClick={() => onEdit(event.id)}>
+                      <Edit className="h-4 w-4 mr-2" />
+                      Editar
+                    </DropdownMenuItem>
+                    
+                    <DropdownMenuItem onClick={() => onManageRegistrations(event.id)}>
+                      <Users className="h-4 w-4 mr-2" />
+                      Inscrições
+                    </DropdownMenuItem>
+                    
+                    <DropdownMenuSeparator />
+                    
+                    {event.status === 'pending' && (
+                      <>
+                        <DropdownMenuItem 
+                          onClick={() => onApprove(event.id)}
+                          className="text-green-600"
                         >
-                          <span className="flex items-center gap-1">
-                            {column.label}
-                            {getSortIcon(column.id)}
-                          </span>
-                        </Button>
-                      ) : (
-                        column.label
-                      )}
-                    </TableHead>
-                  ))}
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {events.map((event) => (
-                  <React.Fragment key={event.id}>
-                    <TableRow className="hover:bg-gray-50 group">
-                      {/* Checkbox */}
-                      {visibleColumns.includes('select') && (
-                        <TableCell>
-                          <Checkbox
-                            checked={selectedEvents.includes(event.id)}
-                            onCheckedChange={(checked) => onSelectEvent(event.id, !!checked)}
-                            aria-label={`Selecionar evento ${event.title}`}
-                          />
-                        </TableCell>
-                      )}
-
-                      {/* Event */}
-                      {visibleColumns.includes('event') && (
-                        <TableCell>
-                          <div className="space-y-1">
-                            <div className="font-medium text-gray-900 line-clamp-1 cursor-pointer"
-                                 onClick={() => toggleRowExpansion(event.id)}>
-                              <div className="flex items-center gap-2">
-                                <span>{event.title}</span>
-                                <ChevronDown className={`h-4 w-4 text-gray-400 transition-transform ${
-                                  expandedRow === event.id ? 'rotate-180' : ''
-                                }`} />
-                              </div>
-                            </div>
-                            <div className="text-sm text-gray-500 line-clamp-1">
-                              {event.short_description || event.description}
-                            </div>
-                            {event.cloned_from_id && (
-                              <Badge variant="outline" className="text-xs">
-                                <Copy className="w-3 h-3 mr-1" />
-                                Clonado
-                              </Badge>
-                            )}
-                          </div>
-                        </TableCell>
-                      )}
-
-                      {/* Type */}
-                      {visibleColumns.includes('type') && (
-                        <TableCell>
-                          <Badge variant="outline">
-                            {event.event_type || event.category || 'Evento'}
-                          </Badge>
-                        </TableCell>
-                      )}
-
-                      {/* Organizer */}
-                      {visibleColumns.includes('organizer') && (
-                        <TableCell>
-                          <div className="text-sm">
-                            {event.partner_name || event.organizer || '-'}
-                          </div>
-                        </TableCell>
-                      )}
-
-                      {/* Status */}
-                      {visibleColumns.includes('status') && (
-                        <TableCell>
-                          {getStatusBadge(event.status)}
-                        </TableCell>
-                      )}
-
-                      {/* Date */}
-                      {visibleColumns.includes('date') && (
-                        <TableCell>
-                          <div className="space-y-1">
-                            <div className="flex items-center text-sm">
-                              <Calendar className="w-4 h-4 mr-1 text-gray-400" />
-                              {formatDate(event.date)}
-                            </div>
-                            {event.end_date && event.end_date !== event.date && (
-                              <div className="flex items-center text-xs text-gray-500">
-                                <Clock className="w-3 h-3 mr-1" />
-                                até {formatDate(event.end_date)}
-                              </div>
-                            )}
-                          </div>
-                        </TableCell>
-                      )}
-
-                      {/* Location */}
-                      {visibleColumns.includes('location') && (
-                        <TableCell>
-                          <div className="flex items-center text-sm">
-                            <MapPin className="w-4 h-4 mr-1 text-gray-400 flex-shrink-0" />
-                            <span className="line-clamp-1">
-                              {event.city ? `${event.city}, ${event.state}` : event.location}
-                            </span>
-                          </div>
-                        </TableCell>
-                      )}
-
-                      {/* Participants */}
-                      {visibleColumns.includes('participants') && (
-                        <TableCell>
-                          <div className="flex items-center text-sm">
-                            <Users className="w-4 h-4 mr-1 text-gray-400" />
-                            {event.max_participants ? `0/${event.max_participants}` : 'Ilimitado'}
-                          </div>
-                        </TableCell>
-                      )}
-
-                      {/* Actions */}
-                      {visibleColumns.includes('actions') && (
-                        <TableCell>
-                          <div className="flex items-center gap-1">
-                            {/* Quick actions for pending events */}
-                            {event.status === 'pending' && (
-                              <>
-                                <Tooltip>
-                                  <TooltipTrigger asChild>
-                                    <Button
-                                      variant="ghost"
-                                      size="sm"
-                                      onClick={() => onApprove(event.id)}
-                                      className="h-8 w-8 p-0 text-green-600 hover:text-green-700 hover:bg-green-50"
-                                    >
-                                      <Check className="w-4 h-4" />
-                                    </Button>
-                                  </TooltipTrigger>
-                                  <TooltipContent>Aprovar evento</TooltipContent>
-                                </Tooltip>
-
-                                <Tooltip>
-                                  <TooltipTrigger asChild>
-                                    <Button
-                                      variant="ghost"
-                                      size="sm"
-                                      onClick={() => onReject(event.id)}
-                                      className="h-8 w-8 p-0 text-red-600 hover:text-red-700 hover:bg-red-50"
-                                    >
-                                      <X className="w-4 h-4" />
-                                    </Button>
-                                  </TooltipTrigger>
-                                  <TooltipContent>Rejeitar evento</TooltipContent>
-                                </Tooltip>
-                              </>
-                            )}
-
-                            {/* More actions menu */}
-                            <DropdownMenu>
-                              <DropdownMenuTrigger asChild>
-                                <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
-                                  <MoreVertical className="h-4 w-4" />
-                                </Button>
-                              </DropdownMenuTrigger>
-                              <DropdownMenuContent align="end">
-                                <DropdownMenuItem onClick={() => onView(event.id)}>
-                                  <Eye className="h-4 w-4 mr-2" />
-                                  Visualizar
-                                </DropdownMenuItem>
-                                <DropdownMenuItem onClick={() => onEdit(event.id)}>
-                                  <Edit className="h-4 w-4 mr-2" />
-                                  Editar
-                                </DropdownMenuItem>
-                                <DropdownMenuItem onClick={() => onManageRegistrations(event.id)}>
-                                  <Users className="h-4 w-4 mr-2" />
-                                  Inscrições
-                                </DropdownMenuItem>
-                                <DropdownMenuSeparator />
-                                <DropdownMenuItem onClick={() => onClone(event.id)}>
-                                  <Copy className="h-4 w-4 mr-2" />
-                                  Clonar
-                                </DropdownMenuItem>
-                                {event.status !== 'cancelled' && (
-                                  <DropdownMenuItem 
-                                    onClick={() => onDeactivate(event.id)}
-                                    className="text-orange-600"
-                                  >
-                                    <Power className="h-4 w-4 mr-2" />
-                                    Desativar
-                                  </DropdownMenuItem>
-                                )}
-                              </DropdownMenuContent>
-                            </DropdownMenu>
-                          </div>
-                        </TableCell>
-                      )}
-                    </TableRow>
-
-                    {/* Expanded row details */}
-                    {expandedRow === event.id && (
-                      <TableRow>
-                        <TableCell 
-                          colSpan={visibleColumns.length} 
-                          className="bg-gray-50 border-l-4 border-blue-200"
+                          <Check className="h-4 w-4 mr-2" />
+                          Aprovar
+                        </DropdownMenuItem>
+                        
+                        <DropdownMenuItem 
+                          onClick={() => onReject(event.id)}
+                          className="text-red-600"
                         >
-                          <div className="py-4 space-y-3">
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-                              <div>
-                                <span className="font-medium text-gray-600">Criado em:</span>
-                                <p>{formatDateTime(event.created_at)}</p>
-                              </div>
-                              {event.approved_at && (
-                                <div>
-                                  <span className="font-medium text-gray-600">Aprovado em:</span>
-                                  <p>{formatDateTime(event.approved_at)}</p>
-                                </div>
-                              )}
-                              {event.price && (
-                                <div>
-                                  <span className="font-medium text-gray-600">Preço:</span>
-                                  <p>{new Intl.NumberFormat('pt-BR', { 
-                                    style: 'currency', 
-                                    currency: 'BRL' 
-                                  }).format(event.price)}</p>
-                                </div>
-                              )}
-                            </div>
-                            
-                            {event.admin_notes && (
-                              <div>
-                                <span className="font-medium text-gray-600">Notas do Admin:</span>
-                                <p className="text-gray-700 mt-1">{event.admin_notes}</p>
-                              </div>
-                            )}
-                            
-                            {event.rejection_reason && (
-                              <div>
-                                <span className="font-medium text-red-600">Motivo da Rejeição:</span>
-                                <p className="text-red-700 mt-1">{event.rejection_reason}</p>
-                              </div>
-                            )}
-                          </div>
-                        </TableCell>
-                      </TableRow>
+                          <X className="h-4 w-4 mr-2" />
+                          Rejeitar
+                        </DropdownMenuItem>
+                      </>
                     )}
-                  </React.Fragment>
-                ))}
-              </TableBody>
-            </Table>
-          </TooltipProvider>
-        </div>
-      </CardContent>
-    </Card>
+                    
+                    <DropdownMenuItem onClick={() => onClone(event.id)}>
+                      <Copy className="h-4 w-4 mr-2" />
+                      Duplicar
+                    </DropdownMenuItem>
+                    
+                    <DropdownMenuSeparator />
+                    
+                    <DropdownMenuItem 
+                      onClick={() => onDeactivate(event.id)}
+                      className="text-orange-600"
+                    >
+                      <Archive className="h-4 w-4 mr-2" />
+                      Arquivar
+                    </DropdownMenuItem>
+                    
+                    <DropdownMenuItem 
+                      onClick={() => console.log('Delete:', event.id)}
+                      className="text-red-600"
+                    >
+                      <Trash2 className="h-4 w-4 mr-2" />
+                      Excluir
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </div>
   );
 };
