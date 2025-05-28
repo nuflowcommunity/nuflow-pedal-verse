@@ -41,7 +41,7 @@ const MarketplaceHome = () => {
     setSearchQuery('');
   };
 
-  const hasActiveFilters = Object.keys(filters).length > 0 || searchQuery;
+  const hasActiveFilters = Boolean(Object.keys(filters).length > 0 || searchQuery);
 
   const getSortedProducts = () => {
     if (!products) return [];

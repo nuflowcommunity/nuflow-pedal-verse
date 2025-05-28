@@ -11,19 +11,11 @@ import {
   checkIfFavorited,
   updateProductViews,
   Product,
-  ProductCategory
+  ProductCategory,
+  ProductFilters
 } from '@/services/marketplace/products';
 
-export interface ProductFilters {
-  category?: string;
-  brand?: string;
-  condition?: string;
-  location?: string;
-  minPrice?: number;
-  maxPrice?: number;
-  search?: string;
-  featured?: boolean;
-}
+export type { ProductFilters };
 
 export const useProducts = (filters?: ProductFilters) => {
   const [products, setProducts] = useState<Product[]>([]);
