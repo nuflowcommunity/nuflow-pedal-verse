@@ -13,7 +13,6 @@ const Hero = () => {
   const isMobile = useIsMobile();
 
   useEffect(() => {
-    // Set loaded state for entrance animations
     setIsLoaded(true);
 
     const interval = setInterval(() => {
@@ -27,10 +26,9 @@ const Hero = () => {
   }, []);
 
   return (
-    <div className="relative bg-[#1c2b1f] text-white overflow-hidden h-screen flex items-center">
+    <div className="relative bg-gradient-to-br from-nuflow-darkForest via-nuflow-forest to-nuflow-deepGreen text-white overflow-hidden h-screen flex items-center">
       {/* Background with subtle animation */}
-      <div className="absolute inset-0 opacity-10 bg-gradient-to-b from-nuflow-moss/20 to-transparent animate-pulse">
-        {/* Mobile-optimized background */}
+      <div className="absolute inset-0 opacity-10 bg-gradient-to-b from-nuflow-mint/20 to-transparent animate-pulse">
       </div>
       
       <div className={`container-custom relative z-10 transition-all duration-700 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
@@ -50,12 +48,12 @@ const Hero = () => {
           
           <div className={`flex flex-col sm:flex-row items-center justify-center gap-4 transition-all duration-500 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`} 
                 style={{animationDelay: '0.9s'}}>
-            <Button size="lg" className="transition-all duration-300 px-8 text-lg rounded-full group bg-[#497052] bg-[#c5e7cf] text-[#2f302c] hover:text-[#0aea3e] w-full sm:w-auto animate-hover-scale">
+            <Button size="lg" className="transition-all duration-300 px-8 text-lg rounded-full group bg-nuflow-mint text-nuflow-forest hover:bg-nuflow-emerald hover:text-nuflow-darkForest w-full sm:w-auto animate-hover-scale">
               Descobrir Rolês
               <ArrowRight size={18} className="ml-2 transition-transform duration-300 group-hover:translate-x-1" />
             </Button>
             
-            <Button size="lg" className="transition-all duration-300 px-8 text-lg rounded-full group bg-[#497052] bg-[#c5e7cf] text-[#2f302c] hover:text-[#0aea3e] w-full sm:w-auto animate-hover-scale">
+            <Button size="lg" className="transition-all duration-300 px-8 text-lg rounded-full group bg-nuflow-mint text-nuflow-forest hover:bg-nuflow-emerald hover:text-nuflow-darkForest w-full sm:w-auto animate-hover-scale">
               Visitar Marketplace
               <ArrowRight size={18} className="ml-2 transition-transform duration-300 group-hover:translate-x-1" />
             </Button>
@@ -64,8 +62,8 @@ const Hero = () => {
       </div>
       
       <div className={`absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce transition-all duration-500 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}>
-        <div className="w-8 h-12 border-2 border-white/60 rounded-full flex items-start justify-center hover:border-[#0aea3e]">
-          <div className="w-1.5 h-3 bg-white/60 rounded-full mt-2 animate-scroll-down hover:bg-[#0aea3e]"></div>
+        <div className="w-8 h-12 border-2 border-white/60 rounded-full flex items-start justify-center hover:border-nuflow-emerald">
+          <div className="w-1.5 h-3 bg-white/60 rounded-full mt-2 animate-scroll-down hover:bg-nuflow-emerald"></div>
         </div>
       </div>
     </div>

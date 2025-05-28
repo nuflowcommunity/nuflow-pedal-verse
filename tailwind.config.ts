@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -63,16 +62,17 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				// Nuflow custom colors
+				// Nova paleta Nuflow inspirada nas imagens
 				nuflow: {
-					moss: '#23301A',      // Verde musgo profundo
-					sand: '#F9F7F2',      // Areia clara / off-white
-					lime: '#B8C671',      // Verde limão queimado
-					charcoal: '#1A1A1A',  // Cinza carvão
-					mineral: '#BAB5AB',   // Cinza mineral
-                    neon: '#11f55c',      // Verde neon
-                    carbon: '#282626',    // Cinza carvão atualizado
-                    green: '#497052',     // Verde adicional
+					darkForest: '#011A10',    // Verde escuro profundo
+					forest: '#1B3D2A',       // Verde médio escuro
+					emerald: '#07E467',      // Verde neon vibrante
+					mint: '#D1F2A0',        // Verde claro suave
+					cream: '#F2EFDF',       // Creme/bege suave
+					// Cores complementares derivadas
+					deepGreen: '#0D2118',    // Verde muito escuro para textos
+					sage: '#8BAF9B',         // Verde acinzentado
+					softGreen: '#A8D4B8',   // Verde pastel
 				}
 			},
 			fontFamily: {
