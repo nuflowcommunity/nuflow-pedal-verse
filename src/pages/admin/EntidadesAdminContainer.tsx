@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
+import { Tabs } from '@/components/ui/tabs';
 import { Entity } from '@/components/admin/entities/types';
 import { EntityHeader } from '@/components/admin/entities/EntityHeader';
 import { EntityStats } from '@/components/admin/entities/EntityStats';
@@ -50,6 +51,18 @@ const EntidadesAdminContainer: React.FC = () => {
     // Implementar ordenação se necessário
   };
 
+  const handleTabChange = (value: string) => {
+    setActiveTab(value);
+    setCurrentPage(1); // Reset pagination when changing tabs
+    
+    // Clear type filter when going to "todos" tab, or set it when selecting specific type
+    if (value === 'todos') {
+      filterActions.setTypeFilter('');
+    } else {
+      filterActions.setTypeFilter(value);
+    }
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
@@ -67,23 +80,25 @@ const EntidadesAdminContainer: React.FC = () => {
         onViewIssues={handleViewIssues}
       />
       
-      <EntityTypesTabs 
-        activeTab={activeTab}
-        onTabChange={setActiveTab}
-      />
-      
-      <EntityTableContent
-        activeTab={activeTab}
-        filters={filters}
-        filteredEntities={entities}
-        partners={partners}
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-        onFilterChange={filterActions}
-        onViewEntity={handleViewEntity}
-        onSort={handleSort}
-        toast={toast}
-      />
+      <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full">
+        <EntityTypesTabs 
+          activeTab={activeTab}
+          onTabChange={handleTabChange}
+        />
+        
+        <EntityTableContent
+          activeTab={activeTab}
+          filters={filters}
+          filteredEntities={entities}
+          partners={partners}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          onFilterChange={filterActions}
+          onViewEntity={handleViewEntity}
+          onSort={handleSort}
+          toast={toast}
+        />
+      </Tabs>
       
       <EntityDetailDrawer
         isOpen={isDetailDrawerOpen}

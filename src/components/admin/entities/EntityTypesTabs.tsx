@@ -2,6 +2,7 @@
 import React from 'react';
 import { TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { entityTypeIcons } from './EntityIcons';
+import { useBreakpoint } from '@/hooks/use-breakpoint';
 
 interface EntityTypesTabsProps {
   activeTab: string;
@@ -12,25 +13,31 @@ export const EntityTypesTabs: React.FC<EntityTypesTabsProps> = ({
   activeTab,
   onTabChange
 }) => {
+  const isMobile = useBreakpoint('md');
+
   return (
-    <TabsList className="grid grid-cols-5 md:w-auto w-full">
-      <TabsTrigger value="todos" onClick={() => onTabChange('todos')}>Todos</TabsTrigger>
-      <TabsTrigger value="evento" className="flex items-center gap-1" onClick={() => onTabChange('evento')}>
-        {entityTypeIcons.evento}
-        Eventos
-      </TabsTrigger>
-      <TabsTrigger value="mensalidade" className="flex items-center gap-1" onClick={() => onTabChange('mensalidade')}>
-        {entityTypeIcons.mensalidade}
-        Mensalidades
-      </TabsTrigger>
-      <TabsTrigger value="dayUse" className="flex items-center gap-1" onClick={() => onTabChange('dayUse')}>
-        {entityTypeIcons.dayUse}
-        Day Use
-      </TabsTrigger>
-      <TabsTrigger value="credito" className="flex items-center gap-1" onClick={() => onTabChange('credito')}>
-        {entityTypeIcons.credito}
-        Créditos
-      </TabsTrigger>
-    </TabsList>
+    <div className="w-full overflow-x-auto">
+      <TabsList className={`grid w-full ${isMobile ? 'grid-cols-3' : 'grid-cols-5'} ${isMobile ? 'min-w-max' : ''}`}>
+        <TabsTrigger value="todos" className="flex items-center gap-1 text-xs sm:text-sm">
+          Todos
+        </TabsTrigger>
+        <TabsTrigger value="evento" className="flex items-center gap-1 text-xs sm:text-sm">
+          <span className="hidden sm:inline">{entityTypeIcons.evento}</span>
+          <span>Eventos</span>
+        </TabsTrigger>
+        <TabsTrigger value="mensalidade" className="flex items-center gap-1 text-xs sm:text-sm">
+          <span className="hidden sm:inline">{entityTypeIcons.mensalidade}</span>
+          <span>Mensalidades</span>
+        </TabsTrigger>
+        <TabsTrigger value="dayUse" className="flex items-center gap-1 text-xs sm:text-sm">
+          <span className="hidden sm:inline">{entityTypeIcons.dayUse}</span>
+          <span>Day Use</span>
+        </TabsTrigger>
+        <TabsTrigger value="credito" className="flex items-center gap-1 text-xs sm:text-sm">
+          <span className="hidden sm:inline">{entityTypeIcons.credito}</span>
+          <span>Créditos</span>
+        </TabsTrigger>
+      </TabsList>
+    </div>
   );
 };
