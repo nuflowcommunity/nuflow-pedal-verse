@@ -11,10 +11,10 @@ import CallToAction from '../components/home/CallToAction';
 
 const Index = () => {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen bg-background font-sans antialiased">
       <Navbar />
       
-      <main className="flex-grow">
+      <main>
         <Hero />
         <FeaturedSections />
         <FeaturedEvents />

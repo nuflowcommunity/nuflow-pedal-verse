@@ -26,11 +26,11 @@ const Hero = () => {
   }, []);
 
   return (
-    <div className="relative bg-gradient-to-br from-nuflow-darkForest via-nuflow-forest to-nuflow-deepGreen text-white overflow-hidden min-h-screen flex items-center justify-center">
+    <section className="relative bg-gradient-to-br from-nuflow-darkForest via-nuflow-forest to-nuflow-deepGreen text-white overflow-hidden">
       {/* Background with subtle animation */}
       <div className="absolute inset-0 opacity-10 bg-gradient-to-b from-nuflow-mint/20 to-transparent animate-pulse"></div>
       
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10 py-16 sm:py-20">
+      <div className="container-custom relative z-10 py-20 md:py-32">
         <div className="max-w-4xl mx-auto text-center">
           
           <h1 className={`text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-heading font-bold mb-6 sm:mb-8 leading-tight transition-all duration-700 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
@@ -79,7 +79,7 @@ const Hero = () => {
           <div className="w-1.5 h-3 bg-white/60 rounded-full mt-2 animate-scroll-down hover:bg-nuflow-emerald transition-colors duration-300"></div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

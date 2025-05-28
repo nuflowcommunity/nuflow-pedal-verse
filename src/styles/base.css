@@ -24,6 +24,8 @@ body {
   background-color: #ffffff;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  padding: 0;
 }
 
 /* Typography improvements with better contrast and responsiveness */
@@ -43,6 +45,7 @@ h1, h2, h3, h4, h5, h6 {
   line-height: 1.2;
   font-weight: 600;
   color: var(--nuflow-charcoal);
+  margin: 0;
 }
 
 h1 {
@@ -72,7 +75,7 @@ h6 {
 p {
   @apply text-sm sm:text-base md:text-lg;
   line-height: 1.7;
-  margin-bottom: 1rem;
+  margin: 0 0 1rem 0;
 }
 
 /* Improved link accessibility with sophisticated animations */

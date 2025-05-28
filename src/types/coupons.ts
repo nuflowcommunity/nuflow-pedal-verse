@@ -4,9 +4,9 @@ export interface Coupon {
   code: string;
   name: string;
   description?: string;
-  discount_type: 'percentage' | 'fixed';
+  discount_type: string; // Mudança: aceitar string genérico em vez de union restrita
   discount_value: number;
-  application_type: 'event' | 'subscription' | 'general';
+  application_type: string; // Mudança: aceitar string genérico em vez de union restrita
   target_event_id?: string;
   start_date: string;
   end_date: string;
@@ -40,9 +40,9 @@ export interface CreateCouponData {
   code: string;
   name: string;
   description?: string;
-  discount_type: 'percentage' | 'fixed';
+  discount_type: 'percentage' | 'fixed'; // Manter union restrita para criação
   discount_value: number;
-  application_type: 'event' | 'subscription' | 'general';
+  application_type: 'event' | 'subscription' | 'general'; // Manter union restrita para criação
   target_event_id?: string;
   start_date: string;
   end_date: string;
