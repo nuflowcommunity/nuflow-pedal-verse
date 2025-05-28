@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { 
@@ -11,11 +10,20 @@ import {
   checkIfFavorited,
   updateProductViews,
   Product,
-  ProductCategory,
-  ProductFilters
+  ProductCategory
 } from '@/services/marketplace/products';
 
-export type { ProductFilters };
+export interface ProductFilters {
+  search?: string;
+  category?: string;
+  brand?: string;
+  condition?: string;
+  location?: string;
+  minPrice?: number;
+  maxPrice?: number;
+  featured?: boolean;
+  year?: number;
+}
 
 export const useProducts = (filters?: ProductFilters) => {
   const [products, setProducts] = useState<Product[]>([]);

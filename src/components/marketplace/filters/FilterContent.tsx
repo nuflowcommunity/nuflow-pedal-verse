@@ -6,6 +6,7 @@ import FilterSection from './FilterSection';
 import FeaturedProductsFilter from './FeaturedProductsFilter';
 import PriceRangeFilter from './PriceRangeFilter';
 import CheckboxFilterGroup from './CheckboxFilterGroup';
+import YearFilter from './YearFilter';
 import { ProductFilters } from '@/hooks/marketplace/useProducts';
 
 interface FilterContentProps {
@@ -62,6 +63,7 @@ const FilterContent: React.FC<FilterContentProps> = ({
     if (filters.condition) count++;
     if (filters.location) count++;
     if (filters.featured) count++;
+    if (filters.year) count++;
     if (filters.minPrice || filters.maxPrice) count++;
     return count;
   };
@@ -109,6 +111,13 @@ const FilterContent: React.FC<FilterContentProps> = ({
     });
   };
 
+  const handleYearChange = (year: number | undefined) => {
+    onFiltersChange({
+      ...filters,
+      year
+    });
+  };
+
   return (
     <div className="space-y-6">
       <FilterHeader
@@ -130,6 +139,13 @@ const FilterContent: React.FC<FilterContentProps> = ({
           minPrice={filters.minPrice || 0}
           maxPrice={filters.maxPrice || 10000}
           onPriceChange={handlePriceChange}
+        />
+      </FilterSection>
+
+      <FilterSection title="Ano de Fabricação">
+        <YearFilter
+          selectedYear={filters.year}
+          onYearChange={handleYearChange}
         />
       </FilterSection>
 

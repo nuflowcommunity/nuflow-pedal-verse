@@ -1,9 +1,10 @@
 
 import React from 'react';
-import { SlidersHorizontal, Grid, List } from 'lucide-react';
+import { SlidersHorizontal, Grid, List, Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
+import { useNavigate } from 'react-router-dom';
 import { ProductFilters } from '@/hooks/marketplace/useProducts';
 
 interface MarketplaceToolbarProps {
@@ -37,6 +38,8 @@ const MarketplaceToolbar: React.FC<MarketplaceToolbarProps> = ({
   onSortChange,
   onViewModeChange
 }) => {
+  const navigate = useNavigate();
+
   return (
     <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 mb-6">
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
@@ -98,6 +101,18 @@ const MarketplaceToolbar: React.FC<MarketplaceToolbarProps> = ({
                   </button>
                 </Badge>
               )}
+              {filters.year && (
+                <Badge variant="secondary" className="flex items-center gap-1" role="listitem">
+                  Ano: {filters.year}
+                  <button 
+                    onClick={() => onFiltersClear({...filters, year: undefined})} 
+                    className="ml-1 hover:text-gray-700"
+                    aria-label="Remover filtro de ano"
+                  >
+                    ×
+                  </button>
+                </Badge>
+              )}
               <Button 
                 variant="ghost" 
                 size="sm" 
@@ -110,8 +125,16 @@ const MarketplaceToolbar: React.FC<MarketplaceToolbarProps> = ({
           )}
         </div>
 
-        {/* Right: Sort and view options */}
-        <div className="flex items-center gap-3">
+        {/* Right: Sort, view options and announce button */}
+        <div className="flex items-center gap-3 flex-wrap">
+          <Button
+            onClick={() => navigate('/anunciar')}
+            className="bg-nuflow-moss text-white hover:bg-nuflow-darkForest flex items-center gap-2 hidden md:flex"
+          >
+            <Plus size={16} />
+            Anunciar
+          </Button>
+          
           <Select value={sortBy} onValueChange={onSortChange}>
             <SelectTrigger className="w-48" aria-label="Ordenar produtos">
               <SelectValue />
