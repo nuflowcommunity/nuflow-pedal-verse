@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -17,7 +16,7 @@ const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = ({
 }) => {
   const [email, setEmail] = useState('');
   const [emailSent, setEmailSent] = useState(false);
-  const { isLoading, sendResetEmail } = usePasswordReset();
+  const { isLoading, requestPasswordReset } = usePasswordReset();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -26,7 +25,7 @@ const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = ({
       return;
     }
 
-    const success = await sendResetEmail(email);
+    const success = await requestPasswordReset(email);
     if (success) {
       setEmailSent(true);
     }
