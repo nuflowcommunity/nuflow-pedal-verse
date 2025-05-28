@@ -54,11 +54,11 @@ class ErrorBoundary extends Component<Props, State> {
     }
   }
 
-  componentDidUpdate(prevProps: Props) {
+  componentDidUpdate(prevProps: Props, prevState: State) {
     const { resetKeys, resetOnPropsChange } = this.props;
     const { hasError } = this.state;
 
-    if (hasError && !prevProps.hasError) {
+    if (hasError && !prevState.hasError) {
       // Error just occurred
       return;
     }

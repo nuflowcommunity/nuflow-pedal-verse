@@ -1,6 +1,7 @@
 
 import { useCallback } from 'react';
-import { useToast } from '@/components/ui/use-toast';
+import { useToast } from '@/hooks/use-toast';
+import { Button } from '@/components/ui/button';
 
 export interface ErrorContext {
   component?: string;
@@ -89,10 +90,15 @@ export const useErrorHandler = () => {
         title,
         description,
         variant: "destructive",
-        action: retryCallback ? {
-          altText: "Tentar novamente",
-          onClick: retryCallback
-        } : undefined
+        action: retryCallback ? (
+          <Button 
+            variant="outline" 
+            size="sm" 
+            onClick={retryCallback}
+          >
+            Tentar novamente
+          </Button>
+        ) : undefined
       });
     }
 
