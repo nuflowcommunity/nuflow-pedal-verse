@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { 
   LineChart, 
@@ -11,7 +10,7 @@ import {
   ResponsiveContainer
 } from 'recharts';
 import { ChartContainer, ChartTooltipContent } from '@/components/ui/chart';
-import { useBreakpoint } from '@/hooks/use-mobile';
+import { useBreakpoint } from '@/hooks/use-breakpoint';
 
 type ChartData = Record<string, any>[];
 
