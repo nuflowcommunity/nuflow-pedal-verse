@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -67,6 +66,15 @@ interface CouponFormDialogProps {
   coupon?: Coupon;
 }
 
+// Type guards para garantir que os valores do banco sejam válidos
+const isValidDiscountType = (value: string): value is 'percentage' | 'fixed' => {
+  return ['percentage', 'fixed'].includes(value);
+};
+
+const isValidApplicationType = (value: string): value is 'event' | 'subscription' | 'general' => {
+  return ['event', 'subscription', 'general'].includes(value);
+};
+
 export const CouponFormDialog: React.FC<CouponFormDialogProps> = ({
   isOpen,
   onClose,
@@ -116,9 +124,9 @@ export const CouponFormDialog: React.FC<CouponFormDialogProps> = ({
         code: coupon.code,
         name: coupon.name,
         description: coupon.description || '',
-        discount_type: coupon.discount_type,
+        discount_type: isValidDiscountType(coupon.discount_type) ? coupon.discount_type : 'percentage',
         discount_value: coupon.discount_value,
-        application_type: coupon.application_type,
+        application_type: isValidApplicationType(coupon.application_type) ? coupon.application_type : 'general',
         target_event_id: coupon.target_event_id || undefined,
         start_date: coupon.start_date.split('T')[0],
         end_date: coupon.end_date.split('T')[0],
