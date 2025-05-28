@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import LazyImage from '@/components/ui/lazy-image';
 import ComparisonButton from './ComparisonButton';
+import WishlistButton from './WishlistButton';
 import { Product } from '@/services/marketplace/types';
 
 interface ProductCardProps {
@@ -78,26 +79,6 @@ const ProductCard: React.FC<ProductCardProps> = ({
           <Badge className="absolute top-3 right-3 bg-gradient-to-r from-amber-500 to-orange-500 text-white border-0">
             Destaque
           </Badge>
-        )}
-        
-        {/* Favorite Button */}
-        {onToggleFavorite && (
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              onToggleFavorite();
-            }}
-            className="absolute bottom-3 right-3 p-2 bg-white/90 hover:bg-white rounded-full shadow-sm transition-all duration-300 hover:scale-110 focus:outline-none focus:scale-110 focus:shadow-lg"
-            aria-label={isFavorited ? "Remover dos favoritos" : "Adicionar aos favoritos"}
-          >
-            <Heart 
-              size={18} 
-              className={cn(
-                "transition-colors",
-                isFavorited ? "text-red-500 fill-red-500" : "text-gray-600"
-              )}
-            />
-          </button>
         )}
       </div>
 
@@ -190,11 +171,19 @@ const ProductCard: React.FC<ProductCardProps> = ({
                 Ver detalhes
               </Link>
             </Button>
-            <ComparisonButton 
-              product={product} 
-              size="sm"
-              className="text-xs"
-            />
+            <div className="flex gap-2">
+              <WishlistButton 
+                productId={product.id}
+                size="sm"
+                className="text-xs flex-1"
+                showText={false}
+              />
+              <ComparisonButton 
+                product={product} 
+                size="sm"
+                className="text-xs flex-1"
+              />
+            </div>
           </div>
         </div>
       </div>

@@ -1042,11 +1042,125 @@ export type Database = {
           },
         ]
       }
+      wishlist_items: {
+        Row: {
+          created_at: string
+          id: string
+          notes: string | null
+          product_id: string
+          wishlist_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          notes?: string | null
+          product_id: string
+          wishlist_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          notes?: string | null
+          product_id?: string
+          wishlist_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "wishlist_items_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "wishlist_items_wishlist_id_fkey"
+            columns: ["wishlist_id"]
+            isOneToOne: false
+            referencedRelation: "wishlists"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      wishlist_shares: {
+        Row: {
+          access_level: string
+          created_at: string
+          id: string
+          shared_by_user_id: string
+          shared_with_user_id: string | null
+          wishlist_id: string
+        }
+        Insert: {
+          access_level?: string
+          created_at?: string
+          id?: string
+          shared_by_user_id: string
+          shared_with_user_id?: string | null
+          wishlist_id: string
+        }
+        Update: {
+          access_level?: string
+          created_at?: string
+          id?: string
+          shared_by_user_id?: string
+          shared_with_user_id?: string | null
+          wishlist_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "wishlist_shares_wishlist_id_fkey"
+            columns: ["wishlist_id"]
+            isOneToOne: false
+            referencedRelation: "wishlists"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      wishlists: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          is_public: boolean
+          is_shared: boolean
+          name: string
+          share_token: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_public?: boolean
+          is_shared?: boolean
+          name?: string
+          share_token?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_public?: boolean
+          is_shared?: boolean
+          name?: string
+          share_token?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
+      generate_share_token: {
+        Args: Record<PropertyKey, never>
+        Returns: string
+      }
       get_entity_stats: {
         Args: Record<PropertyKey, never>
         Returns: {
