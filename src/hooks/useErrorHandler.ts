@@ -1,5 +1,5 @@
 
-import { useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
 
@@ -90,15 +90,12 @@ export const useErrorHandler = () => {
         title,
         description,
         variant: "destructive",
-        action: retryCallback ? (
-          <Button 
-            variant="outline" 
-            size="sm" 
-            onClick={retryCallback}
-          >
-            Tentar novamente
-          </Button>
-        ) : undefined
+        action: retryCallback ? React.createElement(Button, {
+          variant: "outline",
+          size: "sm",
+          onClick: retryCallback,
+          children: "Tentar novamente"
+        }) : undefined
       });
     }
 
