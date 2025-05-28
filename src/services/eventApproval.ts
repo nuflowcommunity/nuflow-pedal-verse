@@ -24,12 +24,12 @@ export class EventApprovalService {
     const { data, error } = await query;
     if (error) throw error;
     
-    // Garantir que os campos obrigatórios existam
+    // Garantir que os campos obrigatórios existam com type assertions
     const eventsWithDefaults = (data || []).map(event => ({
       ...event,
-      event_type: event.event_type || 'evento',
-      documents: event.documents || [],
-      group_purchase_enabled: event.group_purchase_enabled || false
+      event_type: (event as any).event_type || 'evento',
+      documents: (event as any).documents || [],
+      group_purchase_enabled: (event as any).group_purchase_enabled || false
     }));
 
     return eventsWithDefaults as ExtendedEvent[];
