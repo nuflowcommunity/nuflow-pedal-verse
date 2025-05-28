@@ -3,10 +3,12 @@ import { supabase } from '@/integrations/supabase/client';
 
 // Share wishlist
 export const shareWishlist = async (wishlistId: string, email?: string) => {
-  // Update wishlist to be shared and get share token
+  // Update wishlist to be shared and get share token - simplified to avoid deep type inference
   const { data: wishlist, error: updateError } = await supabase
     .from('wishlists')
-    .update({ is_shared: true })
+    .update({ 
+      is_shared: true as boolean
+    })
     .eq('id', wishlistId)
     .select('id, name, description, is_shared, share_token')
     .single();
