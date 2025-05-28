@@ -17,6 +17,7 @@ import Comunidade from "./pages/Comunidade";
 import Sobre from "./pages/Sobre";
 import Roles from "./pages/Roles";
 import Login from "./pages/Login";
+import ResetPassword from "./pages/auth/ResetPassword";
 import NewAnnounce from "./pages/NewAnnounce";
 import NotFound from "./pages/NotFound";
 import Unauthorized from "./pages/Unauthorized";
@@ -69,6 +70,7 @@ function App() {
                 <Route path="/sobre" element={<Sobre />} />
                 <Route path="/roles" element={<Roles />} />
                 <Route path="/login" element={<Login />} />
+                <Route path="/auth/reset-password" element={<ResetPassword />} />
                 <Route path="/anunciar" element={<NewAnnounce />} />
                 <Route path="/unauthorized" element={<Unauthorized />} />
                 <Route path="/marketplace/:id" element={<ProductDetail />} />

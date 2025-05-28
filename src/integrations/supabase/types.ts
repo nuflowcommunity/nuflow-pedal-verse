@@ -767,6 +767,33 @@ export type Database = {
         }
         Relationships: []
       }
+      password_reset_logs: {
+        Row: {
+          email: string
+          id: string
+          ip_address: unknown | null
+          requested_at: string | null
+          user_agent: string | null
+          user_id: string | null
+        }
+        Insert: {
+          email: string
+          id?: string
+          ip_address?: unknown | null
+          requested_at?: string | null
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          email?: string
+          id?: string
+          ip_address?: unknown | null
+          requested_at?: string | null
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       product_categories: {
         Row: {
           created_at: string
@@ -1238,6 +1265,10 @@ export type Database = {
           title: string
           updated_at: string
         }[]
+      }
+      request_password_reset: {
+        Args: { email_address: string }
+        Returns: Json
       }
     }
     Enums: {
