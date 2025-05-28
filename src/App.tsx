@@ -1,4 +1,5 @@
 import { Suspense, lazy } from "react";
+import { HelmetProvider } from "react-helmet-async";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -8,6 +9,9 @@ import { queryClient } from "@/lib/queryClient";
 import Index from "./pages/Index";
 import BackToTopButton from "./components/BackToTopButton";
 import LoadingTransition from "./components/ui/loading-transition";
+import ErrorBoundary from "./components/error/ErrorBoundary";
+import AccessibilityProvider from "./components/accessibility/AccessibilityProvider";
+import SkipLinks from "./components/accessibility/SkipLinks";
 
 // Lazy load components
 const Market = lazy(() => import("./pages/Market"));
@@ -53,61 +57,70 @@ const MetaAdsPage = lazy(() => import("./pages/admin/marketing/MetaAdsPage"));
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <Suspense fallback={<LoadingTransition />}>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/marketplace" element={<Market />} />
-            <Route path="/marketplace/produto/:id" element={<ProductDetail />} />
-            <Route path="/market" element={<Market />} />
-            <Route path="/anunciar" element={<NewAnnounce />} />
-            <Route path="/produtos" element={<Products />} />
-            <Route path="/bikes" element={<Bikes />} />
-            <Route path="/comunidade" element={<Comunidade />} />
-            <Route path="/sobre" element={<Sobre />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/eventos" element={<EventsCalendar />} />
-            <Route path="/eventos/:id" element={<EventDetail />} />
-            <Route path="/roles" element={<Roles />} />
-            <Route path="/unauthorized" element={<Unauthorized />} />
-            
-            {/* Admin routes */}
-            <Route path="/admin" element={<Dashboard />} />
-            <Route path="/admin/dashboard" element={<Dashboard />} />
-            <Route path="/admin/entidades" element={<EntidadesAdminContainer />} />
-            <Route path="/admin/events" element={<EventsAdmin />} />
-            <Route path="/admin/users" element={<UsersAdmin />} />
-            <Route path="/admin/orders" element={<OrdersAdmin />} />
-            <Route path="/admin/messages" element={<MessagesAdmin />} />
-            <Route path="/admin/reports" element={<ReportsAdmin />} />
-            <Route path="/admin/settings" element={<SettingsAdmin />} />
-            <Route path="/admin/marketing" element={<MarketingAdmin />} />
-            
-            {/* Finance routes */}
-            <Route path="/admin/finance" element={<FinanceOverview />} />
-            <Route path="/admin/finance/accounts" element={<AccountsPage />} />
-            <Route path="/admin/finance/cash-flow" element={<CashFlow />} />
-            <Route path="/admin/finance/income" element={<Income />} />
-            <Route path="/admin/finance/expenses" element={<Expenses />} />
-            <Route path="/admin/finance/reports" element={<FinancialReports />} />
-            <Route path="/admin/finance/accounting" element={<Accounting />} />
-            <Route path="/admin/finance/last-24h" element={<Last24HoursDashboard />} />
-            <Route path="/admin/finance/monthly" element={<MonthlyDashboard />} />
-            <Route path="/admin/finance/total" element={<TotalSalesDashboard />} />
-            
-            {/* Marketing routes */}
-            <Route path="/admin/marketing/google-ads" element={<GoogleAdsPage />} />
-            <Route path="/admin/marketing/meta-ads" element={<MetaAdsPage />} />
-            
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </Suspense>
-        <BackToTopButton />
-      </TooltipProvider>
-    </QueryClientProvider>
+    <HelmetProvider>
+      <ErrorBoundary>
+        <QueryClientProvider client={queryClient}>
+          <AccessibilityProvider>
+            <TooltipProvider>
+              <SkipLinks />
+              <Toaster />
+              <Sonner />
+              <Suspense fallback={<LoadingTransition />}>
+                <main id="main-content">
+                  <Routes>
+                    <Route path="/" element={<Index />} />
+                    <Route path="/marketplace" element={<Market />} />
+                    <Route path="/marketplace/produto/:id" element={<ProductDetail />} />
+                    <Route path="/market" element={<Market />} />
+                    <Route path="/anunciar" element={<NewAnnounce />} />
+                    <Route path="/produtos" element={<Products />} />
+                    <Route path="/bikes" element={<Bikes />} />
+                    <Route path="/comunidade" element={<Comunidade />} />
+                    <Route path="/sobre" element={<Sobre />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/eventos" element={<EventsCalendar />} />
+                    <Route path="/eventos/:id" element={<EventDetail />} />
+                    <Route path="/roles" element={<Roles />} />
+                    <Route path="/unauthorized" element={<Unauthorized />} />
+                    
+                    {/* Admin routes */}
+                    <Route path="/admin" element={<Dashboard />} />
+                    <Route path="/admin/dashboard" element={<Dashboard />} />
+                    <Route path="/admin/entidades" element={<EntidadesAdminContainer />} />
+                    <Route path="/admin/events" element={<EventsAdmin />} />
+                    <Route path="/admin/users" element={<UsersAdmin />} />
+                    <Route path="/admin/orders" element={<OrdersAdmin />} />
+                    <Route path="/admin/messages" element={<MessagesAdmin />} />
+                    <Route path="/admin/reports" element={<ReportsAdmin />} />
+                    <Route path="/admin/settings" element={<SettingsAdmin />} />
+                    <Route path="/admin/marketing" element={<MarketingAdmin />} />
+                    
+                    {/* Finance routes */}
+                    <Route path="/admin/finance" element={<FinanceOverview />} />
+                    <Route path="/admin/finance/accounts" element={<AccountsPage />} />
+                    <Route path="/admin/finance/cash-flow" element={<CashFlow />} />
+                    <Route path="/admin/finance/income" element={<Income />} />
+                    <Route path="/admin/finance/expenses" element={<Expenses />} />
+                    <Route path="/admin/finance/reports" element={<FinancialReports />} />
+                    <Route path="/admin/finance/accounting" element={<Accounting />} />
+                    <Route path="/admin/finance/last-24h" element={<Last24HoursDashboard />} />
+                    <Route path="/admin/finance/monthly" element={<MonthlyDashboard />} />
+                    <Route path="/admin/finance/total" element={<TotalSalesDashboard />} />
+                    
+                    {/* Marketing routes */}
+                    <Route path="/admin/marketing/google-ads" element={<GoogleAdsPage />} />
+                    <Route path="/admin/marketing/meta-ads" element={<MetaAdsPage />} />
+                    
+                    <Route path="*" element={<NotFound />} />
+                  </Routes>
+                </main>
+              </Suspense>
+              <BackToTopButton />
+            </TooltipProvider>
+          </AccessibilityProvider>
+        </QueryClientProvider>
+      </ErrorBoundary>
+    </HelmetProvider>
   );
 }
 
