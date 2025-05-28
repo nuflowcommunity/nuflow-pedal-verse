@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { DateRange } from "react-day-picker";
 import { Event } from '@/types/events';
 import { useToast } from '@/components/ui/use-toast';
@@ -39,8 +39,12 @@ export const useEventsData = () => {
           return await getAllEvents();
       }
     },
-    ...cacheConfig.events,
-    onError: (error) => {
+    ...cacheConfig.events
+  });
+
+  // Handle errors using useEffect instead of onError
+  useEffect(() => {
+    if (error) {
       console.error("Error fetching events:", error);
       toast({
         title: "Erro ao carregar eventos",
@@ -48,7 +52,7 @@ export const useEventsData = () => {
         variant: "destructive",
       });
     }
-  });
+  }, [error, toast]);
 
   // Filtrar eventos localmente para melhor performance
   const filteredEvents = React.useMemo(() => {
