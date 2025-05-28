@@ -1043,6 +1043,41 @@ export type Database = {
           },
         ]
       }
+      partner_permissions: {
+        Row: {
+          created_at: string
+          function_type: Database["public"]["Enums"]["partner_function_type"]
+          id: string
+          is_enabled: boolean
+          partner_id: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          function_type: Database["public"]["Enums"]["partner_function_type"]
+          id?: string
+          is_enabled?: boolean
+          partner_id: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          function_type?: Database["public"]["Enums"]["partner_function_type"]
+          id?: string
+          is_enabled?: boolean
+          partner_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "partner_permissions_partner_id_fkey"
+            columns: ["partner_id"]
+            isOneToOne: false
+            referencedRelation: "partners"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       partners: {
         Row: {
           created_at: string | null
@@ -1632,6 +1667,7 @@ export type Database = {
         | "pending"
         | "approved"
         | "rejected"
+      partner_function_type: "creditos" | "day_use" | "assinaturas" | "eventos"
       question_type: "text" | "textarea" | "select" | "radio" | "checkbox"
       transaction_category: "receita" | "despesa" | "transferencia"
       validation_status: "validated" | "pending" | "failed"
@@ -1764,6 +1800,7 @@ export const Constants = {
         "approved",
         "rejected",
       ],
+      partner_function_type: ["creditos", "day_use", "assinaturas", "eventos"],
       question_type: ["text", "textarea", "select", "radio", "checkbox"],
       transaction_category: ["receita", "despesa", "transferencia"],
       validation_status: ["validated", "pending", "failed"],
