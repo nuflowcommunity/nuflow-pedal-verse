@@ -144,14 +144,14 @@ const AdminSidebar = () => {
   const { signOut } = useAuth();
   
   return (
-    <Sidebar className="border-r border-gray-200">
-      <SidebarHeader className="flex items-center justify-center py-4 md:py-6 border-b border-gray-200">
+    <Sidebar className="border-r border-gray-200 bg-white">
+      <SidebarHeader className="flex items-center justify-center py-4 md:py-6 border-b border-gray-200 bg-white">
         <div className="flex flex-col items-center">
           <h2 className="text-lg md:text-xl font-bold text-nuflow-forest">NuFlow Admin</h2>
         </div>
       </SidebarHeader>
       
-      <SidebarContent className="py-2 md:py-4">
+      <SidebarContent className="py-2 md:py-4 bg-white">
         <SidebarMenu>
           {menuItems.map((item) => (
             <SidebarMenuItem key={item.title}>
@@ -159,9 +159,16 @@ const AdminSidebar = () => {
                 asChild 
                 isActive={currentPath === item.path}
                 tooltip={item.title}
+                className={`
+                  w-full text-gray-700 hover:bg-nuflow-mint/50 hover:text-nuflow-forest
+                  ${currentPath === item.path 
+                    ? 'bg-nuflow-mint text-nuflow-forest font-semibold' 
+                    : ''
+                  }
+                `}
               >
                 <Link to={item.path} className="w-full">
-                  <item.icon />
+                  <item.icon className="text-gray-600" />
                   <span>{item.title}</span>
                 </Link>
               </SidebarMenuButton>
@@ -171,8 +178,8 @@ const AdminSidebar = () => {
         
         {/* Marketing Section */}
         <div className="py-2">
-          <SidebarSeparator />
-          <SidebarGroupLabel className="px-2 py-1 mt-2 text-nuflow-charcoal">Marketing</SidebarGroupLabel>
+          <SidebarSeparator className="bg-gray-200" />
+          <SidebarGroupLabel className="px-2 py-1 mt-2 text-gray-600 font-medium">Marketing</SidebarGroupLabel>
         </div>
         
         <SidebarMenu>
@@ -182,9 +189,16 @@ const AdminSidebar = () => {
                 asChild 
                 isActive={currentPath === item.path}
                 tooltip={item.title}
+                className={`
+                  w-full text-gray-700 hover:bg-nuflow-mint/50 hover:text-nuflow-forest
+                  ${currentPath === item.path 
+                    ? 'bg-nuflow-mint text-nuflow-forest font-semibold' 
+                    : ''
+                  }
+                `}
               >
                 <Link to={item.path} className="w-full">
-                  <item.icon />
+                  <item.icon className="text-gray-600" />
                   <span>{item.title}</span>
                 </Link>
               </SidebarMenuButton>
@@ -194,8 +208,8 @@ const AdminSidebar = () => {
         
         {/* Finance Section */}
         <div className="py-2">
-          <SidebarSeparator />
-          <SidebarGroupLabel className="px-2 py-1 mt-2 text-nuflow-charcoal">Financeiro</SidebarGroupLabel>
+          <SidebarSeparator className="bg-gray-200" />
+          <SidebarGroupLabel className="px-2 py-1 mt-2 text-gray-600 font-medium">Financeiro</SidebarGroupLabel>
         </div>
         
         <SidebarMenu>
@@ -205,9 +219,16 @@ const AdminSidebar = () => {
                 asChild 
                 isActive={currentPath === item.path || currentPath.startsWith(item.path + '/')}
                 tooltip={item.title}
+                className={`
+                  w-full text-gray-700 hover:bg-nuflow-mint/50 hover:text-nuflow-forest
+                  ${(currentPath === item.path || currentPath.startsWith(item.path + '/'))
+                    ? 'bg-nuflow-mint text-nuflow-forest font-semibold' 
+                    : ''
+                  }
+                `}
               >
                 <Link to={item.path} className="w-full">
-                  <item.icon />
+                  <item.icon className="text-gray-600" />
                   <span>{item.title}</span>
                 </Link>
               </SidebarMenuButton>
@@ -216,11 +237,11 @@ const AdminSidebar = () => {
         </SidebarMenu>
       </SidebarContent>
       
-      <SidebarFooter className="mt-auto pb-4 border-t border-gray-200">
+      <SidebarFooter className="mt-auto pb-4 border-t border-gray-200 bg-white">
         <div className="flex flex-col items-center gap-2 px-2">
           <Button 
             variant="outline" 
-            className="w-full gap-2 text-red-600 border-red-200 hover:bg-red-50" 
+            className="w-full gap-2 text-red-600 border-red-200 hover:bg-red-50 bg-white" 
             onClick={() => signOut()}
           >
             <LogOut size={18} />
