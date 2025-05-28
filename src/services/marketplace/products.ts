@@ -32,6 +32,7 @@ export interface Product {
     first_name?: string;
     last_name?: string;
     avatar_url?: string;
+    bio?: string;
   };
 }
 
@@ -82,8 +83,7 @@ export const fetchProducts = async (filters?: {
     .from('products')
     .select(`
       *,
-      product_images(id, product_id, image_url, is_primary, sort_order),
-      profiles:seller_id(first_name, last_name, avatar_url)
+      product_images(id, product_id, image_url, is_primary, sort_order)
     `)
     .eq('status', 'ativo')
     .order('created_at', { ascending: false });
@@ -125,8 +125,7 @@ export const fetchProducts = async (filters?: {
 
   return data?.map((product: any) => ({
     ...product,
-    images: product.product_images || [],
-    seller: product.profiles
+    images: product.product_images || []
   })) || [];
 };
 
@@ -138,10 +137,8 @@ export const fetchProductById = async (id: string) => {
       *,
       product_images(id, product_id, image_url, is_primary, sort_order),
       product_reviews(
-        id, rating, comment, created_at,
-        profiles:user_id(first_name, last_name, avatar_url)
-      ),
-      profiles:seller_id(first_name, last_name, avatar_url, bio, location)
+        id, rating, comment, created_at, user_id
+      )
     `)
     .eq('id', id)
     .eq('status', 'ativo')
@@ -152,14 +149,39 @@ export const fetchProductById = async (id: string) => {
     return null;
   }
 
+  // Fetch seller profile separately
+  let seller = null;
+  if (data.seller_id) {
+    const { data: profileData } = await supabase
+      .from('profiles')
+      .select('first_name, last_name, avatar_url, bio')
+      .eq('id', data.seller_id)
+      .single();
+    
+    seller = profileData;
+  }
+
+  // Process reviews to include user profiles
+  const reviewsWithUsers = await Promise.all(
+    (data.product_reviews || []).map(async (review: any) => {
+      const { data: userData } = await supabase
+        .from('profiles')
+        .select('first_name, last_name, avatar_url')
+        .eq('id', review.user_id)
+        .single();
+      
+      return {
+        ...review,
+        user: userData
+      };
+    })
+  );
+
   return {
     ...data,
     images: data.product_images || [],
-    reviews: data.product_reviews?.map((review: any) => ({
-      ...review,
-      user: review.profiles
-    })) || [],
-    seller: data.profiles
+    reviews: reviewsWithUsers,
+    seller
   };
 };
 
@@ -185,8 +207,7 @@ export const fetchFeaturedProducts = async (limit = 8) => {
     .from('products')
     .select(`
       *,
-      product_images(id, product_id, image_url, is_primary, sort_order),
-      profiles:seller_id(first_name, last_name, avatar_url)
+      product_images(id, product_id, image_url, is_primary, sort_order)
     `)
     .eq('status', 'ativo')
     .eq('featured', true)
@@ -200,8 +221,7 @@ export const fetchFeaturedProducts = async (limit = 8) => {
 
   return data?.map((product: any) => ({
     ...product,
-    images: product.product_images || [],
-    seller: product.profiles
+    images: product.product_images || []
   })) || [];
 };
 
@@ -276,12 +296,21 @@ export const checkIfFavorited = async (productId: string) => {
 
 // Update product views
 export const updateProductViews = async (productId: string) => {
-  const { error } = await supabase
+  // First get current views
+  const { data: currentProduct } = await supabase
     .from('products')
-    .update({ views: supabase.sql`views + 1` })
-    .eq('id', productId);
+    .select('views')
+    .eq('id', productId)
+    .single();
 
-  if (error) {
-    console.error('Error updating views:', error);
+  if (currentProduct) {
+    const { error } = await supabase
+      .from('products')
+      .update({ views: (currentProduct.views || 0) + 1 })
+      .eq('id', productId);
+
+    if (error) {
+      console.error('Error updating views:', error);
+    }
   }
 };

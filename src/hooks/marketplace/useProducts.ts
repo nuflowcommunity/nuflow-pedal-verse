@@ -9,6 +9,7 @@ import {
   addToFavorites,
   removeFromFavorites,
   checkIfFavorited,
+  updateProductViews,
   Product,
   ProductCategory
 } from '@/services/marketplace/products';
@@ -66,11 +67,18 @@ export const useProduct = (id: string) => {
       setLoading(true);
       setError(null);
       const data = await fetchProductById(id);
-      setProduct(data);
       
       if (data) {
+        setProduct(data);
+        
+        // Update views
+        await updateProductViews(id);
+        
+        // Check if favorited
         const favorited = await checkIfFavorited(id);
         setIsFavorited(favorited);
+      } else {
+        setError('Produto não encontrado');
       }
     } catch (err) {
       setError('Erro ao carregar produto');
