@@ -14,11 +14,11 @@ interface ExportEventsButtonProps {
 
 const ExportEventsButton = ({ events, format }: ExportEventsButtonProps) => {
   const [isExporting, setIsExporting] = useState(false);
-  const { feedback } = useFeedback();
+  const { showWarning, feedback } = useFeedback();
 
   const handleExport = async () => {
     if (events.length === 0) {
-      feedback.showWarning({
+      showWarning({
         title: "Nenhum evento para exportar",
         description: "Não há eventos disponíveis para exportar.",
       });

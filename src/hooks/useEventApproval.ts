@@ -8,7 +8,7 @@ import { useFeedback } from '@/hooks/useFeedback';
 export const useEventApproval = () => {
   const [selectedStatus, setSelectedStatus] = useState<string>('pending');
   const queryClient = useQueryClient();
-  const { feedback } = useFeedback();
+  const { showError, feedback } = useFeedback();
 
   // Query para buscar eventos por status
   const {
@@ -42,7 +42,7 @@ export const useEventApproval = () => {
       queryClient.invalidateQueries({ queryKey: ['events-approval'] });
     },
     onError: (error) => {
-      feedback.showError({
+      showError({
         title: "Erro ao processar evento",
         description: "Não foi possível processar a ação do evento. Tente novamente.",
       });
