@@ -1,119 +1,151 @@
 
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as SonnerToaster } from "sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Routes, Route } from "react-router-dom";
-import { AuthProvider } from "./contexts/AuthContext";
-import { ComparisonProvider } from "./contexts/ComparisonContext";
-import ErrorBoundary from "./components/error/ErrorBoundary";
-import Index from "./pages/Index";
-import Products from "./pages/Products";
-import Market from "./pages/Market";
-import EventsCalendar from "./pages/EventsCalendar";
-import EventDetail from "./pages/EventDetail";
-import Bikes from "./pages/Bikes";
-import Comunidade from "./pages/Comunidade";
-import Sobre from "./pages/Sobre";
-import Roles from "./pages/Roles";
-import Login from "./pages/Login";
-import ResetPassword from "./pages/auth/ResetPassword";
-import NewAnnounce from "./pages/NewAnnounce";
-import NotFound from "./pages/NotFound";
-import Unauthorized from "./pages/Unauthorized";
-import ProductDetail from "./pages/marketplace/ProductDetail";
-import ProductComparison from "./pages/marketplace/ProductComparison";
-import AdminLayout from "./components/admin/AdminLayout";
-import Dashboard from "./pages/admin/Dashboard";
-import EntidadesAdminContainer from "./pages/admin/EntidadesAdminContainer";
-import UsersAdmin from "./pages/admin/UsersAdmin";
-import EventsAdmin from "./pages/admin/EventsAdmin";
-import MessagesAdmin from "./pages/admin/MessagesAdmin";
-import MarketingAdmin from "./pages/admin/MarketingAdmin";
-import SettingsAdmin from "./pages/admin/SettingsAdmin";
-import OrdersAdmin from "./pages/admin/OrdersAdmin";
-import ReportsAdmin from "./pages/admin/ReportsAdmin";
-import FinanceOverview from "./pages/admin/finance/FinanceOverview";
-import Accounting from "./pages/admin/finance/Accounting";
-import CashFlow from "./pages/admin/finance/CashFlow";
-import Income from "./pages/admin/finance/Income";
-import Expenses from "./pages/admin/finance/Expenses";
-import FinancialReports from "./pages/admin/finance/FinancialReports";
-import AccountsPage from "./pages/admin/finance/AccountsPage";
-import TotalSalesDashboard from "./pages/admin/finance/dashboard/TotalSalesDashboard";
-import MonthlyDashboard from "./pages/admin/finance/dashboard/MonthlyDashboard";
-import Last24HoursDashboard from "./pages/admin/finance/dashboard/Last24HoursDashboard";
-import GoogleAdsPage from "./pages/admin/marketing/GoogleAdsPage";
-import MetaAdsPage from "./pages/admin/marketing/MetaAdsPage";
-import ComparisonFloatingIndicator from "./components/marketplace/ComparisonFloatingIndicator";
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { Toaster } from '@/components/ui/toaster';
+import { AuthProvider } from '@/contexts/AuthContext';
+import { ComparisonProvider } from '@/contexts/ComparisonContext';
+import { AccessibilityProvider } from '@/components/accessibility/AccessibilityProvider';
+import { SkipLinks } from '@/components/accessibility/SkipLinks';
+import { ErrorBoundary } from '@/components/error/ErrorBoundary';
+import { BackToTopButton } from '@/components/BackToTopButton';
+import { SEOHead } from '@/components/seo/SEOHead';
 
-const queryClient = new QueryClient();
+// Layouts
+import AdminLayout from '@/components/admin/AdminLayout';
+
+// Pages
+import Index from '@/pages/Index';
+import Login from '@/pages/Login';
+import Sobre from '@/pages/Sobre';
+import Products from '@/pages/Products';
+import Bikes from '@/pages/Bikes';
+import Market from '@/pages/Market';
+import EventsCalendar from '@/pages/EventsCalendar';
+import EventDetail from '@/pages/EventDetail';
+import NewAnnounce from '@/pages/NewAnnounce';
+import Comunidade from '@/pages/Comunidade';
+import Roles from '@/pages/Roles';
+import Wishlists from '@/pages/Wishlists';
+import WishlistDetail from '@/pages/WishlistDetail';
+import SharedWishlist from '@/pages/SharedWishlist';
+import NotFound from '@/pages/NotFound';
+import Unauthorized from '@/pages/Unauthorized';
+
+// Admin Pages
+import Dashboard from '@/pages/admin/Dashboard';
+import EventsAdmin from '@/pages/admin/EventsAdmin';
+import OrdersAdmin from '@/pages/admin/OrdersAdmin';
+import UsersAdmin from '@/pages/admin/UsersAdmin';
+import MessagesAdmin from '@/pages/admin/MessagesAdmin';
+import ReportsAdmin from '@/pages/admin/ReportsAdmin';
+import SettingsAdmin from '@/pages/admin/SettingsAdmin';
+import MarketingAdmin from '@/pages/admin/MarketingAdmin';
+import EntidadesAdminContainer from '@/pages/admin/EntidadesAdminContainer';
+import CouponsAdmin from '@/pages/admin/CouponsAdmin';
+
+// Marketing Pages
+import GoogleAdsPage from '@/pages/admin/marketing/GoogleAdsPage';
+import MetaAdsPage from '@/pages/admin/marketing/MetaAdsPage';
+
+// Finance Pages
+import FinanceOverview from '@/pages/admin/finance/FinanceOverview';
+import CashFlow from '@/pages/admin/finance/CashFlow';
+import Income from '@/pages/admin/finance/Income';
+import Expenses from '@/pages/admin/finance/Expenses';
+import AccountsPage from '@/pages/admin/finance/AccountsPage';
+import FinancialReports from '@/pages/admin/finance/FinancialReports';
+import Accounting from '@/pages/admin/finance/Accounting';
+
+// Marketplace Pages
+import MarketplaceHome from '@/pages/marketplace/MarketplaceHome';
+import ProductDetail from '@/pages/marketplace/ProductDetail';
+import ProductComparison from '@/pages/marketplace/ProductComparison';
+
+// Auth Pages
+import ResetPassword from '@/pages/auth/ResetPassword';
+
+import './App.css';
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 1000 * 60 * 5, // 5 minutes
+      retry: 1,
+    },
+  },
+});
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <ComparisonProvider>
-          <TooltipProvider>
-            <ErrorBoundary>
-              <Toaster />
-              <SonnerToaster />
-              <Routes>
-                {/* Public Routes */}
-                <Route path="/" element={<Index />} />
-                <Route path="/products" element={<Products />} />
-                <Route path="/market" element={<Market />} />
-                <Route path="/events" element={<EventsCalendar />} />
-                <Route path="/events/:id" element={<EventDetail />} />
-                <Route path="/bikes" element={<Bikes />} />
-                <Route path="/comunidade" element={<Comunidade />} />
-                <Route path="/sobre" element={<Sobre />} />
-                <Route path="/roles" element={<Roles />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/auth/reset-password" element={<ResetPassword />} />
-                <Route path="/anunciar" element={<NewAnnounce />} />
-                <Route path="/unauthorized" element={<Unauthorized />} />
-                <Route path="/marketplace/:id" element={<ProductDetail />} />
-                <Route path="/marketplace/comparacao" element={<ProductComparison />} />
+    <ErrorBoundary>
+      <QueryClientProvider client={queryClient}>
+        <AuthProvider>
+          <ComparisonProvider>
+            <AccessibilityProvider>
+              <Router>
+                <SEOHead />
+                <SkipLinks />
+                <div className="min-h-screen bg-background font-sans antialiased">
+                  <Routes>
+                    {/* Public Routes */}
+                    <Route path="/" element={<Index />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/sobre" element={<Sobre />} />
+                    <Route path="/produtos" element={<Products />} />
+                    <Route path="/bikes" element={<Bikes />} />
+                    <Route path="/market" element={<Market />} />
+                    <Route path="/eventos" element={<EventsCalendar />} />
+                    <Route path="/eventos/:id" element={<EventDetail />} />
+                    <Route path="/anunciar" element={<NewAnnounce />} />
+                    <Route path="/comunidade" element={<Comunidade />} />
+                    <Route path="/roles" element={<Roles />} />
+                    <Route path="/wishlists" element={<Wishlists />} />
+                    <Route path="/wishlists/:id" element={<WishlistDetail />} />
+                    <Route path="/shared/:token" element={<SharedWishlist />} />
+                    <Route path="/unauthorized" element={<Unauthorized />} />
+                    <Route path="/auth/reset-password" element={<ResetPassword />} />
+                    
+                    {/* Marketplace Routes */}
+                    <Route path="/marketplace" element={<MarketplaceHome />} />
+                    <Route path="/marketplace/produto/:id" element={<ProductDetail />} />
+                    <Route path="/marketplace/comparar" element={<ProductComparison />} />
 
-                {/* Admin Routes with AdminLayout */}
-                <Route path="/admin" element={<AdminLayout />}>
-                  <Route index element={<Dashboard />} />
-                  <Route path="entidades" element={<EntidadesAdminContainer />} />
-                  <Route path="usuarios" element={<UsersAdmin />} />
-                  <Route path="eventos" element={<EventsAdmin />} />
-                  <Route path="mensagens" element={<MessagesAdmin />} />
-                  <Route path="pedidos" element={<OrdersAdmin />} />
-                  <Route path="relatorios" element={<ReportsAdmin />} />
-                  <Route path="configuracoes" element={<SettingsAdmin />} />
-                  
-                  {/* Marketing Routes */}
-                  <Route path="marketing" element={<MarketingAdmin />} />
-                  <Route path="marketing/google-ads" element={<GoogleAdsPage />} />
-                  <Route path="marketing/meta-ads" element={<MetaAdsPage />} />
-                  
-                  {/* Finance Routes */}
-                  <Route path="financeiro" element={<FinanceOverview />} />
-                  <Route path="financeiro/dashboard/total-sales" element={<TotalSalesDashboard />} />
-                  <Route path="financeiro/dashboard/monthly" element={<MonthlyDashboard />} />
-                  <Route path="financeiro/dashboard/last-24-hours" element={<Last24HoursDashboard />} />
-                  <Route path="financeiro/contabilidade" element={<Accounting />} />
-                  <Route path="financeiro/fluxo-caixa" element={<CashFlow />} />
-                  <Route path="financeiro/receitas" element={<Income />} />
-                  <Route path="financeiro/despesas" element={<Expenses />} />
-                  <Route path="financeiro/relatorios" element={<FinancialReports />} />
-                  <Route path="financeiro/contas" element={<AccountsPage />} />
-                </Route>
+                    {/* Admin Routes */}
+                    <Route path="/admin" element={<AdminLayout />}>
+                      <Route index element={<Dashboard />} />
+                      <Route path="eventos" element={<EventsAdmin />} />
+                      <Route path="entidades" element={<EntidadesAdminContainer />} />
+                      <Route path="cupons" element={<CouponsAdmin />} />
+                      <Route path="pedidos" element={<OrdersAdmin />} />
+                      <Route path="usuarios" element={<UsersAdmin />} />
+                      <Route path="mensagens" element={<MessagesAdmin />} />
+                      <Route path="relatorios" element={<ReportsAdmin />} />
+                      <Route path="configuracoes" element={<SettingsAdmin />} />
+                      <Route path="marketing" element={<MarketingAdmin />} />
+                      <Route path="marketing/google-ads" element={<GoogleAdsPage />} />
+                      <Route path="marketing/meta-ads" element={<MetaAdsPage />} />
+                      <Route path="financeiro" element={<FinanceOverview />} />
+                      <Route path="financeiro/fluxo-caixa" element={<CashFlow />} />
+                      <Route path="financeiro/receitas" element={<Income />} />
+                      <Route path="financeiro/despesas" element={<Expenses />} />
+                      <Route path="financeiro/contas" element={<AccountsPage />} />
+                      <Route path="financeiro/relatorios" element={<FinancialReports />} />
+                      <Route path="financeiro/contabilidade" element={<Accounting />} />
+                    </Route>
 
-                {/* 404 Route */}
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-              <ComparisonFloatingIndicator />
-            </ErrorBoundary>
-          </TooltipProvider>
-        </ComparisonProvider>
-      </AuthProvider>
-    </QueryClientProvider>
+                    {/* 404 Route */}
+                    <Route path="*" element={<NotFound />} />
+                  </Routes>
+                </div>
+                <BackToTopButton />
+                <Toaster />
+              </Router>
+            </AccessibilityProvider>
+          </ComparisonProvider>
+        </AuthProvider>
+      </QueryClientProvider>
+    </ErrorBoundary>
   );
 }
 

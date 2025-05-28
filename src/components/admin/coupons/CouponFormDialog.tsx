@@ -132,11 +132,19 @@ export const CouponFormDialog: React.FC<CouponFormDialogProps> = ({
   const applicationType = form.watch('application_type');
 
   const onSubmit = (values: z.infer<typeof couponSchema>) => {
-    const data = {
-      ...values,
+    const data: CreateCouponData = {
+      code: values.code,
+      name: values.name,
+      description: values.description,
+      discount_type: values.discount_type,
+      discount_value: values.discount_value,
+      application_type: values.application_type,
       start_date: new Date(values.start_date).toISOString(),
       end_date: new Date(values.end_date).toISOString(),
       target_event_id: values.application_type === 'event' ? values.target_event_id : undefined,
+      usage_limit: values.usage_limit,
+      usage_limit_per_user: values.usage_limit_per_user,
+      is_active: values.is_active,
     };
 
     if (isEditing) {
