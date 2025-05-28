@@ -1,5 +1,6 @@
+
 import React from 'react';
-import { Routes, Route, BrowserRouter } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Toaster } from '@/components/ui/toaster';
 import { AuthProvider } from '@/contexts/AuthContext';
@@ -86,89 +87,87 @@ import { PartnerSettings } from '@/pages/partner/PartnerSettings';
 
 function App() {
   return (
-    <BrowserRouter>
-      <QueryClientProvider client={queryClient}>
-        <Toaster />
-        <ComparisonProvider>
-          <AuthProvider>
-            <AccessibilityProvider>
-              <SEOHead />
-              <SkipLinks />
-              <div className="w-full">
-                <Routes>
-                  {/* Public Routes */}
-                  <Route path="/" element={<Index />} />
-                  <Route path="/login" element={<Login />} />
-                  <Route path="/sobre" element={<Sobre />} />
-                  <Route path="/produtos" element={<Products />} />
-                  <Route path="/bikes" element={<Bikes />} />
-                  <Route path="/market" element={<Market />} />
-                  <Route path="/eventos" element={<EventsCalendar />} />
-                  <Route path="/eventos/:id" element={<EventDetail />} />
-                  <Route path="/anunciar" element={<NewAnnounce />} />
-                  <Route path="/comunidade" element={<Comunidade />} />
-                  <Route path="/roles" element={<Roles />} />
-                  <Route path="/wishlists" element={<Wishlists />} />
-                  <Route path="/wishlists/:id" element={<WishlistDetail />} />
-                  <Route path="/shared/:token" element={<SharedWishlist />} />
-                  <Route path="/unauthorized" element={<Unauthorized />} />
-                  <Route path="/auth/reset-password" element={<ResetPassword />} />
-                  
-                  {/* Marketplace Routes */}
-                  <Route path="/marketplace" element={<MarketplaceHome />} />
-                  <Route path="/marketplace/produto/:id" element={<ProductDetail />} />
-                  <Route path="/marketplace/comparar" element={<ProductComparison />} />
+    <QueryClientProvider client={queryClient}>
+      <Toaster />
+      <ComparisonProvider>
+        <AuthProvider>
+          <AccessibilityProvider>
+            <SEOHead />
+            <SkipLinks />
+            <div className="w-full">
+              <Routes>
+                {/* Public Routes */}
+                <Route path="/" element={<Index />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/sobre" element={<Sobre />} />
+                <Route path="/produtos" element={<Products />} />
+                <Route path="/bikes" element={<Bikes />} />
+                <Route path="/market" element={<Market />} />
+                <Route path="/eventos" element={<EventsCalendar />} />
+                <Route path="/eventos/:id" element={<EventDetail />} />
+                <Route path="/anunciar" element={<NewAnnounce />} />
+                <Route path="/comunidade" element={<Comunidade />} />
+                <Route path="/roles" element={<Roles />} />
+                <Route path="/wishlists" element={<Wishlists />} />
+                <Route path="/wishlists/:id" element={<WishlistDetail />} />
+                <Route path="/shared/:token" element={<SharedWishlist />} />
+                <Route path="/unauthorized" element={<Unauthorized />} />
+                <Route path="/auth/reset-password" element={<ResetPassword />} />
+                
+                {/* Marketplace Routes */}
+                <Route path="/marketplace" element={<MarketplaceHome />} />
+                <Route path="/marketplace/produto/:id" element={<ProductDetail />} />
+                <Route path="/marketplace/comparar" element={<ProductComparison />} />
 
-                  {/* Admin Routes */}
-                  <Route path="/admin" element={<AdminLayout />}>
-                    <Route index element={<Dashboard />} />
-                    <Route path="eventos" element={<EventsAdmin />} />
-                    <Route path="entidades" element={<EntidadesAdminContainer />} />
-                    <Route path="cupons" element={<CouponsAdmin />} />
-                    <Route path="pedidos" element={<OrdersAdmin />} />
-                    <Route path="usuarios" element={<UsersAdmin />} />
-                    <Route path="mensagens" element={<MessagesAdmin />} />
-                    <Route path="relatorios" element={<ReportsAdmin />} />
-                    <Route path="configuracoes" element={<SettingsAdmin />} />
-                    <Route path="marketing" element={<MarketingAdmin />} />
-                    <Route path="marketing/google-ads" element={<GoogleAdsPage />} />
-                    <Route path="marketing/meta-ads" element={<MetaAdsPage />} />
-                    <Route path="financeiro" element={<FinanceOverview />} />
-                    <Route path="financeiro/fluxo-caixa" element={<CashFlow />} />
-                    <Route path="financeiro/receitas" element={<Income />} />
-                    <Route path="financeiro/despesas" element={<Expenses />} />
-                    <Route path="financeiro/contas" element={<AccountsPage />} />
-                    <Route path="financeiro/relatorios" element={<FinancialReports />} />
-                    <Route path="financeiro/contabilidade" element={<Accounting />} />
-                  </Route>
+                {/* Admin Routes */}
+                <Route path="/admin" element={<AdminLayout />}>
+                  <Route index element={<Dashboard />} />
+                  <Route path="eventos" element={<EventsAdmin />} />
+                  <Route path="entidades" element={<EntidadesAdminContainer />} />
+                  <Route path="cupons" element={<CouponsAdmin />} />
+                  <Route path="pedidos" element={<OrdersAdmin />} />
+                  <Route path="usuarios" element={<UsersAdmin />} />
+                  <Route path="mensagens" element={<MessagesAdmin />} />
+                  <Route path="relatorios" element={<ReportsAdmin />} />
+                  <Route path="configuracoes" element={<SettingsAdmin />} />
+                  <Route path="marketing" element={<MarketingAdmin />} />
+                  <Route path="marketing/google-ads" element={<GoogleAdsPage />} />
+                  <Route path="marketing/meta-ads" element={<MetaAdsPage />} />
+                  <Route path="financeiro" element={<FinanceOverview />} />
+                  <Route path="financeiro/fluxo-caixa" element={<CashFlow />} />
+                  <Route path="financeiro/receitas" element={<Income />} />
+                  <Route path="financeiro/despesas" element={<Expenses />} />
+                  <Route path="financeiro/contas" element={<AccountsPage />} />
+                  <Route path="financeiro/relatorios" element={<FinancialReports />} />
+                  <Route path="financeiro/contabilidade" element={<Accounting />} />
+                </Route>
 
-                  {/* Partner Routes */}
-                  <Route
-                    path="/partner/*"
-                    element={
-                      <ProtectedPartnerRoute>
-                        <PartnerLayout />
-                      </ProtectedPartnerRoute>
-                    }
-                  >
-                    <Route path="dashboard" element={<PartnerDashboard />} />
-                    <Route path="creditos" element={<PartnerCredits />} />
-                    <Route path="day-use" element={<PartnerDayUse />} />
-                    <Route path="assinaturas" element={<PartnerSubscriptions />} />
-                    <Route path="eventos" element={<PartnerEvents />} />
-                    <Route path="configuracoes" element={<PartnerSettings />} />
-                  </Route>
+                {/* Partner Routes */}
+                <Route
+                  path="/partner/*"
+                  element={
+                    <ProtectedPartnerRoute>
+                      <PartnerLayout />
+                    </ProtectedPartnerRoute>
+                  }
+                >
+                  <Route path="dashboard" element={<PartnerDashboard />} />
+                  <Route path="creditos" element={<PartnerCredits />} />
+                  <Route path="day-use" element={<PartnerDayUse />} />
+                  <Route path="assinaturas" element={<PartnerSubscriptions />} />
+                  <Route path="eventos" element={<PartnerEvents />} />
+                  <Route path="configuracoes" element={<PartnerSettings />} />
+                </Route>
 
-                  {/* 404 Route */}
-                  <Route path="*" element={<NotFound />} />
-                </Routes>
-              </div>
-              <BackToTopButton />
-            </AccessibilityProvider>
-          </AuthProvider>
-        </ComparisonProvider>
-      </QueryClientProvider>
-    </BrowserRouter>
+                {/* 404 Route */}
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </div>
+            <BackToTopButton />
+          </AccessibilityProvider>
+        </AuthProvider>
+      </ComparisonProvider>
+    </QueryClientProvider>
   );
 }
 
