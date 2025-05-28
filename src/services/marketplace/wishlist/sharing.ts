@@ -7,8 +7,8 @@ export const shareWishlist = async (wishlistId: string, email?: string) => {
   const { data: wishlist, error: updateError } = await supabase
     .from('wishlists')
     .update({ 
-      is_shared: true as boolean 
-    } as { is_shared: boolean })
+      is_shared: true
+    })
     .eq('id', wishlistId)
     .select('id, name, description, is_shared, share_token')
     .single();
@@ -21,20 +21,23 @@ export const shareWishlist = async (wishlistId: string, email?: string) => {
   // If email is provided, create a specific share
   if (email) {
     try {
-      const { data: profile, error: profileError } = await supabase
+      // Use a simpler query approach to avoid type inference issues
+      const profileQuery = await supabase
         .from('profiles')
         .select('id')
         .eq('email', email)
-        .maybeSingle();
+        .limit(1);
 
-      if (profileError) {
-        console.error('User not found:', profileError);
+      if (profileQuery.error) {
+        console.error('Error finding user:', profileQuery.error);
         throw new Error('Usuário não encontrado');
       }
 
-      if (!profile) {
+      if (!profileQuery.data || profileQuery.data.length === 0) {
         throw new Error('Usuário não encontrado');
       }
+
+      const profile = profileQuery.data[0];
 
       const { data: { user } } = await supabase.auth.getUser();
       
