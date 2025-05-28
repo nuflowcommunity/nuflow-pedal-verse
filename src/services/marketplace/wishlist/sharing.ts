@@ -35,15 +35,17 @@ export const shareWishlist = async (wishlistId: string, email?: string) => {
       throw new Error('User not authenticated');
     }
 
-    // Simplify the insert by avoiding complex type inference
+    // Create the share record with explicit typing to avoid deep type inference
+    const shareData = {
+      wishlist_id: wishlistId,
+      shared_with_user_id: profile.id,
+      shared_by_user_id: user.id,
+      access_level: 'view' as 'view' | 'edit'
+    };
+
     const { error: shareError } = await supabase
       .from('wishlist_shares')
-      .insert([{
-        wishlist_id: wishlistId,
-        shared_with_user_id: profile.id,
-        shared_by_user_id: user.id,
-        access_level: 'view'
-      }]);
+      .insert(shareData);
 
     if (shareError) {
       console.error('Error creating share:', shareError);
