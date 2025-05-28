@@ -1,143 +1,108 @@
 
-import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { usePartner } from '@/contexts/PartnerContext';
-import { Button } from '@/components/ui/button';
+import React from 'react';
+import { NavLink } from 'react-router-dom';
 import { 
+  LayoutDashboard, 
   CreditCard, 
   Calendar, 
   Users, 
-  CalendarDays,
-  Menu,
-  X,
-  Home,
-  Settings
+  PartyPopper, 
+  Settings,
+  FileText
 } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { usePartner } from '@/contexts/PartnerContext';
 
 const menuItems = [
   {
-    key: 'dashboard',
-    label: 'Dashboard',
-    icon: Home,
-    path: '/partner/dashboard',
+    title: 'Dashboard',
+    href: '/partner/dashboard',
+    icon: LayoutDashboard,
     alwaysVisible: true
   },
   {
-    key: 'creditos',
-    label: 'Créditos',
+    title: 'Passes Vendidos',
+    href: '/partner/passes',
+    icon: FileText,
+    alwaysVisible: true
+  },
+  {
+    title: 'Créditos',
+    href: '/partner/creditos',
     icon: CreditCard,
-    path: '/partner/creditos',
     permission: 'creditos'
   },
   {
-    key: 'day_use',
-    label: 'Day Use',
-    icon: CalendarDays,
-    path: '/partner/day-use',
+    title: 'Day Use',
+    href: '/partner/day-use',
+    icon: Calendar,
     permission: 'day_use'
   },
   {
-    key: 'assinaturas',
-    label: 'Assinaturas',
+    title: 'Assinaturas',
+    href: '/partner/assinaturas',
     icon: Users,
-    path: '/partner/assinaturas',
     permission: 'assinaturas'
   },
   {
-    key: 'eventos',
-    label: 'Eventos',
-    icon: Calendar,
-    path: '/partner/eventos',
+    title: 'Eventos',
+    href: '/partner/eventos',
+    icon: PartyPopper,
     permission: 'eventos'
   },
   {
-    key: 'configuracoes',
-    label: 'Configurações',
+    title: 'Configurações',
+    href: '/partner/configuracoes',
     icon: Settings,
-    path: '/partner/configuracoes',
     alwaysVisible: true
   }
 ];
 
 export const PartnerSidebar: React.FC = () => {
-  const [isMobileOpen, setIsMobileOpen] = useState(false);
   const { hasPermission, loading } = usePartner();
-  const location = useLocation();
+
+  if (loading) {
+    return (
+      <div className="w-64 bg-white border-r border-gray-200 p-4">
+        <div className="animate-pulse space-y-4">
+          {[...Array(6)].map((_, i) => (
+            <div key={i} className="h-10 bg-gray-200 rounded"></div>
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   const visibleItems = menuItems.filter(item => 
     item.alwaysVisible || (item.permission && hasPermission(item.permission))
   );
 
-  const SidebarContent = () => (
-    <div className="flex flex-col h-full">
-      <div className="p-6">
-        <h2 className="text-lg font-semibold text-white">Menu do Parceiro</h2>
+  return (
+    <div className="w-64 bg-white border-r border-gray-200 flex flex-col">
+      <div className="p-4 border-b border-gray-200">
+        <h2 className="text-xl font-bold text-nuflow-forest">Painel Parceiro</h2>
       </div>
       
-      <nav className="flex-1 px-4 space-y-2">
-        {loading ? (
-          <div className="space-y-2">
-            {[1, 2, 3].map(i => (
-              <div key={i} className="h-10 bg-white/10 rounded animate-pulse" />
-            ))}
-          </div>
-        ) : (
-          visibleItems.map(item => {
-            const Icon = item.icon;
-            const isActive = location.pathname === item.path;
-            
-            return (
-              <Link
-                key={item.key}
-                to={item.path}
-                onClick={() => setIsMobileOpen(false)}
-                className={cn(
-                  "flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors",
-                  isActive
-                    ? "bg-white text-nuflow-primary"
-                    : "text-white/80 hover:text-white hover:bg-white/10"
-                )}
+      <nav className="flex-1 p-4">
+        <ul className="space-y-2">
+          {visibleItems.map((item) => (
+            <li key={item.href}>
+              <NavLink
+                to={item.href}
+                className={({ isActive }) =>
+                  `flex items-center gap-3 px-3 py-2 rounded-lg transition-colors ${
+                    isActive
+                      ? 'bg-nuflow-mint text-nuflow-forest'
+                      : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
+                  }`
+                }
               >
-                <Icon size={18} />
-                {item.label}
-              </Link>
-            );
-          })
-        )}
+                <item.icon size={20} />
+                <span>{item.title}</span>
+              </NavLink>
+            </li>
+          ))}
+        </ul>
       </nav>
     </div>
-  );
-
-  return (
-    <>
-      {/* Mobile menu button */}
-      <Button
-        variant="ghost"
-        size="sm"
-        className="fixed top-4 left-4 z-50 md:hidden bg-white shadow-md"
-        onClick={() => setIsMobileOpen(!isMobileOpen)}
-      >
-        {isMobileOpen ? <X size={20} /> : <Menu size={20} />}
-      </Button>
-
-      {/* Desktop sidebar */}
-      <div className="hidden md:flex w-64 bg-nuflow-primary flex-col">
-        <SidebarContent />
-      </div>
-
-      {/* Mobile sidebar overlay */}
-      {isMobileOpen && (
-        <div className="fixed inset-0 z-40 md:hidden">
-          <div 
-            className="fixed inset-0 bg-black bg-opacity-50"
-            onClick={() => setIsMobileOpen(false)}
-          />
-          <div className="fixed left-0 top-0 h-full w-64 bg-nuflow-primary">
-            <SidebarContent />
-          </div>
-        </div>
-      )}
-    </>
   );
 };

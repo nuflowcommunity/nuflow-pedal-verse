@@ -84,6 +84,7 @@ import { PartnerDayUse } from '@/pages/partner/PartnerDayUse';
 import { PartnerSubscriptions } from '@/pages/partner/PartnerSubscriptions';
 import { PartnerEvents } from '@/pages/partner/PartnerEvents';
 import { PartnerSettings } from '@/pages/partner/PartnerSettings';
+import { PartnerPasses } from '@/pages/partner/PartnerPasses';
 
 function App() {
   return (
@@ -152,6 +153,7 @@ function App() {
                   }
                 >
                   <Route path="dashboard" element={<PartnerDashboard />} />
+                  <Route path="passes" element={<PartnerPasses />} />
                   <Route path="creditos" element={<PartnerCredits />} />
                   <Route path="day-use" element={<PartnerDayUse />} />
                   <Route path="assinaturas" element={<PartnerSubscriptions />} />
