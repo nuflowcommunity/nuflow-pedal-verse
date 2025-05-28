@@ -8,9 +8,9 @@ interface ProtectedPartnerRouteProps {
 }
 
 export const ProtectedPartnerRoute: React.FC<ProtectedPartnerRouteProps> = ({ children }) => {
-  const { user, loading } = useAuth();
+  const { user, isLoading } = useAuth();
 
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-nuflow-primary"></div>
