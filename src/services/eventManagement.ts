@@ -6,23 +6,18 @@ export class EventManagementService {
   static async getAllEvents(): Promise<ExtendedEventForManagement[]> {
     const { data, error } = await supabase
       .from('events')
-      .select(`
-        *
-      `)
+      .select('*')
       .order('created_at', { ascending: false });
 
     if (error) throw error;
     
-    // Garantir que os campos obrigatórios existam com type assertions
-    const eventsWithDefaults = (data || []).map(event => ({
+    return (data || []).map(event => ({
       ...event,
       event_type: (event as any).event_type || 'evento',
       documents: (event as any).documents || [],
       group_purchase_enabled: (event as any).group_purchase_enabled || false,
       ticket_types: []
-    }));
-
-    return eventsWithDefaults as ExtendedEventForManagement[];
+    })) as ExtendedEventForManagement[];
   }
 
   static async getEventsByFilters(filters: {
@@ -33,12 +28,10 @@ export class EventManagementService {
     date_from?: string;
     date_to?: string;
   }): Promise<ExtendedEventForManagement[]> {
-    let query = supabase
-      .from('events')
-      .select(`*`);
+    let query = supabase.from('events').select('*');
 
     if (filters.status) {
-      query = query.eq('status', filters.status as any);
+      query = query.eq('status', filters.status);
     }
 
     if (filters.search) {
@@ -46,12 +39,11 @@ export class EventManagementService {
     }
 
     if (filters.partner) {
-      // Type assertion para campos que não existem no schema atual
-      query = query.eq('partner_name' as any, filters.partner);
+      query = query.eq('organizer', filters.partner);
     }
 
     if (filters.event_type) {
-      query = query.eq('event_type' as any, filters.event_type);
+      query = query.eq('category', filters.event_type);
     }
 
     if (filters.date_from) {
@@ -66,21 +58,18 @@ export class EventManagementService {
 
     if (error) throw error;
     
-    // Garantir que os campos obrigatórios existam com type assertions
-    const eventsWithDefaults = (data || []).map(event => ({
+    return (data || []).map(event => ({
       ...event,
-      event_type: (event as any).event_type || 'evento',
+      event_type: (event as any).event_type || event.category || 'evento',
       documents: (event as any).documents || [],
       group_purchase_enabled: (event as any).group_purchase_enabled || false,
       ticket_types: []
-    }));
-
-    return eventsWithDefaults as ExtendedEventForManagement[];
+    })) as ExtendedEventForManagement[];
   }
 
   static async approveEvent(eventId: string, adminNotes?: string): Promise<void> {
     const updateData: any = {
-      status: 'approved' as any,
+      status: 'approved',
       approved_at: new Date().toISOString(),
     };
 
@@ -94,14 +83,11 @@ export class EventManagementService {
       .eq('id', eventId);
 
     if (error) throw error;
-
-    // Log da ação
-    await this.logAdminAction(eventId, 'approved', { admin_notes: adminNotes });
   }
 
   static async rejectEvent(eventId: string, reason: string, adminNotes?: string): Promise<void> {
     const updateData: any = {
-      status: 'rejected' as any,
+      status: 'rejected',
       rejection_reason: reason,
     };
 
@@ -115,13 +101,9 @@ export class EventManagementService {
       .eq('id', eventId);
 
     if (error) throw error;
-
-    // Log da ação
-    await this.logAdminAction(eventId, 'rejected', { rejection_reason: reason, admin_notes: adminNotes });
   }
 
   static async cloneEvent(eventId: string): Promise<string> {
-    // Buscar evento original
     const { data: originalEvent, error: fetchError } = await supabase
       .from('events')
       .select('*')
@@ -130,8 +112,7 @@ export class EventManagementService {
 
     if (fetchError) throw fetchError;
 
-    // Criar evento clonado - usando apenas campos que existem no schema
-    const clonedEventData: any = {
+    const clonedEventData = {
       title: `${originalEvent.title} (Cópia)`,
       description: originalEvent.description,
       short_description: originalEvent.short_description,
@@ -150,31 +131,8 @@ export class EventManagementService {
       difficulty: originalEvent.difficulty,
       meeting_point: originalEvent.meeting_point,
       google_maps_url: originalEvent.google_maps_url,
-      status: 'draft' as any,
+      status: 'draft',
     };
-
-    // Adicionar campos extras que podem não existir no schema atual
-    if ((originalEvent as any).event_type) {
-      clonedEventData.event_type = (originalEvent as any).event_type;
-    }
-    if ((originalEvent as any).partner_name) {
-      clonedEventData.partner_name = (originalEvent as any).partner_name;
-    }
-    if ((originalEvent as any).documents) {
-      clonedEventData.documents = (originalEvent as any).documents;
-    }
-    if ((originalEvent as any).terms_text) {
-      clonedEventData.terms_text = (originalEvent as any).terms_text;
-    }
-    if ((originalEvent as any).experience_text) {
-      clonedEventData.experience_text = (originalEvent as any).experience_text;
-    }
-    if ((originalEvent as any).group_purchase_enabled !== undefined) {
-      clonedEventData.group_purchase_enabled = (originalEvent as any).group_purchase_enabled;
-    }
-    if ((originalEvent as any).cloned_from_id) {
-      clonedEventData.cloned_from_id = eventId;
-    }
 
     const { data: newEvent, error: createError } = await supabase
       .from('events')
@@ -184,99 +142,61 @@ export class EventManagementService {
 
     if (createError) throw createError;
 
-    // Log da ação
-    await this.logAdminAction(newEvent.id, 'cloned', { cloned_from: eventId });
-
     return newEvent.id;
   }
 
   static async deactivateEvent(eventId: string): Promise<void> {
     const { error } = await supabase
       .from('events')
-      .update({ status: 'cancelled' as any })
+      .update({ status: 'cancelled' })
       .eq('id', eventId);
 
     if (error) throw error;
-
-    await this.logAdminAction(eventId, 'deactivated');
   }
 
   static async createOrUpdateEvent(eventData: EventFormData, eventId?: string): Promise<string> {
-    const { ticket_types, documents, ...eventFields } = eventData;
-
-    // Preparar dados básicos que existem no schema
-    const baseEventData: any = {
-      title: eventFields.title,
-      description: eventFields.description,
-      short_description: eventFields.short_description,
-      image_url: eventFields.image_url,
-      category: eventFields.category,
-      location: eventFields.location,
-      city: eventFields.city,
-      state: eventFields.state,
-      meeting_point: eventFields.meeting_point,
-      google_maps_url: eventFields.google_maps_url,
-      date: eventFields.date,
-      end_date: eventFields.end_date,
-      max_participants: eventFields.max_participants,
-      difficulty: eventFields.difficulty,
-      distance: eventFields.distance,
-      elevation: eventFields.elevation,
-      organizer: eventFields.organizer,
+    const baseEventData = {
+      title: eventData.title,
+      description: eventData.description,
+      short_description: eventData.short_description,
+      image_url: eventData.image_url,
+      category: eventData.category,
+      location: eventData.location,
+      city: eventData.city,
+      state: eventData.state,
+      meeting_point: eventData.meeting_point,
+      google_maps_url: eventData.google_maps_url,
+      date: eventData.date,
+      end_date: eventData.end_date,
+      max_participants: eventData.max_participants,
+      difficulty: eventData.difficulty,
+      distance: eventData.distance,
+      elevation: eventData.elevation,
+      organizer: eventData.organizer,
     };
 
-    // Adicionar campos extras com type assertions
-    if (eventFields.event_type) {
-      (baseEventData as any).event_type = eventFields.event_type;
-    }
-    if (eventFields.partner_name) {
-      (baseEventData as any).partner_name = eventFields.partner_name;
-    }
-    if (documents) {
-      (baseEventData as any).documents = documents;
-    }
-    if (eventFields.terms_text) {
-      (baseEventData as any).terms_text = eventFields.terms_text;
-    }
-    if (eventFields.experience_text) {
-      (baseEventData as any).experience_text = eventFields.experience_text;
-    }
-    if (eventFields.group_purchase_enabled !== undefined) {
-      (baseEventData as any).group_purchase_enabled = eventFields.group_purchase_enabled;
-    }
-
     if (eventId) {
-      // Atualizar evento existente
-      const updateData = {
-        ...baseEventData,
-        updated_at: new Date().toISOString()
-      };
-
       const { error } = await supabase
         .from('events')
-        .update(updateData)
+        .update({
+          ...baseEventData,
+          updated_at: new Date().toISOString()
+        })
         .eq('id', eventId);
 
       if (error) throw error;
-
-      await this.logAdminAction(eventId, 'edited');
       return eventId;
     } else {
-      // Criar novo evento
-      const insertData = {
-        ...baseEventData,
-        status: 'pending' as any
-      };
-
       const { data: newEvent, error } = await supabase
         .from('events')
-        .insert(insertData)
+        .insert({
+          ...baseEventData,
+          status: 'pending'
+        })
         .select()
         .single();
 
       if (error) throw error;
-
-      await this.logAdminAction(newEvent.id, 'created');
       return newEvent.id;
     }
   }
@@ -284,9 +204,7 @@ export class EventManagementService {
   static async getEventRegistrations(eventId: string) {
     const { data, error } = await supabase
       .from('event_registrations')
-      .select(`
-        *
-      `)
+      .select('*')
       .eq('event_id', eventId)
       .order('created_at', { ascending: false });
 
@@ -307,24 +225,5 @@ export class EventManagementService {
       filename: `inscricoes_${event?.title?.replace(/\s+/g, '_')}_${new Date().toISOString().split('T')[0]}`,
       format
     };
-  }
-
-  private static async logAdminAction(eventId: string, action: string, details: any = {}) {
-    const { data: { user } } = await supabase.auth.getUser();
-    
-    try {
-      // Tentar inserir no log de admin, mas não falhar se a tabela não existir
-      await supabase
-        .from('event_admin_logs' as any)
-        .insert({
-          event_id: eventId,
-          admin_user_id: user?.id,
-          action,
-          details
-        });
-    } catch (error) {
-      console.error('Error logging admin action:', error);
-      // Não falhar a operação principal se o log falhar
-    }
   }
 }
