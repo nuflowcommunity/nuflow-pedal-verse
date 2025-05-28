@@ -44,6 +44,112 @@ export type Database = {
           },
         ]
       }
+      coupon_usages: {
+        Row: {
+          coupon_id: string
+          discount_applied: number
+          event_registration_id: string | null
+          id: string
+          order_id: string | null
+          used_at: string
+          user_id: string
+        }
+        Insert: {
+          coupon_id: string
+          discount_applied: number
+          event_registration_id?: string | null
+          id?: string
+          order_id?: string | null
+          used_at?: string
+          user_id: string
+        }
+        Update: {
+          coupon_id?: string
+          discount_applied?: number
+          event_registration_id?: string | null
+          id?: string
+          order_id?: string | null
+          used_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "coupon_usages_coupon_id_fkey"
+            columns: ["coupon_id"]
+            isOneToOne: false
+            referencedRelation: "coupons"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      coupons: {
+        Row: {
+          application_type: string
+          code: string
+          created_at: string
+          created_by: string | null
+          current_usage: number
+          description: string | null
+          discount_type: string
+          discount_value: number
+          end_date: string
+          id: string
+          is_active: boolean
+          name: string
+          start_date: string
+          target_event_id: string | null
+          updated_at: string
+          usage_limit: number | null
+          usage_limit_per_user: number | null
+        }
+        Insert: {
+          application_type: string
+          code: string
+          created_at?: string
+          created_by?: string | null
+          current_usage?: number
+          description?: string | null
+          discount_type: string
+          discount_value: number
+          end_date: string
+          id?: string
+          is_active?: boolean
+          name: string
+          start_date: string
+          target_event_id?: string | null
+          updated_at?: string
+          usage_limit?: number | null
+          usage_limit_per_user?: number | null
+        }
+        Update: {
+          application_type?: string
+          code?: string
+          created_at?: string
+          created_by?: string | null
+          current_usage?: number
+          description?: string | null
+          discount_type?: string
+          discount_value?: number
+          end_date?: string
+          id?: string
+          is_active?: boolean
+          name?: string
+          start_date?: string
+          target_event_id?: string | null
+          updated_at?: string
+          usage_limit?: number | null
+          usage_limit_per_user?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "coupons_target_event_id_fkey"
+            columns: ["target_event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       entities: {
         Row: {
           created_at: string | null

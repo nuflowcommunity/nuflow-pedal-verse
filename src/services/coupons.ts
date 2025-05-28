@@ -6,7 +6,7 @@ export const couponsService = {
   // Buscar todos os cupons (apenas admins)
   async getCoupons(): Promise<Coupon[]> {
     const { data, error } = await supabase
-      .from('coupons' as any)
+      .from('coupons')
       .select('*')
       .order('created_at', { ascending: false });
 
@@ -17,7 +17,7 @@ export const couponsService = {
   // Buscar cupom por ID
   async getCouponById(id: string): Promise<Coupon | null> {
     const { data, error } = await supabase
-      .from('coupons' as any)
+      .from('coupons')
       .select('*')
       .eq('id', id)
       .single();
@@ -31,7 +31,7 @@ export const couponsService = {
     const { data: { user } } = await supabase.auth.getUser();
     
     const { data, error } = await supabase
-      .from('coupons' as any)
+      .from('coupons')
       .insert({
         ...couponData,
         created_by: user?.id
@@ -46,7 +46,7 @@ export const couponsService = {
   // Atualizar cupom
   async updateCoupon(id: string, updates: Partial<CreateCouponData>): Promise<Coupon> {
     const { data, error } = await supabase
-      .from('coupons' as any)
+      .from('coupons')
       .update(updates)
       .eq('id', id)
       .select()
@@ -59,7 +59,7 @@ export const couponsService = {
   // Ativar/Desativar cupom
   async toggleCouponStatus(id: string, isActive: boolean): Promise<Coupon> {
     const { data, error } = await supabase
-      .from('coupons' as any)
+      .from('coupons')
       .update({ is_active: isActive })
       .eq('id', id)
       .select()
@@ -72,7 +72,7 @@ export const couponsService = {
   // Excluir cupom
   async deleteCoupon(id: string): Promise<void> {
     const { error } = await supabase
-      .from('coupons' as any)
+      .from('coupons')
       .delete()
       .eq('id', id);
 
@@ -120,7 +120,7 @@ export const couponsService = {
   // Buscar usos de cupons
   async getCouponUsages(couponId?: string): Promise<CouponUsage[]> {
     let query = supabase
-      .from('coupon_usages' as any)
+      .from('coupon_usages')
       .select('*')
       .order('used_at', { ascending: false });
 
