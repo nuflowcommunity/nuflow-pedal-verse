@@ -1,6 +1,6 @@
 
 import { Toaster } from "@/components/ui/toaster";
-import { Sonner } from "@/components/ui/sonner";
+import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Routes, Route } from "react-router-dom";
@@ -72,6 +72,11 @@ function App() {
               <Route path="/anunciar" element={<NewAnnounce />} />
               <Route path="*" element={<NotFound />} />
               <Route path="/unauthorized" element={<Unauthorized />} />
+
+              {/* Wishlist Routes */}
+              <Route path="/wishlists" element={<Wishlists />} />
+              <Route path="/wishlists/:id" element={<WishlistDetail />} />
+              <Route path="/shared-wishlist/:token" element={<SharedWishlist />} />
 
               {/* Admin Routes */}
               <Route
