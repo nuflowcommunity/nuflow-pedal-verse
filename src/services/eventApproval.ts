@@ -23,7 +23,16 @@ export class EventApprovalService {
 
     const { data, error } = await query;
     if (error) throw error;
-    return data as ExtendedEvent[];
+    
+    // Garantir que os campos obrigatórios existam
+    const eventsWithDefaults = (data || []).map(event => ({
+      ...event,
+      event_type: event.event_type || 'evento',
+      documents: event.documents || [],
+      group_purchase_enabled: event.group_purchase_enabled || false
+    }));
+
+    return eventsWithDefaults as ExtendedEvent[];
   }
 
   // Aprovar ou rejeitar evento

@@ -1,21 +1,28 @@
 
 import { supabase } from '@/integrations/supabase/client';
-import { ExtendedEventForManagement, EventFormData, EventTicketType } from '@/types/eventManagement';
+import { ExtendedEventForManagement, EventFormData } from '@/types/eventManagement';
 
 export class EventManagementService {
   static async getAllEvents(): Promise<ExtendedEventForManagement[]> {
     const { data, error } = await supabase
       .from('events')
       .select(`
-        *,
-        payment_settings:event_payment_settings(*),
-        custom_questions:event_custom_questions(*),
-        ticket_types:event_ticket_types(*)
+        *
       `)
       .order('created_at', { ascending: false });
 
     if (error) throw error;
-    return data || [];
+    
+    // Garantir que os campos obrigatórios existam
+    const eventsWithDefaults = (data || []).map(event => ({
+      ...event,
+      event_type: event.event_type || 'evento',
+      documents: event.documents || [],
+      group_purchase_enabled: event.group_purchase_enabled || false,
+      ticket_types: []
+    }));
+
+    return eventsWithDefaults as ExtendedEventForManagement[];
   }
 
   static async getEventsByFilters(filters: {
@@ -28,12 +35,7 @@ export class EventManagementService {
   }): Promise<ExtendedEventForManagement[]> {
     let query = supabase
       .from('events')
-      .select(`
-        *,
-        payment_settings:event_payment_settings(*),
-        custom_questions:event_custom_questions(*),
-        ticket_types:event_ticket_types(*)
-      `);
+      .select(`*`);
 
     if (filters.status) {
       query = query.eq('status', filters.status);
@@ -62,7 +64,17 @@ export class EventManagementService {
     const { data, error } = await query.order('created_at', { ascending: false });
 
     if (error) throw error;
-    return data || [];
+    
+    // Garantir que os campos obrigatórios existam
+    const eventsWithDefaults = (data || []).map(event => ({
+      ...event,
+      event_type: event.event_type || 'evento',
+      documents: event.documents || [],
+      group_purchase_enabled: event.group_purchase_enabled || false,
+      ticket_types: []
+    }));
+
+    return eventsWithDefaults as ExtendedEventForManagement[];
   }
 
   static async approveEvent(eventId: string, adminNotes?: string): Promise<void> {
@@ -109,16 +121,32 @@ export class EventManagementService {
 
     // Criar evento clonado
     const clonedEventData = {
-      ...originalEvent,
-      id: undefined,
       title: `${originalEvent.title} (Cópia)`,
-      status: 'draft',
-      cloned_from_id: eventId,
-      created_at: undefined,
-      updated_at: undefined,
-      approved_at: null,
-      approved_by: null,
-      rejection_reason: null
+      description: originalEvent.description,
+      short_description: originalEvent.short_description,
+      image_url: originalEvent.image_url,
+      date: originalEvent.date,
+      end_date: originalEvent.end_date,
+      location: originalEvent.location,
+      city: originalEvent.city,
+      state: originalEvent.state,
+      price: originalEvent.price,
+      category: originalEvent.category,
+      max_participants: originalEvent.max_participants,
+      organizer: originalEvent.organizer,
+      distance: originalEvent.distance,
+      elevation: originalEvent.elevation,
+      difficulty: originalEvent.difficulty,
+      meeting_point: originalEvent.meeting_point,
+      google_maps_url: originalEvent.google_maps_url,
+      event_type: originalEvent.event_type || 'evento',
+      partner_name: originalEvent.partner_name,
+      documents: originalEvent.documents || [],
+      terms_text: originalEvent.terms_text,
+      experience_text: originalEvent.experience_text,
+      group_purchase_enabled: originalEvent.group_purchase_enabled || false,
+      status: 'draft' as const,
+      cloned_from_id: eventId
     };
 
     const { data: newEvent, error: createError } = await supabase
@@ -128,25 +156,6 @@ export class EventManagementService {
       .single();
 
     if (createError) throw createError;
-
-    // Clonar tipos de ingresso
-    const { data: ticketTypes } = await supabase
-      .from('event_ticket_types')
-      .select('*')
-      .eq('event_id', eventId);
-
-    if (ticketTypes?.length) {
-      const clonedTickets = ticketTypes.map(ticket => ({
-        ...ticket,
-        id: undefined,
-        event_id: newEvent.id,
-        quantity_sold: 0
-      }));
-
-      await supabase
-        .from('event_ticket_types')
-        .insert(clonedTickets);
-    }
 
     // Log da ação
     await this.logAdminAction(newEvent.id, 'cloned', { cloned_from: eventId });
@@ -181,25 +190,6 @@ export class EventManagementService {
 
       if (error) throw error;
 
-      // Atualizar tipos de ingresso
-      if (ticket_types?.length) {
-        // Remover tipos antigos
-        await supabase
-          .from('event_ticket_types')
-          .delete()
-          .eq('event_id', eventId);
-
-        // Inserir novos tipos
-        const ticketsToInsert = ticket_types.map(ticket => ({
-          ...ticket,
-          event_id: eventId
-        }));
-
-        await supabase
-          .from('event_ticket_types')
-          .insert(ticketsToInsert);
-      }
-
       await this.logAdminAction(eventId, 'edited');
       return eventId;
     } else {
@@ -216,18 +206,6 @@ export class EventManagementService {
 
       if (error) throw error;
 
-      // Inserir tipos de ingresso
-      if (ticket_types?.length) {
-        const ticketsToInsert = ticket_types.map(ticket => ({
-          ...ticket,
-          event_id: newEvent.id
-        }));
-
-        await supabase
-          .from('event_ticket_types')
-          .insert(ticketsToInsert);
-      }
-
       await this.logAdminAction(newEvent.id, 'created');
       return newEvent.id;
     }
@@ -237,11 +215,7 @@ export class EventManagementService {
     const { data, error } = await supabase
       .from('event_registrations')
       .select(`
-        *,
-        answers:event_registration_answers(
-          *,
-          question:event_custom_questions(*)
-        )
+        *
       `)
       .eq('event_id', eventId)
       .order('created_at', { ascending: false });
@@ -268,13 +242,18 @@ export class EventManagementService {
   private static async logAdminAction(eventId: string, action: string, details: any = {}) {
     const { data: { user } } = await supabase.auth.getUser();
     
-    await supabase
-      .from('event_admin_logs')
-      .insert({
-        event_id: eventId,
-        admin_user_id: user?.id,
-        action,
-        details
-      });
+    try {
+      await supabase
+        .from('event_admin_logs')
+        .insert({
+          event_id: eventId,
+          admin_user_id: user?.id,
+          action,
+          details
+        });
+    } catch (error) {
+      console.error('Error logging admin action:', error);
+      // Não falhar a operação principal se o log falhar
+    }
   }
 }

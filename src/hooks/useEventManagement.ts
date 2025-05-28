@@ -100,6 +100,23 @@ export const useEventManagement = () => {
     setFilters({});
   };
 
+  // Wrapper functions para manter compatibilidade com a interface esperada
+  const approveEvent = (eventId: string, adminNotes?: string) => {
+    approveMutation.mutate({ eventId, adminNotes });
+  };
+
+  const rejectEvent = (eventId: string, reason: string, adminNotes?: string) => {
+    rejectMutation.mutate({ eventId, reason, adminNotes });
+  };
+
+  const cloneEvent = (eventId: string) => {
+    cloneMutation.mutate(eventId);
+  };
+
+  const deactivateEvent = (eventId: string) => {
+    deactivateMutation.mutate(eventId);
+  };
+
   return {
     events,
     isLoading,
@@ -108,10 +125,10 @@ export const useEventManagement = () => {
     updateFilters,
     clearFilters,
     refetch,
-    approveEvent: approveMutation.mutate,
-    rejectEvent: rejectMutation.mutate,
-    cloneEvent: cloneMutation.mutate,
-    deactivateEvent: deactivateMutation.mutate,
+    approveEvent,
+    rejectEvent,
+    cloneEvent,
+    deactivateEvent,
     isProcessing: approveMutation.isPending || rejectMutation.isPending || 
                   cloneMutation.isPending || deactivateMutation.isPending
   };
