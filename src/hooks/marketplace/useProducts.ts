@@ -27,7 +27,6 @@ export const useProducts = (filters?: ProductFilters) => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const { toast } = useToast();
 
   const loadProducts = async () => {
     try {
@@ -60,6 +59,7 @@ export const useProduct = (id: string) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isFavorited, setIsFavorited] = useState(false);
+  const { toast } = useToast();
 
   const loadProduct = async () => {
     try {

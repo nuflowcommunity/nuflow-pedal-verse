@@ -4,7 +4,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import BackToTopButton from "./components/BackToTopButton";
 
@@ -58,57 +58,55 @@ function App() {
       <TooltipProvider>
         <Toaster />
         <Sonner />
-        <BrowserRouter>
-          <Suspense fallback={<div>Loading...</div>}>
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/marketplace" element={<Market />} />
-              <Route path="/marketplace/produto/:id" element={<ProductDetail />} />
-              <Route path="/market" element={<Market />} />
-              <Route path="/anunciar" element={<NewAnnounce />} />
-              <Route path="/produtos" element={<Products />} />
-              <Route path="/bikes" element={<Bikes />} />
-              <Route path="/comunidade" element={<Comunidade />} />
-              <Route path="/sobre" element={<Sobre />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/eventos" element={<EventsCalendar />} />
-              <Route path="/eventos/:id" element={<EventDetail />} />
-              <Route path="/roles" element={<Roles />} />
-              <Route path="/unauthorized" element={<Unauthorized />} />
-              
-              {/* Admin routes */}
-              <Route path="/admin" element={<Dashboard />} />
-              <Route path="/admin/dashboard" element={<Dashboard />} />
-              <Route path="/admin/entidades" element={<EntidadesAdminContainer />} />
-              <Route path="/admin/events" element={<EventsAdmin />} />
-              <Route path="/admin/users" element={<UsersAdmin />} />
-              <Route path="/admin/orders" element={<OrdersAdmin />} />
-              <Route path="/admin/messages" element={<MessagesAdmin />} />
-              <Route path="/admin/reports" element={<ReportsAdmin />} />
-              <Route path="/admin/settings" element={<SettingsAdmin />} />
-              <Route path="/admin/marketing" element={<MarketingAdmin />} />
-              
-              {/* Finance routes */}
-              <Route path="/admin/finance" element={<FinanceOverview />} />
-              <Route path="/admin/finance/accounts" element={<AccountsPage />} />
-              <Route path="/admin/finance/cash-flow" element={<CashFlow />} />
-              <Route path="/admin/finance/income" element={<Income />} />
-              <Route path="/admin/finance/expenses" element={<Expenses />} />
-              <Route path="/admin/finance/reports" element={<FinancialReports />} />
-              <Route path="/admin/finance/accounting" element={<Accounting />} />
-              <Route path="/admin/finance/last-24h" element={<Last24HoursDashboard />} />
-              <Route path="/admin/finance/monthly" element={<MonthlyDashboard />} />
-              <Route path="/admin/finance/total" element={<TotalSalesDashboard />} />
-              
-              {/* Marketing routes */}
-              <Route path="/admin/marketing/google-ads" element={<GoogleAdsPage />} />
-              <Route path="/admin/marketing/meta-ads" element={<MetaAdsPage />} />
-              
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </Suspense>
-          <BackToTopButton />
-        </BrowserRouter>
+        <Suspense fallback={<div>Loading...</div>}>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/marketplace" element={<Market />} />
+            <Route path="/marketplace/produto/:id" element={<ProductDetail />} />
+            <Route path="/market" element={<Market />} />
+            <Route path="/anunciar" element={<NewAnnounce />} />
+            <Route path="/produtos" element={<Products />} />
+            <Route path="/bikes" element={<Bikes />} />
+            <Route path="/comunidade" element={<Comunidade />} />
+            <Route path="/sobre" element={<Sobre />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/eventos" element={<EventsCalendar />} />
+            <Route path="/eventos/:id" element={<EventDetail />} />
+            <Route path="/roles" element={<Roles />} />
+            <Route path="/unauthorized" element={<Unauthorized />} />
+            
+            {/* Admin routes */}
+            <Route path="/admin" element={<Dashboard />} />
+            <Route path="/admin/dashboard" element={<Dashboard />} />
+            <Route path="/admin/entidades" element={<EntidadesAdminContainer />} />
+            <Route path="/admin/events" element={<EventsAdmin />} />
+            <Route path="/admin/users" element={<UsersAdmin />} />
+            <Route path="/admin/orders" element={<OrdersAdmin />} />
+            <Route path="/admin/messages" element={<MessagesAdmin />} />
+            <Route path="/admin/reports" element={<ReportsAdmin />} />
+            <Route path="/admin/settings" element={<SettingsAdmin />} />
+            <Route path="/admin/marketing" element={<MarketingAdmin />} />
+            
+            {/* Finance routes */}
+            <Route path="/admin/finance" element={<FinanceOverview />} />
+            <Route path="/admin/finance/accounts" element={<AccountsPage />} />
+            <Route path="/admin/finance/cash-flow" element={<CashFlow />} />
+            <Route path="/admin/finance/income" element={<Income />} />
+            <Route path="/admin/finance/expenses" element={<Expenses />} />
+            <Route path="/admin/finance/reports" element={<FinancialReports />} />
+            <Route path="/admin/finance/accounting" element={<Accounting />} />
+            <Route path="/admin/finance/last-24h" element={<Last24HoursDashboard />} />
+            <Route path="/admin/finance/monthly" element={<MonthlyDashboard />} />
+            <Route path="/admin/finance/total" element={<TotalSalesDashboard />} />
+            
+            {/* Marketing routes */}
+            <Route path="/admin/marketing/google-ads" element={<GoogleAdsPage />} />
+            <Route path="/admin/marketing/meta-ads" element={<MetaAdsPage />} />
+            
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Suspense>
+        <BackToTopButton />
       </TooltipProvider>
     </QueryClientProvider>
   );

@@ -82,7 +82,7 @@ export const fetchProducts = async (filters?: {
     .from('products')
     .select(`
       *,
-      product_images(id, image_url, is_primary, sort_order),
+      product_images(id, product_id, image_url, is_primary, sort_order),
       profiles:seller_id(first_name, last_name, avatar_url)
     `)
     .eq('status', 'ativo')
@@ -125,7 +125,7 @@ export const fetchProducts = async (filters?: {
 
   return data?.map((product: any) => ({
     ...product,
-    images: product.product_images,
+    images: product.product_images || [],
     seller: product.profiles
   })) || [];
 };
@@ -136,7 +136,7 @@ export const fetchProductById = async (id: string) => {
     .from('products')
     .select(`
       *,
-      product_images(id, image_url, is_primary, sort_order),
+      product_images(id, product_id, image_url, is_primary, sort_order),
       product_reviews(
         id, rating, comment, created_at,
         profiles:user_id(first_name, last_name, avatar_url)
@@ -154,11 +154,11 @@ export const fetchProductById = async (id: string) => {
 
   return {
     ...data,
-    images: data.product_images,
+    images: data.product_images || [],
     reviews: data.product_reviews?.map((review: any) => ({
       ...review,
       user: review.profiles
-    })),
+    })) || [],
     seller: data.profiles
   };
 };
@@ -185,7 +185,7 @@ export const fetchFeaturedProducts = async (limit = 8) => {
     .from('products')
     .select(`
       *,
-      product_images(id, image_url, is_primary, sort_order),
+      product_images(id, product_id, image_url, is_primary, sort_order),
       profiles:seller_id(first_name, last_name, avatar_url)
     `)
     .eq('status', 'ativo')
@@ -200,21 +200,30 @@ export const fetchFeaturedProducts = async (limit = 8) => {
 
   return data?.map((product: any) => ({
     ...product,
-    images: product.product_images,
+    images: product.product_images || [],
     seller: product.profiles
   })) || [];
 };
 
 // Add to favorites
 export const addToFavorites = async (productId: string) => {
+  const { data: { user } } = await supabase.auth.getUser();
+  
+  if (!user) {
+    throw new Error('User not authenticated');
+  }
+
   const { data, error } = await supabase
     .from('favorites')
-    .insert({ product_id: productId })
+    .insert({ 
+      product_id: productId,
+      user_id: user.id 
+    })
     .select();
 
   if (error) {
     console.error('Error adding to favorites:', error);
-    return null;
+    throw error;
   }
 
   return data?.[0];
@@ -222,14 +231,21 @@ export const addToFavorites = async (productId: string) => {
 
 // Remove from favorites
 export const removeFromFavorites = async (productId: string) => {
+  const { data: { user } } = await supabase.auth.getUser();
+  
+  if (!user) {
+    throw new Error('User not authenticated');
+  }
+
   const { error } = await supabase
     .from('favorites')
     .delete()
-    .eq('product_id', productId);
+    .eq('product_id', productId)
+    .eq('user_id', user.id);
 
   if (error) {
     console.error('Error removing from favorites:', error);
-    return false;
+    throw error;
   }
 
   return true;
@@ -237,10 +253,17 @@ export const removeFromFavorites = async (productId: string) => {
 
 // Check if product is favorited
 export const checkIfFavorited = async (productId: string) => {
+  const { data: { user } } = await supabase.auth.getUser();
+  
+  if (!user) {
+    return false;
+  }
+
   const { data, error } = await supabase
     .from('favorites')
     .select('id')
     .eq('product_id', productId)
+    .eq('user_id', user.id)
     .single();
 
   if (error && error.code !== 'PGRST116') {
@@ -253,9 +276,10 @@ export const checkIfFavorited = async (productId: string) => {
 
 // Update product views
 export const updateProductViews = async (productId: string) => {
-  const { error } = await supabase.rpc('increment_product_views', {
-    product_id: productId
-  });
+  const { error } = await supabase
+    .from('products')
+    .update({ views: supabase.sql`views + 1` })
+    .eq('id', productId);
 
   if (error) {
     console.error('Error updating views:', error);
