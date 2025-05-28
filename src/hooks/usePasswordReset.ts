@@ -1,53 +1,33 @@
 
 import { useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
-import { toast } from '@/hooks/use-toast';
+import { useToast } from '@/hooks/use-toast';
 
-interface UsePasswordResetResult {
-  isLoading: boolean;
-  sendResetEmail: (email: string) => Promise<boolean>;
-  resetPassword: (password: string, accessToken: string) => Promise<boolean>;
-}
-
-export const usePasswordReset = (): UsePasswordResetResult => {
+export const usePasswordReset = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const { toast } = useToast();
 
-  const sendResetEmail = async (email: string): Promise<boolean> => {
+  const requestPasswordReset = async (email: string) => {
     setIsLoading(true);
     try {
       const { error } = await supabase.auth.resetPasswordForEmail(email, {
         redirectTo: `${window.location.origin}/auth/reset-password`,
       });
 
-      if (error) {
-        console.error('Password reset error:', error);
-        toast({
-          title: "Erro ao enviar email",
-          description: "Não foi possível enviar o email de recuperação. Tente novamente.",
-          variant: "destructive"
-        });
-        return false;
-      }
+      if (error) throw error;
 
       toast({
-        title: "Email enviado!",
+        title: "Email enviado",
         description: "Se o email existir em nossa base, você receberá instruções para redefinir sua senha.",
       });
 
-      // Log the request for security monitoring
-      try {
-        await supabase.rpc('request_password_reset', { email_address: email });
-      } catch (logError) {
-        console.warn('Failed to log password reset request:', logError);
-      }
-
       return true;
     } catch (error) {
-      console.error('Unexpected error:', error);
+      console.error('Password reset error:', error);
       toast({
-        title: "Erro inesperado",
-        description: "Ocorreu um erro inesperado. Tente novamente.",
-        variant: "destructive"
+        title: "Erro",
+        description: "Ocorreu um erro ao enviar o email de recuperação. Tente novamente.",
+        variant: "destructive",
       });
       return false;
     } finally {
@@ -55,36 +35,36 @@ export const usePasswordReset = (): UsePasswordResetResult => {
     }
   };
 
-  const resetPassword = async (password: string, accessToken: string): Promise<boolean> => {
+  const resetPassword = async (newPassword: string, accessToken: string) => {
     setIsLoading(true);
     try {
-      const { error } = await supabase.auth.updateUser(
-        { password },
-        { accessToken }
-      );
+      // Set the session using the access token
+      const { error: sessionError } = await supabase.auth.setSession({
+        access_token: accessToken,
+        refresh_token: '', // We only need access token for password reset
+      });
 
-      if (error) {
-        console.error('Password update error:', error);
-        toast({
-          title: "Erro ao redefinir senha",
-          description: "Não foi possível redefinir a senha. Tente novamente.",
-          variant: "destructive"
-        });
-        return false;
-      }
+      if (sessionError) throw sessionError;
+
+      // Update the password
+      const { error } = await supabase.auth.updateUser({
+        password: newPassword
+      });
+
+      if (error) throw error;
 
       toast({
-        title: "Senha redefinida!",
-        description: "Sua senha foi redefinida com sucesso. Você já pode fazer login.",
+        title: "Senha redefinida",
+        description: "Sua senha foi redefinida com sucesso.",
       });
 
       return true;
     } catch (error) {
-      console.error('Unexpected error:', error);
+      console.error('Password reset error:', error);
       toast({
-        title: "Erro inesperado",
-        description: "Ocorreu um erro inesperado. Tente novamente.",
-        variant: "destructive"
+        title: "Erro",
+        description: "Ocorreu um erro ao redefinir sua senha. Tente novamente.",
+        variant: "destructive",
       });
       return false;
     } finally {
@@ -94,7 +74,7 @@ export const usePasswordReset = (): UsePasswordResetResult => {
 
   return {
     isLoading,
-    sendResetEmail,
-    resetPassword
+    requestPasswordReset,
+    resetPassword,
   };
 };
