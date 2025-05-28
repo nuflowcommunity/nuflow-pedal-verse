@@ -4,6 +4,23 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Color scheme - padronizado */
+:root {
+  --nuflow-forest: #2D5D31;
+  --nuflow-darkForest: #1E3A20;
+  --nuflow-deepGreen: #0F2A11;
+  --nuflow-moss: #4A7C59;
+  --nuflow-sage: #7BA05B;
+  --nuflow-lime: #A8D982;
+  --nuflow-mint: #C8E6C9;
+  --nuflow-emerald: #11C76F;
+  --nuflow-neon: #66FF91;
+  --nuflow-cream: #F5F7F5;
+  --nuflow-sand: #F0F2E8;
+  --nuflow-mineral: #8D9B87;
+  --nuflow-charcoal: #2C3E2D;
+}
+
 /* Accessibility CSS */
 .sr-only {
   position: absolute;
@@ -17,26 +34,12 @@
   border: 0;
 }
 
-.focus:not-sr-only:focus {
-  position: static;
-  width: auto;
-  height: auto;
-  padding: inherit;
-  margin: inherit;
-  overflow: visible;
-  clip: auto;
-  white-space: normal;
-}
-
-/* Focus styles for keyboard navigation */
-body.keyboard-navigation *:focus {
-  outline: 2px solid #11C76F;
-  outline-offset: 2px;
-}
-
+/* Focus styles for better accessibility */
+body.keyboard-navigation *:focus,
 body.focus-visible *:focus-visible {
-  outline: 2px solid #11C76F;
+  outline: 3px solid #11C76F;
   outline-offset: 2px;
+  border-radius: 4px;
 }
 
 /* High contrast mode */
@@ -80,6 +83,163 @@ body.reduced-motion *::after {
 /* Container utilities */
 .container-custom {
   @apply mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl;
+}
+
+/* Card components with proper contrast */
+.card-highlight {
+  @apply bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1 hover:border-nuflow-emerald/30;
+}
+
+.card-tag {
+  @apply absolute top-3 left-3 z-10 bg-nuflow-forest text-white px-3 py-1 rounded-full text-xs font-medium shadow-sm;
+}
+
+/* Button styles with proper contrast */
+.btn-primary {
+  @apply bg-nuflow-forest text-white px-4 py-2 rounded-lg font-medium transition-all duration-200 hover:bg-nuflow-darkForest focus:outline-none focus:ring-3 focus:ring-nuflow-emerald/30 disabled:opacity-50 disabled:cursor-not-allowed;
+}
+
+.btn-secondary {
+  @apply bg-white text-nuflow-forest border-2 border-nuflow-forest px-4 py-2 rounded-lg font-medium transition-all duration-200 hover:bg-nuflow-forest hover:text-white focus:outline-none focus:ring-3 focus:ring-nuflow-emerald/30;
+}
+
+.btn-ghost {
+  @apply text-nuflow-forest px-4 py-2 rounded-lg font-medium transition-all duration-200 hover:bg-nuflow-mint focus:outline-none focus:ring-3 focus:ring-nuflow-emerald/30;
+}
+
+/* Typography improvements with better contrast */
+.font-heading {
+  font-family: 'Poppins', sans-serif;
+}
+
+.font-body {
+  font-family: 'Inter', sans-serif;
+}
+
+/* Base styles */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  line-height: 1.6;
+  color: var(--nuflow-charcoal);
+  background-color: #ffffff;
+}
+
+/* Improved link accessibility with better contrast */
+a {
+  color: var(--nuflow-forest);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--nuflow-emerald);
+  text-decoration: underline;
+}
+
+a:focus {
+  outline: 3px solid var(--nuflow-emerald);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Form accessibility improvements */
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: var(--nuflow-charcoal);
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="tel"],
+input[type="url"],
+input[type="search"],
+textarea,
+select {
+  border: 2px solid var(--nuflow-mineral);
+  border-radius: 6px;
+  padding: 0.75rem;
+  font-size: 1rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  background-color: white;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--nuflow-forest);
+  box-shadow: 0 0 0 3px rgba(17, 199, 111, 0.1);
+  outline: none;
+}
+
+/* Button focus improvements */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 3px solid #11C76F;
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* Error states with better contrast */
+.error {
+  border-color: #dc2626;
+  color: #dc2626;
+}
+
+.error:focus {
+  border-color: #dc2626;
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+}
+
+/* Success states */
+.success {
+  border-color: #16a34a;
+  color: #16a34a;
+}
+
+.success:focus {
+  border-color: #16a34a;
+  box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.1);
+}
+
+/* Loading states */
+.loading-overlay {
+  @apply absolute inset-0 bg-white/80 backdrop-blur-sm flex items-center justify-center z-50;
+}
+
+.loading-spinner {
+  @apply animate-spin rounded-full h-8 w-8 border-b-2 border-nuflow-forest;
+}
+
+/* Dropdown improvements with proper background and z-index */
+.dropdown-content {
+  @apply bg-white border border-gray-200 rounded-lg shadow-lg z-50 min-w-max;
+}
+
+/* Text utilities for better readability */
+.text-high-contrast {
+  @apply text-gray-900;
+}
+
+.text-medium-contrast {
+  @apply text-gray-700;
+}
+
+.text-low-contrast {
+  @apply text-gray-600;
 }
 
 /* Animation utilities */
@@ -139,117 +299,31 @@ body.reduced-motion *::after {
   animation: scrollDown 2s infinite;
 }
 
-/* Typography improvements */
-.font-heading {
-  font-family: 'Poppins', sans-serif;
+/* Utility classes for consistent spacing */
+.spacing-xs { @apply p-2; }
+.spacing-sm { @apply p-4; }
+.spacing-md { @apply p-6; }
+.spacing-lg { @apply p-8; }
+.spacing-xl { @apply p-12; }
+
+/* Text truncation utilities */
+.line-clamp-1 {
+  @apply overflow-hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
 }
 
-.font-body {
-  font-family: 'Inter', sans-serif;
+.line-clamp-2 {
+  @apply overflow-hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 
-/* Color scheme */
-:root {
-  --nuflow-forest: #2D5D31;
-  --nuflow-darkForest: #1E3A20;
-  --nuflow-deepGreen: #0F2A11;
-  --nuflow-moss: #4A7C59;
-  --nuflow-sage: #7BA05B;
-  --nuflow-lime: #A8D982;
-  --nuflow-mint: #C8E6C9;
-  --nuflow-emerald: #11C76F;
-  --nuflow-neon: #66FF91;
-  --nuflow-cream: #F5F7F5;
-  --nuflow-sand: #F0F2E8;
-  --nuflow-mineral: #8D9B87;
-  --nuflow-charcoal: #2C3E2D;
-}
-
-/* Base styles */
-* {
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  font-family: 'Inter', sans-serif;
-  line-height: 1.6;
-  color: var(--nuflow-charcoal);
-  background-color: #ffffff;
-}
-
-/* Button focus improvements */
-button:focus-visible,
-a:focus-visible,
-input:focus-visible,
-textarea:focus-visible,
-select:focus-visible {
-  outline: 2px solid #11C76F;
-  outline-offset: 2px;
-  border-radius: 4px;
-}
-
-/* Improve link accessibility */
-a {
-  color: var(--nuflow-forest);
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-
-a:hover {
-  color: var(--nuflow-emerald);
-  text-decoration: underline;
-}
-
-/* Form accessibility improvements */
-label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-weight: 500;
-  color: var(--nuflow-charcoal);
-}
-
-input[type="text"],
-input[type="email"],
-input[type="password"],
-input[type="tel"],
-input[type="url"],
-input[type="search"],
-textarea,
-select {
-  border: 1px solid var(--nuflow-mineral);
-  border-radius: 4px;
-  padding: 0.75rem;
-  font-size: 1rem;
-  transition: border-color 0.2s ease;
-}
-
-input:focus,
-textarea:focus,
-select:focus {
-  border-color: var(--nuflow-forest);
-  box-shadow: 0 0 0 3px rgba(17, 199, 111, 0.1);
-}
-
-/* Error states */
-.error {
-  border-color: #ef4444;
-}
-
-.error:focus {
-  border-color: #ef4444;
-  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
-}
-
-/* Success states */
-.success {
-  border-color: #22c55e;
-}
-
-.success:focus {
-  border-color: #22c55e;
-  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1);
+.line-clamp-3 {
+  @apply overflow-hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
 }

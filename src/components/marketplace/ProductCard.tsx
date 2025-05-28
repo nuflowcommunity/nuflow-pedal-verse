@@ -1,26 +1,38 @@
 
 import React from 'react';
-import { Heart, MapPin, Eye, Star } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { MapPin, Heart, Eye, Star } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Product } from '@/services/marketplace/products';
+import { cn } from '@/lib/utils';
+
+interface Product {
+  id: string;
+  title: string;
+  brand?: string;
+  price: number;
+  original_price?: number;
+  condition: string;
+  location: string;
+  images?: Array<{ id: string; image_url: string }>;
+  views?: number;
+  featured?: boolean;
+  reviews?: Array<{ rating: number }>;
+}
 
 interface ProductCardProps {
   product: Product;
-  onFavorite?: () => void;
-  isFavorited?: boolean;
   className?: string;
+  isFavorited?: boolean;
+  onToggleFavorite?: () => void;
 }
 
-export const ProductCard: React.FC<ProductCardProps> = ({
-  product,
-  onFavorite,
+const ProductCard: React.FC<ProductCardProps> = ({ 
+  product, 
+  className,
   isFavorited = false,
-  className = ''
+  onToggleFavorite
 }) => {
-  const primaryImage = product.images?.find(img => img.is_primary) || product.images?.[0];
-  const imageUrl = primaryImage?.image_url || 'https://images.unsplash.com/photo-1544191696-15693be56c23?auto=format&fit=crop&w=600';
-  
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('pt-BR', {
       style: 'currency',
@@ -29,147 +41,167 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   };
 
   const getConditionColor = (condition: string) => {
-    switch (condition) {
-      case 'novo': return 'bg-green-100 text-green-800';
-      case 'usado': return 'bg-blue-100 text-blue-800';
-      case 'seminovo': return 'bg-yellow-100 text-yellow-800';
-      default: return 'bg-gray-100 text-gray-800';
+    switch (condition.toLowerCase()) {
+      case 'novo': return 'bg-green-100 text-green-800 border-green-200';
+      case 'usado': return 'bg-blue-100 text-blue-800 border-blue-200';
+      case 'seminovo': return 'bg-yellow-100 text-yellow-800 border-yellow-200';
+      default: return 'bg-gray-100 text-gray-800 border-gray-200';
     }
   };
 
-  return (
-    <div className={`group relative bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1 ${className}`}>
-      {/* Image Container */}
-      <div className="relative aspect-[4/3] overflow-hidden bg-gray-50">
-        <img
-          src={imageUrl}
-          alt={product.title}
-          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-        />
-        
-        {/* Overlay buttons */}
-        <div className="absolute top-3 right-3 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-          {onFavorite && (
-            <Button
-              size="sm"
-              variant="secondary"
-              className="w-8 h-8 p-0 rounded-full bg-white/90 hover:bg-white shadow-sm"
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                onFavorite();
-              }}
-            >
-              <Heart 
-                size={16} 
-                className={`transition-colors ${isFavorited ? 'text-red-500 fill-red-500' : 'text-gray-600'}`}
-              />
-            </Button>
-          )}
-        </div>
+  const averageRating = product.reviews && product.reviews.length > 0
+    ? product.reviews.reduce((acc, review) => acc + review.rating, 0) / product.reviews.length
+    : 0;
 
-        {/* Badges */}
-        <div className="absolute top-3 left-3 flex flex-col gap-2">
-          {product.featured && (
-            <Badge className="bg-gradient-to-r from-amber-500 to-orange-500 text-white font-medium">
-              Destaque
-            </Badge>
-          )}
-          <Badge className={`font-medium ${getConditionColor(product.condition)}`}>
-            {product.condition.charAt(0).toUpperCase() + product.condition.slice(1)}
+  const mainImage = product.images?.[0]?.image_url || 
+    'https://images.unsplash.com/photo-1544191696-15693be56c23?auto=format&fit=crop&w=800';
+
+  const isListView = className?.includes('flex-row');
+
+  return (
+    <div className={cn(
+      "card-highlight group bg-white",
+      isListView ? "flex flex-row" : "flex flex-col",
+      className
+    )}>
+      {/* Image Section */}
+      <div className={cn(
+        "relative overflow-hidden",
+        isListView ? "w-64 flex-shrink-0" : "aspect-[4/3]"
+      )}>
+        <Link to={`/marketplace/${product.id}`} className="block h-full">
+          <img 
+            src={mainImage}
+            alt={`${product.title} - ${product.brand}`}
+            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+            loading="lazy"
+          />
+        </Link>
+        
+        {/* Brand Badge */}
+        {product.brand && (
+          <div className="card-tag">
+            {product.brand}
+          </div>
+        )}
+        
+        {/* Featured Badge */}
+        {product.featured && (
+          <Badge className="absolute top-3 right-3 bg-gradient-to-r from-amber-500 to-orange-500 text-white border-0">
+            Destaque
           </Badge>
-          {product.original_price && product.original_price > product.price && (
-            <Badge variant="destructive" className="font-medium">
-              -{Math.round((1 - product.price / product.original_price) * 100)}%
-            </Badge>
-          )}
-        </div>
+        )}
+        
+        {/* Favorite Button */}
+        {onToggleFavorite && (
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              onToggleFavorite();
+            }}
+            className="absolute bottom-3 right-3 p-2 bg-white/90 hover:bg-white rounded-full shadow-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-nuflow-emerald"
+            aria-label={isFavorited ? "Remover dos favoritos" : "Adicionar aos favoritos"}
+          >
+            <Heart 
+              size={18} 
+              className={cn(
+                "transition-colors",
+                isFavorited ? "text-red-500 fill-red-500" : "text-gray-600"
+              )}
+            />
+          </button>
+        )}
       </div>
 
-      {/* Content */}
-      <div className="p-4">
-        {/* Brand and Views */}
-        <div className="flex items-center justify-between mb-2">
-          <span className="text-sm font-medium text-gray-600 uppercase tracking-wide">
-            {product.brand}
-          </span>
-          <div className="flex items-center gap-1 text-xs text-gray-500">
-            <Eye size={12} />
-            {product.views}
+      {/* Content Section */}
+      <div className={cn(
+        "flex flex-col",
+        isListView ? "flex-1 p-6" : "p-5"
+      )}>
+        {/* Header */}
+        <div className="flex-1">
+          <Link to={`/marketplace/${product.id}`} className="block group/link">
+            <h3 className="font-heading font-semibold text-lg text-high-contrast mb-2 line-clamp-2 group-hover/link:text-nuflow-forest transition-colors">
+              {product.title}
+            </h3>
+          </Link>
+          
+          {/* Condition Badge */}
+          <Badge 
+            variant="outline" 
+            className={cn("mb-3 text-xs font-medium border", getConditionColor(product.condition))}
+          >
+            {product.condition.charAt(0).toUpperCase() + product.condition.slice(1)}
+          </Badge>
+          
+          {/* Rating */}
+          {averageRating > 0 && (
+            <div className="flex items-center gap-1 mb-2">
+              <div className="flex items-center">
+                {[...Array(5)].map((_, i) => (
+                  <Star
+                    key={i}
+                    size={14}
+                    className={cn(
+                      i < Math.floor(averageRating)
+                        ? "text-yellow-500 fill-yellow-500"
+                        : "text-gray-300"
+                    )}
+                  />
+                ))}
+              </div>
+              <span className="text-sm text-medium-contrast ml-1">
+                ({product.reviews?.length})
+              </span>
+            </div>
+          )}
+          
+          {/* Location */}
+          <div className="flex items-center text-sm text-medium-contrast mb-3">
+            <MapPin size={16} className="mr-1 flex-shrink-0" aria-hidden="true" />
+            <span className="line-clamp-1">{product.location}</span>
           </div>
-        </div>
-
-        {/* Title */}
-        <h3 className="font-semibold text-gray-900 mb-2 line-clamp-2 min-h-[2.5rem]">
-          {product.title}
-        </h3>
-
-        {/* Short Description */}
-        {product.short_description && (
-          <p className="text-sm text-gray-600 mb-3 line-clamp-2">
-            {product.short_description}
-          </p>
-        )}
-
-        {/* Size and Details */}
-        <div className="flex flex-wrap gap-2 mb-3">
-          {product.size && (
-            <span className="text-xs px-2 py-1 bg-gray-100 text-gray-700 rounded-full">
-              Tam. {product.size}
-            </span>
-          )}
-          {product.year && (
-            <span className="text-xs px-2 py-1 bg-gray-100 text-gray-700 rounded-full">
-              {product.year}
-            </span>
-          )}
-          {product.color && (
-            <span className="text-xs px-2 py-1 bg-gray-100 text-gray-700 rounded-full">
-              {product.color}
-            </span>
+          
+          {/* Views */}
+          {product.views && (
+            <div className="flex items-center text-xs text-low-contrast mb-3">
+              <Eye size={14} className="mr-1" aria-hidden="true" />
+              <span>{product.views} visualizações</span>
+            </div>
           )}
         </div>
-
-        {/* Price */}
-        <div className="flex items-baseline gap-2 mb-3">
-          <span className="text-xl font-bold text-gray-900">
-            {formatPrice(product.price)}
-          </span>
-          {product.original_price && product.original_price > product.price && (
-            <span className="text-sm text-gray-500 line-through">
-              {formatPrice(product.original_price)}
-            </span>
-          )}
-        </div>
-
-        {/* Location */}
-        <div className="flex items-center gap-1 text-sm text-gray-500 mb-3">
-          <MapPin size={14} />
-          {product.location}
-        </div>
-
-        {/* Reviews */}
-        {product.reviews && product.reviews.length > 0 && (
-          <div className="flex items-center gap-1 text-sm text-gray-600 mb-3">
-            <Star size={14} className="text-yellow-500 fill-yellow-500" />
-            <span className="font-medium">
-              {(product.reviews.reduce((acc, review) => acc + review.rating, 0) / product.reviews.length).toFixed(1)}
-            </span>
-            <span className="text-gray-500">
-              ({product.reviews.length} {product.reviews.length === 1 ? 'avaliação' : 'avaliações'})
-            </span>
+        
+        {/* Footer */}
+        <div className="flex items-center justify-between mt-4 pt-4 border-t border-gray-100">
+          {/* Price */}
+          <div className="flex flex-col">
+            <div className="flex items-baseline gap-2">
+              <span className="font-bold text-xl text-nuflow-forest">
+                {formatPrice(product.price)}
+              </span>
+              {product.original_price && product.original_price > product.price && (
+                <span className="text-sm text-gray-500 line-through">
+                  {formatPrice(product.original_price)}
+                </span>
+              )}
+            </div>
+            {product.original_price && product.original_price > product.price && (
+              <Badge variant="destructive" className="text-xs w-fit mt-1">
+                -{Math.round((1 - product.price / product.original_price) * 100)}% OFF
+              </Badge>
+            )}
           </div>
-        )}
-
-        {/* Action Button */}
-        <Button 
-          className="w-full bg-nuflow-moss text-white hover:bg-nuflow-moss/90 font-medium"
-          asChild
-        >
-          <a href={`/marketplace/produto/${product.id}`}>
-            Ver detalhes
-          </a>
-        </Button>
+          
+          {/* Action Button */}
+          <Button 
+            asChild
+            className="btn-primary px-4 py-2 text-sm"
+          >
+            <Link to={`/marketplace/${product.id}`}>
+              Ver detalhes
+            </Link>
+          </Button>
+        </div>
       </div>
     </div>
   );

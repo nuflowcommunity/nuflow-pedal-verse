@@ -1,13 +1,24 @@
 
-import React, { useState } from 'react';
-import { X, ChevronDown, ChevronUp, Filter } from 'lucide-react';
+import React from 'react';
+import { X, SlidersHorizontal } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { Checkbox } from '@/components/ui/checkbox';
+import { Label } from '@/components/ui/label';
 import { Slider } from '@/components/ui/slider';
-import { Input } from '@/components/ui/input';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { useCategories } from '@/hooks/marketplace/useProducts';
-import { ProductFilters } from '@/hooks/marketplace/useProducts';
+import { Badge } from '@/components/ui/badge';
+import { Separator } from '@/components/ui/separator';
+import { cn } from '@/lib/utils';
+
+export interface ProductFilters {
+  category?: string;
+  brand?: string;
+  condition?: string;
+  minPrice?: number;
+  maxPrice?: number;
+  location?: string;
+  featured?: boolean;
+}
 
 interface FilterSidebarProps {
   isOpen: boolean;
@@ -17,43 +28,50 @@ interface FilterSidebarProps {
   className?: string;
 }
 
-const brands = [
-  'Specialized', 'Trek', 'Cannondale', 'Giant', 'Scott', 'Pinarello', 
-  'Santa Cruz', 'Cervélo', 'Orbea', 'Merida', 'Canyon', 'Focus'
-];
-
-const conditions = [
-  { value: 'novo', label: 'Novo' },
-  { value: 'seminovo', label: 'Seminovo' },
-  { value: 'usado', label: 'Usado' }
-];
-
-export const FilterSidebar: React.FC<FilterSidebarProps> = ({
+const FilterSidebar: React.FC<FilterSidebarProps> = ({
   isOpen,
   onClose,
   filters,
   onFiltersChange,
-  className = ''
+  className
 }) => {
-  const { categories } = useCategories();
-  const [priceRange, setPriceRange] = useState([
-    filters.minPrice || 0,
-    filters.maxPrice || 50000
-  ]);
-  
-  const [openSections, setOpenSections] = useState({
-    categories: true,
-    brands: true,
-    condition: true,
-    price: true
-  });
+  const categories = [
+    'Mountain Bike',
+    'Speed/Road',
+    'Gravel',
+    'BMX',
+    'Elétrica',
+    'Urbana',
+    'Dobrável'
+  ];
 
-  const toggleSection = (section: keyof typeof openSections) => {
-    setOpenSections(prev => ({
-      ...prev,
-      [section]: !prev[section]
-    }));
-  };
+  const brands = [
+    'Trek',
+    'Specialized',
+    'Giant',
+    'Cannondale',
+    'Scott',
+    'Merida',
+    'Caloi',
+    'Oggi'
+  ];
+
+  const conditions = [
+    { value: 'novo', label: 'Novo' },
+    { value: 'seminovo', label: 'Semi-novo' },
+    { value: 'usado', label: 'Usado' }
+  ];
+
+  const locations = [
+    'São Paulo - SP',
+    'Rio de Janeiro - RJ',
+    'Belo Horizonte - MG',
+    'Porto Alegre - RS',
+    'Curitiba - PR',
+    'Salvador - BA'
+  ];
+
+  const priceRange = filters.maxPrice ? [filters.minPrice || 0, filters.maxPrice] : [0, 10000];
 
   const handleCategoryChange = (category: string, checked: boolean) => {
     onFiltersChange({
@@ -76,192 +94,219 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
     });
   };
 
-  const handlePriceChange = (values: number[]) => {
-    setPriceRange(values);
+  const handleLocationChange = (location: string, checked: boolean) => {
     onFiltersChange({
       ...filters,
-      minPrice: values[0],
-      maxPrice: values[1]
+      location: checked ? location : undefined
     });
   };
 
-  const clearFilters = () => {
-    onFiltersChange({});
-    setPriceRange([0, 50000]);
+  const handlePriceChange = (value: number[]) => {
+    onFiltersChange({
+      ...filters,
+      minPrice: value[0],
+      maxPrice: value[1]
+    });
   };
 
-  const hasActiveFilters = Object.keys(filters).some(key => 
-    filters[key as keyof ProductFilters] !== undefined
-  );
+  const handleFeaturedChange = (checked: boolean) => {
+    onFiltersChange({
+      ...filters,
+      featured: checked ? true : undefined
+    });
+  };
 
-  const FilterSection: React.FC<{
-    title: string;
-    section: keyof typeof openSections;
-    children: React.ReactNode;
-  }> = ({ title, section, children }) => (
-    <Collapsible open={openSections[section]} onOpenChange={() => toggleSection(section)}>
-      <CollapsibleTrigger className="flex items-center justify-between w-full py-3 text-left hover:bg-gray-50 rounded-lg px-2">
-        <span className="font-medium text-gray-900">{title}</span>
-        {openSections[section] ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
-      </CollapsibleTrigger>
-      <CollapsibleContent className="px-2 pb-4">
-        {children}
-      </CollapsibleContent>
-    </Collapsible>
+  const clearAllFilters = () => {
+    onFiltersChange({});
+  };
+
+  const getActiveFiltersCount = () => {
+    let count = 0;
+    if (filters.category) count++;
+    if (filters.brand) count++;
+    if (filters.condition) count++;
+    if (filters.location) count++;
+    if (filters.featured) count++;
+    if (filters.minPrice || filters.maxPrice) count++;
+    return count;
+  };
+
+  const FilterContent = () => (
+    <div className="space-y-6">
+      {/* Header */}
+      <div className="flex items-center justify-between">
+        <h3 className="text-lg font-semibold text-high-contrast">Filtros</h3>
+        <div className="flex items-center gap-2">
+          {getActiveFiltersCount() > 0 && (
+            <Badge variant="secondary" className="text-xs">
+              {getActiveFiltersCount()} ativo{getActiveFiltersCount() > 1 ? 's' : ''}
+            </Badge>
+          )}
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={clearAllFilters}
+            className="text-xs text-nuflow-forest hover:text-nuflow-darkForest"
+          >
+            Limpar tudo
+          </Button>
+        </div>
+      </div>
+
+      <Separator />
+
+      {/* Featured Products */}
+      <div className="space-y-3">
+        <Label className="text-sm font-medium text-high-contrast">Especiais</Label>
+        <div className="flex items-center space-x-2">
+          <Checkbox
+            id="featured"
+            checked={filters.featured || false}
+            onCheckedChange={handleFeaturedChange}
+            aria-describedby="featured-description"
+          />
+          <Label htmlFor="featured" className="text-sm cursor-pointer">
+            Apenas produtos em destaque
+          </Label>
+        </div>
+      </div>
+
+      <Separator />
+
+      {/* Price Range */}
+      <div className="space-y-3">
+        <Label className="text-sm font-medium text-high-contrast">
+          Faixa de Preço: R$ {priceRange[0].toLocaleString()} - R$ {priceRange[1].toLocaleString()}
+        </Label>
+        <Slider
+          value={priceRange}
+          onValueChange={handlePriceChange}
+          max={10000}
+          min={0}
+          step={100}
+          className="w-full"
+          aria-label="Faixa de preço"
+        />
+        <div className="flex justify-between text-xs text-low-contrast">
+          <span>R$ 0</span>
+          <span>R$ 10.000+</span>
+        </div>
+      </div>
+
+      <Separator />
+
+      {/* Categories */}
+      <div className="space-y-3">
+        <Label className="text-sm font-medium text-high-contrast">Categorias</Label>
+        <div className="space-y-2 max-h-40 overflow-y-auto">
+          {categories.map((category) => (
+            <div key={category} className="flex items-center space-x-2">
+              <Checkbox
+                id={`category-${category}`}
+                checked={filters.category === category}
+                onCheckedChange={(checked) => handleCategoryChange(category, checked as boolean)}
+              />
+              <Label htmlFor={`category-${category}`} className="text-sm cursor-pointer">
+                {category}
+              </Label>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <Separator />
+
+      {/* Brands */}
+      <div className="space-y-3">
+        <Label className="text-sm font-medium text-high-contrast">Marcas</Label>
+        <div className="space-y-2 max-h-40 overflow-y-auto">
+          {brands.map((brand) => (
+            <div key={brand} className="flex items-center space-x-2">
+              <Checkbox
+                id={`brand-${brand}`}
+                checked={filters.brand === brand}
+                onCheckedChange={(checked) => handleBrandChange(brand, checked as boolean)}
+              />
+              <Label htmlFor={`brand-${brand}`} className="text-sm cursor-pointer">
+                {brand}
+              </Label>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <Separator />
+
+      {/* Condition */}
+      <div className="space-y-3">
+        <Label className="text-sm font-medium text-high-contrast">Condição</Label>
+        <div className="space-y-2">
+          {conditions.map((condition) => (
+            <div key={condition.value} className="flex items-center space-x-2">
+              <Checkbox
+                id={`condition-${condition.value}`}
+                checked={filters.condition === condition.value}
+                onCheckedChange={(checked) => handleConditionChange(condition.value, checked as boolean)}
+              />
+              <Label htmlFor={`condition-${condition.value}`} className="text-sm cursor-pointer">
+                {condition.label}
+              </Label>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <Separator />
+
+      {/* Location */}
+      <div className="space-y-3">
+        <Label className="text-sm font-medium text-high-contrast">Localização</Label>
+        <div className="space-y-2 max-h-40 overflow-y-auto">
+          {locations.map((location) => (
+            <div key={location} className="flex items-center space-x-2">
+              <Checkbox
+                id={`location-${location}`}
+                checked={filters.location === location}
+                onCheckedChange={(checked) => handleLocationChange(location, checked as boolean)}
+              />
+              <Label htmlFor={`location-${location}`} className="text-sm cursor-pointer">
+                {location}
+              </Label>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
   );
 
   return (
     <>
-      {/* Mobile Overlay */}
-      {isOpen && (
-        <div 
-          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
-          onClick={onClose}
-        />
-      )}
-
-      {/* Sidebar */}
-      <div className={`
-        fixed lg:sticky top-0 left-0 h-full lg:h-auto w-80 bg-white z-50 lg:z-auto
-        transform transition-transform duration-300 ease-in-out
-        ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
-        border-r border-gray-200 overflow-y-auto
-        ${className}
-      `}>
-        {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b border-gray-200">
-          <div className="flex items-center gap-2">
-            <Filter size={20} className="text-gray-700" />
-            <h2 className="font-semibold text-gray-900">Filtros</h2>
-          </div>
-          <div className="flex items-center gap-2">
-            {hasActiveFilters && (
-              <Button 
-                variant="ghost" 
-                size="sm" 
-                onClick={clearFilters}
-                className="text-nuflow-moss hover:text-nuflow-moss/80"
-              >
-                Limpar
-              </Button>
-            )}
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={onClose}
-              className="lg:hidden"
-            >
-              <X size={20} />
-            </Button>
-          </div>
-        </div>
-
-        {/* Filters Content */}
-        <div className="p-4 space-y-6">
-          {/* Categories */}
-          <FilterSection title="Categorias" section="categories">
-            <div className="space-y-3">
-              {categories.map((category) => (
-                <div key={category.id} className="flex items-center space-x-2">
-                  <Checkbox
-                    id={`category-${category.id}`}
-                    checked={filters.category === category.name}
-                    onCheckedChange={(checked) => 
-                      handleCategoryChange(category.name, checked as boolean)
-                    }
-                  />
-                  <label
-                    htmlFor={`category-${category.id}`}
-                    className="text-sm text-gray-700 cursor-pointer flex-1"
-                  >
-                    {category.name}
-                  </label>
-                </div>
-              ))}
-            </div>
-          </FilterSection>
-
-          {/* Brands */}
-          <FilterSection title="Marcas" section="brands">
-            <div className="space-y-3 max-h-48 overflow-y-auto">
-              {brands.map((brand) => (
-                <div key={brand} className="flex items-center space-x-2">
-                  <Checkbox
-                    id={`brand-${brand}`}
-                    checked={filters.brand === brand}
-                    onCheckedChange={(checked) => 
-                      handleBrandChange(brand, checked as boolean)
-                    }
-                  />
-                  <label
-                    htmlFor={`brand-${brand}`}
-                    className="text-sm text-gray-700 cursor-pointer flex-1"
-                  >
-                    {brand}
-                  </label>
-                </div>
-              ))}
-            </div>
-          </FilterSection>
-
-          {/* Condition */}
-          <FilterSection title="Estado" section="condition">
-            <div className="space-y-3">
-              {conditions.map((condition) => (
-                <div key={condition.value} className="flex items-center space-x-2">
-                  <Checkbox
-                    id={`condition-${condition.value}`}
-                    checked={filters.condition === condition.value}
-                    onCheckedChange={(checked) => 
-                      handleConditionChange(condition.value, checked as boolean)
-                    }
-                  />
-                  <label
-                    htmlFor={`condition-${condition.value}`}
-                    className="text-sm text-gray-700 cursor-pointer flex-1"
-                  >
-                    {condition.label}
-                  </label>
-                </div>
-              ))}
-            </div>
-          </FilterSection>
-
-          {/* Price Range */}
-          <FilterSection title="Faixa de Preço" section="price">
-            <div className="space-y-4">
-              <Slider
-                value={priceRange}
-                onValueChange={handlePriceChange}
-                max={50000}
-                min={0}
-                step={100}
-                className="w-full"
-              />
-              <div className="flex items-center gap-2">
-                <Input
-                  type="number"
-                  placeholder="Min"
-                  value={priceRange[0]}
-                  onChange={(e) => handlePriceChange([Number(e.target.value), priceRange[1]])}
-                  className="flex-1"
-                />
-                <span className="text-gray-500">até</span>
-                <Input
-                  type="number"
-                  placeholder="Max"
-                  value={priceRange[1]}
-                  onChange={(e) => handlePriceChange([priceRange[0], Number(e.target.value)])}
-                  className="flex-1"
-                />
-              </div>
-              <div className="text-sm text-gray-600 text-center">
-                R$ {priceRange[0].toLocaleString()} - R$ {priceRange[1].toLocaleString()}
-              </div>
-            </div>
-          </FilterSection>
+      {/* Desktop Sidebar */}
+      <div className={cn("hidden lg:block", className)}>
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 sticky top-6">
+          <FilterContent />
         </div>
       </div>
+
+      {/* Mobile Sheet */}
+      <Sheet open={isOpen} onOpenChange={onClose}>
+        <SheetContent side="left" className="w-80 p-0 lg:hidden">
+          <SheetHeader className="p-6 border-b">
+            <div className="flex items-center justify-between">
+              <SheetTitle className="flex items-center gap-2">
+                <SlidersHorizontal size={20} />
+                Filtros
+              </SheetTitle>
+              <Button variant="ghost" size="sm" onClick={onClose} aria-label="Fechar filtros">
+                <X size={18} />
+              </Button>
+            </div>
+          </SheetHeader>
+          <div className="p-6 overflow-y-auto">
+            <FilterContent />
+          </div>
+        </SheetContent>
+      </Sheet>
     </>
   );
 };
