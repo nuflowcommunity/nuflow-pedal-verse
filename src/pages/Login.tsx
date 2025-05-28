@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
@@ -56,13 +57,13 @@ const Login = () => {
         <main className="flex-grow py-16 bg-nuflow-sand">
           <div className="container-custom">
             <div className="max-w-md mx-auto bg-white p-8 rounded-lg shadow-md">
-              <h1 className="text-2xl font-heading font-bold mb-6 text-center">
+              <h1 className="text-2xl font-heading font-bold mb-6 text-center text-nuflow-charcoal">
                 Entrar na sua conta
               </h1>
               
               <form className="space-y-4" onSubmit={handleSubmit}>
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium mb-1">
+                  <label htmlFor="email" className="block text-sm font-medium mb-1 text-nuflow-charcoal">
                     Email
                   </label>
                   <Input
@@ -70,15 +71,14 @@ const Login = () => {
                     id="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full p-3 border border-nuflow-mineral/30 rounded-md focus:outline-none focus:ring-2 focus:ring-nuflow-moss"
+                    className="w-full p-3 border border-nuflow-mineral/30 rounded-md focus:outline-none focus:ring-2 focus:ring-nuflow-forest"
                     placeholder="seu@email.com"
                     required
-                    aria-describedby="email-error"
                   />
                 </div>
                 
                 <div>
-                  <label htmlFor="password" className="block text-sm font-medium mb-1">
+                  <label htmlFor="password" className="block text-sm font-medium mb-1 text-nuflow-charcoal">
                     Senha
                   </label>
                   <Input
@@ -86,10 +86,9 @@ const Login = () => {
                     id="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="w-full p-3 border border-nuflow-mineral/30 rounded-md focus:outline-none focus:ring-2 focus:ring-nuflow-moss"
+                    className="w-full p-3 border border-nuflow-mineral/30 rounded-md focus:outline-none focus:ring-2 focus:ring-nuflow-forest"
                     placeholder="••••••••"
                     required
-                    aria-describedby="password-error"
                   />
                 </div>
                 
@@ -100,16 +99,16 @@ const Login = () => {
                       type="checkbox"
                       checked={rememberMe}
                       onChange={(e) => setRememberMe(e.target.checked)}
-                      className="h-4 w-4 text-nuflow-moss focus:ring-nuflow-moss border-nuflow-mineral/30 rounded"
+                      className="h-4 w-4 text-nuflow-forest focus:ring-nuflow-forest border-nuflow-mineral/30 rounded"
                     />
-                    <label htmlFor="remember" className="ml-2 block text-sm">
+                    <label htmlFor="remember" className="ml-2 block text-sm text-nuflow-charcoal">
                       Lembrar de mim
                     </label>
                   </div>
                   
                   <a 
                     href="#" 
-                    className="text-sm text-nuflow-moss hover:text-nuflow-neon focus:outline-none focus:ring-2 focus:ring-nuflow-moss rounded"
+                    className="text-sm text-nuflow-forest hover:text-nuflow-emerald focus:outline-none focus:ring-2 focus:ring-nuflow-forest rounded"
                   >
                     Esqueceu a senha?
                   </a>
@@ -117,9 +116,8 @@ const Login = () => {
                 
                 <Button 
                   type="submit" 
-                  className="w-full bg-nuflow-moss text-white hover:bg-nuflow-neon hover:text-nuflow-moss"
+                  className="w-full bg-nuflow-forest text-white hover:bg-nuflow-darkForest"
                   disabled={isLoading}
-                  aria-describedby={isLoading ? "loading-status" : undefined}
                 >
                   {isLoading ? (
                     <span className="flex items-center">
@@ -128,15 +126,10 @@ const Login = () => {
                     </span>
                   ) : 'Entrar'}
                 </Button>
-                {isLoading && (
-                  <div id="loading-status" className="sr-only">
-                    Processando login, aguarde...
-                  </div>
-                )}
 
                 <Button 
                   type="button" 
-                  className="w-full mt-4 bg-blue-500 text-white hover:bg-blue-600"
+                  className="w-full mt-4 bg-nuflow-emerald text-nuflow-forest hover:bg-nuflow-mint"
                   onClick={handleDirectAccess}
                 >
                   Acessar Diretamente (Modo Desenvolvimento)
@@ -146,11 +139,11 @@ const Login = () => {
               <SocialAuthButtons mode="signin" />
               
               <div className="mt-6 text-center">
-                <p className="text-sm">
+                <p className="text-sm text-nuflow-charcoal">
                   Não tem uma conta?{" "}
                   <Link 
                     to="#" 
-                    className="text-nuflow-moss hover:text-nuflow-neon font-semibold focus:outline-none focus:ring-2 focus:ring-nuflow-moss rounded"
+                    className="text-nuflow-forest hover:text-nuflow-emerald font-semibold focus:outline-none focus:ring-2 focus:ring-nuflow-forest rounded"
                   >
                     Cadastre-se
                   </Link>

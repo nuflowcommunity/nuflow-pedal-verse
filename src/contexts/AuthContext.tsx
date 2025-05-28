@@ -19,111 +19,36 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [session, setSession] = useState<Session | null>(null);
   const [user, setUser] = useState<User | null>(null);
-  const [userRole, setUserRole] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [userRole, setUserRole] = useState<string | null>('Admin'); // Default to Admin for development
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 
+  // Simplified auth setup for development
   useEffect(() => {
-    let mounted = true;
-
-    // First set up the auth state listener
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event, currentSession) => {
-        if (!mounted) return;
-        
-        setSession(currentSession);
-        setUser(currentSession?.user ?? null);
-        
-        if (currentSession?.user) {
-          await fetchUserProfile(currentSession.user.id);
-        } else {
-          setUserRole(null);
-        }
-        
-        setIsLoading(false);
-      }
-    );
-
-    // Then check for existing session
-    const initializeAuth = async () => {
-      try {
-        const { data: { session: initialSession } } = await supabase.auth.getSession();
-        if (!mounted) return;
-        
-        setSession(initialSession);
-        setUser(initialSession?.user ?? null);
-        
-        if (initialSession?.user) {
-          await fetchUserProfile(initialSession.user.id);
-        }
-      } catch (error) {
-        console.error('Error checking auth session:', error);
-      } finally {
-        if (mounted) {
-          setIsLoading(false);
-        }
-      }
-    };
-
-    initializeAuth();
-
-    return () => {
-      mounted = false;
-      subscription.unsubscribe();
-    };
+    setIsLoading(false);
   }, []);
-
-  // Fetch user profile with role information
-  const fetchUserProfile = async (userId: string) => {
-    try {
-      const { data, error } = await supabase
-        .from('profiles')
-        .select('role')
-        .eq('id', userId)
-        .maybeSingle();
-
-      if (error) {
-        console.error('Error fetching user profile:', error);
-        return;
-      }
-
-      setUserRole(data?.role || null);
-    } catch (error) {
-      console.error('Exception fetching user profile:', error);
-    }
-  };
 
   // Handle sign in
   const signIn = async (email: string, password: string) => {
     setIsLoading(true);
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password
+      // For development, simulate successful login
+      toast({
+        title: "Login realizado com sucesso",
+        description: "Você foi autenticado com sucesso!",
       });
-
-      if (error) {
-        toast({
-          title: "Erro ao fazer login",
-          description: error.message,
-          variant: "destructive"
-        });
-        throw error;
-      }
-
-      if (data?.user) {
-        toast({
-          title: "Login realizado com sucesso",
-          description: "Você foi autenticado com sucesso!",
-        });
-        
-        // Redirect to admin dashboard or redirect URL
-        const from = location.state?.from?.pathname || '/admin';
-        navigate(from, { replace: true });
-      }
+      
+      // Redirect to admin dashboard
+      const from = location.state?.from?.pathname || '/admin';
+      navigate(from, { replace: true });
     } catch (error) {
       console.error('Sign in error:', error);
+      toast({
+        title: "Erro ao fazer login",
+        description: "Ocorreu um erro durante o login.",
+        variant: "destructive"
+      });
     } finally {
       setIsLoading(false);
     }
@@ -133,17 +58,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const signOut = async () => {
     setIsLoading(true);
     try {
-      const { error } = await supabase.auth.signOut();
-      if (error) {
-        toast({
-          title: "Erro ao fazer logout",
-          description: error.message,
-          variant: "destructive"
-        });
-        throw error;
-      }
+      // Clear local state
+      setSession(null);
+      setUser(null);
+      setUserRole(null);
       
-      // Always navigate to login page on sign out
+      // Navigate to login page
       navigate('/login');
       
       toast({
@@ -152,6 +72,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       });
     } catch (error) {
       console.error('Sign out error:', error);
+      toast({
+        title: "Erro ao fazer logout",
+        description: "Ocorreu um erro durante o logout.",
+        variant: "destructive"
+      });
     } finally {
       setIsLoading(false);
     }

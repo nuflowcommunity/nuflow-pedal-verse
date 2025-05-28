@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { 
@@ -33,7 +34,6 @@ import {
   SidebarGroupLabel
 } from '@/components/ui/sidebar';
 import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
 import { useAuth } from '@/contexts/AuthContext';
 
 // Main menu items
@@ -147,7 +147,7 @@ const AdminSidebar = () => {
     <Sidebar>
       <SidebarHeader className="flex items-center justify-center py-6">
         <div className="flex flex-col items-center">
-          <h2 className="text-xl font-bold">NuFlow Admin</h2>
+          <h2 className="text-xl font-bold text-nuflow-forest">NuFlow Admin</h2>
         </div>
       </SidebarHeader>
       <SidebarContent className="py-4">
@@ -171,7 +171,7 @@ const AdminSidebar = () => {
         {/* Marketing Section Separator */}
         <div className="py-2">
           <SidebarSeparator />
-          <SidebarGroupLabel className="px-2 py-1 mt-2">Marketing</SidebarGroupLabel>
+          <SidebarGroupLabel className="px-2 py-1 mt-2 text-nuflow-charcoal">Marketing</SidebarGroupLabel>
         </div>
         
         <SidebarMenu>
@@ -194,7 +194,7 @@ const AdminSidebar = () => {
         {/* Finance Section Separator */}
         <div className="py-2">
           <SidebarSeparator />
-          <SidebarGroupLabel className="px-2 py-1 mt-2">Financeiro</SidebarGroupLabel>
+          <SidebarGroupLabel className="px-2 py-1 mt-2 text-nuflow-charcoal">Financeiro</SidebarGroupLabel>
         </div>
         
         <SidebarMenu>

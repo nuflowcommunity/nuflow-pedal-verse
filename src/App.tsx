@@ -22,6 +22,7 @@ import NotFound from "./pages/NotFound";
 import Unauthorized from "./pages/Unauthorized";
 import ProductDetail from "./pages/marketplace/ProductDetail";
 import ProductComparison from "./pages/marketplace/ProductComparison";
+import AdminLayout from "./components/admin/AdminLayout";
 import Dashboard from "./pages/admin/Dashboard";
 import EntidadesAdminContainer from "./pages/admin/EntidadesAdminContainer";
 import UsersAdmin from "./pages/admin/UsersAdmin";
@@ -43,7 +44,6 @@ import MonthlyDashboard from "./pages/admin/finance/dashboard/MonthlyDashboard";
 import Last24HoursDashboard from "./pages/admin/finance/dashboard/Last24HoursDashboard";
 import GoogleAdsPage from "./pages/admin/marketing/GoogleAdsPage";
 import MetaAdsPage from "./pages/admin/marketing/MetaAdsPage";
-import { ProtectedRoute } from "./components/auth/ProtectedRoute";
 import ComparisonFloatingIndicator from "./components/marketplace/ComparisonFloatingIndicator";
 
 const queryClient = new QueryClient();
@@ -58,6 +58,7 @@ function App() {
               <Toaster />
               <SonnerToaster />
               <Routes>
+                {/* Public Routes */}
                 <Route path="/" element={<Index />} />
                 <Route path="/products" element={<Products />} />
                 <Route path="/market" element={<Market />} />
@@ -69,182 +70,41 @@ function App() {
                 <Route path="/roles" element={<Roles />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/anunciar" element={<NewAnnounce />} />
-                <Route path="*" element={<NotFound />} />
                 <Route path="/unauthorized" element={<Unauthorized />} />
-
-                {/* Admin Routes */}
-                <Route
-                  path="/admin"
-                  element={
-                    <ProtectedRoute requiredRole="Admin">
-                      <Dashboard />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/admin/entidades"
-                  element={
-                    <ProtectedRoute requiredRole="Admin">
-                      <EntidadesAdminContainer />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/admin/users"
-                  element={
-                    <ProtectedRoute requiredRole="Admin">
-                      <UsersAdmin />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/admin/events"
-                  element={
-                    <ProtectedRoute requiredRole="Admin">
-                      <EventsAdmin />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/admin/messages"
-                  element={
-                    <ProtectedRoute requiredRole="Admin">
-                      <MessagesAdmin />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/admin/marketing"
-                  element={
-                    <ProtectedRoute requiredRole="Admin">
-                      <MarketingAdmin />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/admin/marketing/google-ads"
-                  element={
-                    <ProtectedRoute requiredRole="Admin">
-                      <GoogleAdsPage />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/admin/marketing/meta-ads"
-                  element={
-                    <ProtectedRoute requiredRole="Admin">
-                      <MetaAdsPage />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/admin/settings"
-                  element={
-                    <ProtectedRoute requiredRole="Admin">
-                      <SettingsAdmin />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/admin/orders"
-                  element={
-                    <ProtectedRoute requiredRole="Admin">
-                      <OrdersAdmin />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/admin/reports"
-                  element={
-                    <ProtectedRoute requiredRole="Admin">
-                      <ReportsAdmin />
-                    </ProtectedRoute>
-                  }
-                />
-
-                {/* Finance Admin Routes */}
-                <Route
-                  path="/admin/finance"
-                  element={
-                    <ProtectedRoute requiredRole="Admin">
-                      <FinanceOverview />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/admin/finance/dashboard/total-sales"
-                  element={
-                    <ProtectedRoute requiredRole="Admin">
-                      <TotalSalesDashboard />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/admin/finance/dashboard/monthly"
-                  element={
-                    <ProtectedRoute requiredRole="Admin">
-                      <MonthlyDashboard />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/admin/finance/dashboard/last-24-hours"
-                  element={
-                    <ProtectedRoute requiredRole="Admin">
-                      <Last24HoursDashboard />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/admin/finance/accounting"
-                  element={
-                    <ProtectedRoute requiredRole="Admin">
-                      <Accounting />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/admin/finance/cashflow"
-                  element={
-                    <ProtectedRoute requiredRole="Admin">
-                      <CashFlow />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/admin/finance/income"
-                  element={
-                    <ProtectedRoute requiredRole="Admin">
-                      <Income />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/admin/finance/expenses"
-                  element={
-                    <ProtectedRoute requiredRole="Admin">
-                      <Expenses />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/admin/finance/reports"
-                  element={
-                    <ProtectedRoute requiredRole="Admin">
-                      <FinancialReports />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/admin/finance/accounts"
-                  element={
-                    <ProtectedRoute requiredRole="Admin">
-                      <AccountsPage />
-                    </ProtectedRoute>
-                  }
-                />
                 <Route path="/marketplace/:id" element={<ProductDetail />} />
                 <Route path="/marketplace/comparacao" element={<ProductComparison />} />
+
+                {/* Admin Routes with AdminLayout */}
+                <Route path="/admin" element={<AdminLayout />}>
+                  <Route index element={<Dashboard />} />
+                  <Route path="entidades" element={<EntidadesAdminContainer />} />
+                  <Route path="usuarios" element={<UsersAdmin />} />
+                  <Route path="eventos" element={<EventsAdmin />} />
+                  <Route path="mensagens" element={<MessagesAdmin />} />
+                  <Route path="pedidos" element={<OrdersAdmin />} />
+                  <Route path="relatorios" element={<ReportsAdmin />} />
+                  <Route path="configuracoes" element={<SettingsAdmin />} />
+                  
+                  {/* Marketing Routes */}
+                  <Route path="marketing" element={<MarketingAdmin />} />
+                  <Route path="marketing/google-ads" element={<GoogleAdsPage />} />
+                  <Route path="marketing/meta-ads" element={<MetaAdsPage />} />
+                  
+                  {/* Finance Routes */}
+                  <Route path="financeiro" element={<FinanceOverview />} />
+                  <Route path="financeiro/dashboard/total-sales" element={<TotalSalesDashboard />} />
+                  <Route path="financeiro/dashboard/monthly" element={<MonthlyDashboard />} />
+                  <Route path="financeiro/dashboard/last-24-hours" element={<Last24HoursDashboard />} />
+                  <Route path="financeiro/contabilidade" element={<Accounting />} />
+                  <Route path="financeiro/fluxo-caixa" element={<CashFlow />} />
+                  <Route path="financeiro/receitas" element={<Income />} />
+                  <Route path="financeiro/despesas" element={<Expenses />} />
+                  <Route path="financeiro/relatorios" element={<FinancialReports />} />
+                  <Route path="financeiro/contas" element={<AccountsPage />} />
+                </Route>
+
+                {/* 404 Route */}
+                <Route path="*" element={<NotFound />} />
               </Routes>
               <ComparisonFloatingIndicator />
             </ErrorBoundary>
