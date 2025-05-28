@@ -25,10 +25,14 @@ export const shareWishlist = async (wishlistId: string, email?: string) => {
         .from('profiles')
         .select('id')
         .eq('email', email)
-        .single();
+        .maybeSingle();
 
       if (profileError) {
         console.error('User not found:', profileError);
+        throw new Error('Usuário não encontrado');
+      }
+
+      if (!profile) {
         throw new Error('Usuário não encontrado');
       }
 
