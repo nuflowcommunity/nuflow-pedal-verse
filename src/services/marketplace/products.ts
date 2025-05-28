@@ -74,6 +74,7 @@ export const fetchProducts = async (filters?: {
   category?: string;
   brand?: string;
   condition?: string;
+  location?: string;
   minPrice?: number;
   maxPrice?: number;
   search?: string;
@@ -98,6 +99,10 @@ export const fetchProducts = async (filters?: {
   
   if (filters?.condition) {
     query = query.eq('condition', filters.condition);
+  }
+  
+  if (filters?.location) {
+    query = query.ilike('location', `%${filters.location}%`);
   }
   
   if (filters?.minPrice) {
