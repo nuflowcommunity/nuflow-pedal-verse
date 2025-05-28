@@ -1,10 +1,10 @@
-
 import { Suspense, lazy } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { QueryClientProvider } from "@tanstack/react-query";
 import { Routes, Route } from "react-router-dom";
+import { queryClient } from "@/lib/queryClient";
 import Index from "./pages/Index";
 import BackToTopButton from "./components/BackToTopButton";
 import LoadingTransition from "./components/ui/loading-transition";
@@ -50,8 +50,6 @@ const TotalSalesDashboard = lazy(() => import("./pages/admin/finance/dashboard/T
 // Marketing pages
 const GoogleAdsPage = lazy(() => import("./pages/admin/marketing/GoogleAdsPage"));
 const MetaAdsPage = lazy(() => import("./pages/admin/marketing/MetaAdsPage"));
-
-const queryClient = new QueryClient();
 
 function App() {
   return (

@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -62,17 +63,16 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				// Nova paleta Nuflow inspirada nas imagens
+				// Nova paleta Nuflow
 				nuflow: {
-					darkForest: '#011A10',    // Verde escuro profundo
-					forest: '#1B3D2A',       // Verde médio escuro
-					emerald: '#07E467',      // Verde neon vibrante
-					mint: '#D1F2A0',        // Verde claro suave
-					cream: '#F2EFDF',       // Creme/bege suave
-					// Cores complementares derivadas
-					deepGreen: '#0D2118',    // Verde muito escuro para textos
-					sage: '#8BAF9B',         // Verde acinzentado
-					softGreen: '#A8D4B8',   // Verde pastel
+					darkForest: '#011A10',
+					forest: '#1B3D2A',
+					emerald: '#07E467',
+					mint: '#D1F2A0',
+					cream: '#F2EFDF',
+					deepGreen: '#0D2118',
+					sage: '#8BAF9B',
+					softGreen: '#A8D4B8',
 				}
 			},
 			fontFamily: {
@@ -146,6 +146,10 @@ export default {
                 'dot-bounce-3': {
                     '0%, 80%, 100%': { transform: 'scale(0.8)', opacity: '0.5' },
                     '40%': { transform: 'scale(1)', opacity: '1' }
+                },
+                'shimmer': {
+                    '0%': { transform: 'translateX(-100%)' },
+                    '100%': { transform: 'translateX(100%)' }
                 }
 			},
 			animation: {
@@ -162,7 +166,8 @@ export default {
                 'float-reverse': 'float-reverse 6s ease-in-out infinite',
                 'dot-bounce-1': 'dot-bounce-1 1.4s infinite ease-in-out',
                 'dot-bounce-2': 'dot-bounce-2 1.4s infinite ease-in-out 0.2s',
-                'dot-bounce-3': 'dot-bounce-3 1.4s infinite ease-in-out 0.4s'
+                'dot-bounce-3': 'dot-bounce-3 1.4s infinite ease-in-out 0.4s',
+                'shimmer': 'shimmer 2s infinite'
 			},
 			scale: {
 				'98': '0.98',

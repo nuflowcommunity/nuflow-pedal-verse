@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react';
 import { DateRange } from "react-day-picker";
 import { Event } from '@/types/events';
 import { useToast } from '@/components/ui/use-toast';
+import { useQuery } from '@tanstack/react-query';
+import { cacheConfig } from '@/lib/queryClient';
 import { 
   getAllEvents, 
   getUpcomingEvents,
@@ -15,109 +17,77 @@ export const useEventsData = () => {
   const [activeCategory, setActiveCategory] = useState('Todos');
   const [searchQuery, setSearchQuery] = useState('');
   const [dateRange, setDateRange] = useState<DateRange | undefined>(undefined);
-  const [filteredEvents, setFilteredEvents] = useState<Event[]>([]);
-  const [allEvents, setAllEvents] = useState<Event[]>([]);
   const [sortOption, setSortOption] = useState('');
   const [viewMode, setViewMode] = useState<EventViewMode>('all');
-  const [isLoading, setIsLoading] = useState(true);
   const { toast } = useToast();
 
-  // Fetch all events on component mount
-  useEffect(() => {
-    fetchEvents();
-  }, [viewMode]);
-
-  // Apply filters when they change
-  useEffect(() => {
-    applyFilters();
-  }, [activeCategory, searchQuery, sortOption, dateRange, allEvents]);
-
-  // Fetch events based on view mode
-  const fetchEvents = async () => {
-    setIsLoading(true);
-    try {
-      let events: Event[];
-      
+  // Query otimizada para eventos
+  const {
+    data: allEvents = [],
+    isLoading,
+    error,
+    refetch
+  } = useQuery({
+    queryKey: ['events', viewMode],
+    queryFn: async () => {
       switch (viewMode) {
         case 'upcoming':
-          events = await getUpcomingEvents();
-          break;
+          return await getUpcomingEvents();
         case 'past':
-          events = await getPastEvents();
-          break;
+          return await getPastEvents();
         default:
-          events = await getAllEvents();
+          return await getAllEvents();
       }
-      
-      setAllEvents(events);
-      setFilteredEvents(events);
-    } catch (error) {
+    },
+    ...cacheConfig.events,
+    onError: (error) => {
       console.error("Error fetching events:", error);
       toast({
         title: "Erro ao carregar eventos",
         description: "Houve um problema ao buscar os eventos. Por favor, tente novamente.",
         variant: "destructive",
       });
-    } finally {
-      setIsLoading(false);
     }
-  };
+  });
 
-  // Function to apply filters to events
-  const applyFilters = () => {
-    // If no events loaded yet, don't try to filter
-    if (allEvents.length === 0 && !isLoading) return;
+  // Filtrar eventos localmente para melhor performance
+  const filteredEvents = React.useMemo(() => {
+    let results = [...allEvents];
     
-    setIsLoading(true);
-    
-    try {
-      // Start with all events loaded locally, filter in-memory
-      let results = [...allEvents];
-      
-      // Filter by category
-      if (activeCategory !== 'Todos') {
-        results = results.filter(event => event.category === activeCategory);
-      }
-      
-      // Filter by search query
-      if (searchQuery) {
-        const query = searchQuery.toLowerCase();
-        results = results.filter(event => 
-          event.title.toLowerCase().includes(query) || 
-          event.location.toLowerCase().includes(query)
-        );
-      }
-      
-      // Filter by date range
-      if (dateRange && dateRange.from) {
-        const { parseEventDate } = require('@/services/events');
-        results = results.filter(event => {
-          const eventDate = new Date(parseEventDate(event.date));
-          
-          if (dateRange.to) {
-            return eventDate >= dateRange.from && eventDate <= dateRange.to;
-          } else {
-            return eventDate >= dateRange.from;
-          }
-        });
-      }
-      
-      setFilteredEvents(results);
-    } catch (error) {
-      console.error("Error applying filters:", error);
-      toast({
-        title: "Erro ao filtrar eventos",
-        description: "Houve um problema ao aplicar os filtros. Por favor, tente novamente.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsLoading(false);
+    // Filter by category
+    if (activeCategory !== 'Todos') {
+      results = results.filter(event => event.category === activeCategory);
     }
-  };
+    
+    // Filter by search query
+    if (searchQuery) {
+      const query = searchQuery.toLowerCase();
+      results = results.filter(event => 
+        event.title.toLowerCase().includes(query) || 
+        event.location.toLowerCase().includes(query)
+      );
+    }
+    
+    // Filter by date range
+    if (dateRange && dateRange.from) {
+      const { parseEventDate } = require('@/services/events');
+      results = results.filter(event => {
+        const eventDate = new Date(parseEventDate(event.date));
+        
+        if (dateRange.to) {
+          return eventDate >= dateRange.from && eventDate <= dateRange.to;
+        } else {
+          return eventDate >= dateRange.from;
+        }
+      });
+    }
+    
+    return results;
+  }, [allEvents, activeCategory, searchQuery, dateRange]);
 
   // Function to handle filter by date
   const handleFilterByDate = () => {
-    applyFilters();
+    // Filtering é feito automaticamente via useMemo
   };
 
   // Function to clear date filter
@@ -144,11 +114,13 @@ export const useEventsData = () => {
     setDateRange,
     filteredEvents,
     isLoading,
+    error,
     sortOption,
     viewMode,
     handleSortChange,
     handleFilterByDate,
     handleClearDateFilter,
-    handleViewModeChange
+    handleViewModeChange,
+    refetch
   };
 };

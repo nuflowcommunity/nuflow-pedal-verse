@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent } from "@/components/ui/tabs";
@@ -6,7 +5,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import EventCard from '@/components/cards/EventCard';
 import { CalendarIcon, MapPin, ShoppingBag } from 'lucide-react';
 import { Event } from '@/types/events';
-import { Skeleton } from '@/components/ui/skeleton';
+import { EventCardSkeleton } from '@/components/ui/enhanced-skeleton';
 
 interface EventsGridProps {
   events: Event[];
@@ -16,25 +15,11 @@ interface EventsGridProps {
 const EventsGrid = ({ events, isLoading = false }: EventsGridProps) => {
   if (isLoading) {
     return (
-      <section className="py-12 bg-nuflow-sand">
+      <section className="py-12 bg-nuflow-cream">
         <div className="container-custom">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {Array.from({ length: 8 }).map((_, index) => (
-              <Card key={index} className="overflow-hidden">
-                <Skeleton className="h-48 w-full" />
-                <div className="p-4">
-                  <Skeleton className="h-6 w-3/4 mb-2" />
-                  <Skeleton className="h-4 w-1/2 mb-1" />
-                  <Skeleton className="h-4 w-2/3 mb-4" />
-                  <div className="flex justify-between items-center">
-                    <Skeleton className="h-5 w-1/4" />
-                    <div className="flex space-x-2">
-                      <Skeleton className="h-8 w-16" />
-                      <Skeleton className="h-8 w-20" />
-                    </div>
-                  </div>
-                </div>
-              </Card>
+              <EventCardSkeleton key={index} />
             ))}
           </div>
         </div>
@@ -43,7 +28,7 @@ const EventsGrid = ({ events, isLoading = false }: EventsGridProps) => {
   }
 
   return (
-    <section className="py-12 bg-nuflow-sand">
+    <section className="py-12 bg-nuflow-cream">
       <div className="container-custom">
         <Tabs defaultValue="grid" className="w-full">
           <TabsContent value="grid" className="mt-0">
