@@ -3,12 +3,10 @@ import { supabase } from '@/integrations/supabase/client';
 
 // Share wishlist
 export const shareWishlist = async (wishlistId: string, email?: string) => {
-  // Update wishlist to be shared and get share token - simplified to avoid deep type inference
+  // Update wishlist to be shared and get share token
   const { data: wishlist, error: updateError } = await supabase
     .from('wishlists')
-    .update({ 
-      is_shared: true as boolean
-    })
+    .update({ is_shared: true })
     .eq('id', wishlistId)
     .select('id, name, description, is_shared, share_token')
     .single();
@@ -37,17 +35,15 @@ export const shareWishlist = async (wishlistId: string, email?: string) => {
       throw new Error('User not authenticated');
     }
 
-    // Create the share record with explicit typing to avoid deep type inference
-    const shareData = {
-      wishlist_id: wishlistId,
-      shared_with_user_id: profile.id,
-      shared_by_user_id: user.id,
-      access_level: 'view' as 'view' | 'edit'
-    };
-
+    // Create the share record
     const { error: shareError } = await supabase
       .from('wishlist_shares')
-      .insert(shareData);
+      .insert({
+        wishlist_id: wishlistId,
+        shared_with_user_id: profile.id,
+        shared_by_user_id: user.id,
+        access_level: 'view'
+      });
 
     if (shareError) {
       console.error('Error creating share:', shareError);
