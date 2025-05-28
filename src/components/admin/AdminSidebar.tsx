@@ -144,13 +144,14 @@ const AdminSidebar = () => {
   const { signOut } = useAuth();
   
   return (
-    <Sidebar>
-      <SidebarHeader className="flex items-center justify-center py-6">
+    <Sidebar className="border-r border-gray-200">
+      <SidebarHeader className="flex items-center justify-center py-4 md:py-6 border-b border-gray-200">
         <div className="flex flex-col items-center">
-          <h2 className="text-xl font-bold text-nuflow-forest">NuFlow Admin</h2>
+          <h2 className="text-lg md:text-xl font-bold text-nuflow-forest">NuFlow Admin</h2>
         </div>
       </SidebarHeader>
-      <SidebarContent className="py-4">
+      
+      <SidebarContent className="py-2 md:py-4">
         <SidebarMenu>
           {menuItems.map((item) => (
             <SidebarMenuItem key={item.title}>
@@ -168,7 +169,7 @@ const AdminSidebar = () => {
           ))}
         </SidebarMenu>
         
-        {/* Marketing Section Separator */}
+        {/* Marketing Section */}
         <div className="py-2">
           <SidebarSeparator />
           <SidebarGroupLabel className="px-2 py-1 mt-2 text-nuflow-charcoal">Marketing</SidebarGroupLabel>
@@ -191,7 +192,7 @@ const AdminSidebar = () => {
           ))}
         </SidebarMenu>
         
-        {/* Finance Section Separator */}
+        {/* Finance Section */}
         <div className="py-2">
           <SidebarSeparator />
           <SidebarGroupLabel className="px-2 py-1 mt-2 text-nuflow-charcoal">Financeiro</SidebarGroupLabel>
@@ -214,9 +215,14 @@ const AdminSidebar = () => {
           ))}
         </SidebarMenu>
       </SidebarContent>
-      <SidebarFooter className="mt-auto pb-4">
+      
+      <SidebarFooter className="mt-auto pb-4 border-t border-gray-200">
         <div className="flex flex-col items-center gap-2 px-2">
-          <Button variant="outline" className="w-full gap-2" onClick={() => signOut()}>
+          <Button 
+            variant="outline" 
+            className="w-full gap-2 text-red-600 border-red-200 hover:bg-red-50" 
+            onClick={() => signOut()}
+          >
             <LogOut size={18} />
             <span>Sair</span>
           </Button>

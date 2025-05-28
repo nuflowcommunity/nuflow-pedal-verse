@@ -1,10 +1,16 @@
 
 import React from 'react';
-import { Search, MessageSquare } from 'lucide-react';
+import { Search, MessageSquare, Filter } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 
 const mockMessages = [
   { id: '1', from: 'Maria Santos', email: 'maria@email.com', subject: 'Dúvida sobre evento Pedal na Serra', 
@@ -59,9 +65,10 @@ const getInitials = (name: string) => {
 
 const MessagesAdmin = () => {
   return (
-    <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row justify-between gap-4">
-        <div className="relative w-full sm:w-96">
+    <div className="space-y-4 md:space-y-6">
+      {/* Mobile-first header section */}
+      <div className="flex flex-col gap-3 sm:flex-row sm:justify-between sm:gap-4">
+        <div className="relative flex-1">
           <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500" />
           <Input
             type="search"
@@ -69,50 +76,72 @@ const MessagesAdmin = () => {
             className="pl-9 w-full"
           />
         </div>
+        
         <div className="flex gap-2">
-          <Button className="bg-[#19c37d] hover:bg-[#16a86c]">
+          <Button className="flex-1 sm:flex-none bg-nuflow-forest hover:bg-nuflow-darkForest">
             <MessageSquare className="mr-2 h-4 w-4" />
-            Nova Mensagem
+            <span className="hidden sm:inline">Nova Mensagem</span>
+            <span className="sm:hidden">Nova</span>
           </Button>
+          
+          {/* Mobile filter dropdown */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" className="sm:hidden">
+                <Filter className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem>Todas</DropdownMenuItem>
+              <DropdownMenuItem>Não lidas</DropdownMenuItem>
+              <DropdownMenuItem>Alta prioridade</DropdownMenuItem>
+              <DropdownMenuItem>Suporte</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </div>
 
-      <div className="flex flex-wrap gap-3">
-        <Button variant="outline" className="bg-white text-gray-700 border-gray-300 hover:border-[#19c37d] hover:text-[#19c37d]">
+      {/* Desktop filter buttons */}
+      <div className="hidden sm:flex flex-wrap gap-3">
+        <Button variant="outline" className="bg-white text-gray-700 border-gray-300 hover:border-nuflow-forest hover:text-nuflow-forest">
           Todas
         </Button>
-        <Button variant="outline" className="bg-[#19c37d] text-white border-[#19c37d]">
+        <Button variant="outline" className="bg-nuflow-forest text-white border-nuflow-forest">
           Não lidas
         </Button>
-        <Button variant="outline" className="bg-white text-gray-700 border-gray-300 hover:border-[#19c37d] hover:text-[#19c37d]">
+        <Button variant="outline" className="bg-white text-gray-700 border-gray-300 hover:border-nuflow-forest hover:text-nuflow-forest">
           Alta prioridade
         </Button>
-        <Button variant="outline" className="bg-white text-gray-700 border-gray-300 hover:border-[#19c37d] hover:text-[#19c37d]">
+        <Button variant="outline" className="bg-white text-gray-700 border-gray-300 hover:border-nuflow-forest hover:text-nuflow-forest">
           Suporte
         </Button>
       </div>
 
+      {/* Messages list optimized for mobile */}
       <Card>
-        <CardContent className="p-4">
-          <div className="space-y-4">
+        <CardContent className="p-2 sm:p-4">
+          <div className="space-y-3 sm:space-y-4">
             {mockMessages.map((message) => (
               <div 
                 key={message.id} 
-                className={`p-4 rounded-lg border ${message.status === 'não lido' ? 'bg-blue-50 border-blue-100' : 'bg-white border-gray-100'} hover:border-[#19c37d] cursor-pointer transition-colors`}
+                className={`p-3 sm:p-4 rounded-lg border ${message.status === 'não lido' ? 'bg-blue-50 border-blue-100' : 'bg-white border-gray-100'} hover:border-nuflow-forest cursor-pointer transition-colors`}
               >
-                <div className="flex items-start gap-4">
-                  <Avatar>
+                <div className="flex items-start gap-3">
+                  <Avatar className="h-8 w-8 sm:h-10 sm:w-10 flex-shrink-0">
                     <AvatarImage src="" />
-                    <AvatarFallback>{getInitials(message.from)}</AvatarFallback>
+                    <AvatarFallback className="text-xs sm:text-sm">{getInitials(message.from)}</AvatarFallback>
                   </Avatar>
+                  
                   <div className="flex-1 min-w-0">
-                    <div className="flex justify-between items-start">
-                      <h3 className="text-sm font-medium text-gray-900 truncate">{message.subject}</h3>
-                      <span className="text-xs text-gray-500">{message.date}</span>
+                    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-1 sm:gap-0">
+                      <h3 className="text-sm font-medium text-gray-900 truncate pr-2">{message.subject}</h3>
+                      <span className="text-xs text-gray-500 flex-shrink-0">{message.date}</span>
                     </div>
-                    <p className="text-sm text-gray-700 mt-1">{message.from} ({message.email})</p>
-                    <p className="text-sm text-gray-500 mt-2 line-clamp-2">{message.preview}</p>
-                    <div className="flex gap-2 mt-3">
+                    
+                    <p className="text-xs sm:text-sm text-gray-700 mt-1 truncate">{message.from} ({message.email})</p>
+                    <p className="text-xs sm:text-sm text-gray-500 mt-2 line-clamp-2">{message.preview}</p>
+                    
+                    <div className="flex flex-wrap gap-2 mt-3">
                       <span className={`px-2 py-1 text-xs rounded-full ${getStatusClass(message.status)}`}>
                         {message.status}
                       </span>
@@ -122,8 +151,11 @@ const MessagesAdmin = () => {
                     </div>
                   </div>
                 </div>
-                <div className="flex justify-end mt-2">
-                  <Button variant="outline" size="sm" className="text-sm">Responder</Button>
+                
+                <div className="flex justify-end mt-3">
+                  <Button variant="outline" size="sm" className="text-xs sm:text-sm">
+                    Responder
+                  </Button>
                 </div>
               </div>
             ))}
