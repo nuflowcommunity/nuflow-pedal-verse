@@ -1184,6 +1184,16 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      apply_coupon: {
+        Args: {
+          p_coupon_id: string
+          p_user_id: string
+          p_order_id: string
+          p_event_registration_id: string
+          p_discount_applied: number
+        }
+        Returns: boolean
+      }
       generate_share_token: {
         Args: Record<PropertyKey, never>
         Returns: string
@@ -1269,6 +1279,20 @@ export type Database = {
       request_password_reset: {
         Args: { email_address: string }
         Returns: Json
+      }
+      validate_coupon: {
+        Args: {
+          p_code: string
+          p_user_id: string
+          p_event_id: string
+          p_order_total: number
+        }
+        Returns: {
+          valid: boolean
+          coupon_id: string
+          discount_amount: number
+          message: string
+        }[]
       }
     }
     Enums: {

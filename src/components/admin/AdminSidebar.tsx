@@ -20,7 +20,8 @@ import {
   FileText,
   BarChart,
   PieChart,
-  Package2
+  Package2,
+  Ticket
 } from 'lucide-react';
 import { 
   Sidebar, 
@@ -52,6 +53,11 @@ const menuItems = [
     title: 'Entidades',
     path: '/admin/entidades',
     icon: Package2
+  },
+  {
+    title: 'Cupons',
+    path: '/admin/cupons',
+    icon: Ticket
   },
   { 
     title: 'Pedidos', 
