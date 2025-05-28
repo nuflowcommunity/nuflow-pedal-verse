@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { entityTypeIcons } from './EntityIcons';
+import { Calendar, Clock, Users, CreditCard } from 'lucide-react';
 import { useBreakpoint } from '@/hooks/use-breakpoint';
 
 interface EntityTypesTabsProps {
@@ -22,19 +22,19 @@ export const EntityTypesTabs: React.FC<EntityTypesTabsProps> = ({
           Todos
         </TabsTrigger>
         <TabsTrigger value="evento" className="flex items-center gap-1 text-xs sm:text-sm">
-          <span className="hidden sm:inline">{entityTypeIcons.evento}</span>
+          <Calendar className="h-4 w-4" />
           <span>Eventos</span>
         </TabsTrigger>
         <TabsTrigger value="mensalidade" className="flex items-center gap-1 text-xs sm:text-sm">
-          <span className="hidden sm:inline">{entityTypeIcons.mensalidade}</span>
+          <Clock className="h-4 w-4" />
           <span>Mensalidades</span>
         </TabsTrigger>
         <TabsTrigger value="dayUse" className="flex items-center gap-1 text-xs sm:text-sm">
-          <span className="hidden sm:inline">{entityTypeIcons.dayUse}</span>
+          <Users className="h-4 w-4" />
           <span>Day Use</span>
         </TabsTrigger>
         <TabsTrigger value="credito" className="flex items-center gap-1 text-xs sm:text-sm">
-          <span className="hidden sm:inline">{entityTypeIcons.credito}</span>
+          <CreditCard className="h-4 w-4" />
           <span>Créditos</span>
         </TabsTrigger>
       </TabsList>

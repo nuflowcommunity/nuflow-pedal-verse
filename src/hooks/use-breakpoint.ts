@@ -12,21 +12,21 @@ const breakpoints = {
 };
 
 export function useBreakpoint(breakpoint: Breakpoint) {
-  const [matches, setMatches] = useState(false);
+  const [isBelowBreakpoint, setIsBelowBreakpoint] = useState(false);
 
   useEffect(() => {
-    const mediaQuery = window.matchMedia(`(max-width: ${breakpoints[breakpoint]}px)`);
-    
-    const handleChange = () => setMatches(mediaQuery.matches);
+    const checkBreakpoint = () => {
+      setIsBelowBreakpoint(window.innerWidth < breakpoints[breakpoint]);
+    };
     
     // Set initial value
-    handleChange();
+    checkBreakpoint();
     
-    // Listen for changes
-    mediaQuery.addEventListener('change', handleChange);
+    // Listen for resize events
+    window.addEventListener('resize', checkBreakpoint);
     
-    return () => mediaQuery.removeEventListener('change', handleChange);
+    return () => window.removeEventListener('resize', checkBreakpoint);
   }, [breakpoint]);
 
-  return matches;
+  return isBelowBreakpoint;
 }

@@ -19,11 +19,14 @@ export const EntityPagination: React.FC<EntityPaginationProps> = ({
   // Don't show pagination if there's only one page or no pages
   if (totalPages <= 1) return null;
   
+  // Ensure currentPage is within bounds
+  const safePage = Math.max(1, Math.min(currentPage, totalPages));
+  
   // For mobile, show fewer page numbers
   const maxVisiblePages = isMobile ? 3 : 5;
   const halfVisible = Math.floor(maxVisiblePages / 2);
   
-  let startPage = Math.max(1, currentPage - halfVisible);
+  let startPage = Math.max(1, safePage - halfVisible);
   let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
   
   // Adjust start if we're near the end
@@ -36,17 +39,23 @@ export const EntityPagination: React.FC<EntityPaginationProps> = ({
     (_, i) => startPage + i
   );
 
+  const handlePageChange = (page: number) => {
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
+    }
+  };
+
   return (
     <div className="flex justify-center mt-6">
       <Pagination>
         <PaginationContent className="flex-wrap">
-          {currentPage > 1 && (
+          {safePage > 1 && (
             <PaginationItem>
               <PaginationPrevious 
                 href="#" 
                 onClick={(e) => {
                   e.preventDefault();
-                  setCurrentPage(currentPage - 1);
+                  handlePageChange(safePage - 1);
                 }}
                 className="text-xs sm:text-sm"
               />
@@ -60,7 +69,7 @@ export const EntityPagination: React.FC<EntityPaginationProps> = ({
                   href="#" 
                   onClick={(e) => {
                     e.preventDefault();
-                    setCurrentPage(1);
+                    handlePageChange(1);
                   }}
                   className="text-xs sm:text-sm"
                 >
@@ -79,10 +88,10 @@ export const EntityPagination: React.FC<EntityPaginationProps> = ({
             <PaginationItem key={pageNum}>
               <PaginationLink 
                 href="#" 
-                isActive={currentPage === pageNum}
+                isActive={safePage === pageNum}
                 onClick={(e) => {
                   e.preventDefault();
-                  setCurrentPage(pageNum);
+                  handlePageChange(pageNum);
                 }}
                 className="text-xs sm:text-sm"
               >
@@ -103,7 +112,7 @@ export const EntityPagination: React.FC<EntityPaginationProps> = ({
                   href="#" 
                   onClick={(e) => {
                     e.preventDefault();
-                    setCurrentPage(totalPages);
+                    handlePageChange(totalPages);
                   }}
                   className="text-xs sm:text-sm"
                 >
@@ -113,13 +122,13 @@ export const EntityPagination: React.FC<EntityPaginationProps> = ({
             </>
           )}
           
-          {currentPage < totalPages && (
+          {safePage < totalPages && (
             <PaginationItem>
               <PaginationNext 
                 href="#" 
                 onClick={(e) => {
                   e.preventDefault();
-                  setCurrentPage(currentPage + 1);
+                  handlePageChange(safePage + 1);
                 }}
                 className="text-xs sm:text-sm"
               />

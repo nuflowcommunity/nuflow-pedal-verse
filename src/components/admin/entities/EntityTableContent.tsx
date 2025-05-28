@@ -1,6 +1,5 @@
 
 import React from 'react';
-import { TabsContent } from '@/components/ui/tabs';
 import { FinanceTable } from '@/components/admin/finance/FinanceTable';
 import { EntityFilterBar } from '@/components/admin/entities/EntityFilterBar';
 import { EntityPagination } from '@/components/admin/entities/EntityPagination';
@@ -10,7 +9,6 @@ import { getTypeSpecificActions } from '@/components/admin/entities/EntityAction
 import { entityTypeLabels } from '@/components/admin/entities/types';
 import { Entity } from '@/components/admin/entities/types';
 import { EntitiesFilterState } from '@/hooks/admin/useEntitiesData';
-import { useBreakpoint } from '@/hooks/use-breakpoint';
 import LoadingSkeleton from '@/components/ui/loading-skeleton';
 
 interface EntityTableContentProps {
@@ -49,20 +47,24 @@ export const EntityTableContent: React.FC<EntityTableContentProps> = ({
   onSort,
   toast
 }) => {
-  const isMobile = useBreakpoint('md');
-  
   // Get columns for the current entity type
   const typeSpecificColumns = React.useMemo(() => 
     getTypeSpecificColumns(activeTab), [activeTab]);
   
   // Actions configuration for the table
-  const tableActions = (item: Entity) => ({
+  const tableActions = React.useCallback((item: Entity) => ({
     view: true,
     custom: getTypeSpecificActions(item, toast)
-  });
+  }), [toast]);
 
-  const renderTabContent = (tabValue: string) => (
-    <TabsContent value={tabValue} className="mt-6 space-y-4">
+  // Calculate pagination
+  const itemsPerPage = 10;
+  const totalPages = Math.max(1, Math.ceil(filteredEntities.length / itemsPerPage));
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const paginatedEntities = filteredEntities.slice(startIndex, startIndex + itemsPerPage);
+
+  return (
+    <div className="space-y-4">
       {/* Filter bar */}
       <EntityFilterBar 
         searchQuery={filters.searchQuery}
@@ -91,39 +93,32 @@ export const EntityTableContent: React.FC<EntityTableContentProps> = ({
         <div className="space-y-4">
           <LoadingSkeleton variant="card" count={3} />
         </div>
+      ) : filteredEntities.length === 0 ? (
+        /* Empty state */
+        <EntityEmptyState entityType={activeTab === 'todos' ? 'geral' : activeTab} />
       ) : (
-        /* Entity table with responsive design */
+        /* Entity table */
         <div className="w-full">
           <FinanceTable
             title={`Entidades ${activeTab !== 'todos' ? '- ' + entityTypeLabels[activeTab as keyof typeof entityTypeLabels] : ''}`}
             columns={typeSpecificColumns}
-            data={filteredEntities}
+            data={paginatedEntities}
             actions={tableActions}
             onRowClick={onViewEntity}
             pagination={
               <EntityPagination 
                 currentPage={currentPage} 
                 setCurrentPage={setCurrentPage} 
-                totalPages={Math.max(1, Math.ceil(filteredEntities.length / 10))} 
+                totalPages={totalPages} 
               />
             }
-            emptyState={<EntityEmptyState />}
+            emptyState={<EntityEmptyState entityType={activeTab === 'todos' ? 'geral' : activeTab} />}
             defaultSortField="salesLast24h"
             defaultSortDirection="desc"
             onSort={onSort}
           />
         </div>
       )}
-    </TabsContent>
-  );
-
-  return (
-    <>
-      {renderTabContent('todos')}
-      {renderTabContent('evento')}
-      {renderTabContent('mensalidade')}
-      {renderTabContent('dayUse')}
-      {renderTabContent('credito')}
-    </>
+    </div>
   );
 };
