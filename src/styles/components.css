@@ -1,16 +1,16 @@
 
-/* Container utilities */
+/* Container utilities - melhor responsividade */
 .container-custom {
   @apply mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl;
 }
 
-/* Card components with proper contrast */
+/* Card components with proper contrast and better responsivity */
 .card-highlight {
   @apply bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden transition-all duration-300 hover:shadow-lg hover:scale-[1.02] hover:border-nuflow-emerald/30;
 }
 
 .card-tag {
-  @apply absolute top-3 left-3 z-10 bg-nuflow-forest text-white px-3 py-1 rounded-full text-xs font-medium shadow-sm;
+  @apply absolute top-2 sm:top-3 left-2 sm:left-3 z-10 bg-nuflow-forest text-white px-2 sm:px-3 py-1 rounded-full text-xs font-medium shadow-sm;
 }
 
 /* Button styles with sophisticated animations - NO OUTLINES */
@@ -19,7 +19,7 @@
 }
 
 .btn-secondary {
-  @apply bg-white text-nuflow-forest border border-nuflow-forest px-4 py-2 rounded-lg font-medium transition-all duration-300 hover:bg-nuflow-mint hover:scale-[1.02] hover:shadow-lg focus:bg-nuflow-mint focus:scale-[1.02] focus:shadow-lg;
+  @apply bg-nuflow-emerald text-nuflow-forest border-2 border-nuflow-emerald px-4 py-2 rounded-lg font-medium transition-all duration-300 hover:bg-nuflow-mint hover:scale-[1.02] hover:shadow-lg focus:bg-nuflow-mint focus:scale-[1.02] focus:shadow-lg;
 }
 
 .btn-ghost {
@@ -38,4 +38,43 @@
 /* Dropdown improvements with solid background and high z-index */
 .dropdown-content {
   @apply bg-white border border-gray-200 rounded-lg shadow-lg z-50 min-w-max;
+}
+
+/* Typography responsiva */
+.heading-responsive {
+  @apply text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl;
+}
+
+.subheading-responsive {
+  @apply text-lg sm:text-xl md:text-2xl;
+}
+
+.text-responsive {
+  @apply text-sm sm:text-base md:text-lg;
+}
+
+/* Spacing responsivo */
+.spacing-responsive-sm {
+  @apply p-2 sm:p-4;
+}
+
+.spacing-responsive-md {
+  @apply p-4 sm:p-6 md:p-8;
+}
+
+.spacing-responsive-lg {
+  @apply p-6 sm:p-8 md:p-12;
+}
+
+/* Grid responsivo */
+.grid-responsive-auto {
+  @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6;
+}
+
+.grid-responsive-2 {
+  @apply grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6;
+}
+
+.grid-responsive-3 {
+  @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6;
 }

@@ -22,15 +22,57 @@ body {
   line-height: 1.6;
   color: var(--nuflow-charcoal);
   background-color: #ffffff;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Typography improvements with better contrast */
+/* Typography improvements with better contrast and responsiveness */
 .font-heading {
   font-family: 'Poppins', sans-serif;
+  line-height: 1.2;
 }
 
 .font-body {
   font-family: 'Inter', sans-serif;
+  line-height: 1.6;
+}
+
+/* Responsive typography base */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Poppins', sans-serif;
+  line-height: 1.2;
+  font-weight: 600;
+  color: var(--nuflow-charcoal);
+}
+
+h1 {
+  @apply text-3xl sm:text-4xl md:text-5xl lg:text-6xl;
+}
+
+h2 {
+  @apply text-2xl sm:text-3xl md:text-4xl lg:text-5xl;
+}
+
+h3 {
+  @apply text-xl sm:text-2xl md:text-3xl;
+}
+
+h4 {
+  @apply text-lg sm:text-xl md:text-2xl;
+}
+
+h5 {
+  @apply text-base sm:text-lg md:text-xl;
+}
+
+h6 {
+  @apply text-sm sm:text-base md:text-lg;
+}
+
+p {
+  @apply text-sm sm:text-base md:text-lg;
+  line-height: 1.7;
+  margin-bottom: 1rem;
 }
 
 /* Improved link accessibility with sophisticated animations */
@@ -43,4 +85,65 @@ a {
 a:hover {
   color: var(--nuflow-emerald);
   transform: translateY(-1px);
+}
+
+/* Better focus states for accessibility */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--nuflow-emerald) !important;
+  outline-offset: 2px !important;
+  box-shadow: 0 0 0 2px var(--nuflow-emerald) !important;
+}
+
+/* Responsive containers */
+.container-fluid {
+  @apply w-full px-4 sm:px-6 lg:px-8;
+}
+
+.container-narrow {
+  @apply max-w-4xl mx-auto px-4 sm:px-6 lg:px-8;
+}
+
+.container-wide {
+  @apply max-w-8xl mx-auto px-4 sm:px-6 lg:px-8;
+}
+
+/* Better text rendering */
+.text-render-optimized {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Responsive utilities */
+.hide-on-mobile {
+  @apply hidden sm:block;
+}
+
+.show-on-mobile {
+  @apply block sm:hidden;
+}
+
+.center-content {
+  @apply flex items-center justify-center;
+}
+
+.center-text {
+  @apply text-center;
+}
+
+/* Better spacing system */
+.section-padding {
+  @apply py-8 sm:py-12 md:py-16 lg:py-20;
+}
+
+.section-padding-sm {
+  @apply py-4 sm:py-6 md:py-8;
+}
+
+.section-padding-lg {
+  @apply py-12 sm:py-16 md:py-20 lg:py-24;
 }

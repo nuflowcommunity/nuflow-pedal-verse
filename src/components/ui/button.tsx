@@ -12,10 +12,11 @@ const buttonVariants = cva(
       variant: {
         default: "bg-nuflow-forest text-white hover:bg-nuflow-darkForest hover:scale-[1.02] hover:shadow-lg focus:bg-nuflow-darkForest focus:scale-[1.02] focus:shadow-lg",
         destructive: "bg-red-500 text-white hover:bg-red-600 hover:scale-[1.02] hover:shadow-lg focus:bg-red-600 focus:scale-[1.02] focus:shadow-lg",
-        outline: "bg-white text-nuflow-forest border border-nuflow-forest hover:bg-nuflow-mint hover:scale-[1.02] hover:shadow-lg focus:bg-nuflow-mint focus:scale-[1.02] focus:shadow-lg",
+        outline: "bg-nuflow-emerald text-nuflow-forest border-2 border-nuflow-emerald hover:bg-nuflow-mint hover:scale-[1.02] hover:shadow-lg focus:bg-nuflow-mint focus:scale-[1.02] focus:shadow-lg",
         secondary: "bg-gray-100 text-gray-900 hover:bg-gray-200 hover:scale-[1.02] hover:shadow-lg focus:bg-gray-200 focus:scale-[1.02] focus:shadow-lg",
         ghost: "text-nuflow-forest hover:bg-nuflow-mint/50 hover:scale-[1.02] focus:bg-nuflow-mint/50 focus:scale-[1.02]",
         link: "text-nuflow-forest underline-offset-4 hover:underline hover:scale-[1.02] focus:scale-[1.02]",
+        navbarPrimary: "bg-nuflow-emerald text-nuflow-forest border-2 border-nuflow-emerald hover:bg-nuflow-mint hover:text-nuflow-darkForest hover:scale-[1.02] hover:shadow-lg focus:bg-nuflow-mint focus:text-nuflow-darkForest focus:scale-[1.02] focus:shadow-lg",
       },
       size: {
         default: "h-10 px-4 py-2",
