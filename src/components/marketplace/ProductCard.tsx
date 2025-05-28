@@ -42,10 +42,10 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
   const getConditionColor = (condition: string) => {
     switch (condition.toLowerCase()) {
-      case 'novo': return 'bg-green-600 text-white border-green-600';
-      case 'usado': return 'bg-blue-600 text-white border-blue-600';
-      case 'seminovo': return 'bg-amber-600 text-white border-amber-600';
-      default: return 'bg-gray-600 text-white border-gray-600';
+      case 'novo': return 'bg-emerald-600 text-white';
+      case 'usado': return 'bg-blue-600 text-white';
+      case 'seminovo': return 'bg-amber-600 text-white';
+      default: return 'bg-gray-700 text-white';
     }
   };
 
@@ -99,7 +99,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
               e.preventDefault();
               onToggleFavorite();
             }}
-            className="absolute bottom-3 right-3 p-2 bg-white/90 hover:bg-white rounded-full shadow-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-nuflow-emerald"
+            className="absolute bottom-3 right-3 p-2 bg-white/90 hover:bg-white rounded-full shadow-sm transition-all duration-300 hover:scale-110 focus:outline-none focus:scale-110 focus:shadow-lg"
             aria-label={isFavorited ? "Remover dos favoritos" : "Adicionar aos favoritos"}
           >
             <Heart 
@@ -129,7 +129,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
           {/* Condition Badge */}
           <Badge 
             variant="outline" 
-            className={cn("mb-3 text-xs font-medium border", getConditionColor(product.condition))}
+            className={cn("mb-3 text-xs font-medium border-0", getConditionColor(product.condition))}
           >
             {product.condition.charAt(0).toUpperCase() + product.condition.slice(1)}
           </Badge>

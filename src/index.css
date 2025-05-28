@@ -37,7 +37,7 @@
 /* Focus styles for better accessibility */
 body.keyboard-navigation *:focus,
 body.focus-visible *:focus-visible {
-  outline: 3px solid #11C76F;
+  outline: 2px solid #11C76F;
   outline-offset: 2px;
   border-radius: 4px;
 }
@@ -94,17 +94,18 @@ body.reduced-motion *::after {
   @apply absolute top-3 left-3 z-10 bg-nuflow-forest text-white px-3 py-1 rounded-full text-xs font-medium shadow-sm;
 }
 
-/* Button styles with proper contrast */
+/* Button styles with proper contrast and no outlines */
 .btn-primary {
-  @apply bg-nuflow-forest text-white px-4 py-2 rounded-lg font-medium transition-all duration-200 hover:bg-nuflow-darkForest focus:outline-none focus:ring-2 focus:ring-nuflow-emerald/30 disabled:opacity-50 disabled:cursor-not-allowed;
+  @apply bg-nuflow-forest text-white px-4 py-2 rounded-lg font-medium transition-all duration-300 hover:bg-nuflow-darkForest hover:scale-105 hover:shadow-lg focus:outline-none focus:bg-nuflow-darkForest focus:scale-105 focus:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:shadow-none;
 }
 
 .btn-secondary {
-  @apply bg-white text-nuflow-forest border-2 border-nuflow-forest px-4 py-2 rounded-lg font-medium transition-all duration-200 hover:bg-nuflow-forest hover:text-white focus:outline-none focus:ring-2 focus:ring-nuflow-emerald/30;
+  @apply bg-white text-nuflow-forest border-0 px-4 py-2 rounded-lg font-medium transition-all duration-300 hover:bg-nuflow-mint hover:scale-105 hover:shadow-lg focus:outline-none focus:bg-nuflow-mint focus:scale-105 focus:shadow-lg;
+  box-shadow: inset 0 0 0 1px var(--nuflow-forest);
 }
 
 .btn-ghost {
-  @apply text-nuflow-forest px-4 py-2 rounded-lg font-medium transition-all duration-200 hover:bg-nuflow-mint focus:outline-none focus:ring-2 focus:ring-nuflow-emerald/30;
+  @apply text-nuflow-forest px-4 py-2 rounded-lg font-medium transition-all duration-300 hover:bg-nuflow-mint/50 hover:scale-105 focus:outline-none focus:bg-nuflow-mint/50 focus:scale-105;
 }
 
 /* Typography improvements with better contrast */
@@ -136,16 +137,16 @@ body {
 a {
   color: var(--nuflow-forest);
   text-decoration: none;
-  transition: color 0.2s ease;
+  transition: all 0.2s ease;
 }
 
 a:hover {
   color: var(--nuflow-emerald);
-  text-decoration: underline;
+  transform: translateY(-1px);
 }
 
 a:focus {
-  outline: 3px solid var(--nuflow-emerald);
+  outline: 2px solid var(--nuflow-emerald);
   outline-offset: 2px;
   border-radius: 4px;
 }
@@ -166,11 +167,11 @@ input[type="url"],
 input[type="search"],
 textarea,
 select {
-  border: 2px solid var(--nuflow-mineral);
+  border: 1px solid var(--nuflow-mineral);
   border-radius: 6px;
   padding: 0.75rem;
   font-size: 1rem;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  transition: all 0.2s ease;
   background-color: white;
 }
 
@@ -180,17 +181,19 @@ select:focus {
   border-color: var(--nuflow-forest);
   box-shadow: 0 0 0 3px rgba(17, 199, 111, 0.1);
   outline: none;
+  transform: translateY(-1px);
 }
 
-/* Button focus improvements */
+/* Button focus improvements without outlines */
 button:focus-visible,
 a:focus-visible,
 input:focus-visible,
 textarea:focus-visible,
 select:focus-visible {
-  outline: 3px solid #11C76F;
-  outline-offset: 2px;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(17, 199, 111, 0.3);
   border-radius: 6px;
+  transform: translateY(-1px);
 }
 
 /* Error states with better contrast */
@@ -270,12 +273,23 @@ select:focus-visible {
   }
 }
 
+@keyframes breathe {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.02);
+    opacity: 0.95;
+  }
+}
+
 .animate-fadeIn {
   animation: fadeIn 0.6s ease-out;
 }
 
 .animate-hover-scale {
-  transition: transform 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 .animate-hover-scale:hover {
@@ -284,6 +298,10 @@ select:focus-visible {
 
 .animate-scroll-down {
   animation: scrollDown 2s infinite;
+}
+
+.animate-breathe {
+  animation: breathe 3s ease-in-out infinite;
 }
 
 /* Utility classes for consistent spacing */
