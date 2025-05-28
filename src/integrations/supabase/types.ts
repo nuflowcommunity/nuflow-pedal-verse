@@ -9,6 +9,175 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      entities: {
+        Row: {
+          created_at: string | null
+          id: string
+          name: string
+          partner_id: string | null
+          price: number | null
+          status: Database["public"]["Enums"]["entity_status"] | null
+          type: Database["public"]["Enums"]["entity_type"]
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          name: string
+          partner_id?: string | null
+          price?: number | null
+          status?: Database["public"]["Enums"]["entity_status"] | null
+          type: Database["public"]["Enums"]["entity_type"]
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          name?: string
+          partner_id?: string | null
+          price?: number | null
+          status?: Database["public"]["Enums"]["entity_status"] | null
+          type?: Database["public"]["Enums"]["entity_type"]
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "entities_partner_id_fkey"
+            columns: ["partner_id"]
+            isOneToOne: false
+            referencedRelation: "partners"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      entity_credits: {
+        Row: {
+          expiry_date: string | null
+          id: string
+          total_credits: number | null
+          used_credits: number | null
+          validation_status:
+            | Database["public"]["Enums"]["validation_status"]
+            | null
+        }
+        Insert: {
+          expiry_date?: string | null
+          id: string
+          total_credits?: number | null
+          used_credits?: number | null
+          validation_status?:
+            | Database["public"]["Enums"]["validation_status"]
+            | null
+        }
+        Update: {
+          expiry_date?: string | null
+          id?: string
+          total_credits?: number | null
+          used_credits?: number | null
+          validation_status?:
+            | Database["public"]["Enums"]["validation_status"]
+            | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "entity_credits_id_fkey"
+            columns: ["id"]
+            isOneToOne: true
+            referencedRelation: "entities"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      entity_day_use: {
+        Row: {
+          access_date: string | null
+          id: string
+          valid_for: string | null
+        }
+        Insert: {
+          access_date?: string | null
+          id: string
+          valid_for?: string | null
+        }
+        Update: {
+          access_date?: string | null
+          id?: string
+          valid_for?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "entity_day_use_id_fkey"
+            columns: ["id"]
+            isOneToOne: true
+            referencedRelation: "entities"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      entity_events: {
+        Row: {
+          capacity: number | null
+          date: string | null
+          description: string | null
+          id: string
+          location: string | null
+          registrations: number | null
+        }
+        Insert: {
+          capacity?: number | null
+          date?: string | null
+          description?: string | null
+          id: string
+          location?: string | null
+          registrations?: number | null
+        }
+        Update: {
+          capacity?: number | null
+          date?: string | null
+          description?: string | null
+          id?: string
+          location?: string | null
+          registrations?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "entity_events_id_fkey"
+            columns: ["id"]
+            isOneToOne: true
+            referencedRelation: "entities"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      entity_subscriptions: {
+        Row: {
+          duration: string | null
+          id: string
+          included_credits: number | null
+          renewal_date: string | null
+        }
+        Insert: {
+          duration?: string | null
+          id: string
+          included_credits?: number | null
+          renewal_date?: string | null
+        }
+        Update: {
+          duration?: string | null
+          id?: string
+          included_credits?: number | null
+          renewal_date?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "entity_subscriptions_id_fkey"
+            columns: ["id"]
+            isOneToOne: true
+            referencedRelation: "entities"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       event_images: {
         Row: {
           created_at: string
@@ -218,38 +387,364 @@ export type Database = {
         }
         Relationships: []
       }
+      financial_accounts: {
+        Row: {
+          balance: number | null
+          created_at: string | null
+          currency: string | null
+          id: string
+          is_active: boolean | null
+          name: string
+          type: string
+        }
+        Insert: {
+          balance?: number | null
+          created_at?: string | null
+          currency?: string | null
+          id?: string
+          is_active?: boolean | null
+          name: string
+          type: string
+        }
+        Update: {
+          balance?: number | null
+          created_at?: string | null
+          currency?: string | null
+          id?: string
+          is_active?: boolean | null
+          name?: string
+          type?: string
+        }
+        Relationships: []
+      }
+      financial_transactions: {
+        Row: {
+          amount: number
+          category: string | null
+          created_at: string | null
+          created_by: string | null
+          date: string
+          description: string
+          entity_id: string | null
+          id: string
+          partner_id: string | null
+          type: Database["public"]["Enums"]["transaction_category"]
+        }
+        Insert: {
+          amount: number
+          category?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          date: string
+          description: string
+          entity_id?: string | null
+          id?: string
+          partner_id?: string | null
+          type: Database["public"]["Enums"]["transaction_category"]
+        }
+        Update: {
+          amount?: number
+          category?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          date?: string
+          description?: string
+          entity_id?: string | null
+          id?: string
+          partner_id?: string | null
+          type?: Database["public"]["Enums"]["transaction_category"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "financial_transactions_entity_id_fkey"
+            columns: ["entity_id"]
+            isOneToOne: false
+            referencedRelation: "entities"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "financial_transactions_partner_id_fkey"
+            columns: ["partner_id"]
+            isOneToOne: false
+            referencedRelation: "partners"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      marketing_campaigns: {
+        Row: {
+          budget: number | null
+          clicks: number | null
+          conversions: number | null
+          created_at: string | null
+          created_by: string | null
+          end_date: string | null
+          id: string
+          impressions: number | null
+          name: string
+          spent: number | null
+          start_date: string | null
+          status: Database["public"]["Enums"]["campaign_status"] | null
+          target_audience: Json | null
+          type: Database["public"]["Enums"]["campaign_type"]
+          updated_at: string | null
+        }
+        Insert: {
+          budget?: number | null
+          clicks?: number | null
+          conversions?: number | null
+          created_at?: string | null
+          created_by?: string | null
+          end_date?: string | null
+          id?: string
+          impressions?: number | null
+          name: string
+          spent?: number | null
+          start_date?: string | null
+          status?: Database["public"]["Enums"]["campaign_status"] | null
+          target_audience?: Json | null
+          type: Database["public"]["Enums"]["campaign_type"]
+          updated_at?: string | null
+        }
+        Update: {
+          budget?: number | null
+          clicks?: number | null
+          conversions?: number | null
+          created_at?: string | null
+          created_by?: string | null
+          end_date?: string | null
+          id?: string
+          impressions?: number | null
+          name?: string
+          spent?: number | null
+          start_date?: string | null
+          status?: Database["public"]["Enums"]["campaign_status"] | null
+          target_audience?: Json | null
+          type?: Database["public"]["Enums"]["campaign_type"]
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      marketing_metrics: {
+        Row: {
+          campaign_id: string | null
+          clicks: number | null
+          conversions: number | null
+          cost: number | null
+          created_at: string | null
+          date: string
+          id: string
+          impressions: number | null
+          revenue: number | null
+        }
+        Insert: {
+          campaign_id?: string | null
+          clicks?: number | null
+          conversions?: number | null
+          cost?: number | null
+          created_at?: string | null
+          date: string
+          id?: string
+          impressions?: number | null
+          revenue?: number | null
+        }
+        Update: {
+          campaign_id?: string | null
+          clicks?: number | null
+          conversions?: number | null
+          cost?: number | null
+          created_at?: string | null
+          date?: string
+          id?: string
+          impressions?: number | null
+          revenue?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "marketing_metrics_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "marketing_campaigns"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      messages: {
+        Row: {
+          content: string
+          created_at: string | null
+          from_user_id: string | null
+          id: string
+          is_read: boolean | null
+          subject: string | null
+          to_user_id: string | null
+          type: string | null
+        }
+        Insert: {
+          content: string
+          created_at?: string | null
+          from_user_id?: string | null
+          id?: string
+          is_read?: boolean | null
+          subject?: string | null
+          to_user_id?: string | null
+          type?: string | null
+        }
+        Update: {
+          content?: string
+          created_at?: string | null
+          from_user_id?: string | null
+          id?: string
+          is_read?: boolean | null
+          subject?: string | null
+          to_user_id?: string | null
+          type?: string | null
+        }
+        Relationships: []
+      }
+      partners: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          email: string | null
+          id: string
+          logo_url: string | null
+          name: string
+          phone: string | null
+          status: Database["public"]["Enums"]["entity_status"] | null
+          updated_at: string | null
+          website: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          email?: string | null
+          id?: string
+          logo_url?: string | null
+          name: string
+          phone?: string | null
+          status?: Database["public"]["Enums"]["entity_status"] | null
+          updated_at?: string | null
+          website?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          email?: string | null
+          id?: string
+          logo_url?: string | null
+          name?: string
+          phone?: string | null
+          status?: Database["public"]["Enums"]["entity_status"] | null
+          updated_at?: string | null
+          website?: string | null
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
+          avatar_url: string | null
+          bio: string | null
           created_at: string | null
           first_name: string | null
           id: string
           last_name: string | null
+          location: string | null
+          phone: string | null
           role: string | null
           updated_at: string | null
         }
         Insert: {
+          avatar_url?: string | null
+          bio?: string | null
           created_at?: string | null
           first_name?: string | null
           id: string
           last_name?: string | null
+          location?: string | null
+          phone?: string | null
           role?: string | null
           updated_at?: string | null
         }
         Update: {
+          avatar_url?: string | null
+          bio?: string | null
           created_at?: string | null
           first_name?: string | null
           id?: string
           last_name?: string | null
+          location?: string | null
+          phone?: string | null
           role?: string | null
           updated_at?: string | null
         }
         Relationships: []
+      }
+      sales: {
+        Row: {
+          amount: number
+          created_at: string | null
+          entity_id: string | null
+          id: string
+          payment_method: string | null
+          status: string | null
+          user_id: string | null
+        }
+        Insert: {
+          amount: number
+          created_at?: string | null
+          entity_id?: string | null
+          id?: string
+          payment_method?: string | null
+          status?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          amount?: number
+          created_at?: string | null
+          entity_id?: string | null
+          id?: string
+          payment_method?: string | null
+          status?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "sales_entity_id_fkey"
+            columns: ["entity_id"]
+            isOneToOne: false
+            referencedRelation: "entities"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
+      get_entity_stats: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          total_entities: number
+          active_entities: number
+          pending_entities: number
+          cancelled_entities: number
+          total_revenue: number
+        }[]
+      }
+      get_marketing_stats: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          total_campaigns: number
+          active_campaigns: number
+          total_budget: number
+          total_spent: number
+          total_impressions: number
+          total_clicks: number
+          total_conversions: number
+        }[]
+      }
       get_past_events: {
         Args: Record<PropertyKey, never>
         Returns: {
@@ -308,8 +803,14 @@ export type Database = {
       }
     }
     Enums: {
+      campaign_status: "ativa" | "pausada" | "finalizada" | "rascunho"
+      campaign_type: "google_ads" | "meta_ads" | "email" | "social_media"
+      entity_status: "ativo" | "pendente" | "cancelado"
+      entity_type: "evento" | "mensalidade" | "dayUse" | "credito"
       event_category: "MTB" | "Speed" | "Gravel" | "Urbano" | "Outro"
       event_status: "active" | "cancelled" | "completed" | "draft"
+      transaction_category: "receita" | "despesa" | "transferencia"
+      validation_status: "validated" | "pending" | "failed"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -425,8 +926,14 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      campaign_status: ["ativa", "pausada", "finalizada", "rascunho"],
+      campaign_type: ["google_ads", "meta_ads", "email", "social_media"],
+      entity_status: ["ativo", "pendente", "cancelado"],
+      entity_type: ["evento", "mensalidade", "dayUse", "credito"],
       event_category: ["MTB", "Speed", "Gravel", "Urbano", "Outro"],
       event_status: ["active", "cancelled", "completed", "draft"],
+      transaction_category: ["receita", "despesa", "transferencia"],
+      validation_status: ["validated", "pending", "failed"],
     },
   },
 } as const

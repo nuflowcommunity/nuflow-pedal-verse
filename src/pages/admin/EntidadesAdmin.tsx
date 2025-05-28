@@ -1,10 +1,9 @@
 
 import React from 'react';
-import { EntidadesAdminContainer } from './EntidadesAdminContainer';
-import { mockEntities } from '@/components/admin/entities/mockData';
+import EntidadesAdminContainer from './EntidadesAdminContainer';
 
-const EntidadesAdmin = () => {
-  return <EntidadesAdminContainer initialEntities={mockEntities} />;
+const EntidadesAdmin: React.FC = () => {
+  return <EntidadesAdminContainer />;
 };
 
 export default EntidadesAdmin;
