@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { 
   Calendar,
@@ -22,6 +21,7 @@ import {
 } from '@/components/ui/table';
 import { cn } from '@/lib/utils';
 import MarketingChart from '@/components/admin/marketing/MarketingChart';
+import { useBreakpoint } from '@/hooks/use-breakpoint';
 
 // Mock Data
 const marketingSummary = {
@@ -85,6 +85,8 @@ const statuses = [
 ];
 
 const MarketingAdmin = () => {
+  const isMobile = useBreakpoint('md');
+  
   // States for filters
   const [period, setPeriod] = useState('30');
   const [channel, setChannel] = useState('all');
@@ -103,7 +105,7 @@ const MarketingAdmin = () => {
     }
   };
 
-  // Chart config object
+  // Chart config objects
   const googleChartConfig = {
     cliques: { label: 'Cliques', color: '#19c37d' },
     impressoes: { label: 'Impressões', color: '#6366f1' },
@@ -121,94 +123,100 @@ const MarketingAdmin = () => {
   };
 
   return (
-    <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold">Marketing</h1>
-        <div className="flex gap-2">
-          {/* Filter Period */}
+    <div className="space-y-4 lg:space-y-6 p-2 lg:p-0">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <h1 className="text-xl lg:text-2xl font-bold">Marketing</h1>
+        
+        {/* Filters - Responsive */}
+        <div className="flex flex-wrap gap-2 w-full sm:w-auto">
           <select 
             value={period}
             onChange={e => setPeriod(e.target.value)}
-            className="h-9 rounded-md border border-input px-3 py-1 text-sm bg-background shadow-sm focus:outline-none focus:ring-1 focus:ring-ring"
+            className="h-9 rounded-md border border-input px-3 py-1 text-sm bg-background shadow-sm focus:outline-none focus:ring-1 focus:ring-ring min-w-[120px]"
           >
             {periods.map(p => (
               <option key={p.value} value={p.value}>{p.label}</option>
             ))}
           </select>
           
-          {/* Filter Channel */}
           <select 
             value={channel}
             onChange={e => setChannel(e.target.value)}
-            className="h-9 rounded-md border border-input px-3 py-1 text-sm bg-background shadow-sm focus:outline-none focus:ring-1 focus:ring-ring"
+            className="h-9 rounded-md border border-input px-3 py-1 text-sm bg-background shadow-sm focus:outline-none focus:ring-1 focus:ring-ring min-w-[120px]"
           >
             {channels.map(c => (
               <option key={c.value} value={c.value}>{c.label}</option>
             ))}
           </select>
           
-          {/* Filter Status */}
           <select 
             value={status}
             onChange={e => setStatus(e.target.value)}
-            className="h-9 rounded-md border border-input px-3 py-1 text-sm bg-background shadow-sm focus:outline-none focus:ring-1 focus:ring-ring"
+            className="h-9 rounded-md border border-input px-3 py-1 text-sm bg-background shadow-sm focus:outline-none focus:ring-1 focus:ring-ring min-w-[120px]"
           >
             {statuses.map(s => (
               <option key={s.value} value={s.value}>{s.label}</option>
             ))}
           </select>
           
-          <Button variant="outline" className="gap-1">
+          <Button variant="outline" className="gap-1 min-h-[36px]">
             <Filter size={16} />
-            <span>Filtros</span>
+            {!isMobile && <span>Filtros</span>}
           </Button>
         </div>
       </div>
 
-      {/* Summary Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      {/* Summary Cards - Responsive Grid */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4">
         <Card>
-          <CardHeader className="py-4">
-            <CardTitle className="text-sm font-medium text-muted-foreground">Investimento Total</CardTitle>
+          <CardHeader className="py-3 lg:py-4">
+            <CardTitle className="text-xs lg:text-sm font-medium text-muted-foreground">
+              Investimento Total
+            </CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="flex items-baseline space-x-2">
-              <div className="text-2xl font-bold">{formatCurrency(marketingSummary.totalInvestment)}</div>
+          <CardContent className="py-0 pb-3 lg:pb-4">
+            <div className="text-lg lg:text-2xl font-bold">
+              {formatCurrency(marketingSummary.totalInvestment)}
             </div>
           </CardContent>
         </Card>
         
         <Card>
-          <CardHeader className="py-4">
-            <CardTitle className="text-sm font-medium text-muted-foreground">ROI</CardTitle>
+          <CardHeader className="py-3 lg:py-4">
+            <CardTitle className="text-xs lg:text-sm font-medium text-muted-foreground">ROI</CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="py-0 pb-3 lg:pb-4">
             <div className="flex items-center space-x-2">
-              <div className="text-2xl font-bold">{marketingSummary.roi}%</div>
-              <TrendingUp className="h-4 w-4 text-[#19c37d]" />
+              <div className="text-lg lg:text-2xl font-bold">{marketingSummary.roi}%</div>
+              <TrendingUp className="h-3 w-3 lg:h-4 lg:w-4 text-[#19c37d]" />
             </div>
           </CardContent>
         </Card>
         
         <Card>
-          <CardHeader className="py-4">
-            <CardTitle className="text-sm font-medium text-muted-foreground">Leads Gerados</CardTitle>
+          <CardHeader className="py-3 lg:py-4">
+            <CardTitle className="text-xs lg:text-sm font-medium text-muted-foreground">
+              Leads Gerados
+            </CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="py-0 pb-3 lg:pb-4">
             <div className="flex items-center space-x-2">
-              <div className="text-2xl font-bold">{marketingSummary.leadsGenerated}</div>
-              <Users className="h-4 w-4 text-[#19c37d]" />
+              <div className="text-lg lg:text-2xl font-bold">{marketingSummary.leadsGenerated}</div>
+              <Users className="h-3 w-3 lg:h-4 lg:w-4 text-[#19c37d]" />
             </div>
           </CardContent>
         </Card>
         
         <Card>
-          <CardHeader className="py-4">
-            <CardTitle className="text-sm font-medium text-muted-foreground">Custo por Lead</CardTitle>
+          <CardHeader className="py-3 lg:py-4">
+            <CardTitle className="text-xs lg:text-sm font-medium text-muted-foreground">
+              Custo por Lead
+            </CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="flex items-center space-x-2">
-              <div className="text-2xl font-bold">{formatCurrency(marketingSummary.costPerLead)}</div>
+          <CardContent className="py-0 pb-3 lg:pb-4">
+            <div className="text-lg lg:text-2xl font-bold">
+              {formatCurrency(marketingSummary.costPerLead)}
             </div>
           </CardContent>
         </Card>
@@ -216,18 +224,18 @@ const MarketingAdmin = () => {
 
       {/* Marketing Channels Tabs */}
       <Tabs defaultValue="google" className="w-full">
-        <TabsList className="mb-4">
-          <TabsTrigger value="google">Google Ads</TabsTrigger>
-          <TabsTrigger value="meta">Meta Ads</TabsTrigger>
+        <TabsList className="mb-4 w-full sm:w-auto">
+          <TabsTrigger value="google" className="flex-1 sm:flex-none">Google Ads</TabsTrigger>
+          <TabsTrigger value="meta" className="flex-1 sm:flex-none">Meta Ads</TabsTrigger>
         </TabsList>
         
-        <TabsContent value="google" className="space-y-6">
+        <TabsContent value="google" className="space-y-4 lg:space-y-6">
           {/* Google Ads Chart */}
           <Card>
             <CardHeader className="pb-2">
-              <CardTitle className="text-lg">Desempenho Google Ads</CardTitle>
+              <CardTitle className="text-base lg:text-lg">Desempenho Google Ads</CardTitle>
             </CardHeader>
-            <CardContent className="h-[300px]">
+            <CardContent className="h-[300px] lg:h-[350px]">
               <MarketingChart 
                 data={googleAdsData} 
                 config={googleChartConfig} 
@@ -236,60 +244,62 @@ const MarketingAdmin = () => {
             </CardContent>
           </Card>
           
-          {/* Google Campaigns */}
+          {/* Google Campaigns - Responsive Table */}
           <Card>
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-lg">Campanhas Google Ads</CardTitle>
+            <CardHeader className="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-2 space-y-2 sm:space-y-0">
+              <CardTitle className="text-base lg:text-lg">Campanhas Google Ads</CardTitle>
               <Button className="bg-[#19c37d] hover:bg-[#16a86c]" size="sm">
                 <Plus size={16} className="mr-1" />
-                Nova Campanha
+                {!isMobile && 'Nova Campanha'}
               </Button>
             </CardHeader>
             <CardContent>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Nome</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead>Orçamento</TableHead>
-                    <TableHead>Conversões</TableHead>
-                    <TableHead>ROI</TableHead>
-                    <TableHead>Ações</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {googleCampaigns.map((campaign) => (
-                    <TableRow key={campaign.id}>
-                      <TableCell className="font-medium">{campaign.name}</TableCell>
-                      <TableCell>
-                        <span className={cn("py-1 px-2 rounded-full text-xs font-medium", getStatusColor(campaign.status))}>
-                          {campaign.status}
-                        </span>
-                      </TableCell>
-                      <TableCell>{formatCurrency(campaign.budget)}</TableCell>
-                      <TableCell>{campaign.result}</TableCell>
-                      <TableCell>{campaign.roi}%</TableCell>
-                      <TableCell>
-                        <Button variant="ghost" size="sm" className="h-8 p-0 px-2">
-                          <Eye size={16} className="mr-1" />
-                          Ver Detalhes
-                        </Button>
-                      </TableCell>
+              <div className="overflow-x-auto">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead className="min-w-[150px]">Nome</TableHead>
+                      <TableHead className="min-w-[80px]">Status</TableHead>
+                      <TableHead className="min-w-[100px]">Orçamento</TableHead>
+                      <TableHead className="min-w-[80px]">Conversões</TableHead>
+                      <TableHead className="min-w-[60px]">ROI</TableHead>
+                      <TableHead className="min-w-[100px]">Ações</TableHead>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
+                  </TableHeader>
+                  <TableBody>
+                    {googleCampaigns.map((campaign) => (
+                      <TableRow key={campaign.id}>
+                        <TableCell className="font-medium">{campaign.name}</TableCell>
+                        <TableCell>
+                          <span className={cn("py-1 px-2 rounded-full text-xs font-medium", getStatusColor(campaign.status))}>
+                            {campaign.status}
+                          </span>
+                        </TableCell>
+                        <TableCell>{formatCurrency(campaign.budget)}</TableCell>
+                        <TableCell>{campaign.result}</TableCell>
+                        <TableCell>{campaign.roi}%</TableCell>
+                        <TableCell>
+                          <Button variant="ghost" size="sm" className="h-8 p-0 px-2">
+                            <Eye size={16} className="mr-1" />
+                            {!isMobile && 'Ver Detalhes'}
+                          </Button>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
             </CardContent>
           </Card>
         </TabsContent>
         
-        <TabsContent value="meta" className="space-y-6">
+        <TabsContent value="meta" className="space-y-4 lg:space-y-6">
           {/* Meta Ads Chart */}
           <Card>
             <CardHeader className="pb-2">
-              <CardTitle className="text-lg">Desempenho Meta Ads</CardTitle>
+              <CardTitle className="text-base lg:text-lg">Desempenho Meta Ads</CardTitle>
             </CardHeader>
-            <CardContent className="h-[300px]">
+            <CardContent className="h-[300px] lg:h-[350px]">
               <MarketingChart 
                 data={metaAdsData} 
                 config={metaChartConfig} 
@@ -298,49 +308,51 @@ const MarketingAdmin = () => {
             </CardContent>
           </Card>
           
-          {/* Meta Campaigns */}
+          {/* Meta Campaigns - Responsive Table */}
           <Card>
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-lg">Campanhas Meta Ads</CardTitle>
+            <CardHeader className="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-2 space-y-2 sm:space-y-0">
+              <CardTitle className="text-base lg:text-lg">Campanhas Meta Ads</CardTitle>
               <Button className="bg-[#19c37d] hover:bg-[#16a86c]" size="sm">
                 <Plus size={16} className="mr-1" />
-                Nova Campanha
+                {!isMobile && 'Nova Campanha'}
               </Button>
             </CardHeader>
             <CardContent>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Nome</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead>Orçamento</TableHead>
-                    <TableHead>Conversões</TableHead>
-                    <TableHead>ROI</TableHead>
-                    <TableHead>Ações</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {metaCampaigns.map((campaign) => (
-                    <TableRow key={campaign.id}>
-                      <TableCell className="font-medium">{campaign.name}</TableCell>
-                      <TableCell>
-                        <span className={cn("py-1 px-2 rounded-full text-xs font-medium", getStatusColor(campaign.status))}>
-                          {campaign.status}
-                        </span>
-                      </TableCell>
-                      <TableCell>{formatCurrency(campaign.budget)}</TableCell>
-                      <TableCell>{campaign.result}</TableCell>
-                      <TableCell>{campaign.roi}%</TableCell>
-                      <TableCell>
-                        <Button variant="ghost" size="sm" className="h-8 p-0 px-2">
-                          <Eye size={16} className="mr-1" />
-                          Ver Detalhes
-                        </Button>
-                      </TableCell>
+              <div className="overflow-x-auto">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead className="min-w-[150px]">Nome</TableHead>
+                      <TableHead className="min-w-[80px]">Status</TableHead>
+                      <TableHead className="min-w-[100px]">Orçamento</TableHead>
+                      <TableHead className="min-w-[80px]">Conversões</TableHead>
+                      <TableHead className="min-w-[60px]">ROI</TableHead>
+                      <TableHead className="min-w-[100px]">Ações</TableHead>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
+                  </TableHeader>
+                  <TableBody>
+                    {metaCampaigns.map((campaign) => (
+                      <TableRow key={campaign.id}>
+                        <TableCell className="font-medium">{campaign.name}</TableCell>
+                        <TableCell>
+                          <span className={cn("py-1 px-2 rounded-full text-xs font-medium", getStatusColor(campaign.status))}>
+                            {campaign.status}
+                          </span>
+                        </TableCell>
+                        <TableCell>{formatCurrency(campaign.budget)}</TableCell>
+                        <TableCell>{campaign.result}</TableCell>
+                        <TableCell>{campaign.roi}%</TableCell>
+                        <TableCell>
+                          <Button variant="ghost" size="sm" className="h-8 p-0 px-2">
+                            <Eye size={16} className="mr-1" />
+                            {!isMobile && 'Ver Detalhes'}
+                          </Button>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
             </CardContent>
           </Card>
         </TabsContent>
