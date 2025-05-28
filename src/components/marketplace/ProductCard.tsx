@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { MapPin, Heart, Eye, Star } from 'lucide-react';
@@ -6,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import LazyImage from '@/components/ui/lazy-image';
+import ComparisonButton from './ComparisonButton';
 
 interface Product {
   id: string;
@@ -193,15 +193,22 @@ const ProductCard: React.FC<ProductCardProps> = ({
             )}
           </div>
           
-          {/* Action Button */}
-          <Button 
-            asChild
-            className="btn-primary px-4 py-2 text-sm"
-          >
-            <Link to={`/marketplace/${product.id}`}>
-              Ver detalhes
-            </Link>
-          </Button>
+          {/* Action Buttons */}
+          <div className="flex flex-col gap-2">
+            <Button 
+              asChild
+              className="btn-primary px-4 py-2 text-sm"
+            >
+              <Link to={`/marketplace/${product.id}`}>
+                Ver detalhes
+              </Link>
+            </Button>
+            <ComparisonButton 
+              product={product} 
+              size="sm"
+              className="text-xs"
+            />
+          </div>
         </div>
       </div>
     </div>
