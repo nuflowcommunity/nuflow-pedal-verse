@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { Entity, EntityType } from '@/components/admin/entities/types';
@@ -17,6 +16,8 @@ export interface EntitiesFilterState {
   validationFilter: string;
   startDate?: Date;
   endDate?: Date;
+  activeTab: string;
+  sortDirection: 'asc' | 'desc';
 }
 
 export const useSupabaseEntitiesData = () => {
@@ -45,6 +46,8 @@ export const useSupabaseEntitiesData = () => {
     typeFilter: '',
     statusFilter: '',
     validationFilter: '',
+    activeTab: 'todos',
+    sortDirection: 'desc',
   });
 
   // Carregar dados iniciais
@@ -140,6 +143,8 @@ export const useSupabaseEntitiesData = () => {
       typeFilter: '',
       statusFilter: '',
       validationFilter: '',
+      activeTab: 'todos',
+      sortDirection: 'desc',
     }),
   };
 

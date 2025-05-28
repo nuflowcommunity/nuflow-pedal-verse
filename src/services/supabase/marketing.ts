@@ -21,7 +21,16 @@ export const fetchMarketingStats = async () => {
       };
     }
 
-    const stats = data?.[0] || {};
+    const stats = data?.[0] || {
+      total_campaigns: 0,
+      active_campaigns: 0,
+      total_budget: 0,
+      total_spent: 0,
+      total_impressions: 0,
+      total_clicks: 0,
+      total_conversions: 0,
+    };
+
     const totalClicks = Number(stats.total_clicks || 0);
     const totalConversions = Number(stats.total_conversions || 0);
     const totalSpent = Number(stats.total_spent || 0);

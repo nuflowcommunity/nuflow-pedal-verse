@@ -1,4 +1,3 @@
-
 import { supabase } from '@/integrations/supabase/client';
 import { Entity, EntityType, EntityStatus } from '@/components/admin/entities/types';
 
@@ -156,7 +155,13 @@ export const fetchEntityStats = async () => {
       };
     }
 
-    const stats = data?.[0] || {};
+    const stats = data?.[0] || {
+      total_entities: 0,
+      active_entities: 0,
+      pending_entities: 0,
+      cancelled_entities: 0,
+      total_revenue: 0,
+    };
     
     // Buscar contagens por tipo
     const { data: typeCounts } = await supabase
@@ -175,6 +180,8 @@ export const fetchEntityStats = async () => {
       .select('id')
       .eq('validation_status', 'failed');
 
+    const totalRevenue = Number(stats.total_revenue || 0);
+
     return {
       total: Number(stats.total_entities || 0),
       ativo: Number(stats.active_entities || 0),
@@ -185,9 +192,9 @@ export const fetchEntityStats = async () => {
       dayUse: typeStats.dayUse || 0,
       creditos: typeStats.credito || 0,
       validationIssues: validationIssues?.length || 0,
-      salesLast24h: Number(stats.total_revenue || 0) * 0.1, // Mock calculation
-      salesCurrentMonth: Number(stats.total_revenue || 0) * 0.3, // Mock calculation
-      salesTotal: Number(stats.total_revenue || 0),
+      salesLast24h: totalRevenue * 0.1, // Mock calculation
+      salesCurrentMonth: totalRevenue * 0.3, // Mock calculation
+      salesTotal: totalRevenue,
     };
   } catch (error) {
     console.error('Unexpected error fetching entity stats:', error);
