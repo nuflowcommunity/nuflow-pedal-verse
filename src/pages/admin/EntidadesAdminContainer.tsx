@@ -18,35 +18,42 @@ const EntidadesAdminContainer: React.FC = () => {
   const [isDetailDrawerOpen, setIsDetailDrawerOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
 
+  // Initialize default values
   let entities: Entity[] = [];
   let partners: string[] = [];
   let loading = false;
-  let stats = {
+  let supabaseStats = {
     total: 0,
-    byType: {
-      evento: 0,
-      mensalidade: 0,
-      dayUse: 0,
-      credito: 0
-    },
-    validationIssues: 0
+    ativo: 0,
+    pendente: 0,
+    cancelado: 0,
+    eventos: 0,
+    mensalidades: 0,
+    dayUse: 0,
+    creditos: 0,
+    validationIssues: 0,
+    salesLast24h: 0,
+    salesCurrentMonth: 0,
+    salesTotal: 0,
   };
-  let filters = {
+  let supabaseFilters = {
     searchQuery: '',
     partnerFilter: '',
     typeFilter: '',
     statusFilter: '',
     validationFilter: '',
-    startDate: undefined,
-    endDate: undefined
+    startDate: undefined as Date | undefined,
+    endDate: undefined as Date | undefined,
+    activeTab: 'todos',
+    sortDirection: 'desc' as 'asc' | 'desc',
   };
-  let filterActions = {
-    setSearchQuery: () => {},
-    setPartnerFilter: () => {},
-    setTypeFilter: () => {},
-    setStatusFilter: () => {},
-    setValidationFilter: () => {},
-    handleDateChange: () => {},
+  let supabaseFilterActions = {
+    setSearchQuery: (value: string) => {},
+    setPartnerFilter: (value: string) => {},
+    setTypeFilter: (value: string) => {},
+    setStatusFilter: (value: string) => {},
+    setValidationFilter: (value: string) => {},
+    handleDateChange: (start?: Date, end?: Date) => {},
     filterLast24Hours: () => {},
     filterCurrentMonth: () => {},
     filterAllTime: () => {},
@@ -59,9 +66,9 @@ const EntidadesAdminContainer: React.FC = () => {
     entities = hookData.entities || [];
     partners = hookData.partners || [];
     loading = hookData.loading;
-    stats = hookData.stats || stats;
-    filters = hookData.filters || filters;
-    filterActions = hookData.filterActions || filterActions;
+    supabaseStats = hookData.stats || supabaseStats;
+    supabaseFilters = hookData.filters || supabaseFilters;
+    supabaseFilterActions = hookData.filterActions || supabaseFilterActions;
     refreshData = hookData.refreshData || refreshData;
   } catch (error) {
     console.error('Error loading entities data:', error);
@@ -71,6 +78,43 @@ const EntidadesAdminContainer: React.FC = () => {
       variant: "destructive"
     });
   }
+
+  // Transform supabase stats to match EntityStats interface
+  const stats = {
+    total: supabaseStats.total,
+    byType: {
+      evento: supabaseStats.eventos,
+      mensalidade: supabaseStats.mensalidades,
+      dayUse: supabaseStats.dayUse,
+      credito: supabaseStats.creditos
+    },
+    validationIssues: supabaseStats.validationIssues
+  };
+
+  // Transform supabase filters to match expected interface
+  const filters = {
+    searchQuery: supabaseFilters.searchQuery,
+    partnerFilter: supabaseFilters.partnerFilter,
+    typeFilter: supabaseFilters.typeFilter,
+    statusFilter: supabaseFilters.statusFilter,
+    validationFilter: supabaseFilters.validationFilter,
+    startDate: supabaseFilters.startDate,
+    endDate: supabaseFilters.endDate
+  };
+
+  // Transform filter actions to match expected interface
+  const filterActions = {
+    setSearchQuery: supabaseFilterActions.setSearchQuery,
+    setPartnerFilter: supabaseFilterActions.setPartnerFilter,
+    setTypeFilter: supabaseFilterActions.setTypeFilter,
+    setStatusFilter: supabaseFilterActions.setStatusFilter,
+    setValidationFilter: supabaseFilterActions.setValidationFilter,
+    handleDateChange: supabaseFilterActions.handleDateChange,
+    filterLast24Hours: supabaseFilterActions.filterLast24Hours,
+    filterCurrentMonth: supabaseFilterActions.filterCurrentMonth,
+    filterAllTime: supabaseFilterActions.filterAllTime,
+    clearFilters: supabaseFilterActions.clearFilters
+  };
 
   const handleViewEntity = useCallback((entity: Entity) => {
     setSelectedEntity(entity);
@@ -128,7 +172,20 @@ const EntidadesAdminContainer: React.FC = () => {
       <EntityHeader onRefresh={refreshData} />
       
       <EntityStats 
-        stats={stats}
+        stats={{
+          total: stats.total,
+          ativo: supabaseStats.ativo,
+          pendente: supabaseStats.pendente,
+          cancelado: supabaseStats.cancelado,
+          eventos: stats.byType.evento,
+          mensalidades: stats.byType.mensalidade,
+          dayUse: stats.byType.dayUse,
+          creditos: stats.byType.credito,
+          validationIssues: stats.validationIssues,
+          salesLast24h: supabaseStats.salesLast24h,
+          salesCurrentMonth: supabaseStats.salesCurrentMonth,
+          salesTotal: supabaseStats.salesTotal
+        }}
         onViewIssues={handleViewIssues}
       />
       
