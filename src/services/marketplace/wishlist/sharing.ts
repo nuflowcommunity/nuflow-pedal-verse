@@ -8,7 +8,7 @@ export const shareWishlist = async (wishlistId: string, email?: string) => {
     .from('wishlists')
     .update({ is_shared: true })
     .eq('id', wishlistId)
-    .select()
+    .select('*')
     .single();
 
   if (updateError) {
@@ -37,7 +37,7 @@ export const shareWishlist = async (wishlistId: string, email?: string) => {
         wishlist_id: wishlistId,
         shared_with_user_id: profile.id,
         shared_by_user_id: user?.id,
-        access_level: 'view'
+        access_level: 'view' as const
       });
 
     if (shareError) {
