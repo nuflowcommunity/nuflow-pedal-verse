@@ -96,15 +96,15 @@ body.reduced-motion *::after {
 
 /* Button styles with proper contrast */
 .btn-primary {
-  @apply bg-nuflow-forest text-white px-4 py-2 rounded-lg font-medium transition-all duration-200 hover:bg-nuflow-darkForest focus:outline-none focus:ring-3 focus:ring-nuflow-emerald/30 disabled:opacity-50 disabled:cursor-not-allowed;
+  @apply bg-nuflow-forest text-white px-4 py-2 rounded-lg font-medium transition-all duration-200 hover:bg-nuflow-darkForest focus:outline-none focus:ring-2 focus:ring-nuflow-emerald/30 disabled:opacity-50 disabled:cursor-not-allowed;
 }
 
 .btn-secondary {
-  @apply bg-white text-nuflow-forest border-2 border-nuflow-forest px-4 py-2 rounded-lg font-medium transition-all duration-200 hover:bg-nuflow-forest hover:text-white focus:outline-none focus:ring-3 focus:ring-nuflow-emerald/30;
+  @apply bg-white text-nuflow-forest border-2 border-nuflow-forest px-4 py-2 rounded-lg font-medium transition-all duration-200 hover:bg-nuflow-forest hover:text-white focus:outline-none focus:ring-2 focus:ring-nuflow-emerald/30;
 }
 
 .btn-ghost {
-  @apply text-nuflow-forest px-4 py-2 rounded-lg font-medium transition-all duration-200 hover:bg-nuflow-mint focus:outline-none focus:ring-3 focus:ring-nuflow-emerald/30;
+  @apply text-nuflow-forest px-4 py-2 rounded-lg font-medium transition-all duration-200 hover:bg-nuflow-mint focus:outline-none focus:ring-2 focus:ring-nuflow-emerald/30;
 }
 
 /* Typography improvements with better contrast */
