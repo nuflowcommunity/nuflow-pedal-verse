@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Separator } from '@/components/ui/separator';
 import FilterHeader from './FilterHeader';
@@ -7,7 +6,9 @@ import FeaturedProductsFilter from './FeaturedProductsFilter';
 import PriceRangeFilter from './PriceRangeFilter';
 import CheckboxFilterGroup from './CheckboxFilterGroup';
 import YearFilter from './YearFilter';
+import DynamicFilterSection from './DynamicFilterSection';
 import { ProductFilters } from '@/hooks/marketplace/useProducts';
+import { useDynamicFilters } from '@/hooks/marketplace/useDynamicFilters';
 
 interface FilterContentProps {
   filters: ProductFilters;
@@ -20,6 +21,13 @@ const FilterContent: React.FC<FilterContentProps> = ({
   onFiltersChange,
   onClearAll
 }) => {
+  const { 
+    filters: dynamicFilters, 
+    selectedFilters: dynamicSelectedFilters,
+    updateFilter: updateDynamicFilter,
+    clearFilters: clearDynamicFilters
+  } = useDynamicFilters(filters.category);
+
   const categories = [
     'Mountain Bike',
     'Speed/Road',
@@ -65,7 +73,16 @@ const FilterContent: React.FC<FilterContentProps> = ({
     if (filters.featured) count++;
     if (filters.year) count++;
     if (filters.minPrice || filters.maxPrice) count++;
+    
+    // Contar filtros dinâmicos
+    count += Object.keys(dynamicSelectedFilters).length;
+    
     return count;
+  };
+
+  const handleClearAll = () => {
+    onClearAll();
+    clearDynamicFilters();
   };
 
   const handleCategoryChange = (category: string, checked: boolean) => {
@@ -122,7 +139,7 @@ const FilterContent: React.FC<FilterContentProps> = ({
     <div className="space-y-6">
       <FilterHeader
         activeFiltersCount={getActiveFiltersCount()}
-        onClearAll={onClearAll}
+        onClearAll={handleClearAll}
       />
 
       <Separator className="bg-gray-200" />
@@ -148,6 +165,25 @@ const FilterContent: React.FC<FilterContentProps> = ({
           onYearChange={handleYearChange}
         />
       </FilterSection>
+
+      {/* Filtros Dinâmicos da IA */}
+      {dynamicFilters.length > 0 && (
+        <>
+          <Separator className="bg-gray-200" />
+          <FilterSection title="Filtros Inteligentes" className="bg-blue-50 p-3 rounded-lg">
+            <div className="space-y-4">
+              {dynamicFilters.map((filter) => (
+                <DynamicFilterSection
+                  key={filter.id}
+                  filter={filter}
+                  value={dynamicSelectedFilters[filter.id]}
+                  onChange={(value) => updateDynamicFilter(filter.id, value)}
+                />
+              ))}
+            </div>
+          </FilterSection>
+        </>
+      )}
 
       <FilterSection title="Categorias">
         <CheckboxFilterGroup

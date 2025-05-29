@@ -9,6 +9,47 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      ai_learning_data: {
+        Row: {
+          ai_model_version: string | null
+          approved_attributes: Json | null
+          created_at: string
+          extracted_attributes: Json
+          feedback_score: number | null
+          id: string
+          processing_time_ms: number | null
+          product_id: string
+        }
+        Insert: {
+          ai_model_version?: string | null
+          approved_attributes?: Json | null
+          created_at?: string
+          extracted_attributes: Json
+          feedback_score?: number | null
+          id?: string
+          processing_time_ms?: number | null
+          product_id: string
+        }
+        Update: {
+          ai_model_version?: string | null
+          approved_attributes?: Json | null
+          created_at?: string
+          extracted_attributes?: Json
+          feedback_score?: number | null
+          id?: string
+          processing_time_ms?: number | null
+          product_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ai_learning_data_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       cart_items: {
         Row: {
           created_at: string
@@ -149,6 +190,57 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      dynamic_filters: {
+        Row: {
+          admin_approved: boolean | null
+          category: string | null
+          confidence_score: number | null
+          created_at: string
+          created_by_ai: boolean
+          id: string
+          is_active: boolean
+          is_ai_suggested: boolean
+          name: string
+          options: Json | null
+          slug: string
+          type: string
+          updated_at: string
+          usage_count: number | null
+        }
+        Insert: {
+          admin_approved?: boolean | null
+          category?: string | null
+          confidence_score?: number | null
+          created_at?: string
+          created_by_ai?: boolean
+          id?: string
+          is_active?: boolean
+          is_ai_suggested?: boolean
+          name: string
+          options?: Json | null
+          slug: string
+          type: string
+          updated_at?: string
+          usage_count?: number | null
+        }
+        Update: {
+          admin_approved?: boolean | null
+          category?: string | null
+          confidence_score?: number | null
+          created_at?: string
+          created_by_ai?: boolean
+          id?: string
+          is_active?: boolean
+          is_ai_suggested?: boolean
+          name?: string
+          options?: Json | null
+          slug?: string
+          type?: string
+          updated_at?: string
+          usage_count?: number | null
+        }
+        Relationships: []
       }
       entities: {
         Row: {
@@ -766,6 +858,106 @@ export type Database = {
           },
         ]
       }
+      filter_suggestions: {
+        Row: {
+          admin_notes: string | null
+          category_context: string | null
+          confidence_score: number | null
+          created_at: string
+          extracted_value: string
+          id: string
+          product_id: string
+          reviewed_at: string | null
+          reviewed_by: string | null
+          status: string
+          suggested_filter_name: string
+          suggested_filter_type: string
+          suggested_options: Json | null
+        }
+        Insert: {
+          admin_notes?: string | null
+          category_context?: string | null
+          confidence_score?: number | null
+          created_at?: string
+          extracted_value: string
+          id?: string
+          product_id: string
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string
+          suggested_filter_name: string
+          suggested_filter_type: string
+          suggested_options?: Json | null
+        }
+        Update: {
+          admin_notes?: string | null
+          category_context?: string | null
+          confidence_score?: number | null
+          created_at?: string
+          extracted_value?: string
+          id?: string
+          product_id?: string
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string
+          suggested_filter_name?: string
+          suggested_filter_type?: string
+          suggested_options?: Json | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "filter_suggestions_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      filter_usage_analytics: {
+        Row: {
+          clicked_products: number | null
+          created_at: string
+          filter_id: string
+          filter_value: string | null
+          id: string
+          results_count: number | null
+          search_context: Json | null
+          session_id: string | null
+          user_id: string | null
+        }
+        Insert: {
+          clicked_products?: number | null
+          created_at?: string
+          filter_id: string
+          filter_value?: string | null
+          id?: string
+          results_count?: number | null
+          search_context?: Json | null
+          session_id?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          clicked_products?: number | null
+          created_at?: string
+          filter_id?: string
+          filter_value?: string | null
+          id?: string
+          results_count?: number | null
+          search_context?: Json | null
+          session_id?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "filter_usage_analytics_filter_id_fkey"
+            columns: ["filter_id"]
+            isOneToOne: false
+            referencedRelation: "dynamic_filters"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       financial_accounts: {
         Row: {
           balance: number | null
@@ -1143,6 +1335,45 @@ export type Database = {
           user_id?: string | null
         }
         Relationships: []
+      }
+      product_attributes: {
+        Row: {
+          attribute_value: string
+          created_at: string
+          filter_id: string
+          id: string
+          product_id: string
+        }
+        Insert: {
+          attribute_value: string
+          created_at?: string
+          filter_id: string
+          id?: string
+          product_id: string
+        }
+        Update: {
+          attribute_value?: string
+          created_at?: string
+          filter_id?: string
+          id?: string
+          product_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "product_attributes_filter_id_fkey"
+            columns: ["filter_id"]
+            isOneToOne: false
+            referencedRelation: "dynamic_filters"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "product_attributes_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       product_categories: {
         Row: {
