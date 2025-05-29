@@ -20,7 +20,9 @@ export const fetchFilterSuggestions = async (status = 'pending'): Promise<Filter
     product_id: item.product_id,
     suggested_filter_name: item.suggested_filter_name,
     suggested_filter_type: item.suggested_filter_type,
-    suggested_options: Array.isArray(item.suggested_options) ? item.suggested_options.filter(opt => typeof opt === 'string') as string[] : undefined,
+    suggested_options: Array.isArray(item.suggested_options)
+      ? item.suggested_options.filter(opt => typeof opt === 'string') as string[]
+      : undefined,
     extracted_value: item.extracted_value,
     confidence_score: item.confidence_score,
     category_context: item.category_context,

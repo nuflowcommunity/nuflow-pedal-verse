@@ -27,7 +27,9 @@ export const fetchDynamicFilters = async (category?: string): Promise<DynamicFil
     slug: item.slug,
     type: item.type as 'text' | 'select' | 'range' | 'checkbox',
     category: item.category,
-    options: Array.isArray(item.options) ? item.options.filter(opt => typeof opt === 'string') as string[] : undefined,
+    options: Array.isArray(item.options) 
+      ? item.options.filter(opt => typeof opt === 'string') as string[]
+      : undefined,
     is_active: item.is_active,
     is_ai_suggested: item.is_ai_suggested,
     confidence_score: item.confidence_score,
