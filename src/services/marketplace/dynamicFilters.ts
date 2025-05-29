@@ -60,7 +60,21 @@ export const fetchDynamicFilters = async (category?: string): Promise<DynamicFil
     return [];
   }
 
-  return data || [];
+  return (data || []).map(item => ({
+    id: item.id,
+    name: item.name,
+    slug: item.slug,
+    type: item.type as 'text' | 'select' | 'range' | 'checkbox',
+    category: item.category,
+    options: Array.isArray(item.options) ? item.options : undefined,
+    is_active: item.is_active,
+    is_ai_suggested: item.is_ai_suggested,
+    confidence_score: item.confidence_score,
+    usage_count: item.usage_count,
+    admin_approved: item.admin_approved,
+    created_at: item.created_at,
+    updated_at: item.updated_at
+  }));
 };
 
 // Buscar sugestões de filtros pendentes
@@ -76,7 +90,21 @@ export const fetchFilterSuggestions = async (status = 'pending'): Promise<Filter
     return [];
   }
 
-  return data || [];
+  return (data || []).map(item => ({
+    id: item.id,
+    product_id: item.product_id,
+    suggested_filter_name: item.suggested_filter_name,
+    suggested_filter_type: item.suggested_filter_type,
+    suggested_options: Array.isArray(item.suggested_options) ? item.suggested_options : undefined,
+    extracted_value: item.extracted_value,
+    confidence_score: item.confidence_score,
+    category_context: item.category_context,
+    status: item.status as 'pending' | 'approved' | 'rejected',
+    admin_notes: item.admin_notes,
+    created_at: item.created_at,
+    reviewed_at: item.reviewed_at,
+    reviewed_by: item.reviewed_by
+  }));
 };
 
 // Aprovar sugestão de filtro
