@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useMemo } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { 
@@ -35,15 +34,18 @@ export const useProducts = (filters?: ProductFilters) => {
   const memoizedFilters = useMemo(() => {
     if (!filters) return undefined;
     
-    // Clean filters - remove undefined/empty values
-    const cleanFilters: ProductFilters = {};
-    Object.entries(filters).forEach(([key, value]) => {
+    // Clean filters - remove undefined/empty values with proper typing
+    const cleanFilters: Partial<ProductFilters> = {};
+    
+    // Type-safe iteration over filter entries
+    (Object.keys(filters) as (keyof ProductFilters)[]).forEach((key) => {
+      const value = filters[key];
       if (value !== undefined && value !== null && value !== '') {
-        cleanFilters[key as keyof ProductFilters] = value;
+        cleanFilters[key] = value;
       }
     });
     
-    return Object.keys(cleanFilters).length > 0 ? cleanFilters : undefined;
+    return Object.keys(cleanFilters).length > 0 ? cleanFilters as ProductFilters : undefined;
   }, [filters]);
 
   const loadProducts = async () => {
