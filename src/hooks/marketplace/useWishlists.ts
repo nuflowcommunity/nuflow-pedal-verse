@@ -18,7 +18,7 @@ import type { Wishlist, CreateWishlistData, UpdateWishlistData } from '@/service
 
 export const useWishlists = () => {
   const [wishlists, setWishlists] = useState<Wishlist[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const { toast } = useToast();
 
@@ -27,10 +27,12 @@ export const useWishlists = () => {
       setLoading(true);
       setError(null);
       const data = await fetchUserWishlists();
-      setWishlists(data);
+      setWishlists(data || []);
     } catch (err) {
-      setError('Erro ao carregar listas de desejos');
-      console.error('Error loading wishlists:', err);
+      // Silently handle auth errors - user might not be logged in
+      setWishlists([]);
+      setError(null);
+      console.log('User not authenticated for wishlists');
     } finally {
       setLoading(false);
     }
@@ -109,7 +111,7 @@ export const useWishlists = () => {
 
 export const useWishlist = (id?: string, token?: string) => {
   const [wishlist, setWishlist] = useState<Wishlist | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const { toast } = useToast();
 
@@ -130,6 +132,7 @@ export const useWishlist = (id?: string, token?: string) => {
       setWishlist(data || null);
     } catch (err) {
       setError('Erro ao carregar lista de desejos');
+      setWishlist(null);
       console.error('Error loading wishlist:', err);
     } finally {
       setLoading(false);
@@ -212,24 +215,26 @@ export const useWishlist = (id?: string, token?: string) => {
 
 export const useProductWishlistStatus = (productId: string) => {
   const [wishlistItems, setWishlistItems] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const checkStatus = async () => {
+    if (!productId) return;
+    
     try {
       setLoading(true);
       const data = await checkProductInWishlist(productId);
       setWishlistItems(data || []);
     } catch (error) {
-      console.error('Error checking wishlist status:', error);
+      // Silently handle auth errors
+      setWishlistItems([]);
+      console.log('User not authenticated for wishlist status check');
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    if (productId) {
-      checkStatus();
-    }
+    checkStatus();
   }, [productId]);
 
   return {
@@ -242,14 +247,16 @@ export const useProductWishlistStatus = (productId: string) => {
 
 export const usePublicWishlists = (limit = 12) => {
   const [wishlists, setWishlists] = useState<Wishlist[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const loadPublicWishlists = async () => {
       try {
+        setLoading(true);
         const data = await fetchPublicWishlists(limit);
-        setWishlists(data);
+        setWishlists(data || []);
       } catch (error) {
+        setWishlists([]);
         console.error('Error loading public wishlists:', error);
       } finally {
         setLoading(false);

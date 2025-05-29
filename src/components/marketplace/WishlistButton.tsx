@@ -26,9 +26,24 @@ const WishlistButton: React.FC<WishlistButtonProps> = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedWishlistId, setSelectedWishlistId] = useState<string>('');
-  const { wishlists } = useWishlists();
+  const { wishlists, loading: wishlistsLoading } = useWishlists();
   const { wishlistItems, isInWishlist, refetch } = useProductWishlistStatus(productId);
   const { toast } = useToast();
+
+  // If there's an error or no wishlists available, render a simpler button
+  if (wishlistsLoading) {
+    return (
+      <Button
+        variant={variant}
+        size={size}
+        className={cn("transition-colors", className)}
+        disabled
+      >
+        <Heart size={16} className="mr-1" />
+        {showText && "..."}
+      </Button>
+    );
+  }
 
   const handleAddToWishlist = async () => {
     if (!selectedWishlistId) return;
@@ -45,7 +60,7 @@ const WishlistButton: React.FC<WishlistButtonProps> = ({
     } catch (error) {
       toast({
         title: "Erro",
-        description: "Erro ao adicionar à lista de desejos",
+        description: "Faça login para adicionar à lista de desejos",
         variant: "destructive"
       });
     }
@@ -66,6 +81,18 @@ const WishlistButton: React.FC<WishlistButtonProps> = ({
         variant: "destructive"
       });
     }
+  };
+
+  const handleButtonClick = () => {
+    if (wishlists.length === 0) {
+      toast({
+        title: "Login necessário",
+        description: "Faça login para usar listas de desejos",
+        variant: "destructive"
+      });
+      return;
+    }
+    setIsOpen(true);
   };
 
   if (isInWishlist) {
@@ -94,7 +121,7 @@ const WishlistButton: React.FC<WishlistButtonProps> = ({
             </p>
             {wishlistItems.map((item) => (
               <div key={item.id} className="flex items-center justify-between p-3 border rounded-lg">
-                <span className="font-medium">{item.wishlists.name}</span>
+                <span className="font-medium">{item.wishlists?.name || 'Lista sem nome'}</span>
                 <Button
                   variant="outline"
                   size="sm"
@@ -118,6 +145,7 @@ const WishlistButton: React.FC<WishlistButtonProps> = ({
           variant={variant}
           size={size}
           className={cn("transition-colors", className)}
+          onClick={handleButtonClick}
         >
           <Heart size={16} className="mr-1" />
           {showText && "Favoritar"}

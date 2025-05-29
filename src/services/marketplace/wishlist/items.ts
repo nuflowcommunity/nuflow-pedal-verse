@@ -3,6 +3,12 @@ import { supabase } from '@/integrations/supabase/client';
 
 // Add product to wishlist
 export const addToWishlist = async (wishlistId: string, productId: string, notes?: string) => {
+  const { data: { user } } = await supabase.auth.getUser();
+  
+  if (!user) {
+    throw new Error('User not authenticated');
+  }
+
   const { data, error } = await supabase
     .from('wishlist_items')
     .insert({
@@ -23,6 +29,12 @@ export const addToWishlist = async (wishlistId: string, productId: string, notes
 
 // Remove product from wishlist
 export const removeFromWishlist = async (wishlistId: string, productId: string) => {
+  const { data: { user } } = await supabase.auth.getUser();
+  
+  if (!user) {
+    throw new Error('User not authenticated');
+  }
+
   const { error } = await supabase
     .from('wishlist_items')
     .delete()
@@ -49,7 +61,7 @@ export const checkProductInWishlist = async (productId: string) => {
     .from('wishlist_items')
     .select(`
       *,
-      wishlists(id, name)
+      wishlists(id, name, user_id)
     `)
     .eq('product_id', productId)
     .eq('wishlists.user_id', user.id);
