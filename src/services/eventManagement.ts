@@ -1,4 +1,3 @@
-
 import { supabase } from '@/integrations/supabase/client';
 import { ExtendedEventForManagement, EventFormData } from '@/types/eventManagement';
 
@@ -6,7 +5,10 @@ export class EventManagementService {
   static async getAllEvents(): Promise<ExtendedEventForManagement[]> {
     const { data, error } = await supabase
       .from('events')
-      .select('*')
+      .select(`
+        *,
+        registrations:event_registrations(count)
+      `)
       .order('created_at', { ascending: false });
 
     if (error) throw error;
@@ -16,7 +18,8 @@ export class EventManagementService {
       event_type: (event as any).event_type || 'evento',
       documents: (event as any).documents || [],
       group_purchase_enabled: (event as any).group_purchase_enabled || false,
-      ticket_types: []
+      ticket_types: [],
+      current_registrations: event.registrations?.[0]?.count || 0
     })) as ExtendedEventForManagement[];
   }
 
@@ -28,7 +31,10 @@ export class EventManagementService {
     date_from?: string;
     date_to?: string;
   }): Promise<ExtendedEventForManagement[]> {
-    let query = supabase.from('events').select('*');
+    let query = supabase.from('events').select(`
+      *,
+      registrations:event_registrations(count)
+    `);
 
     if (filters.status) {
       query = query.eq('status', filters.status as any);
@@ -63,7 +69,8 @@ export class EventManagementService {
       event_type: (event as any).event_type || event.category || 'evento',
       documents: (event as any).documents || [],
       group_purchase_enabled: (event as any).group_purchase_enabled || false,
-      ticket_types: []
+      ticket_types: [],
+      current_registrations: event.registrations?.[0]?.count || 0
     })) as ExtendedEventForManagement[];
   }
 

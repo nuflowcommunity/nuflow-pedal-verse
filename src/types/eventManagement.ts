@@ -1,4 +1,3 @@
-
 export interface EventTicketType {
   id: string;
   event_id: string;
@@ -60,6 +59,7 @@ export interface ExtendedEventForManagement {
   group_purchase_enabled: boolean;
   cloned_from_id?: string;
   ticket_types?: EventTicketType[];
+  current_registrations?: number;
 }
 
 export interface EventFormData {
