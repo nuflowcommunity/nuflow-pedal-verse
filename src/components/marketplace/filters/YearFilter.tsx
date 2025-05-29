@@ -16,20 +16,28 @@ const YearFilter: React.FC<YearFilterProps> = ({
   const years = Array.from({ length: currentYear - 2009 }, (_, i) => currentYear - i)
     .filter(year => year <= 2025 && year >= 2010);
 
+  const handleValueChange = (value: string) => {
+    if (value === "all" || value === "") {
+      onYearChange(undefined);
+    } else {
+      onYearChange(parseInt(value));
+    }
+  };
+
   return (
     <div className="space-y-3">
       <Label className="text-sm font-medium text-gray-700">
         Ano de Fabricação
       </Label>
       <Select 
-        value={selectedYear?.toString() || ""} 
-        onValueChange={(value) => onYearChange(value ? parseInt(value) : undefined)}
+        value={selectedYear ? selectedYear.toString() : "all"} 
+        onValueChange={handleValueChange}
       >
         <SelectTrigger className="w-full">
           <SelectValue placeholder="Selecione o ano" />
         </SelectTrigger>
         <SelectContent className="bg-white border border-gray-300 shadow-lg max-h-60">
-          <SelectItem value="">Todos os anos</SelectItem>
+          <SelectItem value="all">Todos os anos</SelectItem>
           {years.map((year) => (
             <SelectItem key={year} value={year.toString()}>
               {year}

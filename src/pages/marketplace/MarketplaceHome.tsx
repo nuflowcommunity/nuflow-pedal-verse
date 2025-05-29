@@ -18,25 +18,37 @@ const MarketplaceHome = () => {
   const [showFilters, setShowFilters] = useState(false);
   const [filters, setFilters] = useState<ProductFilters>({});
 
+  console.log('MarketplaceHome - Current filters:', filters);
+  console.log('MarketplaceHome - Search query:', searchQuery);
+
   // Combine search with filters
   const activeFilters = {
     ...filters,
     search: searchQuery || undefined
   };
 
+  console.log('MarketplaceHome - Active filters:', activeFilters);
+
   const { products, loading, error } = useProducts(activeFilters);
   const { products: featuredProducts, loading: featuredLoading } = useFeaturedProducts(4);
 
+  console.log('MarketplaceHome - Products loaded:', products?.length || 0);
+  console.log('MarketplaceHome - Loading state:', loading);
+  console.log('MarketplaceHome - Error state:', error);
+
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
+    console.log('MarketplaceHome - Search submitted:', searchQuery);
     // Search is handled automatically by the useProducts hook
   };
 
   const handleFilterChange = (newFilters: ProductFilters) => {
+    console.log('MarketplaceHome - Filters changed:', newFilters);
     setFilters(newFilters);
   };
 
   const clearFilters = () => {
+    console.log('MarketplaceHome - Clearing all filters');
     setFilters({});
     setSearchQuery('');
   };

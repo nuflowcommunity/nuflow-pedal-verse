@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+
+import { useState, useEffect, useMemo } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { 
   fetchProducts, 
@@ -30,15 +31,33 @@ export const useProducts = (filters?: ProductFilters) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  // Memoize filters to prevent unnecessary re-renders
+  const memoizedFilters = useMemo(() => {
+    if (!filters) return undefined;
+    
+    // Clean filters - remove undefined/empty values
+    const cleanFilters: ProductFilters = {};
+    Object.entries(filters).forEach(([key, value]) => {
+      if (value !== undefined && value !== null && value !== '') {
+        cleanFilters[key as keyof ProductFilters] = value;
+      }
+    });
+    
+    return Object.keys(cleanFilters).length > 0 ? cleanFilters : undefined;
+  }, [filters]);
+
   const loadProducts = async () => {
     try {
       setLoading(true);
       setError(null);
-      const data = await fetchProducts(filters);
-      setProducts(data);
+      console.log('Loading products with filters:', memoizedFilters);
+      const data = await fetchProducts(memoizedFilters);
+      console.log('Products loaded:', data?.length || 0);
+      setProducts(data || []);
     } catch (err) {
-      setError('Erro ao carregar produtos');
       console.error('Error loading products:', err);
+      setError('Erro ao carregar produtos');
+      setProducts([]);
     } finally {
       setLoading(false);
     }
@@ -46,7 +65,7 @@ export const useProducts = (filters?: ProductFilters) => {
 
   useEffect(() => {
     loadProducts();
-  }, [JSON.stringify(filters)]);
+  }, [memoizedFilters]);
 
   return {
     products,
@@ -64,26 +83,38 @@ export const useProduct = (id: string) => {
   const { toast } = useToast();
 
   const loadProduct = async () => {
+    if (!id) return;
+    
     try {
       setLoading(true);
       setError(null);
+      console.log('Loading product:', id);
       const data = await fetchProductById(id);
       
       if (data) {
         setProduct(data);
         
         // Update views
-        await updateProductViews(id);
+        try {
+          await updateProductViews(id);
+        } catch (viewError) {
+          console.warn('Failed to update product views:', viewError);
+        }
         
         // Check if favorited
-        const favorited = await checkIfFavorited(id);
-        setIsFavorited(favorited);
+        try {
+          const favorited = await checkIfFavorited(id);
+          setIsFavorited(favorited);
+        } catch (favError) {
+          console.warn('Failed to check favorite status:', favError);
+          setIsFavorited(false);
+        }
       } else {
         setError('Produto não encontrado');
       }
     } catch (err) {
-      setError('Erro ao carregar produto');
       console.error('Error loading product:', err);
+      setError('Erro ao carregar produto');
     } finally {
       setLoading(false);
     }
@@ -96,6 +127,8 @@ export const useProduct = (id: string) => {
   }, [id]);
 
   const toggleFavorite = async () => {
+    if (!id) return;
+    
     try {
       if (isFavorited) {
         await removeFromFavorites(id);
@@ -113,6 +146,7 @@ export const useProduct = (id: string) => {
         });
       }
     } catch (error) {
+      console.error('Error toggling favorite:', error);
       toast({
         title: "Erro",
         description: "Erro ao atualizar favoritos",
@@ -138,10 +172,13 @@ export const useCategories = () => {
   useEffect(() => {
     const loadCategories = async () => {
       try {
+        console.log('Loading categories...');
         const data = await fetchCategories();
-        setCategories(data);
+        console.log('Categories loaded:', data?.length || 0);
+        setCategories(data || []);
       } catch (error) {
         console.error('Error loading categories:', error);
+        setCategories([]);
       } finally {
         setLoading(false);
       }
@@ -160,10 +197,13 @@ export const useFeaturedProducts = (limit = 8) => {
   useEffect(() => {
     const loadFeatured = async () => {
       try {
+        console.log('Loading featured products...');
         const data = await fetchFeaturedProducts(limit);
-        setProducts(data);
+        console.log('Featured products loaded:', data?.length || 0);
+        setProducts(data || []);
       } catch (error) {
         console.error('Error loading featured products:', error);
+        setProducts([]);
       } finally {
         setLoading(false);
       }

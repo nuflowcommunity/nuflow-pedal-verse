@@ -1,14 +1,22 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { MapPin, Heart, Eye, Star } from 'lucide-react';
+import { MapPin, Eye, Star } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import LazyImage from '@/components/ui/lazy-image';
 import ComparisonButton from './ComparisonButton';
-import WishlistButton from './WishlistButton';
 import { Product } from '@/services/marketplace/types';
+
+// Import WishlistButton conditionally to prevent breaking the entire card
+let WishlistButton: React.ComponentType<any> | null = null;
+try {
+  const WishlistButtonModule = require('./WishlistButton');
+  WishlistButton = WishlistButtonModule.default;
+} catch (error) {
+  console.warn('WishlistButton not available:', error);
+}
 
 interface ProductCardProps {
   product: Product;
@@ -23,6 +31,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
   isFavorited = false,
   onToggleFavorite
 }) => {
+  console.log('Rendering ProductCard for:', product.title);
+
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('pt-BR', {
       style: 'currency',
@@ -173,12 +183,15 @@ const ProductCard: React.FC<ProductCardProps> = ({
               </Link>
             </Button>
             <div className="flex gap-2">
-              <WishlistButton 
-                productId={product.id}
-                size="sm"
-                className="text-xs flex-1"
-                showText={false}
-              />
+              {/* Conditionally render WishlistButton only if it's available */}
+              {WishlistButton && (
+                <WishlistButton 
+                  productId={product.id}
+                  size="sm"
+                  className="text-xs flex-1"
+                  showText={false}
+                />
+              )}
               <ComparisonButton 
                 product={product} 
                 size="sm"
