@@ -2,10 +2,10 @@
 import React from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import Hero from '../components/home/Hero';
-import FeaturedSections from '../components/home/FeaturedSections';
-import FeaturedEvents from '../components/home/FeaturedEvents';
-import FeaturedProducts from '../components/home/FeaturedProducts';
+import EditorialHero from '../components/home/EditorialHero';
+import EditorialFeaturedSections from '../components/home/EditorialFeaturedSections';
+import EditorialFeaturedEvents from '../components/home/EditorialFeaturedEvents';
+import EditorialFeaturedProducts from '../components/home/EditorialFeaturedProducts';
 import CommunityHighlight from '../components/home/CommunityHighlight';
 import CallToAction from '../components/home/CallToAction';
 
@@ -15,10 +15,10 @@ const Index = () => {
       <Navbar />
       
       <main>
-        <Hero />
-        <FeaturedSections />
-        <FeaturedEvents />
-        <FeaturedProducts />
+        <EditorialHero />
+        <EditorialFeaturedSections />
+        <EditorialFeaturedEvents />
+        <EditorialFeaturedProducts />
         <CommunityHighlight />
         <CallToAction />
       </main>
