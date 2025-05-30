@@ -14,7 +14,7 @@ const Footer = () => {
           <div className="lg:col-span-1">
             <div className="flex items-center mb-8">
               <img 
-                src="/lovable-uploads/7e2ed504-8934-4c4e-a36e-077e7b054a17.png" 
+                src="/lovable-uploads/16a87e5f-efde-44b6-b0af-91e0ece61fe3.png" 
                 alt="NuFlow Logo" 
                 className="w-10 h-10 mr-4" 
               />
