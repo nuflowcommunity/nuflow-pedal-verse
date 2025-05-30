@@ -1,11 +1,11 @@
 
-/* TrailFlow Polymer-Inspired Animations */
+/* TrailFlow Polymer-Inspired Animations - Enhanced */
 
-/* Enhanced Keyframes */
+/* Enhanced Keyframes with Better Easing */
 @keyframes fade-in {
   0% {
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(24px);
   }
   100% {
     opacity: 1;
@@ -18,14 +18,14 @@
     transform: translateY(0px);
   }
   50% {
-    transform: translateY(-12px);
+    transform: translateY(-8px);
   }
 }
 
 @keyframes scale-in {
   0% {
     opacity: 0;
-    transform: scale(0.9);
+    transform: scale(0.95);
   }
   100% {
     opacity: 1;
@@ -36,7 +36,7 @@
 @keyframes slide-up {
   0% {
     opacity: 0;
-    transform: translateY(40px);
+    transform: translateY(32px);
   }
   100% {
     opacity: 1;
@@ -46,68 +46,84 @@
 
 @keyframes gentle-pulse {
   0%, 100% {
-    opacity: 0.6;
+    opacity: 0.5;
   }
   50% {
-    opacity: 1;
+    opacity: 0.8;
   }
 }
 
-/* Enhanced Animation Classes */
+@keyframes smooth-glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(132, 176, 103, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(132, 176, 103, 0.4);
+  }
+}
+
+/* Enhanced Animation Classes with Polymer Timing */
 .animate-fade-in {
-  animation: fade-in 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  animation: fade-in 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .animate-fade-in-delayed {
   opacity: 0;
-  animation: fade-in 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s forwards;
+  animation: fade-in 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
 }
 
 .animate-scale-in {
-  animation: scale-in 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  animation: scale-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .animate-slide-up {
-  animation: slide-up 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  animation: slide-up 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .animate-float {
-  animation: float 8s ease-in-out infinite;
+  animation: float 6s ease-in-out infinite;
 }
 
 .animate-gentle-pulse {
-  animation: gentle-pulse 3s ease-in-out infinite;
+  animation: gentle-pulse 4s ease-in-out infinite;
 }
 
-/* Enhanced Hover Effects */
+.animate-smooth-glow {
+  animation: smooth-glow 3s ease-in-out infinite;
+}
+
+/* Enhanced Hover Effects with Better Performance */
 .hover-lift {
-  transition: all 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
 }
 
 .hover-lift:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 20px 60px -10px rgba(38, 38, 38, 0.2);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px -8px rgba(38, 38, 38, 0.15);
 }
 
 .hover-scale {
-  transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
 }
 
 .hover-scale:hover {
-  transform: scale(1.03);
+  transform: scale(1.02);
 }
 
-/* Sophisticated Interactions */
+/* Sophisticated Interactions with Polymer Feel */
 .interactive-card {
-  transition: all 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, box-shadow;
 }
 
 .interactive-card:hover {
-  transform: translateY(-12px) scale(1.02);
-  box-shadow: 0 25px 70px -15px rgba(38, 38, 38, 0.25);
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: 0 16px 50px -12px rgba(38, 38, 38, 0.2);
 }
 
-/* Polymer-Style Underline Animation */
+/* Refined Underline Animation */
 .polymer-underline {
   position: relative;
   overflow: hidden;
@@ -120,10 +136,10 @@
   left: 0;
   width: 100%;
   height: 2px;
-  background: #84B067;
+  background: linear-gradient(90deg, #84B067, #6B8F4A);
   transform: scaleX(0);
   transform-origin: left;
-  transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .polymer-underline:hover::after {
@@ -133,13 +149,13 @@
 /* Smooth Page Transitions */
 .page-transition-enter {
   opacity: 0;
-  transform: translateY(20px);
+  transform: translateY(16px);
 }
 
 .page-transition-enter-active {
   opacity: 1;
   transform: translateY(0);
-  transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .page-transition-exit {
@@ -149,27 +165,97 @@
 
 .page-transition-exit-active {
   opacity: 0;
-  transform: translateY(-20px);
-  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transform: translateY(-16px);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Loading States */
+/* Enhanced Loading States */
 .loading-fade {
-  opacity: 0.4;
-  transition: opacity 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  opacity: 0.3;
+  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Responsive Adjustments */
+.loading-skeleton {
+  background: linear-gradient(90deg, 
+    rgba(255, 255, 255, 0.1) 25%, 
+    rgba(255, 255, 255, 0.2) 50%, 
+    rgba(255, 255, 255, 0.1) 75%
+  );
+  background-size: 200% 100%;
+  animation: loading-shimmer 2s infinite;
+}
+
+@keyframes loading-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Improved Dropdown and Menu */
+.dropdown-modern {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  z-index: 50;
+  min-width: max-content;
+  overflow: hidden;
+  animation: scale-in 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dropdown-item {
+  padding: 12px 16px;
+  font-size: 0.875rem;
+  color: #595959;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+}
+
+.dropdown-item:hover {
+  background: rgba(132, 176, 103, 0.1);
+  color: #84B067;
+}
+
+/* Enhanced Blur Effects for Modern Look */
+.polymer-blur {
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+}
+
+.polymer-blur-light {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Improved Focus States */
+.focus-visible-modern:focus-visible {
+  outline: 2px solid #84B067;
+  outline-offset: 2px;
+  border-radius: 4px;
+  transition: outline 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Responsive Adjustments with Better Performance */
 @media (max-width: 768px) {
   .animate-fade-in,
   .animate-fade-in-delayed {
-    animation-duration: 0.6s;
+    animation-duration: 0.8s;
   }
   
   .hover-lift:hover,
   .hover-scale:hover,
   .interactive-card:hover {
     transform: none;
+  }
+  
+  .hover-lift:active,
+  .hover-scale:active,
+  .interactive-card:active {
+    transform: scale(0.98);
   }
 }
 
@@ -183,15 +269,57 @@
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+  
+  .hover-lift:hover,
+  .hover-scale:hover,
+  .interactive-card:hover {
+    transform: none;
+  }
 }
 
-/* Blur Effects for Polymer-style depth */
-.polymer-blur {
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+  .polymer-underline::after {
+    background: currentColor;
+    height: 3px;
+  }
+  
+  .dropdown-modern {
+    border: 2px solid currentColor;
+    background: white;
+    backdrop-filter: none;
+  }
 }
 
-.polymer-blur-light {
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+/* Dark Mode Enhancements */
+@media (prefers-color-scheme: dark) {
+  .dropdown-modern {
+    background: rgba(89, 89, 89, 0.95);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  .dropdown-item {
+    color: rgba(255, 255, 255, 0.9);
+  }
+  
+  .dropdown-item:hover {
+    background: rgba(132, 176, 103, 0.2);
+    color: #84B067;
+  }
+}
+
+/* Performance Optimizations */
+.gpu-accelerated {
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+.smooth-scroll {
+  scroll-behavior: smooth;
+}
+
+@supports (scroll-behavior: smooth) {
+  .smooth-scroll {
+    scroll-behavior: smooth;
+  }
 }

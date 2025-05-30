@@ -13,23 +13,23 @@ const NavbarUserActions = ({ scrolled }: NavbarUserActionsProps) => {
   const isMobile = useIsMobile();
 
   return (
-    <div className="flex items-center space-x-3">
+    <div className="flex items-center space-x-2">
       {!isMobile && (
         <Link 
           to="/cart" 
-          className="p-3 rounded-lg hover:bg-white/5 transition-all duration-300 group"
+          className="p-2 rounded-lg hover:bg-white/10 transition-all duration-300 group"
         >
-          <ShoppingCart size={18} className="text-gray-300 group-hover:text-white transition-colors duration-300" />
+          <ShoppingCart size={16} className="text-white/70 group-hover:text-white transition-colors duration-300" />
         </Link>
       )}
       <Link 
         to="/login" 
-        className="p-3 rounded-lg hover:bg-white/5 transition-all duration-300 group"
+        className="p-2 rounded-lg hover:bg-white/10 transition-all duration-300 group"
       >
-        <User size={18} className="text-gray-300 group-hover:text-white transition-colors duration-300" />
+        <User size={16} className="text-white/70 group-hover:text-white transition-colors duration-300" />
       </Link>
       {!isMobile && (
-        <Button variant="accent" size="sm" className="ml-4 font-mono font-medium uppercase tracking-wide text-sm" asChild>
+        <Button variant="accent" size="sm" className="ml-3 font-mono font-medium uppercase tracking-wide text-xs px-4 py-2" asChild>
           <Link to="/anunciar">ANUNCIAR</Link>
         </Button>
       )}
