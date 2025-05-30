@@ -11,10 +11,12 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default: "bg-trailflow-lighter text-trailflow-dark hover:bg-trailflow-light hover:shadow-lg hover:scale-[1.02] focus:bg-trailflow-light active:scale-[0.98]",
-        accent: "bg-trailflow-green text-white hover:bg-trailflow-green-dark hover:shadow-lg hover:scale-[1.02] focus:bg-trailflow-green-dark active:scale-[0.98]",
+        destructive: "bg-red-500 text-white hover:bg-red-600 hover:shadow-lg hover:scale-[1.02] focus:bg-red-600 active:scale-[0.98]",
         outline: "border-2 border-trailflow-lighter bg-transparent text-trailflow-dark hover:bg-trailflow-lighter hover:shadow-md hover:scale-[1.02] focus:bg-trailflow-lighter active:scale-[0.98]",
+        secondary: "bg-trailflow-light text-trailflow-dark hover:bg-trailflow-lighter hover:shadow-md hover:scale-[1.02] focus:bg-trailflow-lighter active:scale-[0.98]",
         ghost: "text-trailflow-medium hover:bg-trailflow-accent hover:text-trailflow-dark hover:scale-[1.02] focus:bg-trailflow-accent active:scale-[0.98]",
         link: "text-trailflow-medium underline-offset-4 hover:underline hover:text-trailflow-green hover:scale-[1.02] focus:scale-[1.02] active:scale-[0.98]",
+        accent: "bg-trailflow-green text-white hover:bg-trailflow-green-dark hover:shadow-lg hover:scale-[1.02] focus:bg-trailflow-green-dark active:scale-[0.98]",
         minimal: "bg-white/80 backdrop-blur-sm text-trailflow-dark hover:bg-white hover:shadow-md hover:scale-[1.02] focus:bg-white active:scale-[0.98]",
         overlay: "bg-white/20 backdrop-blur-md text-trailflow-dark hover:bg-white/30 hover:shadow-lg hover:scale-[1.02] focus:bg-white/30 active:scale-[0.98]",
       },

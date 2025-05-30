@@ -11,7 +11,7 @@ import CallToAction from '../components/home/CallToAction';
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-background font-sans antialiased">
+    <div className="min-h-screen bg-trailflow-medium font-sans antialiased">
       <Navbar />
       
       <main>

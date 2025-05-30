@@ -1,7 +1,7 @@
 
-/* TrailFlow Color Palette - Polymer Style Hierarchy */
+/* TrailFlow Color Palette - Polymer Style Dark Theme */
 :root {
-  /* Core TrailFlow Colors - Polymer Hierarchy */
+  /* Core TrailFlow Colors */
   --trailflow-green: #84B067;
   --trailflow-dark: #262626;
   --trailflow-medium: #595959;
@@ -11,47 +11,40 @@
   --trailflow-white: #FFFFFF;
   --trailflow-black: #000000;
 
-  /* Polymer-style Semantic Colors */
-  --color-primary: var(--trailflow-dark); /* Text primary now dark grey */
-  --color-primary-light: var(--trailflow-medium);
+  /* Dark Theme - Polymer Style */
+  --color-primary: var(--trailflow-medium); /* Main background now dark grey */
+  --color-primary-light: var(--trailflow-light);
   --color-accent: var(--trailflow-green); /* Green only for accents */
   
-  --color-background: var(--trailflow-accent); /* Light grey as main background */
-  --color-background-secondary: var(--trailflow-lighter);
+  --color-background: var(--trailflow-medium); /* Dark grey as main background */
+  --color-background-secondary: var(--trailflow-dark);
   --color-background-card: var(--trailflow-white);
   
-  --color-text: var(--trailflow-dark);
-  --color-text-light: var(--trailflow-medium);
+  --color-text: var(--trailflow-white);
+  --color-text-light: var(--trailflow-lighter);
   --color-text-lighter: var(--trailflow-light);
-  --color-text-white: var(--trailflow-white);
+  --color-text-dark: var(--trailflow-dark);
   
-  --color-border: var(--trailflow-lighter);
-  --color-border-light: #F0F0F0;
+  --color-border: var(--trailflow-light);
+  --color-border-light: rgba(255, 255, 255, 0.1);
   
-  /* Interactive States - Minimal green usage */
-  --color-hover: rgba(217, 217, 217, 0.5);
-  --color-hover-accent: rgba(132, 176, 103, 0.1);
+  /* Interactive States */
+  --color-hover: rgba(255, 255, 255, 0.1);
+  --color-hover-accent: rgba(132, 176, 103, 0.2);
   --color-focus: var(--trailflow-green);
-  --color-active: var(--trailflow-medium);
+  --color-active: var(--trailflow-light);
   
-  /* Shadows - Polymer style */
-  --shadow-sm: 0 1px 3px 0 rgba(38, 38, 38, 0.08);
-  --shadow-md: 0 4px 12px -2px rgba(38, 38, 38, 0.12);
-  --shadow-lg: 0 8px 25px -5px rgba(38, 38, 38, 0.15);
-  --shadow-xl: 0 16px 40px -8px rgba(38, 38, 38, 0.18);
+  /* Shadows - Enhanced for dark theme */
+  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px -2px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 25px -5px rgba(0, 0, 0, 0.5);
+  --shadow-xl: 0 16px 40px -8px rgba(0, 0, 0, 0.6);
   
-  /* Gradients - Grey based */
-  --gradient-primary: linear-gradient(135deg, var(--trailflow-accent) 0%, var(--trailflow-lighter) 100%);
-  --gradient-overlay: linear-gradient(135deg, rgba(233, 246, 246, 0.9) 0%, rgba(255, 255, 255, 0.7) 100%);
+  /* Gradients - Dark based */
+  --gradient-primary: linear-gradient(135deg, var(--trailflow-medium) 0%, var(--trailflow-dark) 100%);
+  --gradient-overlay: linear-gradient(135deg, rgba(89, 89, 89, 0.9) 0%, rgba(38, 38, 38, 0.7) 100%);
   --gradient-accent: linear-gradient(135deg, var(--trailflow-green) 0%, #6B8F4A 100%);
-}
-
-/* Dark mode support */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-background: var(--trailflow-dark);
-    --color-background-card: var(--trailflow-medium);
-    --color-text: var(--trailflow-white);
-    --color-border: var(--trailflow-medium);
-  }
+  
+  /* Logo watermark */
+  --logo-watermark: rgba(255, 255, 255, 0.03);
 }
