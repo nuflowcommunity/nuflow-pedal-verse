@@ -5,7 +5,7 @@ import { Instagram, Facebook, Twitter } from 'lucide-react';
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-50 text-trailflow-dark pt-20 pb-12">
+    <footer className="bg-gradient-to-t from-gray-100 to-white text-trailflow-dark pt-20 pb-12 font-mono">
       <div className="container mx-auto px-8 sm:px-12 lg:px-16 max-w-7xl">
         
         {/* Main Footer Content */}
@@ -19,44 +19,44 @@ const Footer = () => {
                 alt="NuFlow Logo" 
                 className="w-10 h-10 mr-4" 
               />
-              <h2 className="text-3xl font-bold text-trailflow-dark font-mono">NuFlow</h2>
+              <h2 className="text-3xl font-bold text-trailflow-dark">NuFlow</h2>
             </div>
             <p className="text-lg text-trailflow-medium leading-relaxed mb-8 font-light">
               A plataforma completa para ciclistas. Conectando riders através de experiências, produtos e comunidade.
             </p>
-            <div className="flex space-x-6">
+            <div className="flex space-x-4">
               <a 
                 href="https://instagram.com" 
-                className="w-12 h-12 bg-trailflow-lighter rounded-full flex items-center justify-center text-trailflow-medium hover:bg-trailflow-green hover:text-white transition-all duration-300"
+                className="w-10 h-10 bg-trailflow-lighter/50 rounded-2xl flex items-center justify-center text-trailflow-medium hover:bg-trailflow-green hover:text-white transition-all duration-300"
                 aria-label="Instagram"
               >
-                <Instagram size={20} />
+                <Instagram size={18} />
               </a>
               <a 
                 href="https://facebook.com" 
-                className="w-12 h-12 bg-trailflow-lighter rounded-full flex items-center justify-center text-trailflow-medium hover:bg-trailflow-green hover:text-white transition-all duration-300"
+                className="w-10 h-10 bg-trailflow-lighter/50 rounded-2xl flex items-center justify-center text-trailflow-medium hover:bg-trailflow-green hover:text-white transition-all duration-300"
                 aria-label="Facebook"
               >
-                <Facebook size={20} />
+                <Facebook size={18} />
               </a>
               <a 
                 href="https://twitter.com" 
-                className="w-12 h-12 bg-trailflow-lighter rounded-full flex items-center justify-center text-trailflow-medium hover:bg-trailflow-green hover:text-white transition-all duration-300"
+                className="w-10 h-10 bg-trailflow-lighter/50 rounded-2xl flex items-center justify-center text-trailflow-medium hover:bg-trailflow-green hover:text-white transition-all duration-300"
                 aria-label="Twitter"
               >
-                <Twitter size={20} />
+                <Twitter size={18} />
               </a>
             </div>
           </div>
 
           {/* Navigation Links */}
           <div>
-            <h3 className="text-xl font-semibold mb-6 text-trailflow-dark">Navegação</h3>
-            <ul className="space-y-4">
+            <h3 className="text-lg font-semibold mb-6 text-trailflow-dark">Navegação</h3>
+            <ul className="space-y-3">
               <li>
                 <Link 
                   to="/roles" 
-                  className="text-lg text-trailflow-medium hover:text-trailflow-green transition-colors duration-300 font-light"
+                  className="text-base text-trailflow-medium hover:text-trailflow-green transition-colors duration-300"
                 >
                   Rolês & Passes
                 </Link>
@@ -64,7 +64,7 @@ const Footer = () => {
               <li>
                 <Link 
                   to="/market" 
-                  className="text-lg text-trailflow-medium hover:text-trailflow-green transition-colors duration-300 font-light"
+                  className="text-base text-trailflow-medium hover:text-trailflow-green transition-colors duration-300"
                 >
                   Marketplace
                 </Link>
@@ -72,7 +72,7 @@ const Footer = () => {
               <li>
                 <Link 
                   to="/comunidade" 
-                  className="text-lg text-trailflow-medium hover:text-trailflow-green transition-colors duration-300 font-light"
+                  className="text-base text-trailflow-medium hover:text-trailflow-green transition-colors duration-300"
                 >
                   Comunidade
                 </Link>
@@ -80,7 +80,7 @@ const Footer = () => {
               <li>
                 <Link 
                   to="/parceiros" 
-                  className="text-lg text-trailflow-medium hover:text-trailflow-green transition-colors duration-300 font-light"
+                  className="text-base text-trailflow-medium hover:text-trailflow-green transition-colors duration-300"
                 >
                   Seja Parceiro
                 </Link>
@@ -90,12 +90,12 @@ const Footer = () => {
 
           {/* Support Links */}
           <div>
-            <h3 className="text-xl font-semibold mb-6 text-trailflow-dark">Suporte</h3>
-            <ul className="space-y-4">
+            <h3 className="text-lg font-semibold mb-6 text-trailflow-dark">Suporte</h3>
+            <ul className="space-y-3">
               <li>
                 <Link 
                   to="/sobre" 
-                  className="text-lg text-trailflow-medium hover:text-trailflow-green transition-colors duration-300 font-light"
+                  className="text-base text-trailflow-medium hover:text-trailflow-green transition-colors duration-300"
                 >
                   Sobre Nós
                 </Link>
@@ -103,7 +103,7 @@ const Footer = () => {
               <li>
                 <Link 
                   to="/contato" 
-                  className="text-lg text-trailflow-medium hover:text-trailflow-green transition-colors duration-300 font-light"
+                  className="text-base text-trailflow-medium hover:text-trailflow-green transition-colors duration-300"
                 >
                   Contato
                 </Link>
@@ -111,7 +111,7 @@ const Footer = () => {
               <li>
                 <Link 
                   to="/politica-privacidade" 
-                  className="text-lg text-trailflow-medium hover:text-trailflow-green transition-colors duration-300 font-light"
+                  className="text-base text-trailflow-medium hover:text-trailflow-green transition-colors duration-300"
                 >
                   Privacidade
                 </Link>
@@ -119,7 +119,7 @@ const Footer = () => {
               <li>
                 <Link 
                   to="/termos" 
-                  className="text-lg text-trailflow-medium hover:text-trailflow-green transition-colors duration-300 font-light"
+                  className="text-base text-trailflow-medium hover:text-trailflow-green transition-colors duration-300"
                 >
                   Termos de Uso
                 </Link>
@@ -129,19 +129,19 @@ const Footer = () => {
 
           {/* Newsletter */}
           <div>
-            <h3 className="text-xl font-semibold mb-6 text-trailflow-dark">Newsletter</h3>
-            <p className="text-lg text-trailflow-medium mb-6 font-light leading-relaxed">
+            <h3 className="text-lg font-semibold mb-6 text-trailflow-dark">Newsletter</h3>
+            <p className="text-base text-trailflow-medium mb-6 leading-relaxed">
               Receba as novidades, eventos e lançamentos direto no seu e-mail.
             </p>
-            <form className="space-y-4">
+            <form className="space-y-3">
               <input
                 type="email"
                 placeholder="Digite seu e-mail"
-                className="w-full px-6 py-4 rounded-2xl bg-white border-2 border-trailflow-lighter text-trailflow-dark placeholder-trailflow-light focus:border-trailflow-green focus:outline-none transition-colors duration-300"
+                className="w-full px-4 py-3 rounded-xl bg-white border border-trailflow-lighter text-trailflow-dark placeholder-trailflow-light focus:border-trailflow-green focus:outline-none transition-colors duration-300"
               />
               <button 
                 type="submit" 
-                className="w-full bg-trailflow-green text-white px-6 py-4 rounded-2xl font-semibold hover:bg-trailflow-dark transition-colors duration-300"
+                className="w-full bg-trailflow-green text-white px-4 py-3 rounded-xl font-semibold hover:bg-trailflow-dark transition-colors duration-300"
               >
                 Inscrever-se
               </button>
@@ -150,12 +150,12 @@ const Footer = () => {
         </div>
 
         {/* Bottom Section */}
-        <div className="border-t border-trailflow-lighter pt-12">
+        <div className="border-t border-trailflow-lighter pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center text-center md:text-left space-y-4 md:space-y-0">
-            <p className="text-lg text-trailflow-light font-light">
+            <p className="text-sm text-trailflow-light">
               &copy; {new Date().getFullYear()} NuFlow. Todos os direitos reservados.
             </p>
-            <p className="text-lg text-trailflow-light font-light">
+            <p className="text-sm text-trailflow-light">
               Feito com <span className="text-trailflow-green">♥</span> para ciclistas apaixonados
             </p>
           </div>
