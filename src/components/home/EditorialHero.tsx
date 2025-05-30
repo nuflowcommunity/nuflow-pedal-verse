@@ -38,16 +38,16 @@ const EditorialHero = () => {
       </div>
       
       <div className="container mx-auto px-8 sm:px-12 lg:px-16 max-w-7xl relative z-10">
-        <div className="text-center space-y-16">
+        <div className="text-center space-y-12">
           
-          {/* Dramatic Typography with Perfect Spacing */}
+          {/* Dramatic Typography with Improved Spacing */}
           <div className={`transition-all duration-1200 ease-out ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
-            <h1 className="text-7xl sm:text-8xl md:text-9xl lg:text-[12rem] xl:text-[14rem] font-bold text-white leading-[0.85] tracking-tight mb-16 font-mono">
+            <h1 className="text-7xl sm:text-8xl md:text-9xl lg:text-[12rem] xl:text-[14rem] font-bold text-white leading-[0.85] tracking-tight mb-8 font-mono">
               <span className="block">NuFlow</span>
             </h1>
             
-            {/* Dynamic Phrase with Enhanced Spacing */}
-            <div className="relative overflow-hidden mb-24">
+            {/* Dynamic Phrase with Reduced Spacing */}
+            <div className="relative overflow-hidden mb-16">
               <h2 className={`text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-white font-light transition-all duration-700 ease-out ${visible ? 'opacity-100 transform-none' : 'opacity-0 translate-y-6'}`}>
                 {phrases[currentPhrase]}
               </h2>
