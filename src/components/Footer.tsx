@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Instagram, Facebook, Twitter } from 'lucide-react';
@@ -19,7 +18,11 @@ const Footer = () => {
                 alt="NuFlow Logo" 
                 className="w-10 h-10 mr-4" 
               />
-              <h2 className="text-3xl font-bold text-trailflow-dark">NuFlow</h2>
+              <img 
+                src="/lovable-uploads/ec81a495-9c9e-496e-9570-f43da7765d0a.png" 
+                alt="NuFlow" 
+                className="h-8" 
+              />
             </div>
             <p className="text-lg text-trailflow-medium leading-relaxed mb-8 font-light">
               A plataforma completa para ciclistas. Conectando riders através de experiências, produtos e comunidade.
