@@ -1,8 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Instagram, Facebook, Twitter } from 'lucide-react';
+
 const Footer = () => {
-  return <footer className="bg-gradient-to-t from-gray-100 to-white text-trailflow-dark pt-20 pb-12 font-mono">
+  const [clickedIcon, setClickedIcon] = useState<string | null>(null);
+
+  const handleIconClick = (iconName: string) => {
+    setClickedIcon(iconName);
+    // Reset the clicked state after a short delay
+    setTimeout(() => setClickedIcon(null), 200);
+  };
+
+  return (
+    <footer className="bg-gradient-to-t from-gray-100 to-white text-trailflow-dark pt-20 pb-12 font-mono">
       <div className="container mx-auto px-8 sm:px-12 lg:px-16 max-w-7xl">
         
         {/* Main Footer Content */}
@@ -10,19 +20,44 @@ const Footer = () => {
           
           {/* Brand Section */}
           <div className="lg:col-span-1">
-            
+            <img 
+              src="/lovable-uploads/16a87e5f-efde-44b6-b0af-91e0ece61fe3.png" 
+              alt="TrailFlow Logo" 
+              className="h-8 mb-6"
+            />
             <p className="text-lg text-trailflow-medium leading-relaxed mb-8 font-light">
               A plataforma completa para ciclistas. Conectando riders através de experiências, produtos e comunidade.
             </p>
             <div className="flex space-x-4">
-              <a href="https://instagram.com" className="w-10 h-10 bg-trailflow-lighter/50 rounded-2xl flex items-center justify-center text-trailflow-medium hover:bg-trailflow-green hover:text-white transition-all duration-300" aria-label="Instagram">
-                <Instagram size={18} />
+              <a 
+                href="https://instagram.com" 
+                className={`w-10 h-10 bg-transparent border border-trailflow-medium/30 rounded-2xl flex items-center justify-center transition-all duration-300 hover:border-trailflow-green hover:scale-105 hover:shadow-md ${
+                  clickedIcon === 'instagram' ? 'text-trailflow-green border-trailflow-green' : 'text-trailflow-medium hover:text-trailflow-green'
+                }`}
+                aria-label="Instagram"
+                onClick={() => handleIconClick('instagram')}
+              >
+                <Instagram size={18} strokeWidth={1.5} />
               </a>
-              <a href="https://facebook.com" className="w-10 h-10 bg-trailflow-lighter/50 rounded-2xl flex items-center justify-center text-trailflow-medium hover:bg-trailflow-green hover:text-white transition-all duration-300" aria-label="Facebook">
-                <Facebook size={18} />
+              <a 
+                href="https://facebook.com" 
+                className={`w-10 h-10 bg-transparent border border-trailflow-medium/30 rounded-2xl flex items-center justify-center transition-all duration-300 hover:border-trailflow-green hover:scale-105 hover:shadow-md ${
+                  clickedIcon === 'facebook' ? 'text-trailflow-green border-trailflow-green' : 'text-trailflow-medium hover:text-trailflow-green'
+                }`}
+                aria-label="Facebook"
+                onClick={() => handleIconClick('facebook')}
+              >
+                <Facebook size={18} strokeWidth={1.5} />
               </a>
-              <a href="https://twitter.com" className="w-10 h-10 bg-trailflow-lighter/50 rounded-2xl flex items-center justify-center text-trailflow-medium hover:bg-trailflow-green hover:text-white transition-all duration-300" aria-label="Twitter">
-                <Twitter size={18} />
+              <a 
+                href="https://twitter.com" 
+                className={`w-10 h-10 bg-transparent border border-trailflow-medium/30 rounded-2xl flex items-center justify-center transition-all duration-300 hover:border-trailflow-green hover:scale-105 hover:shadow-md ${
+                  clickedIcon === 'twitter' ? 'text-trailflow-green border-trailflow-green' : 'text-trailflow-medium hover:text-trailflow-green'
+                }`}
+                aria-label="Twitter"
+                onClick={() => handleIconClick('twitter')}
+              >
+                <Twitter size={18} strokeWidth={1.5} />
               </a>
             </div>
           </div>
@@ -108,6 +143,8 @@ const Footer = () => {
           </div>
         </div>
       </div>
-    </footer>;
+    </footer>
+  );
 };
+
 export default Footer;
