@@ -1,0 +1,156 @@
+
+/* TrailFlow Layout System - Modular Design */
+
+/* Enhanced Container System */
+.container-editorial {
+  @apply mx-auto px-8 sm:px-12 lg:px-16 xl:px-20;
+  max-width: 1400px;
+}
+
+.container-content {
+  @apply mx-auto px-8 sm:px-12 lg:px-16;
+  max-width: 1200px;
+}
+
+.container-reading {
+  @apply mx-auto px-8 sm:px-12;
+  max-width: 800px;
+}
+
+/* Modular Grid System */
+.grid-editorial {
+  @apply grid gap-8 sm:gap-12 lg:gap-16;
+}
+
+.grid-cards {
+  @apply grid gap-6 sm:gap-8 lg:gap-10;
+}
+
+.grid-features {
+  @apply grid gap-8 sm:gap-12 md:gap-16;
+}
+
+/* Enhanced Spacing Utilities - 8px Base Grid */
+.space-xs { @apply space-y-2; }      /* 8px */
+.space-sm { @apply space-y-4; }      /* 16px */
+.space-md { @apply space-y-6; }      /* 24px */
+.space-lg { @apply space-y-8; }      /* 32px */
+.space-xl { @apply space-y-12; }     /* 48px */
+.space-2xl { @apply space-y-16; }    /* 64px */
+.space-3xl { @apply space-y-24; }    /* 96px */
+.space-4xl { @apply space-y-32; }    /* 128px */
+
+/* Typography Rhythm */
+.text-rhythm > * + * {
+  margin-top: 1.5rem;
+}
+
+.text-rhythm-lg > * + * {
+  margin-top: 2rem;
+}
+
+.text-rhythm-xl > * + * {
+  margin-top: 3rem;
+}
+
+/* Section Spacing - Mathematical Progression */
+.section-xs { @apply py-8 sm:py-12; }
+.section-sm { @apply py-12 sm:py-16; }
+.section-md { @apply py-16 sm:py-20; }
+.section-lg { @apply py-20 sm:py-24 md:py-32; }
+.section-xl { @apply py-24 sm:py-32 md:py-40; }
+.section-2xl { @apply py-32 sm:py-40 md:py-48 lg:py-64; }
+
+/* Breathing Room - Internal Spacing */
+.breathe-xs { @apply p-4; }
+.breathe-sm { @apply p-6; }
+.breathe-md { @apply p-8; }
+.breathe-lg { @apply p-12; }
+.breathe-xl { @apply p-16; }
+.breathe-2xl { @apply p-20; }
+
+/* Card Layout Enhancements */
+.card-editorial {
+  @apply bg-white rounded-3xl border border-white/20 overflow-hidden transition-all duration-500 ease-out hover:-translate-y-2 hover:shadow-xl;
+}
+
+.card-content {
+  @apply breathe-lg space-lg;
+}
+
+.card-minimal {
+  @apply bg-white/95 backdrop-blur-sm rounded-2xl breathe-md hover:bg-white transition-all duration-300;
+}
+
+/* Visual Hierarchy Helpers */
+.visual-break {
+  @apply my-16 sm:my-20 md:my-24;
+}
+
+.visual-separator {
+  @apply my-12 sm:my-16;
+}
+
+.visual-gap {
+  @apply my-8 sm:my-12;
+}
+
+/* Content Flow */
+.content-flow > * + * {
+  margin-top: 2rem;
+}
+
+.content-flow-tight > * + * {
+  margin-top: 1rem;
+}
+
+.content-flow-loose > * + * {
+  margin-top: 3rem;
+}
+
+/* Alignment Utilities */
+.align-editorial {
+  @apply text-center max-w-5xl mx-auto;
+}
+
+.align-content {
+  @apply text-left max-w-4xl mx-auto;
+}
+
+.align-reading {
+  @apply text-left max-w-3xl mx-auto;
+}
+
+/* Responsive Gutters */
+.gutter-sm { @apply px-4 sm:px-6; }
+.gutter-md { @apply px-6 sm:px-8 lg:px-12; }
+.gutter-lg { @apply px-8 sm:px-12 lg:px-16; }
+.gutter-xl { @apply px-12 sm:px-16 lg:px-20; }
+
+/* Layout Constraints */
+.constrain-narrow { max-width: 600px; }
+.constrain-medium { max-width: 800px; }
+.constrain-wide { max-width: 1200px; }
+.constrain-full { max-width: 1400px; }
+
+/* Aspect Ratio Utilities */
+.aspect-editorial { aspect-ratio: 16/9; }
+.aspect-card { aspect-ratio: 4/3; }
+.aspect-square { aspect-ratio: 1/1; }
+.aspect-portrait { aspect-ratio: 3/4; }
+
+/* Overflow Handling */
+.overflow-editorial {
+  @apply overflow-hidden;
+  border-radius: 24px;
+}
+
+.overflow-card {
+  @apply overflow-hidden;
+  border-radius: 16px;
+}
+
+.overflow-minimal {
+  @apply overflow-hidden;
+  border-radius: 12px;
+}
