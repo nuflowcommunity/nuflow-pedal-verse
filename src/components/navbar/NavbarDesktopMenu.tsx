@@ -3,12 +3,20 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Calendar } from 'lucide-react';
 
-const NavbarDesktopMenu = () => {
+interface NavbarDesktopMenuProps {
+  scrolled: boolean;
+}
+
+const NavbarDesktopMenu = ({ scrolled }: NavbarDesktopMenuProps) => {
   const location = useLocation();
   
   const isActive = (path: string) => {
     return location.pathname === path;
   };
+
+  const linkClass = "font-mono font-medium text-sm uppercase tracking-wide transition-all duration-300 hover:text-white py-3 px-4 relative group";
+  const activeLinkClass = "text-white";
+  const inactiveLinkClass = "text-gray-300";
 
   return (
     <>
@@ -16,28 +24,25 @@ const NavbarDesktopMenu = () => {
       <div className="hidden md:flex items-center space-x-8 flex-1">
         <Link 
           to="/roles" 
-          className={`font-medium text-sm transition-all duration-200 hover:text-trailflow-green py-2 px-4 rounded-full hover:bg-white/10 ${
-            isActive('/roles') ? 'text-trailflow-green bg-white/10' : 'text-trailflow-light'
-          }`}
+          className={`${linkClass} ${isActive('/roles') ? activeLinkClass : inactiveLinkClass}`}
         >
-          Trilhas
+          TRILHAS
+          <span className="absolute bottom-0 left-0 w-full h-0.5 bg-trailflow-green transform scale-x-0 transition-transform duration-300 group-hover:scale-x-100"></span>
         </Link>
         <Link 
           to="/events" 
-          className={`font-medium text-sm transition-all duration-200 hover:text-trailflow-green py-2 px-4 rounded-full hover:bg-white/10 flex items-center ${
-            isActive('/events') ? 'text-trailflow-green bg-white/10' : 'text-trailflow-light'
-          }`}
+          className={`${linkClass} ${isActive('/events') ? activeLinkClass : inactiveLinkClass} flex items-center`}
         >
           <Calendar size={14} className="mr-2" />
-          Eventos
+          EVENTOS
+          <span className="absolute bottom-0 left-0 w-full h-0.5 bg-trailflow-green transform scale-x-0 transition-transform duration-300 group-hover:scale-x-100"></span>
         </Link>
         <Link 
           to="/market" 
-          className={`font-medium text-sm transition-all duration-200 hover:text-trailflow-green py-2 px-4 rounded-full hover:bg-white/10 ${
-            isActive('/market') ? 'text-trailflow-green bg-white/10' : 'text-trailflow-light'
-          }`}
+          className={`${linkClass} ${isActive('/market') ? activeLinkClass : inactiveLinkClass}`}
         >
-          Marketplace
+          MARKETPLACE
+          <span className="absolute bottom-0 left-0 w-full h-0.5 bg-trailflow-green transform scale-x-0 transition-transform duration-300 group-hover:scale-x-100"></span>
         </Link>
       </div>
 
@@ -45,19 +50,17 @@ const NavbarDesktopMenu = () => {
       <div className="hidden md:flex items-center space-x-8 flex-1 justify-end">
         <Link 
           to="/comunidade" 
-          className={`font-medium text-sm transition-all duration-200 hover:text-trailflow-green py-2 px-4 rounded-full hover:bg-white/10 ${
-            isActive('/comunidade') ? 'text-trailflow-green bg-white/10' : 'text-trailflow-light'
-          }`}
+          className={`${linkClass} ${isActive('/comunidade') ? activeLinkClass : inactiveLinkClass}`}
         >
-          Comunidade
+          COMUNIDADE
+          <span className="absolute bottom-0 left-0 w-full h-0.5 bg-trailflow-green transform scale-x-0 transition-transform duration-300 group-hover:scale-x-100"></span>
         </Link>
         <Link 
           to="/sobre" 
-          className={`font-medium text-sm transition-all duration-200 hover:text-trailflow-green py-2 px-4 rounded-full hover:bg-white/10 ${
-            isActive('/sobre') ? 'text-trailflow-green bg-white/10' : 'text-trailflow-light'
-          }`}
+          className={`${linkClass} ${isActive('/sobre') ? activeLinkClass : inactiveLinkClass}`}
         >
-          Sobre
+          SOBRE
+          <span className="absolute bottom-0 left-0 w-full h-0.5 bg-trailflow-green transform scale-x-0 transition-transform duration-300 group-hover:scale-x-100"></span>
         </Link>
       </div>
     </>

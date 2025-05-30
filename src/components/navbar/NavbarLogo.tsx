@@ -2,20 +2,24 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const NavbarLogo = () => {
+interface NavbarLogoProps {
+  scrolled: boolean;
+}
+
+const NavbarLogo = ({ scrolled }: NavbarLogoProps) => {
   return (
     <div className="absolute left-1/2 transform -translate-x-1/2">
       <Link to="/" className="flex items-center group">
-        <div className="flex items-center space-x-3">
-          <div className="w-10 h-10 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/20">
+        <div className="flex items-center space-x-4">
+          <div className="w-12 h-12 flex items-center justify-center transition-all duration-300">
             <img 
-              src="/lovable-uploads/adf44db0-c66b-4031-a615-a8e98fe5f77f.png" 
-              alt="NuFlow Mountain Logo" 
-              className="w-6 h-6 object-contain brightness-0 invert"
+              src={scrolled ? "/lovable-uploads/7e2ed504-8934-4c4e-a36e-077e7b054a17.png" : "/lovable-uploads/fad41de5-b88c-44e7-90a2-508e7415281a.png"}
+              alt="NuFlow Logo" 
+              className="w-8 h-8 object-contain transition-all duration-300"
             />
           </div>
-          <div className="text-xl font-bold text-white group-hover:text-trailflow-green transition-colors duration-200">
-            NuFlow
+          <div className="text-xl font-mono font-bold text-white uppercase tracking-wide transition-all duration-300">
+            NUFLOW
           </div>
         </div>
       </Link>

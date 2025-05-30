@@ -12,64 +12,70 @@ interface NavbarMobileMenuProps {
 const NavbarMobileMenu = ({ isOpen, onToggleMenu }: NavbarMobileMenuProps) => {
   if (!isOpen) return null;
 
+  const linkClass = "block py-4 px-6 font-mono font-medium uppercase tracking-wide text-gray-300 hover:text-white hover:bg-white/5 transition-all duration-300 rounded-lg";
+
   return (
-    <div className="md:hidden bg-trailflow-medium/95 backdrop-blur-lg border-t border-white/10 animate-fade-in">
-      <div className="container mx-auto px-6 py-6 space-y-2">
+    <div className="md:hidden bg-trailflow-medium/90 backdrop-blur-md border-t border-white/5 animate-fade-in">
+      <div className="container mx-auto px-6 py-8 space-y-2">
         <Link 
           to="/roles" 
-          className="block py-3 px-4 text-trailflow-light hover:text-trailflow-green hover:bg-white/10 transition-all rounded-lg font-medium"
+          className={linkClass}
           onClick={onToggleMenu}
         >
-          Trilhas
+          TRILHAS
         </Link>
         <Link 
           to="/events" 
-          className="block py-3 px-4 text-trailflow-light hover:text-trailflow-green hover:bg-white/10 transition-all rounded-lg font-medium flex items-center"
+          className={`${linkClass} flex items-center`}
           onClick={onToggleMenu}
         >
           <Calendar size={18} className="mr-3" />
-          Eventos
+          EVENTOS
         </Link>
         <Link 
           to="/market" 
-          className="block py-3 px-4 text-trailflow-light hover:text-trailflow-green hover:bg-white/10 transition-all rounded-lg font-medium"
+          className={linkClass}
           onClick={onToggleMenu}
         >
-          Marketplace
+          MARKETPLACE
         </Link>
         <Link 
           to="/comunidade" 
-          className="block py-3 px-4 text-trailflow-light hover:text-trailflow-green hover:bg-white/10 transition-all rounded-lg font-medium"
+          className={linkClass}
           onClick={onToggleMenu}
         >
-          Comunidade
+          COMUNIDADE
         </Link>
         <Link 
           to="/sobre" 
-          className="block py-3 px-4 text-trailflow-light hover:text-trailflow-green hover:bg-white/10 transition-all rounded-lg font-medium"
+          className={linkClass}
           onClick={onToggleMenu}
         >
-          Sobre
+          SOBRE
         </Link>
-        <hr className="my-4 border-white/20" />
+        <hr className="my-6 border-white/10" />
         <Link 
           to="/login" 
-          className="block py-3 px-4 text-trailflow-light hover:text-trailflow-green hover:bg-white/10 transition-all rounded-lg font-medium"
+          className={linkClass}
           onClick={onToggleMenu}
         >
-          Entrar / Criar conta
+          ENTRAR / CRIAR CONTA
         </Link>
         <Link 
           to="/cart" 
-          className="block py-3 px-4 text-trailflow-light hover:text-trailflow-green hover:bg-white/10 transition-all rounded-lg font-medium flex items-center"
+          className={`${linkClass} flex items-center`}
           onClick={onToggleMenu}
         >
           <ShoppingCart size={18} className="mr-3" />
-          Carrinho
+          CARRINHO
         </Link>
-        <div className="pt-4">
-          <Button className="w-full font-medium bg-trailflow-green text-white hover:bg-trailflow-green-dark" onClick={onToggleMenu} asChild>
-            <Link to="/anunciar">Anunciar</Link>
+        <div className="pt-6">
+          <Button 
+            className="w-full font-mono font-medium uppercase tracking-wide bg-trailflow-green text-white hover:bg-trailflow-green-dark transition-all duration-300" 
+            onClick={onToggleMenu} 
+            asChild
+          >
+            <Link to="/anunciar">ANUNCIAR</Link>
           </Button>
         </div>
       </div>
