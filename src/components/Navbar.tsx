@@ -32,22 +32,22 @@ const Navbar = () => {
   }, []);
   
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ease-out ${
       scrolled 
-        ? 'bg-trailflow-medium/80 backdrop-blur-md border-b border-white/5' 
+        ? 'bg-trailflow-medium/85 backdrop-blur-lg border-b border-white/10' 
         : 'bg-transparent'
     }`}>
-      <div className="container mx-auto px-6 sm:px-8 lg:px-12 max-w-6xl py-6">
+      <div className="container mx-auto px-6 sm:px-8 lg:px-12 max-w-7xl py-8">
         <div className="flex items-center justify-between relative">
           
           {/* Mobile Menu Button */}
           <div className="md:hidden flex items-center">
             <button 
-              className="p-3 text-white hover:text-trailflow-green transition-all duration-300 rounded-lg hover:bg-white/5" 
+              className="p-4 text-white hover:text-trailflow-green transition-all duration-300 rounded-xl hover:bg-white/5" 
               onClick={toggleMenu}
               aria-label={isOpen ? "Fechar menu" : "Abrir menu"}
             >
-              {isOpen ? <X size={20} /> : <Menu size={20} />}
+              {isOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
           </div>
 

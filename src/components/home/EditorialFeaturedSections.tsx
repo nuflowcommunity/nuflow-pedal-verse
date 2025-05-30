@@ -10,7 +10,7 @@ const EditorialFeaturedSections = () => {
   const features = [
     {
       id: 1,
-      icon: <Calendar size={32} className="text-trailflow-light" />,
+      icon: <Calendar size={36} className="text-trailflow-light" />,
       title: 'Rolês & Aventuras',
       description: 'Experiências épicas nas trilhas mais incríveis do Brasil. Guias especializados te levam aos lugares que você nunca imaginou.',
       link: '/roles',
@@ -18,7 +18,7 @@ const EditorialFeaturedSections = () => {
     },
     {
       id: 2,
-      icon: <Bike size={32} className="text-trailflow-light" />,
+      icon: <Bike size={36} className="text-trailflow-light" />,
       title: 'Marketplace Épico',
       description: 'As bikes mais cobiçadas e equipamentos premium. Encontre raridades e pechinchas que só existem aqui.',
       link: '/market',
@@ -26,7 +26,7 @@ const EditorialFeaturedSections = () => {
     },
     {
       id: 3,
-      icon: <Users size={32} className="text-trailflow-light" />,
+      icon: <Users size={36} className="text-trailflow-light" />,
       title: 'Comunidade Viva',
       description: 'Conecte-se com riders apaixonados, compartilhe suas conquistas e faça parte da família NuFlow.',
       link: '/comunidade',
@@ -52,64 +52,64 @@ const EditorialFeaturedSections = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-32 bg-trailflow-medium relative overflow-hidden">
+    <section ref={sectionRef} className="py-40 bg-trailflow-medium relative overflow-hidden">
       
       {/* Clean Editorial Background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-trailflow-medium via-trailflow-dark/30 to-trailflow-medium"></div>
+      <div className="absolute inset-0 bg-gradient-to-b from-trailflow-medium via-trailflow-dark/15 to-trailflow-medium"></div>
       
       {/* Subtle Logo Watermark */}
-      <div className="absolute inset-0 flex items-center justify-center opacity-5">
+      <div className="absolute inset-0 flex items-center justify-center opacity-[0.015]">
         <img 
           src="/lovable-uploads/adf44db0-c66b-4031-a615-a8e98fe5f77f.png" 
           alt="NuFlow Mountain Logo" 
-          className="w-80 h-80 object-contain"
+          className="w-96 h-96 object-contain"
         />
       </div>
       
       <div className="container mx-auto px-6 sm:px-8 lg:px-12 max-w-6xl relative z-10">
         
         {/* Title */}
-        <div className="text-center mb-20">
-          <h2 className={`text-5xl sm:text-6xl md:text-7xl font-bold text-white mb-6 leading-tight ${isVisible ? 'animate-fade-in' : 'opacity-0'}`}>
+        <div className="text-center mb-24">
+          <h2 className={`text-6xl sm:text-7xl md:text-8xl font-bold text-white mb-8 leading-tight transition-all duration-1000 ease-out ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
             Sua Jornada
           </h2>
-          <p className={`text-xl text-trailflow-light max-w-3xl mx-auto font-light ${isVisible ? 'animate-fade-in' : 'opacity-0'}`} style={{ animationDelay: '0.2s' }}>
+          <p className={`text-2xl text-trailflow-light max-w-4xl mx-auto font-light transition-all duration-1000 ease-out delay-200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
             Três universos conectados para transformar sua paixão pelo ciclismo
           </p>
         </div>
 
         {/* Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-16">
           {features.map((feature, index) => (
             <div 
               key={feature.id} 
-              className={`group ${isVisible ? 'animate-fade-in' : 'opacity-0'}`}
-              style={{ animationDelay: `${0.3 + (index * 0.1)}s` }}
+              className={`group transition-all duration-1000 ease-out ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}
+              style={{ animationDelay: `${0.4 + (index * 0.2)}s` }}
             >
-              <div className="bg-white/95 backdrop-blur-sm border border-white/20 rounded-3xl p-8 hover:shadow-xl transition-all duration-500 hover:-translate-y-2 h-full hover:bg-white">
+              <div className="bg-white/98 backdrop-blur-sm border border-white/30 rounded-3xl p-10 hover:shadow-2xl transition-all duration-700 ease-out hover:-translate-y-3 h-full hover:bg-white group-hover:border-white/50">
                 
                 {/* Icon */}
-                <div className="mb-6">
-                  <div className="w-16 h-16 bg-trailflow-medium/10 rounded-2xl flex items-center justify-center group-hover:bg-trailflow-green/20 transition-colors duration-300">
+                <div className="mb-8">
+                  <div className="w-20 h-20 bg-trailflow-medium/8 rounded-3xl flex items-center justify-center group-hover:bg-trailflow-green/15 transition-all duration-700 ease-out group-hover:scale-110">
                     {feature.icon}
                   </div>
                 </div>
                 
                 {/* Content */}
-                <h3 className="text-2xl font-bold text-trailflow-dark mb-4 group-hover:text-trailflow-medium transition-colors">
+                <h3 className="text-3xl font-bold text-trailflow-dark mb-6 group-hover:text-trailflow-medium transition-all duration-500">
                   {feature.title}
                 </h3>
-                <p className="text-trailflow-medium mb-8 leading-relaxed font-light">
+                <p className="text-trailflow-medium mb-10 leading-relaxed font-light text-lg">
                   {feature.description}
                 </p>
                 
                 {/* Link */}
                 <Link 
                   to={feature.link} 
-                  className="inline-flex items-center text-trailflow-medium font-medium hover:text-trailflow-green transition-all duration-300 group-hover:translate-x-1"
+                  className="inline-flex items-center text-trailflow-medium font-medium hover:text-trailflow-green transition-all duration-500 ease-out group-hover:translate-x-2"
                 >
                   {feature.linkText}
-                  <ArrowRight size={16} className="ml-2 transition-transform duration-300" />
+                  <ArrowRight size={18} className="ml-3 transition-transform duration-500" />
                 </Link>
               </div>
             </div>
@@ -117,16 +117,16 @@ const EditorialFeaturedSections = () => {
         </div>
         
         {/* CTA */}
-        <div className={`text-center mt-20 ${isVisible ? 'animate-fade-in' : 'opacity-0'}`} style={{ animationDelay: '0.8s' }}>
-          <div className="inline-block bg-white/10 backdrop-blur-sm p-8 rounded-3xl border border-white/20">
-            <h3 className="text-2xl font-bold text-white mb-4">Pronto para começar?</h3>
-            <p className="text-trailflow-light mb-6 font-light">Junte-se a milhares de ciclistas que já transformaram sua paixão em aventura.</p>
+        <div className={`text-center mt-24 transition-all duration-1000 ease-out delay-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
+          <div className="inline-block bg-white/8 backdrop-blur-lg p-12 rounded-3xl border border-white/20 hover:bg-white/12 transition-all duration-700">
+            <h3 className="text-3xl font-bold text-white mb-6">Pronto para começar?</h3>
+            <p className="text-trailflow-light mb-8 font-light text-lg">Junte-se a milhares de ciclistas que já transformaram sua paixão em aventura.</p>
             <Link 
               to="/login" 
-              className="inline-flex items-center bg-trailflow-green text-white px-8 py-4 rounded-full font-medium hover:bg-trailflow-green-dark transition-all duration-300 hover:shadow-lg hover:scale-105"
+              className="inline-flex items-center bg-trailflow-green text-white px-10 py-5 rounded-full font-medium hover:bg-trailflow-green-dark transition-all duration-500 hover:shadow-2xl hover:scale-105"
             >
               Começar Agora
-              <ArrowRight size={18} className="ml-2" />
+              <ArrowRight size={20} className="ml-3" />
             </Link>
           </div>
         </div>

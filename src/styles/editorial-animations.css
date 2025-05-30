@@ -1,11 +1,11 @@
 
-/* TrailFlow Minimal Animations - Polymer Style */
+/* TrailFlow Polymer-Inspired Animations */
 
-/* Subtle Keyframes */
+/* Enhanced Keyframes */
 @keyframes fade-in {
   0% {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(30px);
   }
   100% {
     opacity: 1;
@@ -18,14 +18,14 @@
     transform: translateY(0px);
   }
   50% {
-    transform: translateY(-8px);
+    transform: translateY(-12px);
   }
 }
 
 @keyframes scale-in {
   0% {
     opacity: 0;
-    transform: scale(0.95);
+    transform: scale(0.9);
   }
   100% {
     opacity: 1;
@@ -36,7 +36,7 @@
 @keyframes slide-up {
   0% {
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(40px);
   }
   100% {
     opacity: 1;
@@ -44,75 +44,136 @@
   }
 }
 
-/* Minimal Animation Classes */
+@keyframes gentle-pulse {
+  0%, 100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* Enhanced Animation Classes */
 .animate-fade-in {
-  animation: fade-in 0.6s ease-out forwards;
+  animation: fade-in 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
 }
 
 .animate-fade-in-delayed {
   opacity: 0;
-  animation: fade-in 0.6s ease-out 0.3s forwards;
+  animation: fade-in 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s forwards;
 }
 
 .animate-scale-in {
-  animation: scale-in 0.4s ease-out forwards;
+  animation: scale-in 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
 }
 
 .animate-slide-up {
-  animation: slide-up 0.5s ease-out forwards;
+  animation: slide-up 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
 }
 
 .animate-float {
-  animation: float 6s ease-in-out infinite;
+  animation: float 8s ease-in-out infinite;
 }
 
-/* Hover Effects */
+.animate-gentle-pulse {
+  animation: gentle-pulse 3s ease-in-out infinite;
+}
+
+/* Enhanced Hover Effects */
 .hover-lift {
-  transition: all 0.3s ease-out;
+  transition: all 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .hover-lift:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 25px -5px rgba(38, 38, 38, 0.15);
+  transform: translateY(-8px);
+  box-shadow: 0 20px 60px -10px rgba(38, 38, 38, 0.2);
 }
 
 .hover-scale {
-  transition: transform 0.3s ease-out;
+  transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .hover-scale:hover {
-  transform: scale(1.02);
+  transform: scale(1.03);
 }
 
-/* Subtle Interactions */
+/* Sophisticated Interactions */
 .interactive-card {
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .interactive-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 16px 40px -8px rgba(38, 38, 38, 0.18);
+  transform: translateY(-12px) scale(1.02);
+  box-shadow: 0 25px 70px -15px rgba(38, 38, 38, 0.25);
+}
+
+/* Polymer-Style Underline Animation */
+.polymer-underline {
+  position: relative;
+  overflow: hidden;
+}
+
+.polymer-underline::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: #84B067;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.polymer-underline:hover::after {
+  transform: scaleX(1);
+}
+
+/* Smooth Page Transitions */
+.page-transition-enter {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.page-transition-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.page-transition-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.page-transition-exit-active {
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 /* Loading States */
 .loading-fade {
-  opacity: 0.6;
-  transition: opacity 0.3s ease;
+  opacity: 0.4;
+  transition: opacity 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 /* Responsive Adjustments */
 @media (max-width: 768px) {
   .animate-fade-in,
   .animate-fade-in-delayed {
-    animation-duration: 0.4s;
+    animation-duration: 0.6s;
   }
   
-  .hover-lift:hover {
+  .hover-lift:hover,
+  .hover-scale:hover,
+  .interactive-card:hover {
     transform: none;
   }
 }
 
-/* Accessibility */
+/* Accessibility - Respect user preferences */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -122,4 +183,15 @@
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* Blur Effects for Polymer-style depth */
+.polymer-blur {
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.polymer-blur-light {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
