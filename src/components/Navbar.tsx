@@ -43,11 +43,11 @@ const Navbar = () => {
           {/* Mobile Menu Button */}
           <div className="md:hidden flex items-center">
             <button 
-              className="p-4 text-white hover:text-trailflow-green transition-all duration-300 rounded-xl hover:bg-white/5" 
+              className="p-4 text-white hover:text-trailflow-green transition-all duration-300 rounded-xl hover:bg-white/5 font-mono text-xs uppercase tracking-wide" 
               onClick={toggleMenu}
               aria-label={isOpen ? "Fechar menu" : "Abrir menu"}
             >
-              {isOpen ? <X size={24} /> : <Menu size={24} />}
+              {isOpen ? "FECHAR" : "MENU"}
             </button>
           </div>
 
