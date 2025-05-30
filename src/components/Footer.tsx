@@ -36,8 +36,8 @@ const Footer = () => {
           {/* Brand Section */}
           <div className="lg:col-span-1">
             <img 
-              src="/lovable-uploads/16a87e5f-efde-44b6-b0af-91e0ece61fe3.png" 
-              alt="TrailFlow Logo" 
+              src="/lovable-uploads/774f3d13-1d84-449f-8b2a-a5e9afa7ff27.png" 
+              alt="NuFlow Logo" 
               className="h-8 mb-6"
             />
             <p className="text-lg text-trailflow-medium leading-relaxed mb-8 font-light">
