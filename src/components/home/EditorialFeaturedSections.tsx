@@ -54,7 +54,10 @@ const EditorialFeaturedSections = () => {
   return (
     <section ref={sectionRef} className="py-32 bg-trailflow-medium relative overflow-hidden">
       
-      {/* Logo Watermark */}
+      {/* Clean Editorial Background */}
+      <div className="absolute inset-0 bg-gradient-to-b from-trailflow-medium via-trailflow-dark/30 to-trailflow-medium"></div>
+      
+      {/* Subtle Logo Watermark */}
       <div className="absolute inset-0 flex items-center justify-center opacity-5">
         <img 
           src="/lovable-uploads/adf44db0-c66b-4031-a615-a8e98fe5f77f.png" 

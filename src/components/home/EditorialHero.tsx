@@ -28,22 +28,17 @@ const EditorialHero = () => {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-trailflow-medium">
-      {/* Dark Background with subtle pattern */}
-      <div className="absolute inset-0 bg-gradient-to-br from-trailflow-medium via-trailflow-dark to-trailflow-medium opacity-90"></div>
+      {/* Clean Editorial Background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-trailflow-medium via-trailflow-dark/50 to-trailflow-medium"></div>
       
-      {/* Logo Watermark */}
-      <div className="absolute inset-0 flex items-center justify-center opacity-5">
+      {/* Subtle Logo Watermark */}
+      <div className="absolute inset-0 flex items-center justify-center opacity-3">
         <img 
           src="/lovable-uploads/adf44db0-c66b-4031-a615-a8e98fe5f77f.png" 
           alt="NuFlow Mountain Logo" 
           className="w-96 h-96 object-contain"
         />
       </div>
-      
-      {/* Subtle Floating Elements */}
-      <div className="absolute top-32 left-16 w-24 h-24 bg-white/10 rounded-full backdrop-blur-sm animate-float"></div>
-      <div className="absolute bottom-40 right-20 w-32 h-32 bg-white/5 rounded-lg backdrop-blur-sm animate-float" style={{ animationDelay: '2s' }}></div>
-      <div className="absolute top-1/2 left-8 w-16 h-16 bg-white/15 rounded-full backdrop-blur-sm animate-float" style={{ animationDelay: '4s' }}></div>
       
       <div className="container mx-auto px-6 sm:px-8 lg:px-12 max-w-6xl relative z-10">
         <div className="text-center space-y-8">
