@@ -1,20 +1,15 @@
-
 import React, { useEffect, useState } from 'react';
 import { ArrowRight, Play } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useIsMobile } from '@/hooks/use-mobile';
-
 const EditorialHero = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [currentPhrase, setCurrentPhrase] = useState(0);
   const [visible, setVisible] = useState(true);
   const isMobile = useIsMobile();
-
   const phrases = ['Pedale.', 'Explore.', 'Conecte.', 'Viva.'];
-
   useEffect(() => {
     setIsLoaded(true);
-    
     const interval = setInterval(() => {
       setVisible(false);
       setTimeout(() => {
@@ -22,22 +17,15 @@ const EditorialHero = () => {
         setVisible(true);
       }, 300);
     }, 3000);
-    
     return () => clearInterval(interval);
   }, []);
-
-  return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-trailflow-medium">
+  return <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-trailflow-medium">
       {/* Clean Editorial Background */}
       <div className="absolute inset-0 bg-gradient-to-br from-trailflow-medium via-trailflow-dark/50 to-trailflow-medium"></div>
       
       {/* Subtle Logo Watermark */}
       <div className="absolute inset-0 flex items-center justify-center opacity-3">
-        <img 
-          src="/lovable-uploads/adf44db0-c66b-4031-a615-a8e98fe5f77f.png" 
-          alt="NuFlow Mountain Logo" 
-          className="w-96 h-96 object-contain"
-        />
+        <img src="/lovable-uploads/adf44db0-c66b-4031-a615-a8e98fe5f77f.png" alt="NuFlow Mountain Logo" className="w-96 h-96 object-contain" />
       </div>
       
       <div className="container mx-auto px-6 sm:px-8 lg:px-12 max-w-6xl relative z-10">
@@ -46,13 +34,7 @@ const EditorialHero = () => {
           {/* Logo Integration */}
           <div className={`transition-all duration-700 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
             <div className="mb-8 flex justify-center">
-              <div className="w-20 h-20 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg border border-white/20">
-                <img 
-                  src="/lovable-uploads/adf44db0-c66b-4031-a615-a8e98fe5f77f.png" 
-                  alt="NuFlow Mountain Logo" 
-                  className="w-12 h-12 object-contain brightness-0 invert"
-                />
-              </div>
+              
             </div>
           </div>
           
@@ -64,11 +46,7 @@ const EditorialHero = () => {
             
             {/* Dynamic Phrase */}
             <div className="relative overflow-hidden mb-8">
-              <h2 
-                className={`text-2xl sm:text-3xl md:text-4xl text-trailflow-lighter font-light transition-all duration-500 ${
-                  visible ? 'opacity-100 transform-none' : 'opacity-0 translate-y-4'
-                }`}
-              >
+              <h2 className={`text-2xl sm:text-3xl md:text-4xl text-trailflow-lighter font-light transition-all duration-500 ${visible ? 'opacity-100 transform-none' : 'opacity-0 translate-y-4'}`}>
                 {phrases[currentPhrase]}
               </h2>
             </div>
@@ -86,24 +64,14 @@ const EditorialHero = () => {
           
           {/* CTAs */}
           <div className={`flex flex-col sm:flex-row items-center justify-center gap-4 pt-12 transition-all duration-700 delay-600 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-            <Button 
-              variant="accent" 
-              size="lg" 
-              className="font-medium shadow-lg"
-              asChild
-            >
+            <Button variant="accent" size="lg" className="font-medium shadow-lg" asChild>
               <a href="/roles">
                 Explorar Trilhas
                 <ArrowRight size={18} className="ml-2 transition-transform duration-300 group-hover:translate-x-1" />
               </a>
             </Button>
             
-            <Button 
-              variant="outline" 
-              size="lg"
-              className="font-medium border-white/30 text-white hover:bg-white/10"
-              asChild
-            >
+            <Button variant="outline" size="lg" className="font-medium border-white/30 text-white hover:bg-white/10" asChild>
               <a href="/market">
                 <Play size={16} className="mr-2" />
                 Ver Marketplace
@@ -143,8 +111,6 @@ const EditorialHero = () => {
           <div className="w-2 h-2 bg-white/60 rounded-full animate-pulse"></div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default EditorialHero;
