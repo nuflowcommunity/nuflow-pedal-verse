@@ -10,7 +10,7 @@ const EditorialFeaturedSections = () => {
   const features = [
     {
       id: 1,
-      icon: <Calendar size={32} className="text-trailflow-green" />,
+      icon: <Calendar size={32} className="text-trailflow-dark" />,
       title: 'Rolês & Aventuras',
       description: 'Experiências épicas nas trilhas mais incríveis do Brasil. Guias especializados te levam aos lugares que você nunca imaginou.',
       link: '/roles',
@@ -18,7 +18,7 @@ const EditorialFeaturedSections = () => {
     },
     {
       id: 2,
-      icon: <Bike size={32} className="text-trailflow-green" />,
+      icon: <Bike size={32} className="text-trailflow-dark" />,
       title: 'Marketplace Épico',
       description: 'As bikes mais cobiçadas e equipamentos premium. Encontre raridades e pechinchas que só existem aqui.',
       link: '/market',
@@ -26,7 +26,7 @@ const EditorialFeaturedSections = () => {
     },
     {
       id: 3,
-      icon: <Users size={32} className="text-trailflow-green" />,
+      icon: <Users size={32} className="text-trailflow-dark" />,
       title: 'Comunidade Viva',
       description: 'Conecte-se com riders apaixonados, compartilhe suas conquistas e faça parte da família NuFlow.',
       link: '/comunidade',
@@ -52,53 +52,44 @@ const EditorialFeaturedSections = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} className="section-padding bg-trailflow-medium relative overflow-hidden">
+    <section ref={sectionRef} className="py-32 bg-gradient-to-b from-trailflow-medium via-trailflow-white to-trailflow-white relative overflow-hidden">
       
       {/* Clean Editorial Background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-trailflow-medium via-trailflow-medium/98 to-trailflow-dark/60"></div>
-      
-      {/* Subtle Logo Watermark */}
-      <div className="absolute inset-0 flex items-center justify-center opacity-[0.01]">
-        <img 
-          src="/lovable-uploads/adf44db0-c66b-4031-a615-a8e98fe5f77f.png" 
-          alt="NuFlow Mountain Logo" 
-          className="w-96 h-96 object-contain"
-        />
-      </div>
+      <div className="absolute inset-0 bg-gradient-to-b from-trailflow-medium/20 via-transparent to-transparent"></div>
       
       <div className="container mx-auto px-8 sm:px-12 lg:px-16 max-w-7xl relative z-10">
         
         {/* Enhanced Title Section */}
-        <div className="text-center mb-24">
-          <div className="breathing-room-lg">
-            <h2 className={`text-6xl sm:text-7xl md:text-8xl font-bold text-white mb-12 leading-tight transition-all duration-1200 ease-out font-mono ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
+        <div className="text-center mb-32">
+          <div className="max-w-5xl mx-auto">
+            <h2 className={`text-6xl sm:text-7xl md:text-8xl font-bold text-trailflow-dark mb-16 leading-tight transition-all duration-1200 ease-out font-mono ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
               Sua Jornada
             </h2>
-            <p className={`text-2xl sm:text-3xl text-white/90 max-w-5xl mx-auto font-light leading-relaxed transition-all duration-1200 ease-out delay-200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
+            <p className={`text-2xl sm:text-3xl text-trailflow-medium max-w-5xl mx-auto font-light leading-relaxed transition-all duration-1200 ease-out delay-200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
               Três universos conectados para transformar sua paixão pelo ciclismo
             </p>
           </div>
         </div>
 
         {/* Enhanced Grid with Better Spacing */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-16 lg:gap-20">
           {features.map((feature, index) => (
             <div 
               key={feature.id} 
               className={`group transition-all duration-1200 ease-out ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}
               style={{ animationDelay: `${0.4 + (index * 0.2)}s` }}
             >
-              <div className="bg-white/98 backdrop-blur-sm border border-white/20 rounded-3xl breathing-room-lg hover:shadow-xl transition-all duration-500 ease-out hover:-translate-y-3 h-full hover:bg-white group-hover:border-trailflow-green/30">
+              <div className="bg-white rounded-3xl p-12 hover:shadow-xl transition-all duration-500 ease-out hover:-translate-y-3 h-full border border-trailflow-lighter/30 hover:border-trailflow-medium/20">
                 
                 {/* Icon with Enhanced Spacing */}
-                <div className="mb-8">
-                  <div className="w-20 h-20 bg-trailflow-green/10 rounded-3xl flex items-center justify-center group-hover:bg-trailflow-green/20 transition-all duration-500 ease-out group-hover:scale-110">
+                <div className="mb-12">
+                  <div className="w-20 h-20 bg-trailflow-lighter/50 rounded-3xl flex items-center justify-center group-hover:bg-trailflow-lighter/70 transition-all duration-500 ease-out group-hover:scale-110">
                     {feature.icon}
                   </div>
                 </div>
                 
                 {/* Content with Perfect Typography */}
-                <div className="space-y-6">
+                <div className="space-y-8">
                   <h3 className="text-3xl font-bold text-trailflow-dark group-hover:text-trailflow-medium transition-all duration-300 leading-tight">
                     {feature.title}
                   </h3>
@@ -107,10 +98,10 @@ const EditorialFeaturedSections = () => {
                   </p>
                   
                   {/* Link with Enhanced Spacing */}
-                  <div className="pt-4">
+                  <div className="pt-6">
                     <Link 
                       to={feature.link} 
-                      className="inline-flex items-center text-lg text-trailflow-green font-medium hover:text-trailflow-dark transition-all duration-300 ease-out group-hover:translate-x-1"
+                      className="inline-flex items-center text-lg text-trailflow-dark font-medium hover:text-trailflow-medium transition-all duration-300 ease-out group-hover:translate-x-1"
                     >
                       {feature.linkText}
                       <ArrowRight size={18} className="ml-3 transition-transform duration-300" />
@@ -123,14 +114,16 @@ const EditorialFeaturedSections = () => {
         </div>
         
         {/* Enhanced CTA with Perfect Spacing */}
-        <div className={`text-center mt-32 transition-all duration-1200 ease-out delay-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
-          <div className="inline-block bg-white/10 backdrop-blur-lg breathing-room-xl rounded-3xl border border-white/20 hover:bg-white/15 transition-all duration-500">
+        <div className={`text-center mt-40 transition-all duration-1200 ease-out delay-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
+          <div className="inline-block bg-trailflow-dark rounded-3xl p-16 text-white max-w-3xl mx-auto">
             <div className="space-y-8">
-              <h3 className="text-3xl font-bold text-white">Pronto para começar?</h3>
-              <p className="text-xl text-white/90 font-light leading-relaxed">Junte-se a milhares de ciclistas que já transformaram sua paixão em aventura.</p>
+              <h3 className="text-4xl font-bold">Pronto para começar?</h3>
+              <p className="text-xl font-light leading-relaxed opacity-90">
+                Junte-se a milhares de ciclistas que já transformaram sua paixão em aventura.
+              </p>
               <Link 
                 to="/login" 
-                className="inline-flex items-center bg-trailflow-green text-white px-10 py-4 rounded-full font-medium text-lg hover:bg-trailflow-green/90 transition-all duration-300 hover:shadow-lg hover:scale-[1.02]"
+                className="inline-flex items-center bg-white text-trailflow-dark px-10 py-4 rounded-full font-medium text-lg hover:bg-trailflow-lighter transition-all duration-300 hover:shadow-lg hover:scale-[1.02]"
               >
                 Começar Agora
                 <ArrowRight size={20} className="ml-3" />

@@ -24,7 +24,7 @@ const EditorialHero = () => {
   }, []);
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-trailflow-medium">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-trailflow-medium pt-24 md:pt-32">
       {/* Clean Editorial Background */}
       <div className="absolute inset-0 bg-gradient-to-br from-trailflow-medium via-trailflow-medium/95 to-trailflow-dark/80"></div>
       
@@ -38,16 +38,16 @@ const EditorialHero = () => {
       </div>
       
       <div className="container mx-auto px-8 sm:px-12 lg:px-16 max-w-7xl relative z-10">
-        <div className="text-center space-y-12">
+        <div className="text-center space-y-16">
           
           {/* Dramatic Typography with Perfect Spacing */}
           <div className={`transition-all duration-1200 ease-out ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
-            <h1 className="text-7xl sm:text-8xl md:text-9xl lg:text-[12rem] xl:text-[14rem] font-bold text-white leading-[0.85] tracking-tight mb-12 font-mono">
+            <h1 className="text-7xl sm:text-8xl md:text-9xl lg:text-[12rem] xl:text-[14rem] font-bold text-white leading-[0.85] tracking-tight mb-16 font-mono">
               <span className="block">NuFlow</span>
             </h1>
             
             {/* Dynamic Phrase with Enhanced Spacing */}
-            <div className="relative overflow-hidden mb-20">
+            <div className="relative overflow-hidden mb-24">
               <h2 className={`text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-white font-light transition-all duration-700 ease-out ${visible ? 'opacity-100 transform-none' : 'opacity-0 translate-y-6'}`}>
                 {phrases[currentPhrase]}
               </h2>
@@ -56,7 +56,7 @@ const EditorialHero = () => {
           
           {/* Description with Perfect Typography */}
           <div className={`transition-all duration-1200 ease-out delay-300 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
-            <div className="max-w-6xl mx-auto breathing-room-lg">
+            <div className="max-w-6xl mx-auto mb-24">
               <p className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-white/95 leading-relaxed font-light">
                 A plataforma completa para ciclistas.{' '}
                 <span className="text-white font-medium">
@@ -67,7 +67,7 @@ const EditorialHero = () => {
           </div>
           
           {/* CTAs with Enhanced Spacing */}
-          <div className={`flex flex-col sm:flex-row items-center justify-center gap-8 pt-16 transition-all duration-1200 ease-out delay-500 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
+          <div className={`flex flex-col sm:flex-row items-center justify-center gap-8 mb-24 transition-all duration-1200 ease-out delay-500 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
             <Button variant="accent" size="lg" className="font-medium shadow-xl hover:shadow-2xl transform hover:scale-[1.02] transition-all duration-300 px-10 py-5 text-lg" asChild>
               <a href="/roles">
                 Explorar Trilhas
@@ -84,22 +84,22 @@ const EditorialHero = () => {
           </div>
           
           {/* Stats with Mathematical Spacing */}
-          <div className={`pt-24 transition-all duration-1200 ease-out delay-700 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
+          <div className={`transition-all duration-1200 ease-out delay-700 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-16 max-w-4xl mx-auto">
-              <div className="text-center breathing-room">
-                <div className="text-5xl sm:text-6xl md:text-7xl font-bold text-white mb-4 font-mono leading-none">500+</div>
+              <div className="text-center">
+                <div className="text-5xl sm:text-6xl md:text-7xl font-bold text-white mb-6 font-mono leading-none">500+</div>
                 <div className="text-lg text-white/80 font-medium tracking-wide">Trilhas</div>
               </div>
-              <div className="text-center breathing-room">
-                <div className="text-5xl sm:text-6xl md:text-7xl font-bold text-white mb-4 font-mono leading-none">2k+</div>
+              <div className="text-center">
+                <div className="text-5xl sm:text-6xl md:text-7xl font-bold text-white mb-6 font-mono leading-none">2k+</div>
                 <div className="text-lg text-white/80 font-medium tracking-wide">Ciclistas</div>
               </div>
-              <div className="text-center breathing-room">
-                <div className="text-5xl sm:text-6xl md:text-7xl font-bold text-white mb-4 font-mono leading-none">1k+</div>
+              <div className="text-center">
+                <div className="text-5xl sm:text-6xl md:text-7xl font-bold text-white mb-6 font-mono leading-none">1k+</div>
                 <div className="text-lg text-white/80 font-medium tracking-wide">Produtos</div>
               </div>
-              <div className="text-center breathing-room">
-                <div className="text-5xl sm:text-6xl md:text-7xl font-bold text-white mb-4 font-mono leading-none">50+</div>
+              <div className="text-center">
+                <div className="text-5xl sm:text-6xl md:text-7xl font-bold text-white mb-6 font-mono leading-none">50+</div>
                 <div className="text-lg text-white/80 font-medium tracking-wide">Eventos</div>
               </div>
             </div>
@@ -109,7 +109,7 @@ const EditorialHero = () => {
       
       {/* Enhanced Scroll Indicator */}
       <div className={`absolute bottom-12 left-1/2 transform -translate-x-1/2 transition-all duration-1500 ease-out delay-1000 ${isLoaded ? 'opacity-100' : 'opacity-0'} ${isMobile ? 'hidden' : 'block'}`}>
-        <div className="flex flex-col items-center space-y-4 breathing-room-sm">
+        <div className="flex flex-col items-center space-y-4">
           <div className="text-sm text-white/70 font-medium uppercase tracking-[0.2em]">Descubra mais</div>
           <div className="w-px h-20 bg-white/40"></div>
           <div className="w-3 h-3 bg-white/60 rounded-full animate-pulse"></div>
