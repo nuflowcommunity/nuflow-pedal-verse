@@ -6,23 +6,25 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all duration-300 focus:outline-none focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-trailflow-green focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
   {
     variants: {
       variant: {
-        default: "bg-nuflow-forest text-white hover:bg-nuflow-darkForest hover:scale-[1.02] hover:shadow-lg focus:bg-nuflow-darkForest focus:scale-[1.02] focus:shadow-lg",
-        destructive: "bg-red-500 text-white hover:bg-red-600 hover:scale-[1.02] hover:shadow-lg focus:bg-red-600 focus:scale-[1.02] focus:shadow-lg",
-        outline: "bg-nuflow-emerald text-nuflow-forest border-2 border-nuflow-emerald hover:bg-nuflow-mint hover:scale-[1.02] hover:shadow-lg focus:bg-nuflow-mint focus:scale-[1.02] focus:shadow-lg",
-        secondary: "bg-gray-100 text-gray-900 hover:bg-gray-200 hover:scale-[1.02] hover:shadow-lg focus:bg-gray-200 focus:scale-[1.02] focus:shadow-lg",
-        ghost: "text-nuflow-forest hover:bg-nuflow-mint/50 hover:scale-[1.02] focus:bg-nuflow-mint/50 focus:scale-[1.02]",
-        link: "text-nuflow-forest underline-offset-4 hover:underline hover:scale-[1.02] focus:scale-[1.02]",
-        navbarPrimary: "bg-nuflow-emerald text-nuflow-forest border-2 border-nuflow-emerald hover:bg-nuflow-mint hover:text-nuflow-darkForest hover:scale-[1.02] hover:shadow-lg focus:bg-nuflow-mint focus:text-nuflow-darkForest focus:scale-[1.02] focus:shadow-lg",
+        default: "bg-trailflow-green text-white hover:bg-trailflow-green-dark hover:shadow-md hover:scale-[1.02] focus:bg-trailflow-green-dark active:scale-[0.98]",
+        destructive: "bg-red-500 text-white hover:bg-red-600 hover:shadow-md hover:scale-[1.02] focus:bg-red-600 active:scale-[0.98]",
+        outline: "border-2 border-trailflow-green bg-transparent text-trailflow-green hover:bg-trailflow-green hover:text-white hover:shadow-md hover:scale-[1.02] focus:bg-trailflow-green focus:text-white active:scale-[0.98]",
+        secondary: "bg-trailflow-lighter text-trailflow-dark hover:bg-trailflow-light hover:shadow-md hover:scale-[1.02] focus:bg-trailflow-light active:scale-[0.98]",
+        ghost: "text-trailflow-green hover:bg-trailflow-green/10 hover:text-trailflow-green-dark hover:scale-[1.02] focus:bg-trailflow-green/10 active:scale-[0.98]",
+        link: "text-trailflow-green underline-offset-4 hover:underline hover:text-trailflow-green-dark hover:scale-[1.02] focus:scale-[1.02] active:scale-[0.98]",
+        dark: "bg-trailflow-dark text-white hover:bg-trailflow-medium hover:shadow-md hover:scale-[1.02] focus:bg-trailflow-medium active:scale-[0.98]",
+        accent: "bg-trailflow-accent text-trailflow-dark hover:bg-trailflow-green/10 hover:shadow-md hover:scale-[1.02] focus:bg-trailflow-green/10 active:scale-[0.98]",
       },
       size: {
-        default: "h-10 px-4 py-2",
-        sm: "h-9 rounded-md px-3",
-        lg: "h-11 rounded-md px-8",
-        icon: "h-10 w-10",
+        default: "h-11 px-6 py-2.5",
+        sm: "h-9 rounded-md px-4 text-xs",
+        lg: "h-12 rounded-lg px-8 text-base",
+        xl: "h-14 rounded-lg px-10 text-lg",
+        icon: "h-11 w-11",
       },
     },
     defaultVariants: {

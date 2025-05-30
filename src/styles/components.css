@@ -1,80 +1,218 @@
 
-/* Container utilities - melhor responsividade */
+/* TrailFlow Components - Polymer Style */
+
+/* Container utilities with generous spacing */
 .container-custom {
-  @apply mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl;
+  @apply mx-auto px-6 sm:px-8 lg:px-12 max-w-7xl;
 }
 
-/* Card components with proper contrast and better responsivity */
-.card-highlight {
-  @apply bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden transition-all duration-300 hover:shadow-lg hover:scale-[1.02] hover:border-nuflow-emerald/30;
+.container-narrow {
+  @apply mx-auto px-6 sm:px-8 max-w-4xl;
 }
 
-.card-tag {
-  @apply absolute top-2 sm:top-3 left-2 sm:left-3 z-10 bg-nuflow-forest text-white px-2 sm:px-3 py-1 rounded-full text-xs font-medium shadow-sm;
+.container-wide {
+  @apply mx-auto px-6 sm:px-8 lg:px-12 max-w-[1400px];
 }
 
-/* Button styles with sophisticated animations - NO OUTLINES */
+/* Modern card components */
+.card-modern {
+  @apply bg-white rounded-xl border border-trailflow-lighter/50 overflow-hidden transition-all duration-300 hover:shadow-lg hover:scale-[1.02] hover:border-trailflow-green/20;
+}
+
+.card-minimal {
+  @apply bg-white rounded-lg border border-trailflow-lighter/30 overflow-hidden transition-all duration-200 hover:shadow-md hover:border-trailflow-green/30;
+}
+
+.card-accent {
+  @apply bg-trailflow-accent/30 rounded-xl border border-trailflow-green/20 overflow-hidden transition-all duration-300 hover:shadow-md hover:bg-trailflow-accent/50;
+}
+
+/* Button styles - modern and clean */
 .btn-primary {
-  @apply bg-nuflow-forest text-white px-4 py-2 rounded-lg font-medium transition-all duration-300 hover:bg-nuflow-darkForest hover:scale-[1.02] hover:shadow-lg focus:bg-nuflow-darkForest focus:scale-[1.02] focus:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:shadow-none;
+  @apply bg-trailflow-green text-white px-6 py-3 rounded-lg font-medium transition-all duration-200 hover:bg-trailflow-green-dark hover:scale-[1.02] hover:shadow-md focus:bg-trailflow-green-dark focus:scale-[1.02] focus:shadow-md active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:shadow-none;
 }
 
 .btn-secondary {
-  @apply bg-nuflow-emerald text-nuflow-forest border-2 border-nuflow-emerald px-4 py-2 rounded-lg font-medium transition-all duration-300 hover:bg-nuflow-mint hover:scale-[1.02] hover:shadow-lg focus:bg-nuflow-mint focus:scale-[1.02] focus:shadow-lg;
+  @apply border-2 border-trailflow-green bg-transparent text-trailflow-green px-6 py-3 rounded-lg font-medium transition-all duration-200 hover:bg-trailflow-green hover:text-white hover:scale-[1.02] hover:shadow-md focus:bg-trailflow-green focus:text-white focus:scale-[1.02] focus:shadow-md active:scale-[0.98];
 }
 
 .btn-ghost {
-  @apply text-nuflow-forest px-4 py-2 rounded-lg font-medium transition-all duration-300 hover:bg-nuflow-mint/50 hover:scale-[1.02] focus:bg-nuflow-mint/50 focus:scale-[1.02];
+  @apply text-trailflow-green px-6 py-3 rounded-lg font-medium transition-all duration-200 hover:bg-trailflow-green/10 hover:scale-[1.02] focus:bg-trailflow-green/10 focus:scale-[1.02] active:scale-[0.98];
+}
+
+.btn-dark {
+  @apply bg-trailflow-dark text-white px-6 py-3 rounded-lg font-medium transition-all duration-200 hover:bg-trailflow-medium hover:scale-[1.02] hover:shadow-md focus:bg-trailflow-medium focus:scale-[1.02] focus:shadow-md active:scale-[0.98];
+}
+
+/* Form elements */
+.input-modern {
+  @apply w-full px-4 py-3 border border-trailflow-lighter rounded-lg bg-white text-trailflow-dark placeholder:text-trailflow-light transition-all duration-200 focus:border-trailflow-green focus:ring-2 focus:ring-trailflow-green/20 focus:outline-none hover:border-trailflow-light;
+}
+
+.input-error {
+  @apply border-red-500 focus:border-red-500 focus:ring-red-500/20;
+}
+
+.input-success {
+  @apply border-trailflow-green focus:border-trailflow-green focus:ring-trailflow-green/20;
+}
+
+/* Badge components */
+.badge-primary {
+  @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-trailflow-green text-white;
+}
+
+.badge-secondary {
+  @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-trailflow-lighter text-trailflow-dark;
+}
+
+.badge-outline {
+  @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium border border-trailflow-green text-trailflow-green bg-transparent;
+}
+
+.badge-accent {
+  @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-trailflow-accent text-trailflow-dark;
 }
 
 /* Loading states */
 .loading-overlay {
-  @apply absolute inset-0 bg-white/80 backdrop-blur-sm flex items-center justify-center z-50;
+  @apply absolute inset-0 bg-white/80 backdrop-blur-sm flex items-center justify-center z-50 rounded-lg;
 }
 
 .loading-spinner {
-  @apply animate-spin rounded-full h-8 w-8 border-b-2 border-nuflow-forest;
+  @apply animate-spin rounded-full h-8 w-8 border-b-2 border-trailflow-green;
 }
 
-/* Dropdown improvements with solid background and high z-index */
-.dropdown-content {
-  @apply bg-white border border-gray-200 rounded-lg shadow-lg z-50 min-w-max;
+.loading-dots {
+  @apply flex space-x-1;
 }
 
-/* Typography responsiva */
-.heading-responsive {
-  @apply text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl;
+.loading-dots div {
+  @apply w-2 h-2 bg-trailflow-green rounded-full animate-pulse;
 }
 
-.subheading-responsive {
-  @apply text-lg sm:text-xl md:text-2xl;
+.loading-dots div:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.loading-dots div:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+/* Dropdown and menu improvements */
+.dropdown-modern {
+  @apply bg-white border border-trailflow-lighter rounded-xl shadow-lg z-50 min-w-max overflow-hidden;
+}
+
+.dropdown-item {
+  @apply px-4 py-3 text-sm text-trailflow-dark hover:bg-trailflow-accent/50 hover:text-trailflow-green transition-all duration-150 cursor-pointer;
+}
+
+/* Grid layouts - responsive and spacious */
+.grid-modern {
+  @apply grid gap-6 sm:gap-8;
+}
+
+.grid-auto {
+  @apply grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4;
+}
+
+.grid-2 {
+  @apply grid-cols-1 md:grid-cols-2;
+}
+
+.grid-3 {
+  @apply grid-cols-1 sm:grid-cols-2 lg:grid-cols-3;
+}
+
+.grid-4 {
+  @apply grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4;
+}
+
+/* Spacing utilities - generous like Polymer */
+.space-y-modern > * + * {
+  margin-top: 2rem;
+}
+
+.space-y-modern-sm > * + * {
+  margin-top: 1rem;
+}
+
+.space-y-modern-lg > * + * {
+  margin-top: 3rem;
+}
+
+/* Typography utilities */
+.text-gradient {
+  @apply bg-gradient-to-r from-trailflow-green to-trailflow-green-dark bg-clip-text text-transparent;
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+/* Animation utilities */
+.animate-fade-up {
+  animation: fade-in 0.6s ease-out;
+}
+
+.animate-fade-up-delayed {
+  animation: fade-in-delayed 1.2s ease-out;
+}
+
+.animate-scale-in {
+  animation: scale-in 0.3s ease-out;
+}
+
+/* Hover effects */
+.hover-lift {
+  @apply transition-transform duration-200 hover:scale-[1.02] hover:shadow-md;
+}
+
+.hover-lift-sm {
+  @apply transition-transform duration-200 hover:scale-[1.01] hover:shadow-sm;
+}
+
+/* Focus styles */
+.focus-ring {
+  @apply focus:ring-2 focus:ring-trailflow-green focus:ring-offset-2 focus:outline-none;
+}
+
+/* Modern shadows */
+.shadow-modern {
+  box-shadow: 0 4px 6px -1px rgba(38, 38, 38, 0.1), 0 2px 4px -1px rgba(38, 38, 38, 0.06);
+}
+
+.shadow-modern-lg {
+  box-shadow: 0 10px 15px -3px rgba(38, 38, 38, 0.1), 0 4px 6px -2px rgba(38, 38, 38, 0.05);
+}
+
+/* Responsive utilities */
+.hide-mobile {
+  @apply hidden sm:block;
+}
+
+.show-mobile {
+  @apply block sm:hidden;
 }
 
 .text-responsive {
-  @apply text-sm sm:text-base md:text-lg;
+  @apply text-sm sm:text-base lg:text-lg;
 }
 
-/* Spacing responsivo */
-.spacing-responsive-sm {
-  @apply p-2 sm:p-4;
+.text-responsive-lg {
+  @apply text-lg sm:text-xl lg:text-2xl;
 }
 
-.spacing-responsive-md {
-  @apply p-4 sm:p-6 md:p-8;
+/* Section utilities */
+.section {
+  @apply py-16 sm:py-20 md:py-24 lg:py-32;
 }
 
-.spacing-responsive-lg {
-  @apply p-6 sm:p-8 md:p-12;
+.section-sm {
+  @apply py-8 sm:py-12 md:py-16;
 }
 
-/* Grid responsivo */
-.grid-responsive-auto {
-  @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6;
-}
-
-.grid-responsive-2 {
-  @apply grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6;
-}
-
-.grid-responsive-3 {
-  @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6;
+.section-lg {
+  @apply py-20 sm:py-24 md:py-32 lg:py-40;
 }

@@ -1,152 +1,229 @@
 
-/* Base styles */
-* {
+/* TrailFlow Base Styles - Polymer Inspired */
+
+/* Import Inter font */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+/* Reset and base styles */
+*,
+*::before,
+*::after {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-/* Remove all outlines globally */
+/* Remove all outlines globally for clean design */
 *,
 *:focus,
 *:focus-visible,
 *:active {
   outline: none !important;
-  box-shadow: none !important;
+}
+
+/* Modern focus styles using TrailFlow colors */
+*:focus-visible {
+  box-shadow: 0 0 0 2px var(--trailflow-green) !important;
+  border-radius: 6px;
 }
 
 html {
   scroll-behavior: smooth;
+  font-feature-settings: 'cv11', 'ss01';
+  font-variation-settings: 'opsz' 32;
 }
 
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-weight: 400;
   line-height: 1.6;
-  color: var(--nuflow-charcoal);
-  background-color: #ffffff;
+  color: var(--trailflow-dark);
+  background-color: var(--trailflow-white);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  margin: 0;
-  padding: 0;
+  text-rendering: optimizeLegibility;
 }
 
-/* Typography improvements with better contrast and responsiveness */
-.font-heading {
-  font-family: 'Poppins', sans-serif;
-  line-height: 1.2;
-}
-
-.font-body {
-  font-family: 'Inter', sans-serif;
-  line-height: 1.6;
-}
-
-/* Responsive typography base */
+/* Typography hierarchy - Polymer style */
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Poppins', sans-serif;
-  line-height: 1.2;
+  font-family: 'Inter', system-ui, sans-serif;
   font-weight: 600;
-  color: var(--nuflow-charcoal);
+  line-height: 1.1;
+  color: var(--trailflow-dark);
+  letter-spacing: -0.025em;
   margin: 0;
 }
 
 h1 {
-  @apply text-3xl sm:text-4xl md:text-5xl lg:text-6xl;
+  @apply text-4xl sm:text-5xl md:text-6xl lg:text-7xl;
+  font-weight: 700;
+  letter-spacing: -0.04em;
 }
 
 h2 {
-  @apply text-2xl sm:text-3xl md:text-4xl lg:text-5xl;
+  @apply text-3xl sm:text-4xl md:text-5xl lg:text-6xl;
+  font-weight: 600;
+  letter-spacing: -0.03em;
 }
 
 h3 {
-  @apply text-xl sm:text-2xl md:text-3xl;
+  @apply text-2xl sm:text-3xl md:text-4xl;
+  font-weight: 600;
+  letter-spacing: -0.02em;
 }
 
 h4 {
-  @apply text-lg sm:text-xl md:text-2xl;
+  @apply text-xl sm:text-2xl md:text-3xl;
+  font-weight: 600;
 }
 
 h5 {
-  @apply text-base sm:text-lg md:text-xl;
+  @apply text-lg sm:text-xl md:text-2xl;
+  font-weight: 500;
 }
 
 h6 {
-  @apply text-sm sm:text-base md:text-lg;
+  @apply text-base sm:text-lg md:text-xl;
+  font-weight: 500;
 }
 
 p {
-  @apply text-sm sm:text-base md:text-lg;
+  @apply text-base sm:text-lg;
   line-height: 1.7;
-  margin: 0 0 1rem 0;
+  margin: 0;
+  color: var(--trailflow-medium);
 }
 
-/* Improved link accessibility with sophisticated animations */
+.text-large {
+  @apply text-lg sm:text-xl md:text-2xl;
+  line-height: 1.6;
+}
+
+.text-small {
+  @apply text-sm md:text-base;
+  line-height: 1.5;
+}
+
+/* Links with modern hover effects */
 a {
-  color: var(--nuflow-forest);
+  color: var(--trailflow-green);
   text-decoration: none;
-  transition: all 0.3s ease;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 a:hover {
-  color: var(--nuflow-emerald);
+  color: var(--trailflow-green-dark);
   transform: translateY(-1px);
 }
 
-/* Better focus states for accessibility */
-button:focus-visible,
-a:focus-visible,
-input:focus-visible,
-select:focus-visible,
-textarea:focus-visible {
-  outline: 2px solid var(--nuflow-emerald) !important;
-  outline-offset: 2px !important;
-  box-shadow: 0 0 0 2px var(--nuflow-emerald) !important;
-}
-
-/* Responsive containers */
-.container-fluid {
-  @apply w-full px-4 sm:px-6 lg:px-8;
+/* Container system - more spacious like Polymer */
+.container-modern {
+  @apply mx-auto px-6 sm:px-8 lg:px-12;
+  max-width: 1200px;
 }
 
 .container-narrow {
-  @apply max-w-4xl mx-auto px-4 sm:px-6 lg:px-8;
+  @apply mx-auto px-6 sm:px-8;
+  max-width: 800px;
 }
 
 .container-wide {
-  @apply max-w-8xl mx-auto px-4 sm:px-6 lg:px-8;
-}
-
-/* Better text rendering */
-.text-render-optimized {
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  @apply mx-auto px-6 sm:px-8 lg:px-12;
+  max-width: 1400px;
 }
 
 /* Responsive utilities */
-.hide-on-mobile {
-  @apply hidden sm:block;
-}
-
-.show-on-mobile {
-  @apply block sm:hidden;
-}
-
-.center-content {
-  @apply flex items-center justify-center;
-}
-
-.center-text {
-  @apply text-center;
-}
-
-/* Better spacing system */
 .section-padding {
-  @apply py-8 sm:py-12 md:py-16 lg:py-20;
+  @apply py-16 sm:py-20 md:py-24 lg:py-32;
 }
 
 .section-padding-sm {
-  @apply py-4 sm:py-6 md:py-8;
+  @apply py-8 sm:py-12 md:py-16;
 }
 
 .section-padding-lg {
-  @apply py-12 sm:py-16 md:py-20 lg:py-24;
+  @apply py-20 sm:py-24 md:py-32 lg:py-40;
+}
+
+/* Modern spacing system */
+.space-modern > * + * {
+  margin-top: 2rem;
+}
+
+.space-modern-sm > * + * {
+  margin-top: 1rem;
+}
+
+.space-modern-lg > * + * {
+  margin-top: 3rem;
+}
+
+/* Accessibility improvements */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Selection styles */
+::selection {
+  background-color: var(--trailflow-green);
+  color: var(--trailflow-white);
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--trailflow-lighter);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--trailflow-light);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--trailflow-medium);
+}
+
+/* Modern image handling */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Button reset for custom styling */
+button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+/* Input reset */
+input, textarea, select {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+/* Modern loading states */
+.loading-shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--trailflow-lighter) 25%,
+    var(--trailflow-accent) 50%,
+    var(--trailflow-lighter) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
 }

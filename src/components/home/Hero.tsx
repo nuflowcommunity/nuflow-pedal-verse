@@ -1,10 +1,10 @@
 
 import React, { useEffect, useState } from 'react';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Play } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useIsMobile } from '@/hooks/use-mobile';
 
-const phrases = ['Pedale.', 'Compre.', 'Conecte.'];
+const phrases = ['Pedale.', 'Explore.', 'Conecte.'];
 
 const Hero = () => {
   const [currentPhrase, setCurrentPhrase] = useState(0);
@@ -20,63 +20,101 @@ const Hero = () => {
       setTimeout(() => {
         setCurrentPhrase(prev => (prev + 1) % phrases.length);
         setVisible(true);
-      }, 500);
+      }, 300);
     }, 3000);
     return () => clearInterval(interval);
   }, []);
 
   return (
-    <section className="relative bg-gradient-to-br from-nuflow-darkForest via-nuflow-forest to-nuflow-deepGreen text-white overflow-hidden">
-      {/* Background with subtle animation */}
-      <div className="absolute inset-0 opacity-10 bg-gradient-to-b from-nuflow-mint/20 to-transparent animate-pulse"></div>
+    <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-trailflow-white via-trailflow-accent/30 to-trailflow-white overflow-hidden">
+      {/* Background Pattern */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(132,176,103,0.1),transparent_50%)]"></div>
       
-      <div className="container-custom relative z-10 py-20 md:py-32">
-        <div className="max-w-4xl mx-auto text-center">
+      <div className="container-modern relative z-10 text-center">
+        <div className="max-w-5xl mx-auto space-y-8">
           
-          <h1 className={`text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-heading font-bold mb-6 sm:mb-8 leading-tight transition-all duration-700 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-            <span className="block sm:inline mr-0 sm:mr-4 animate-fadeIn" style={{animationDelay: '0.3s'}}>
-              Explore.
-            </span>
-            <span className={`block sm:inline transition-all duration-500 ease-in-out ${visible ? 'opacity-100' : 'opacity-0'} mt-2 sm:mt-0`}>
-              {phrases[currentPhrase]}
-            </span>
-          </h1>
+          {/* Main Heading */}
+          <div className={`transition-all duration-700 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+            <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-bold text-trailflow-dark leading-none tracking-tight mb-4">
+              <span className="block animate-fade-in">
+                TrailFlow
+              </span>
+              <span 
+                className={`block text-trailflow-green transition-all duration-500 ease-in-out ${
+                  visible ? 'opacity-100 transform-none' : 'opacity-0 -translate-y-4'
+                }`}
+              >
+                {phrases[currentPhrase]}
+              </span>
+            </h1>
+          </div>
           
-          <p className={`text-lg sm:text-xl md:text-2xl text-white/90 mb-8 sm:mb-12 max-w-3xl mx-auto leading-relaxed transition-all duration-700 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
-             style={{animationDelay: '0.6s'}}>
-            Encontre experiências, compre bikes, viva a cultura da bike em um só lugar.
-          </p>
+          {/* Description */}
+          <div className={`transition-all duration-700 delay-300 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+            <p className="text-xl sm:text-2xl md:text-3xl lg:text-4xl text-trailflow-medium max-w-4xl mx-auto leading-relaxed font-light">
+              A plataforma completa para ciclistas.{' '}
+              <span className="text-trailflow-green font-medium">
+                Descubra trilhas, compre equipamentos, conecte-se com a comunidade.
+              </span>
+            </p>
+          </div>
           
-          <div className={`flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 transition-all duration-700 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`} 
-                style={{animationDelay: '0.9s'}}>
+          {/* CTA Buttons */}
+          <div className={`flex flex-col sm:flex-row items-center justify-center gap-6 pt-8 transition-all duration-700 delay-500 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
             <Button 
-              size="lg" 
-              className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg rounded-full group bg-nuflow-emerald text-nuflow-forest hover:bg-nuflow-mint hover:text-nuflow-darkForest transition-all duration-300 hover:scale-105 hover:shadow-xl font-semibold"
+              size="xl" 
+              className="group font-medium text-lg px-10 py-4 h-auto hover:shadow-xl"
               asChild
             >
               <a href="/roles">
-                Descobrir Rolês
+                Explorar Trilhas
                 <ArrowRight size={20} className="ml-2 transition-transform duration-300 group-hover:translate-x-1" />
               </a>
             </Button>
             
             <Button 
-              size="lg" 
-              className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg rounded-full group bg-nuflow-emerald text-nuflow-forest hover:bg-nuflow-mint hover:text-nuflow-darkForest transition-all duration-300 hover:scale-105 hover:shadow-xl font-semibold"
+              variant="outline" 
+              size="xl"
+              className="group font-medium text-lg px-10 py-4 h-auto border-2 hover:shadow-xl"
               asChild
             >
               <a href="/market">
-                Visitar Marketplace
-                <ArrowRight size={20} className="ml-2 transition-transform duration-300 group-hover:translate-x-1" />
+                <Play size={18} className="mr-2" />
+                Ver Demo
               </a>
             </Button>
+          </div>
+          
+          {/* Stats */}
+          <div className={`pt-16 transition-all duration-700 delay-700 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-2xl mx-auto">
+              <div className="text-center">
+                <div className="text-3xl sm:text-4xl font-bold text-trailflow-green">500+</div>
+                <div className="text-sm sm:text-base text-trailflow-light font-medium">Trilhas</div>
+              </div>
+              <div className="text-center">
+                <div className="text-3xl sm:text-4xl font-bold text-trailflow-green">2k+</div>
+                <div className="text-sm sm:text-base text-trailflow-light font-medium">Ciclistas</div>
+              </div>
+              <div className="text-center">
+                <div className="text-3xl sm:text-4xl font-bold text-trailflow-green">1k+</div>
+                <div className="text-sm sm:text-base text-trailflow-light font-medium">Produtos</div>
+              </div>
+              <div className="text-center">
+                <div className="text-3xl sm:text-4xl font-bold text-trailflow-green">50+</div>
+                <div className="text-sm sm:text-base text-trailflow-light font-medium">Eventos</div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
       
-      <div className={`absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce transition-all duration-700 ${isLoaded ? 'opacity-100' : 'opacity-0'} hidden sm:block`}>
-        <div className="w-8 h-12 border-2 border-white/60 rounded-full flex items-start justify-center hover:border-nuflow-emerald transition-colors duration-300">
-          <div className="w-1.5 h-3 bg-white/60 rounded-full mt-2 animate-scroll-down hover:bg-nuflow-emerald transition-colors duration-300"></div>
+      {/* Scroll Indicator */}
+      <div className={`absolute bottom-8 left-1/2 transform -translate-x-1/2 transition-all duration-700 delay-1000 ${isLoaded ? 'opacity-100' : 'opacity-0'} hide-mobile`}>
+        <div className="flex flex-col items-center space-y-2">
+          <div className="text-xs text-trailflow-light font-medium uppercase tracking-wider">Scroll</div>
+          <div className="w-px h-12 bg-trailflow-lighter"></div>
+          <div className="w-2 h-2 bg-trailflow-green rounded-full animate-pulse"></div>
         </div>
       </div>
     </section>

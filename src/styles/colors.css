@@ -1,17 +1,55 @@
 
-/* Color scheme - padronizado */
+/* TrailFlow Color Palette - Inspirado no design Polymer */
 :root {
-  --nuflow-forest: #2D5D31;
-  --nuflow-darkForest: #1E3A20;
-  --nuflow-deepGreen: #0F2A11;
-  --nuflow-moss: #4A7C59;
-  --nuflow-sage: #7BA05B;
-  --nuflow-lime: #A8D982;
-  --nuflow-mint: #C8E6C9;
-  --nuflow-emerald: #11C76F;
-  --nuflow-neon: #66FF91;
-  --nuflow-cream: #F5F7F5;
-  --nuflow-sand: #F0F2E8;
-  --nuflow-mineral: #8D9B87;
-  --nuflow-charcoal: #2C3E2D;
+  /* Core TrailFlow Colors */
+  --trailflow-green: #84B067;
+  --trailflow-dark: #262626;
+  --trailflow-medium: #595959;
+  --trailflow-light: #A6A1A1;
+  --trailflow-lighter: #D9D9D9;
+  --trailflow-accent: #E9F6F6;
+  --trailflow-white: #FFFFFF;
+  --trailflow-black: #000000;
+
+  /* Semantic Colors */
+  --color-primary: var(--trailflow-green);
+  --color-primary-dark: #6B8F4A;
+  --color-primary-light: #A1C285;
+  
+  --color-background: var(--trailflow-white);
+  --color-background-dark: var(--trailflow-dark);
+  --color-background-accent: var(--trailflow-accent);
+  
+  --color-text: var(--trailflow-dark);
+  --color-text-light: var(--trailflow-medium);
+  --color-text-lighter: var(--trailflow-light);
+  --color-text-white: var(--trailflow-white);
+  
+  --color-border: var(--trailflow-lighter);
+  --color-border-light: #F0F0F0;
+  
+  /* Interactive States */
+  --color-hover: rgba(132, 176, 103, 0.1);
+  --color-focus: var(--trailflow-green);
+  --color-active: #6B8F4A;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(38, 38, 38, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(38, 38, 38, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(38, 38, 38, 0.1);
+  --shadow-xl: 0 20px 25px -5px rgba(38, 38, 38, 0.1);
+  
+  /* Gradients */
+  --gradient-primary: linear-gradient(135deg, var(--trailflow-green) 0%, #6B8F4A 100%);
+  --gradient-subtle: linear-gradient(135deg, var(--trailflow-accent) 0%, var(--trailflow-white) 100%);
+  --gradient-dark: linear-gradient(135deg, var(--trailflow-dark) 0%, var(--trailflow-medium) 100%);
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-background: var(--trailflow-dark);
+    --color-text: var(--trailflow-white);
+    --color-border: var(--trailflow-medium);
+  }
 }
