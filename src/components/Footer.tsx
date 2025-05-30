@@ -31,33 +31,33 @@ const Footer = () => {
             <div className="flex space-x-4">
               <a 
                 href="https://instagram.com" 
-                className={`w-10 h-10 bg-transparent border border-trailflow-medium/30 rounded-2xl flex items-center justify-center transition-all duration-300 hover:border-trailflow-green hover:scale-105 hover:shadow-md ${
-                  clickedIcon === 'instagram' ? 'text-trailflow-green border-trailflow-green' : 'text-trailflow-medium hover:text-trailflow-green'
+                className={`transition-all duration-300 hover:scale-110 ${
+                  clickedIcon === 'instagram' ? 'text-trailflow-green' : 'hover:text-trailflow-green'
                 }`}
                 aria-label="Instagram"
                 onClick={() => handleIconClick('instagram')}
               >
-                <Instagram size={18} strokeWidth={1.5} />
+                <Instagram size={24} fill="#595959" color="#595959" strokeWidth={0} />
               </a>
               <a 
                 href="https://facebook.com" 
-                className={`w-10 h-10 bg-transparent border border-trailflow-medium/30 rounded-2xl flex items-center justify-center transition-all duration-300 hover:border-trailflow-green hover:scale-105 hover:shadow-md ${
-                  clickedIcon === 'facebook' ? 'text-trailflow-green border-trailflow-green' : 'text-trailflow-medium hover:text-trailflow-green'
+                className={`transition-all duration-300 hover:scale-110 ${
+                  clickedIcon === 'facebook' ? 'text-trailflow-green' : 'hover:text-trailflow-green'
                 }`}
                 aria-label="Facebook"
                 onClick={() => handleIconClick('facebook')}
               >
-                <Facebook size={18} strokeWidth={1.5} />
+                <Facebook size={24} fill="#595959" color="#595959" strokeWidth={0} />
               </a>
               <a 
                 href="https://twitter.com" 
-                className={`w-10 h-10 bg-transparent border border-trailflow-medium/30 rounded-2xl flex items-center justify-center transition-all duration-300 hover:border-trailflow-green hover:scale-105 hover:shadow-md ${
-                  clickedIcon === 'twitter' ? 'text-trailflow-green border-trailflow-green' : 'text-trailflow-medium hover:text-trailflow-green'
+                className={`transition-all duration-300 hover:scale-110 ${
+                  clickedIcon === 'twitter' ? 'text-trailflow-green' : 'hover:text-trailflow-green'
                 }`}
                 aria-label="Twitter"
                 onClick={() => handleIconClick('twitter')}
               >
-                <Twitter size={18} strokeWidth={1.5} />
+                <Twitter size={24} fill="#595959" color="#595959" strokeWidth={0} />
               </a>
             </div>
           </div>
