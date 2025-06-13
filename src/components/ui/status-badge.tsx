@@ -5,7 +5,7 @@ import { CheckCircle, AlertCircle, Clock, Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface StatusBadgeProps {
-  status: 'success' | 'error' | 'pending' | 'loading';
+  status: 'success' | 'error' | 'pending' | 'loading' | 'active' | 'completed' | 'cancelled' | 'draft' | 'paid';
   text?: string;
   className?: string;
 }
@@ -13,23 +13,48 @@ interface StatusBadgeProps {
 const statusConfig = {
   success: {
     icon: CheckCircle,
-    className: 'bg-green-100 text-green-800 border-green-200',
-    defaultText: 'Concluído',
+    className: 'bg-trailflow-green/20 text-trailflow-green border-trailflow-green/30',
+    defaultText: 'Sucesso',
+  },
+  active: {
+    icon: CheckCircle,
+    className: 'bg-trailflow-green/20 text-trailflow-green border-trailflow-green/30',
+    defaultText: 'Ativo',
+  },
+  paid: {
+    icon: CheckCircle,
+    className: 'bg-trailflow-green/20 text-trailflow-green border-trailflow-green/30',
+    defaultText: 'Pago',
   },
   error: {
     icon: AlertCircle,
-    className: 'bg-red-100 text-red-800 border-red-200',
+    className: 'bg-red-500/20 text-red-600 border-red-500/30',
     defaultText: 'Erro',
+  },
+  cancelled: {
+    icon: AlertCircle,
+    className: 'bg-red-500/20 text-red-600 border-red-500/30',
+    defaultText: 'Cancelado',
   },
   pending: {
     icon: Clock,
-    className: 'bg-yellow-100 text-yellow-800 border-yellow-200',
+    className: 'bg-yellow-500/20 text-yellow-600 border-yellow-500/30',
     defaultText: 'Pendente',
+  },
+  draft: {
+    icon: Clock,
+    className: 'bg-yellow-500/20 text-yellow-600 border-yellow-500/30',
+    defaultText: 'Rascunho',
   },
   loading: {
     icon: Loader2,
-    className: 'bg-blue-100 text-blue-800 border-blue-200',
+    className: 'bg-trailflow-light/20 text-trailflow-medium border-trailflow-light/30',
     defaultText: 'Processando',
+  },
+  completed: {
+    icon: CheckCircle,
+    className: 'bg-trailflow-light/20 text-trailflow-medium border-trailflow-light/30',
+    defaultText: 'Encerrado',
   },
 };
 
@@ -38,14 +63,14 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({
   text,
   className,
 }) => {
-  const config = statusConfig[status];
+  const config = statusConfig[status] || statusConfig.pending;
   const Icon = config.icon;
 
   return (
     <Badge
       variant="outline"
       className={cn(
-        'flex items-center gap-1.5 text-xs font-medium',
+        'flex items-center gap-1.5 text-xs font-medium border',
         config.className,
         className
       )}

@@ -2,6 +2,7 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Calendar, TrendingUp, DollarSign, Clock } from 'lucide-react';
 
 interface PartnerStats {
   total_events: number;
@@ -25,7 +26,7 @@ const ResumoCard: React.FC<ResumoCardProps> = ({ stats, isLoading }) => {
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString('pt-BR', {
+    return date.toLocaleDate('pt-BR', {
       day: '2-digit',
       month: '2-digit',
       year: 'numeric',
@@ -36,16 +37,19 @@ const ResumoCard: React.FC<ResumoCardProps> = ({ stats, isLoading }) => {
 
   if (isLoading) {
     return (
-      <Card>
+      <Card className="bg-trailflow-white border-trailflow-lighter/20 shadow-modern">
         <CardHeader>
-          <CardTitle className="text-yellow-800">🟨 Resumo</CardTitle>
+          <CardTitle className="text-trailflow-dark flex items-center gap-2">
+            <div className="w-4 h-4 bg-yellow-500 rounded"></div>
+            Resumo
+          </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="space-y-4">
-            {[1, 2, 3, 4].map((i) => (
-              <div key={i} className="text-center">
-                <Skeleton className="h-8 w-16 mx-auto mb-2" />
-                <Skeleton className="h-4 w-24 mx-auto" />
+          <div className="space-y-6">
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="text-center space-y-2">
+                <Skeleton className="h-8 w-16 mx-auto bg-trailflow-lighter/30" />
+                <Skeleton className="h-4 w-24 mx-auto bg-trailflow-lighter/30" />
               </div>
             ))}
           </div>
@@ -58,46 +62,62 @@ const ResumoCard: React.FC<ResumoCardProps> = ({ stats, isLoading }) => {
     {
       label: 'Eventos Ativos',
       value: stats.total_events,
-      icon: '📅',
-      color: 'text-blue-600'
+      icon: Calendar,
+      color: 'text-blue-600',
+      bgColor: 'bg-blue-500/20'
     },
     {
       label: 'Total de Vendas',
       value: stats.total_sales,
-      icon: '🎫',
-      color: 'text-green-600'
+      icon: TrendingUp,
+      color: 'text-trailflow-green',
+      bgColor: 'bg-trailflow-green/20'
     },
     {
       label: 'Receita Acumulada',
       value: formatCurrency(stats.total_revenue),
-      icon: '💰',
-      color: 'text-emerald-600'
+      icon: DollarSign,
+      color: 'text-emerald-600',
+      bgColor: 'bg-emerald-500/20'
     }
   ];
 
   return (
-    <Card>
+    <Card className="bg-trailflow-white border-trailflow-lighter/20 shadow-modern">
       <CardHeader>
-        <CardTitle className="text-yellow-800">🟨 Resumo</CardTitle>
+        <CardTitle className="text-trailflow-dark flex items-center gap-2">
+          <div className="w-4 h-4 bg-yellow-500 rounded"></div>
+          Resumo
+        </CardTitle>
       </CardHeader>
       <CardContent>
         <div className="space-y-6">
-          {summaryItems.map((item, index) => (
-            <div key={index} className="text-center">
-              <div className="text-2xl mb-2">{item.icon}</div>
-              <div className={`text-2xl font-bold ${item.color}`}>
-                {item.value}
+          {summaryItems.map((item, index) => {
+            const Icon = item.icon;
+            return (
+              <div key={index} className="text-center space-y-3">
+                <div className={`w-12 h-12 mx-auto rounded-full ${item.bgColor} flex items-center justify-center`}>
+                  <Icon className={`w-6 h-6 ${item.color}`} />
+                </div>
+                <div className="space-y-1">
+                  <div className={`text-2xl font-bold ${item.color}`}>
+                    {item.value}
+                  </div>
+                  <div className="text-sm text-trailflow-medium">
+                    {item.label}
+                  </div>
+                </div>
               </div>
-              <div className="text-sm text-gray-600 mt-1">
-                {item.label}
-              </div>
-            </div>
-          ))}
+            );
+          })}
           
-          <div className="border-t pt-4 mt-6">
-            <div className="text-center">
-              <div className="text-xs text-gray-500">Último acesso:</div>
-              <div className="text-sm text-gray-700 mt-1">
+          <div className="border-t border-trailflow-lighter/20 pt-4 mt-6">
+            <div className="text-center space-y-2">
+              <div className="flex items-center justify-center gap-2">
+                <Clock className="w-4 h-4 text-trailflow-medium" />
+                <span className="text-xs text-trailflow-medium">Último acesso</span>
+              </div>
+              <div className="text-sm text-trailflow-dark">
                 {formatDate(stats.last_access)}
               </div>
             </div>

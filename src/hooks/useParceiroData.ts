@@ -55,25 +55,34 @@ export const useParceiroData = () => {
           date,
           city,
           location,
-          status,
-          event_registrations(count)
+          status
         `)
         .eq('created_by', user.id)
         .order('date', { ascending: false });
 
       if (error) throw error;
 
-      const formattedEvents = data?.map(event => ({
-        id: event.id,
-        title: event.title,
-        date: event.date,
-        city: event.city || '',
-        location: event.location,
-        registrations_count: event.event_registrations?.[0]?.count || 0,
-        status: event.status
-      })) || [];
+      // Count registrations for each event separately
+      const eventsWithRegistrations = await Promise.all(
+        (data || []).map(async (event) => {
+          const { count } = await supabase
+            .from('event_registrations')
+            .select('*', { count: 'exact', head: true })
+            .eq('event_id', event.id);
 
-      setEvents(formattedEvents);
+          return {
+            id: event.id,
+            title: event.title,
+            date: event.date,
+            city: event.city || '',
+            location: event.location,
+            registrations_count: count || 0,
+            status: event.status
+          };
+        })
+      );
+
+      setEvents(eventsWithRegistrations);
     } catch (err: any) {
       console.error('Error fetching partner events:', err);
       setError('Erro ao carregar eventos');
@@ -87,41 +96,77 @@ export const useParceiroData = () => {
       // First get partner events
       const { data: partnerEvents, error: eventsError } = await supabase
         .from('events')
-        .select('id')
+        .select('id, title, price')
         .eq('created_by', user.id);
 
       if (eventsError) throw eventsError;
 
-      const eventIds = partnerEvents?.map(event => event.id) || [];
-
-      if (eventIds.length === 0) {
+      if (!partnerEvents || partnerEvents.length === 0) {
         setSales([]);
         return;
       }
 
-      // Then get registrations for those events
+      const eventIds = partnerEvents.map(event => event.id);
+
+      // Get registrations for those events
       const { data: registrations, error: salesError } = await supabase
         .from('event_registrations')
         .select(`
           id,
           created_at,
           payment_status,
-          events(title, price),
-          profiles(first_name, last_name)
+          event_id,
+          user_id
         `)
         .in('event_id', eventIds)
         .order('created_at', { ascending: false });
 
       if (salesError) throw salesError;
 
-      const formattedSales = registrations?.map(reg => ({
-        id: reg.id,
-        buyer_name: `${reg.profiles?.first_name || ''} ${reg.profiles?.last_name || ''}`.trim() || 'N/A',
-        event_title: reg.events?.title || '',
-        purchase_date: reg.created_at,
-        amount: reg.events?.price || 0,
-        status: reg.payment_status || 'pending'
-      })) || [];
+      if (!registrations || registrations.length === 0) {
+        setSales([]);
+        return;
+      }
+
+      // Get user profiles for buyer names
+      const userIds = registrations.map(reg => reg.user_id);
+      const { data: profiles, error: profilesError } = await supabase
+        .from('profiles')
+        .select('id, first_name, last_name')
+        .in('id', userIds);
+
+      if (profilesError) {
+        console.error('Error fetching profiles:', profilesError);
+      }
+
+      // Create a map for quick profile lookup
+      const profilesMap = new Map(
+        (profiles || []).map(profile => [
+          profile.id, 
+          { first_name: profile.first_name, last_name: profile.last_name }
+        ])
+      );
+
+      // Create a map for event details
+      const eventsMap = new Map(
+        partnerEvents.map(event => [event.id, { title: event.title, price: event.price }])
+      );
+
+      const formattedSales = registrations.map(reg => {
+        const profile = profilesMap.get(reg.user_id);
+        const event = eventsMap.get(reg.event_id);
+        
+        return {
+          id: reg.id,
+          buyer_name: profile 
+            ? `${profile.first_name || ''} ${profile.last_name || ''}`.trim() || 'N/A'
+            : 'N/A',
+          event_title: event?.title || 'Evento não encontrado',
+          purchase_date: reg.created_at,
+          amount: event?.price || 0,
+          status: reg.payment_status || 'pending'
+        };
+      });
 
       setSales(formattedSales);
     } catch (err: any) {
