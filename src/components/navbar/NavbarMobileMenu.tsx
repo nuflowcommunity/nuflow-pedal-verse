@@ -74,6 +74,14 @@ const NavbarMobileMenu = ({ isOpen, onToggleMenu }: NavbarMobileMenuProps) => {
               >
                 Comunidade
               </Link>
+              
+              <Link 
+                to="/faq" 
+                className="block py-4 px-4 text-white font-mono text-sm uppercase tracking-wide hover:text-trailflow-green hover:bg-white/5 rounded-xl transition-all duration-300"
+                onClick={onToggleMenu}
+              >
+                FAQ
+              </Link>
             </div>
           </nav>
           

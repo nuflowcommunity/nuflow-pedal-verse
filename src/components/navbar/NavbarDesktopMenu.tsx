@@ -49,6 +49,11 @@ const NavbarDesktopMenu = ({ scrolled }: NavbarDesktopMenuProps) => {
         <span className="relative z-10">COMUNIDADE</span>
         <div className="absolute inset-0 bg-white/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
       </Link>
+      
+      <Link to="/faq" className={linkClass('/faq')}>
+        <span className="relative z-10">FAQ</span>
+        <div className="absolute inset-0 bg-white/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+      </Link>
     </div>
   );
 };
