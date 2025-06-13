@@ -2,77 +2,95 @@
 import React from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import EventsHero from '@/components/events/EventsHero';
-import EventsBreadcrumb from '@/components/events/EventsBreadcrumb';
-import EventsSearch from '@/components/events/EventsSearch';
-import EventsCategoryFilter from '@/components/events/EventsCategoryFilter';
 import EventsGrid from '@/components/events/EventsGrid';
-import EventViewModeSelector from '@/components/events/EventViewModeSelector';
-import ExportEventsButton from '@/components/events/ExportEventsButton';
+import CityFilter from '@/components/events/CityFilter';
+import SimpleDateFilter from '@/components/events/SimpleDateFilter';
 import BackToTopButton from '@/components/BackToTopButton';
 import { useEventsData } from '@/hooks/useEventsData';
-import { ExportFormat } from '@/services/events/types';
-
-const categories = ['Todos', 'MTB', 'Speed', 'Gravel', 'Urbano', 'Outro'];
+import { Input } from '@/components/ui/input';
+import { Search } from 'lucide-react';
 
 const EventsCalendar = () => {
   const {
-    activeCategory,
-    setActiveCategory,
     searchQuery,
     setSearchQuery,
-    dateRange,
-    setDateRange,
+    selectedCity,
+    setSelectedCity,
+    selectedDate,
+    setSelectedDate,
     filteredEvents,
     isLoading,
-    viewMode,
-    handleSortChange,
-    handleFilterByDate,
-    handleClearDateFilter,
-    handleViewModeChange
+    handleClearDateFilter
   } = useEventsData();
-
-  // Function to export events to CSV or XLS
-  const handleExport = (format: ExportFormat) => {
-    // Handled by the ExportEventsButton component
-  };
 
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
       
       <main className="flex-grow">
-        <EventsHero />
-        <EventsBreadcrumb />
+        {/* Header Section */}
+        <section className="py-12 bg-trailflow-accent">
+          <div className="container mx-auto px-4">
+            <h1 className="text-4xl font-heading font-bold text-trailflow-dark mb-8 text-center">
+              Eventos Disponíveis
+            </h1>
+            
+            {/* Filters Section */}
+            <div className="max-w-4xl mx-auto">
+              {/* Search Bar */}
+              <div className="relative mb-6">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-trailflow-medium h-4 w-4" />
+                <Input
+                  type="text"
+                  placeholder="Busque por nome do evento..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="pl-10 h-12 text-base"
+                />
+              </div>
+              
+              {/* Filter Row */}
+              <div className="flex flex-wrap gap-4 items-center justify-center">
+                <div className="flex flex-col">
+                  <label className="text-sm font-medium text-trailflow-dark mb-2">
+                    Cidade
+                  </label>
+                  <CityFilter 
+                    selectedCity={selectedCity}
+                    onCityChange={setSelectedCity}
+                  />
+                </div>
+                
+                <div className="flex flex-col">
+                  <label className="text-sm font-medium text-trailflow-dark mb-2">
+                    Data
+                  </label>
+                  <SimpleDateFilter
+                    selectedDate={selectedDate}
+                    onDateChange={setSelectedDate}
+                    mode="select"
+                  />
+                </div>
+                
+                {(selectedCity !== 'Todas as cidades' || selectedDate) && (
+                  <div className="flex flex-col justify-end">
+                    <button
+                      onClick={() => {
+                        setSelectedCity('Todas as cidades');
+                        handleClearDateFilter();
+                      }}
+                      className="text-sm text-trailflow-green hover:text-trailflow-green-dark underline mt-6"
+                    >
+                      Limpar filtros
+                    </button>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </section>
         
-        <EventViewModeSelector 
-          viewMode={viewMode} 
-          onViewModeChange={handleViewModeChange} 
-        />
-        
-        <EventsSearch 
-          searchQuery={searchQuery} 
-          setSearchQuery={setSearchQuery}
-          dateRange={dateRange}
-          setDateRange={setDateRange}
-          onFilterByDate={handleFilterByDate}
-          onClearDateFilter={handleClearDateFilter}
-          onSortChange={handleSortChange}
-          onExport={handleExport}
-          renderExportButtons={() => (
-            <>
-              <ExportEventsButton events={filteredEvents} format="csv" />
-              <ExportEventsButton events={filteredEvents} format="xlsx" />
-            </>
-          )}
-        />
-        
-        <EventsCategoryFilter 
-          categories={categories} 
-          activeCategory={activeCategory} 
-          setActiveCategory={setActiveCategory} 
-        />
-        
+        {/* Events Grid */}
         <EventsGrid 
           events={filteredEvents} 
           isLoading={isLoading} 

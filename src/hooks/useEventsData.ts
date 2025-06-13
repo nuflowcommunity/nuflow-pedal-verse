@@ -17,6 +17,8 @@ export const useEventsData = () => {
   const [activeCategory, setActiveCategory] = useState('Todos');
   const [searchQuery, setSearchQuery] = useState('');
   const [dateRange, setDateRange] = useState<DateRange | undefined>(undefined);
+  const [selectedCity, setSelectedCity] = useState('Todas as cidades');
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
   const [sortOption, setSortOption] = useState('');
   const [viewMode, setViewMode] = useState<EventViewMode>('all');
   const { toast } = useToast();
@@ -72,7 +74,24 @@ export const useEventsData = () => {
       );
     }
     
-    // Filter by date range
+    // Filter by city
+    if (selectedCity !== 'Todas as cidades') {
+      results = results.filter(event => 
+        event.location.toLowerCase().includes(selectedCity.toLowerCase())
+      );
+    }
+    
+    // Filter by selected date
+    if (selectedDate) {
+      const { parseEventDate } = require('@/services/events');
+      results = results.filter(event => {
+        const eventDate = new Date(parseEventDate(event.date));
+        const filterDate = new Date(selectedDate);
+        return eventDate.toDateString() === filterDate.toDateString();
+      });
+    }
+    
+    // Filter by date range (fallback for existing functionality)
     if (dateRange && dateRange.from) {
       const { parseEventDate } = require('@/services/events');
       results = results.filter(event => {
@@ -87,7 +106,7 @@ export const useEventsData = () => {
     }
     
     return results;
-  }, [allEvents, activeCategory, searchQuery, dateRange]);
+  }, [allEvents, activeCategory, searchQuery, selectedCity, selectedDate, dateRange]);
 
   // Function to handle filter by date
   const handleFilterByDate = () => {
@@ -97,6 +116,7 @@ export const useEventsData = () => {
   // Function to clear date filter
   const handleClearDateFilter = () => {
     setDateRange(undefined);
+    setSelectedDate(undefined);
   };
 
   // Function to handle view mode change
@@ -116,6 +136,10 @@ export const useEventsData = () => {
     setSearchQuery,
     dateRange,
     setDateRange,
+    selectedCity,
+    setSelectedCity,
+    selectedDate,
+    setSelectedDate,
     filteredEvents,
     isLoading,
     error,
