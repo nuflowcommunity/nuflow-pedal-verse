@@ -34,6 +34,7 @@ import NotFound from '@/pages/NotFound';
 import Unauthorized from '@/pages/Unauthorized';
 import Checkout from '@/pages/Checkout';
 import MeusPasses from '@/pages/MeusPasses';
+import Perfil from '@/pages/Perfil';
 
 // Admin Pages
 import Dashboard from '@/pages/admin/Dashboard';
@@ -114,6 +115,7 @@ function App() {
                 <Route path="/eventos/:id" element={<EventDetail />} />
                 <Route path="/checkout" element={<Checkout />} />
                 <Route path="/meus-passes" element={<MeusPasses />} />
+                <Route path="/perfil" element={<Perfil />} />
                 <Route path="/anunciar" element={<NewAnnounce />} />
                 <Route path="/comunidade" element={<Comunidade />} />
                 <Route path="/roles" element={<Roles />} />

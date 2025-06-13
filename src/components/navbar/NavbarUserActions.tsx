@@ -2,46 +2,42 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { User, ShoppingCart } from 'lucide-react';
-import { useIsMobile } from '@/hooks/use-mobile';
+import { User, LogOut } from 'lucide-react';
+import { useAuth } from '@/contexts/AuthContext';
 
-interface NavbarUserActionsProps {
-  scrolled: boolean;
-}
+const NavbarUserActions = () => {
+  const { user, signOut } = useAuth();
 
-const NavbarUserActions = ({ scrolled }: NavbarUserActionsProps) => {
-  const isMobile = useIsMobile();
+  if (!user) {
+    return (
+      <div className="flex items-center space-x-2">
+        <Link to="/login">
+          <Button variant="ghost" size="sm" className="text-white hover:text-trailflow-green hover:bg-white/10">
+            <User size={18} className="mr-2" />
+            Entrar
+          </Button>
+        </Link>
+      </div>
+    );
+  }
 
   return (
     <div className="flex items-center space-x-2">
-      {!isMobile && (
-        <Link 
-          to="/cart" 
-          className="p-2 rounded-lg hover:bg-white/10 transition-all duration-300 group"
-        >
-          <ShoppingCart size={16} className="text-white/70 group-hover:text-white transition-colors duration-300" />
-        </Link>
-      )}
-      {isMobile ? (
-        <Link 
-          to="/login" 
-          className="p-2 rounded-lg hover:bg-white/10 transition-all duration-300 group font-mono text-xs uppercase tracking-wide text-white/70 hover:text-white"
-        >
-          LOGIN
-        </Link>
-      ) : (
-        <Link 
-          to="/login" 
-          className="p-2 rounded-lg hover:bg-white/10 transition-all duration-300 group"
-        >
-          <User size={16} className="text-white/70 group-hover:text-white transition-colors duration-300" />
-        </Link>
-      )}
-      {!isMobile && (
-        <Button variant="accent" size="sm" className="ml-3 font-mono font-medium uppercase tracking-wide text-xs px-4 py-2" asChild>
-          <Link to="/anunciar">ANUNCIAR</Link>
+      <Link to="/perfil">
+        <Button variant="ghost" size="sm" className="text-white hover:text-trailflow-green hover:bg-white/10">
+          <User size={18} className="mr-2" />
+          Perfil
         </Button>
-      )}
+      </Link>
+      <Button 
+        variant="ghost" 
+        size="sm" 
+        onClick={signOut}
+        className="text-white hover:text-trailflow-green hover:bg-white/10"
+      >
+        <LogOut size={18} className="mr-2" />
+        Sair
+      </Button>
     </div>
   );
 };
