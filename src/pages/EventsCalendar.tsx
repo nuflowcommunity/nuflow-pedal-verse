@@ -24,35 +24,37 @@ const EventsCalendar = () => {
   } = useEventsData();
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-white">
       <Navbar />
       
       <main className="flex-grow">
         {/* Header Section */}
-        <section className="py-12 bg-trailflow-accent">
-          <div className="container mx-auto px-4">
-            <h1 className="text-4xl font-heading font-bold text-trailflow-dark mb-8 text-center">
+        <section className="py-20 bg-white">
+          <div className="container mx-auto px-4 max-w-6xl">
+            <h1 className="text-4xl font-light text-gray-900 mb-16 text-center uppercase tracking-widest">
               Eventos Disponíveis
             </h1>
             
-            {/* Filters Section */}
-            <div className="max-w-4xl mx-auto">
+            {/* Search and Filters Section */}
+            <div className="max-w-4xl mx-auto mb-16">
               {/* Search Bar */}
-              <div className="relative mb-6">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-trailflow-medium h-4 w-4" />
-                <Input
-                  type="text"
-                  placeholder="Busque por nome do evento..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10 h-12 text-base"
-                />
+              <div className="relative mb-8">
+                <div className="relative">
+                  <Search className="absolute left-0 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+                  <Input
+                    type="text"
+                    placeholder="Buscar evento..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="w-full pl-8 pr-4 py-4 text-base border-0 border-b border-gray-200 rounded-none bg-transparent focus:border-gray-400 focus:ring-0 placeholder:text-gray-400"
+                  />
+                </div>
               </div>
               
               {/* Filter Row */}
-              <div className="flex flex-wrap gap-4 items-center justify-center">
-                <div className="flex flex-col">
-                  <label className="text-sm font-medium text-trailflow-dark mb-2">
+              <div className="flex flex-col sm:flex-row gap-6 items-start sm:items-center justify-center">
+                <div className="flex flex-col items-center">
+                  <label className="text-xs font-normal text-gray-600 mb-3 uppercase tracking-wider">
                     Cidade
                   </label>
                   <CityFilter 
@@ -61,8 +63,8 @@ const EventsCalendar = () => {
                   />
                 </div>
                 
-                <div className="flex flex-col">
-                  <label className="text-sm font-medium text-trailflow-dark mb-2">
+                <div className="flex flex-col items-center">
+                  <label className="text-xs font-normal text-gray-600 mb-3 uppercase tracking-wider">
                     Data
                   </label>
                   <SimpleDateFilter
@@ -79,7 +81,7 @@ const EventsCalendar = () => {
                         setSelectedCity('Todas as cidades');
                         handleClearDateFilter();
                       }}
-                      className="text-sm text-trailflow-green hover:text-trailflow-green-dark underline mt-6"
+                      className="text-xs text-gray-500 hover:text-gray-700 transition-colors mt-6 uppercase tracking-wide"
                     >
                       Limpar filtros
                     </button>

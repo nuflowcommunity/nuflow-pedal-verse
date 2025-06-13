@@ -32,47 +32,42 @@ const EventCard = ({
   const imageUrl = image || image_url || 'https://placehold.co/600x400?text=Sem+Imagem';
   
   return (
-    <Card className="overflow-hidden hover:shadow-md transition-shadow">
-      <div className="relative">
-        <Link to={`/eventos/${id}`}>
-          <img 
-            src={imageUrl} 
-            alt={title} 
-            className="h-48 w-full object-cover"
-          />
-        </Link>
-        <span className="absolute top-3 right-3 bg-trailflow-green text-white text-xs font-medium px-3 py-1 rounded-full">
-          {category}
-        </span>
-      </div>
-      
-      <div className="p-4">
-        <h3 className="font-heading font-medium text-lg hover:text-trailflow-green transition-colors line-clamp-1">
-          <Link to={`/eventos/${id}`}>
+    <Link to={`/eventos/${id}`} className="group block">
+      <Card className="overflow-hidden bg-white shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 hover:-translate-y-1">
+        <div className="relative">
+          <div className="aspect-[4/3] overflow-hidden">
+            <img 
+              src={imageUrl} 
+              alt={title} 
+              className="w-full h-full object-cover transition-all duration-300 group-hover:scale-105 group-hover:brightness-90"
+            />
+          </div>
+          <span className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm text-gray-700 text-xs font-normal px-3 py-1 rounded-full uppercase tracking-wide">
+            {category}
+          </span>
+        </div>
+        
+        <div className="p-6 text-center">
+          <h3 className="font-light text-lg text-gray-900 mb-3 uppercase tracking-wide leading-tight">
             {title}
-          </Link>
-        </h3>
-        
-        <div className="flex items-center mt-2 text-sm text-trailflow-medium">
-          <CalendarIcon size={14} className="mr-1" />
-          <span>{date}</span>
+          </h3>
+          
+          <div className="flex items-center justify-center mb-2 text-sm text-gray-500">
+            <CalendarIcon size={14} className="mr-2" />
+            <span>{date}</span>
+          </div>
+          
+          <div className="flex items-center justify-center mb-4 text-sm text-gray-500">
+            <MapPin size={14} className="mr-2" />
+            <span>{location}</span>
+          </div>
+          
+          <div className="flex justify-center items-center">
+            <span className="font-normal text-gray-900 text-lg">{price}</span>
+          </div>
         </div>
-        
-        <div className="flex items-center mt-1 text-sm text-trailflow-medium">
-          <MapPin size={14} className="mr-1" />
-          <span>{location}</span>
-        </div>
-        
-        <div className="flex justify-between items-center mt-4">
-          <span className="font-semibold text-trailflow-green">{price}</span>
-          <Link to={`/eventos/${id}`}>
-            <Button className="bg-trailflow-green text-white hover:bg-trailflow-green-dark py-1 h-8 px-4">
-              <span className="text-xs">Ver detalhes</span>
-            </Button>
-          </Link>
-        </div>
-      </div>
-    </Card>
+      </Card>
+    </Link>
   );
 };
 

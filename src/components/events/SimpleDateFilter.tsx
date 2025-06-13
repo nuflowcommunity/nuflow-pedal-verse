@@ -53,12 +53,12 @@ const SimpleDateFilter = ({
   if (mode === 'select') {
     return (
       <Select value={formatSelectedDate()} onValueChange={handleSelectChange}>
-        <SelectTrigger className="w-[250px]">
+        <SelectTrigger className="w-[250px] border-0 border-b border-gray-200 rounded-none bg-transparent focus:border-gray-400 focus:ring-0 text-sm">
           <SelectValue placeholder="Selecione a data" />
         </SelectTrigger>
-        <SelectContent>
+        <SelectContent className="bg-white border border-gray-200 shadow-lg">
           {getNext30Days().map((day) => (
-            <SelectItem key={day} value={day}>
+            <SelectItem key={day} value={day} className="text-sm hover:bg-gray-50">
               {day}
             </SelectItem>
           ))}
@@ -73,15 +73,15 @@ const SimpleDateFilter = ({
         <Button
           variant="outline"
           className={cn(
-            "w-[250px] justify-start text-left font-normal",
-            !selectedDate && "text-muted-foreground"
+            "w-[250px] justify-start text-left font-normal border-0 border-b border-gray-200 rounded-none bg-transparent focus:border-gray-400 hover:bg-transparent",
+            !selectedDate && "text-gray-400"
           )}
         >
           <CalendarIcon className="mr-2 h-4 w-4" />
           {selectedDate ? format(selectedDate, "dd/MM/yyyy", { locale: ptBR }) : "Selecione a data"}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-auto p-0" align="start">
+      <PopoverContent className="w-auto p-0 bg-white border border-gray-200 shadow-lg" align="start">
         <Calendar
           mode="single"
           selected={selectedDate}

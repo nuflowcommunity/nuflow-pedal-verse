@@ -23,12 +23,12 @@ const CityFilter = ({ selectedCity, onCityChange }: CityFilterProps) => {
 
   return (
     <Select value={selectedCity} onValueChange={onCityChange}>
-      <SelectTrigger className="w-[200px]">
+      <SelectTrigger className="w-[200px] border-0 border-b border-gray-200 rounded-none bg-transparent focus:border-gray-400 focus:ring-0 text-sm">
         <SelectValue placeholder="Selecione a cidade" />
       </SelectTrigger>
-      <SelectContent>
+      <SelectContent className="bg-white border border-gray-200 shadow-lg">
         {cities.map((city) => (
-          <SelectItem key={city} value={city}>
+          <SelectItem key={city} value={city} className="text-sm hover:bg-gray-50">
             {city}
           </SelectItem>
         ))}
