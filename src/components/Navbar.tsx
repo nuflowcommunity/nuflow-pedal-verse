@@ -32,28 +32,39 @@ const Navbar = () => {
   }, []);
   
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ease-out ${
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-out ${
       scrolled 
-        ? 'bg-trailflow-medium/85 backdrop-blur-lg border-b border-white/10' 
-        : 'bg-transparent'
+        ? 'bg-white/95 backdrop-blur-lg shadow-sm border-b border-gray-100/50' 
+        : 'bg-white/90 backdrop-blur-sm'
     }`}>
-      <div className="container mx-auto px-6 sm:px-8 lg:px-12 max-w-7xl py-8">
-        <div className="flex items-center justify-between relative">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl h-[60px]">
+        <div className="flex items-center justify-between h-full">
           
           {/* Mobile Menu Button */}
           <div className="md:hidden flex items-center">
             <button 
-              className="p-4 text-white hover:text-trailflow-green transition-all duration-300 rounded-xl hover:bg-white/5 font-mono text-xs uppercase tracking-wide" 
+              className="p-2 text-trailflow-dark hover:text-trailflow-green transition-colors duration-200 rounded-lg hover:bg-gray-50" 
               onClick={toggleMenu}
               aria-label={isOpen ? "Fechar menu" : "Abrir menu"}
             >
-              {isOpen ? "FECHAR" : "MENU"}
+              {isOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
           </div>
 
-          <NavbarDesktopMenu scrolled={scrolled} />
-          <NavbarLogo scrolled={scrolled} />
-          <NavbarUserActions scrolled={scrolled} />
+          {/* Desktop: Logo on left, Mobile: Logo centered */}
+          <div className="md:flex-1 md:flex md:justify-start">
+            <NavbarLogo scrolled={scrolled} />
+          </div>
+
+          {/* Desktop Menu - Hidden on mobile */}
+          <div className="hidden md:flex md:flex-1 md:justify-center">
+            <NavbarDesktopMenu scrolled={scrolled} />
+          </div>
+
+          {/* User Actions */}
+          <div className="md:flex-1 md:flex md:justify-end">
+            <NavbarUserActions scrolled={scrolled} />
+          </div>
         </div>
       </div>
 

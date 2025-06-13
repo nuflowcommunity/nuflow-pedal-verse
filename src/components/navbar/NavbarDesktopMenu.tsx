@@ -16,43 +16,37 @@ const NavbarDesktopMenu = ({ scrolled }: NavbarDesktopMenuProps) => {
   };
 
   const linkClass = (path: string) => `
-    relative px-6 py-4 text-white font-mono text-xs uppercase tracking-wide transition-all duration-300 
-    hover:text-trailflow-green hover:bg-white/5 rounded-xl group
-    ${isActive(path) ? 'text-trailflow-green bg-white/10' : ''}
+    relative px-4 py-2 text-sm font-medium text-trailflow-dark transition-all duration-200 
+    hover:text-trailflow-green rounded-lg hover:bg-gray-50 tracking-tight
+    ${isActive(path) ? 'text-trailflow-green bg-gray-50' : ''}
   `;
 
   return (
-    <div className="hidden md:flex items-center space-x-2">
+    <div className="flex items-center space-x-1">
       <Link to="/sobre" className={linkClass('/sobre')}>
-        <span className="relative z-10">SOBRE</span>
-        <div className="absolute inset-0 bg-white/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        Sobre
       </Link>
       
       <Link to="/eventos" className={linkClass('/eventos')}>
-        <span className="relative z-10">EVENTOS</span>
-        <div className="absolute inset-0 bg-white/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        Eventos
       </Link>
 
       {user && (
         <Link to="/meus-passes" className={linkClass('/meus-passes')}>
-          <span className="relative z-10">MEUS PASSES</span>
-          <div className="absolute inset-0 bg-white/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          Meus Passes
         </Link>
       )}
       
       <Link to="/marketplace" className={linkClass('/marketplace')}>
-        <span className="relative z-10">MARKETPLACE</span>
-        <div className="absolute inset-0 bg-white/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        Marketplace
       </Link>
       
       <Link to="/comunidade" className={linkClass('/comunidade')}>
-        <span className="relative z-10">COMUNIDADE</span>
-        <div className="absolute inset-0 bg-white/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        Comunidade
       </Link>
       
       <Link to="/faq" className={linkClass('/faq')}>
-        <span className="relative z-10">FAQ</span>
-        <div className="absolute inset-0 bg-white/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        FAQ
       </Link>
     </div>
   );

@@ -16,26 +16,26 @@ const NavbarMobileMenu = ({ isOpen, onToggleMenu }: NavbarMobileMenuProps) => {
     <div className={`fixed inset-0 z-40 md:hidden transform transition-transform duration-300 ease-out ${
       isOpen ? 'translate-x-0' : 'translate-x-full'
     }`}>
-      <div className="absolute inset-0 bg-trailflow-medium/95 backdrop-blur-lg">
+      <div className="absolute inset-0 bg-white/95 backdrop-blur-lg">
         <div className="flex flex-col h-full">
           {/* Header */}
-          <div className="flex justify-between items-center p-6 border-b border-white/10">
-            <h2 className="text-white font-mono text-lg uppercase tracking-wide">Menu</h2>
+          <div className="flex justify-between items-center p-4 border-b border-gray-100">
+            <h2 className="text-trailflow-dark font-medium text-lg tracking-tight">Menu</h2>
             <button 
               onClick={onToggleMenu}
-              className="p-2 text-white hover:text-trailflow-green transition-colors rounded-lg hover:bg-white/5"
+              className="p-2 text-trailflow-dark hover:text-trailflow-green transition-colors rounded-lg hover:bg-gray-50"
               aria-label="Fechar menu"
             >
-              <X size={24} />
+              <X size={20} />
             </button>
           </div>
           
           {/* Navigation Links */}
-          <nav className="flex-1 px-6 py-8">
-            <div className="space-y-2">
+          <nav className="flex-1 px-4 py-6">
+            <div className="space-y-1">
               <Link 
                 to="/sobre" 
-                className="block py-4 px-4 text-white font-mono text-sm uppercase tracking-wide hover:text-trailflow-green hover:bg-white/5 rounded-xl transition-all duration-300"
+                className="block py-3 px-3 text-trailflow-dark font-medium text-sm hover:text-trailflow-green hover:bg-gray-50 rounded-lg transition-all duration-200 tracking-tight"
                 onClick={onToggleMenu}
               >
                 Sobre
@@ -43,7 +43,7 @@ const NavbarMobileMenu = ({ isOpen, onToggleMenu }: NavbarMobileMenuProps) => {
               
               <Link 
                 to="/eventos" 
-                className="block py-4 px-4 text-white font-mono text-sm uppercase tracking-wide hover:text-trailflow-green hover:bg-white/5 rounded-xl transition-all duration-300"
+                className="block py-3 px-3 text-trailflow-dark font-medium text-sm hover:text-trailflow-green hover:bg-gray-50 rounded-lg transition-all duration-200 tracking-tight"
                 onClick={onToggleMenu}
               >
                 Eventos
@@ -52,7 +52,7 @@ const NavbarMobileMenu = ({ isOpen, onToggleMenu }: NavbarMobileMenuProps) => {
               {user && (
                 <Link 
                   to="/meus-passes" 
-                  className="block py-4 px-4 text-white font-mono text-sm uppercase tracking-wide hover:text-trailflow-green hover:bg-white/5 rounded-xl transition-all duration-300"
+                  className="block py-3 px-3 text-trailflow-dark font-medium text-sm hover:text-trailflow-green hover:bg-gray-50 rounded-lg transition-all duration-200 tracking-tight"
                   onClick={onToggleMenu}
                 >
                   Meus Passes
@@ -61,7 +61,7 @@ const NavbarMobileMenu = ({ isOpen, onToggleMenu }: NavbarMobileMenuProps) => {
               
               <Link 
                 to="/marketplace" 
-                className="block py-4 px-4 text-white font-mono text-sm uppercase tracking-wide hover:text-trailflow-green hover:bg-white/5 rounded-xl transition-all duration-300"
+                className="block py-3 px-3 text-trailflow-dark font-medium text-sm hover:text-trailflow-green hover:bg-gray-50 rounded-lg transition-all duration-200 tracking-tight"
                 onClick={onToggleMenu}
               >
                 Marketplace
@@ -69,7 +69,7 @@ const NavbarMobileMenu = ({ isOpen, onToggleMenu }: NavbarMobileMenuProps) => {
               
               <Link 
                 to="/comunidade" 
-                className="block py-4 px-4 text-white font-mono text-sm uppercase tracking-wide hover:text-trailflow-green hover:bg-white/5 rounded-xl transition-all duration-300"
+                className="block py-3 px-3 text-trailflow-dark font-medium text-sm hover:text-trailflow-green hover:bg-gray-50 rounded-lg transition-all duration-200 tracking-tight"
                 onClick={onToggleMenu}
               >
                 Comunidade
@@ -77,7 +77,7 @@ const NavbarMobileMenu = ({ isOpen, onToggleMenu }: NavbarMobileMenuProps) => {
               
               <Link 
                 to="/faq" 
-                className="block py-4 px-4 text-white font-mono text-sm uppercase tracking-wide hover:text-trailflow-green hover:bg-white/5 rounded-xl transition-all duration-300"
+                className="block py-3 px-3 text-trailflow-dark font-medium text-sm hover:text-trailflow-green hover:bg-gray-50 rounded-lg transition-all duration-200 tracking-tight"
                 onClick={onToggleMenu}
               >
                 FAQ
@@ -86,8 +86,8 @@ const NavbarMobileMenu = ({ isOpen, onToggleMenu }: NavbarMobileMenuProps) => {
           </nav>
           
           {/* Footer */}
-          <div className="px-6 py-6 border-t border-white/10">
-            <p className="text-white/60 text-xs">
+          <div className="px-4 py-4 border-t border-gray-100">
+            <p className="text-gray-500 text-xs tracking-tight">
               © 2024 TrailFlow. Todos os direitos reservados.
             </p>
           </div>
