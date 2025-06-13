@@ -19,9 +19,9 @@ const NavbarUserActions: React.FC<NavbarUserActionsProps> = ({ scrolled }) => {
           <Button 
             variant="ghost" 
             size="sm" 
-            className="text-trailflow-dark hover:text-trailflow-green hover:bg-gray-50 text-sm font-medium tracking-tight"
+            className="text-trailflow-dark hover:text-trailflow-green hover:bg-gray-50/50 text-sm font-medium tracking-wide px-4 py-2 uppercase text-xs"
           >
-            <User size={16} className="mr-2" />
+            <User size={14} className="mr-2" />
             Entrar
           </Button>
         </Link>
@@ -35,9 +35,9 @@ const NavbarUserActions: React.FC<NavbarUserActionsProps> = ({ scrolled }) => {
         <Button 
           variant="ghost" 
           size="sm" 
-          className="text-trailflow-dark hover:text-trailflow-green hover:bg-gray-50 text-sm font-medium tracking-tight"
+          className="text-trailflow-dark hover:text-trailflow-green hover:bg-gray-50/50 text-sm font-medium tracking-wide px-3 py-2"
         >
-          <User size={16} className="mr-2" />
+          <User size={14} className="mr-2" />
           Perfil
         </Button>
       </Link>
@@ -45,9 +45,9 @@ const NavbarUserActions: React.FC<NavbarUserActionsProps> = ({ scrolled }) => {
         variant="ghost" 
         size="sm" 
         onClick={signOut}
-        className="text-trailflow-dark hover:text-trailflow-green hover:bg-gray-50 text-sm font-medium tracking-tight"
+        className="text-trailflow-dark hover:text-trailflow-green hover:bg-gray-50/50 text-sm font-medium tracking-wide px-3 py-2"
       >
-        <LogOut size={16} className="mr-2" />
+        <LogOut size={14} className="mr-2" />
         Sair
       </Button>
     </div>

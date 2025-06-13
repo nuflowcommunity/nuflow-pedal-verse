@@ -19,7 +19,7 @@ const Navbar = () => {
   useEffect(() => {
     const handleScroll = () => {
       const offset = window.scrollY;
-      if (offset > 50) {
+      if (offset > 10) {
         setScrolled(true);
       } else {
         setScrolled(false);
@@ -32,27 +32,27 @@ const Navbar = () => {
   }, []);
   
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-out ${
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out h-[60px] ${
       scrolled 
-        ? 'bg-white/95 backdrop-blur-lg shadow-sm border-b border-gray-100/50' 
-        : 'bg-white/90 backdrop-blur-sm'
+        ? 'bg-white/80 backdrop-blur-[8px] shadow-sm border-b border-gray-100/30' 
+        : 'bg-white/80 backdrop-blur-[8px]'
     }`}>
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl h-[60px]">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl h-full">
         <div className="flex items-center justify-between h-full">
           
           {/* Mobile Menu Button */}
           <div className="md:hidden flex items-center">
             <button 
-              className="p-2 text-trailflow-dark hover:text-trailflow-green transition-colors duration-200 rounded-lg hover:bg-gray-50" 
+              className="p-2 text-trailflow-dark hover:text-trailflow-green transition-colors duration-200 rounded-lg hover:bg-gray-50/50" 
               onClick={toggleMenu}
               aria-label={isOpen ? "Fechar menu" : "Abrir menu"}
             >
-              {isOpen ? <X size={20} /> : <Menu size={20} />}
+              {isOpen ? <X size={18} /> : <Menu size={18} />}
             </button>
           </div>
 
           {/* Desktop: Logo on left, Mobile: Logo centered */}
-          <div className="md:flex-1 md:flex md:justify-start">
+          <div className="md:flex-none">
             <NavbarLogo scrolled={scrolled} />
           </div>
 
@@ -62,7 +62,7 @@ const Navbar = () => {
           </div>
 
           {/* User Actions */}
-          <div className="md:flex-1 md:flex md:justify-end">
+          <div className="md:flex-none">
             <NavbarUserActions scrolled={scrolled} />
           </div>
         </div>
