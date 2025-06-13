@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -37,6 +36,7 @@ import Checkout from '@/pages/Checkout';
 import MeusPasses from '@/pages/MeusPasses';
 import Perfil from '@/pages/Perfil';
 import FAQ from '@/pages/FAQ';
+import Parceiro from '@/pages/Parceiro';
 
 // Admin Pages
 import Dashboard from '@/pages/admin/Dashboard';
@@ -129,6 +129,9 @@ function App() {
                 <Route path="/auth/reset-password" element={<ResetPassword />} />
                 <Route path="/admin/reset-password" element={<ResetPassword />} />
                 <Route path="/partner/reset-password" element={<ResetPassword />} />
+                
+                {/* Partner Area Route */}
+                <Route path="/parceiro" element={<Parceiro />} />
                 
                 {/* Marketplace Routes */}
                 <Route path="/marketplace" element={<MarketplaceHome />} />

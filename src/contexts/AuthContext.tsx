@@ -19,34 +19,112 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [session, setSession] = useState<Session | null>(null);
   const [user, setUser] = useState<User | null>(null);
-  const [userRole, setUserRole] = useState<string | null>('Admin'); // Default to Admin for development
-  const [isLoading, setIsLoading] = useState(false);
+  const [userRole, setUserRole] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Simplified auth setup for development
+  // Check user role from profiles table
+  const fetchUserRole = async (userId: string) => {
+    try {
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('role')
+        .eq('id', userId)
+        .single();
+
+      if (error) {
+        console.error('Error fetching user role:', error);
+        return null;
+      }
+
+      return data?.role || 'user';
+    } catch (error) {
+      console.error('Error fetching user role:', error);
+      return 'user';
+    }
+  };
+
+  // Initialize auth state
   useEffect(() => {
-    setIsLoading(false);
+    const initializeAuth = async () => {
+      setIsLoading(true);
+      
+      try {
+        const { data: { session }, error } = await supabase.auth.getSession();
+        
+        if (error) {
+          console.error('Error getting session:', error);
+          return;
+        }
+
+        setSession(session);
+        setUser(session?.user || null);
+        
+        if (session?.user) {
+          const role = await fetchUserRole(session.user.id);
+          setUserRole(role);
+        }
+      } catch (error) {
+        console.error('Error initializing auth:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    initializeAuth();
+
+    // Listen for auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+      setSession(session);
+      setUser(session?.user || null);
+      
+      if (session?.user) {
+        const role = await fetchUserRole(session.user.id);
+        setUserRole(role);
+      } else {
+        setUserRole(null);
+      }
+    });
+
+    return () => subscription.unsubscribe();
   }, []);
 
   // Handle sign in
   const signIn = async (email: string, password: string) => {
     setIsLoading(true);
     try {
-      // For development, simulate successful login
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+
+      if (error) {
+        throw error;
+      }
+
       toast({
         title: "Login realizado com sucesso",
         description: "Você foi autenticado com sucesso!",
       });
       
-      // Redirect to admin dashboard
-      const from = location.state?.from?.pathname || '/admin';
+      // Redirect based on user role
+      const role = await fetchUserRole(data.user.id);
+      let redirectPath = '/';
+      
+      if (role === 'admin') {
+        redirectPath = '/admin';
+      } else if (role === 'partner') {
+        redirectPath = '/parceiro';
+      }
+      
+      const from = location.state?.from?.pathname || redirectPath;
       navigate(from, { replace: true });
-    } catch (error) {
+    } catch (error: any) {
       console.error('Sign in error:', error);
       toast({
         title: "Erro ao fazer login",
-        description: "Ocorreu um erro durante o login.",
+        description: error.message || "Ocorreu um erro durante o login.",
         variant: "destructive"
       });
     } finally {
@@ -58,23 +136,27 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const signOut = async () => {
     setIsLoading(true);
     try {
-      // Clear local state
+      const { error } = await supabase.auth.signOut();
+      
+      if (error) {
+        throw error;
+      }
+
       setSession(null);
       setUser(null);
       setUserRole(null);
       
-      // Navigate to login page
-      navigate('/login');
+      navigate('/');
       
       toast({
         title: "Logout realizado",
         description: "Você saiu do sistema com sucesso.",
       });
-    } catch (error) {
+    } catch (error: any) {
       console.error('Sign out error:', error);
       toast({
         title: "Erro ao fazer logout",
-        description: "Ocorreu um erro durante o logout.",
+        description: error.message || "Ocorreu um erro durante o logout.",
         variant: "destructive"
       });
     } finally {
