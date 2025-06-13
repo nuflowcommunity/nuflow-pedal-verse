@@ -1,8 +1,8 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Calendar, ShoppingCart } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { X } from 'lucide-react';
+import { useAuth } from '@/contexts/AuthContext';
 
 interface NavbarMobileMenuProps {
   isOpen: boolean;
@@ -10,73 +10,79 @@ interface NavbarMobileMenuProps {
 }
 
 const NavbarMobileMenu = ({ isOpen, onToggleMenu }: NavbarMobileMenuProps) => {
-  if (!isOpen) return null;
-
-  const linkClass = "block py-4 px-6 font-mono font-medium uppercase tracking-wide text-gray-300 hover:text-white hover:bg-white/5 transition-all duration-300 rounded-lg";
+  const { user } = useAuth();
 
   return (
-    <div className="md:hidden bg-trailflow-medium/90 backdrop-blur-md border-t border-white/5 animate-fade-in">
-      <div className="container mx-auto px-6 py-8 space-y-2">
-        <Link 
-          to="/roles" 
-          className={linkClass}
-          onClick={onToggleMenu}
-        >
-          TRILHAS
-        </Link>
-        <Link 
-          to="/events" 
-          className={`${linkClass} flex items-center`}
-          onClick={onToggleMenu}
-        >
-          <Calendar size={18} className="mr-3" />
-          EVENTOS
-        </Link>
-        <Link 
-          to="/market" 
-          className={linkClass}
-          onClick={onToggleMenu}
-        >
-          MARKETPLACE
-        </Link>
-        <Link 
-          to="/comunidade" 
-          className={linkClass}
-          onClick={onToggleMenu}
-        >
-          COMUNIDADE
-        </Link>
-        <Link 
-          to="/sobre" 
-          className={linkClass}
-          onClick={onToggleMenu}
-        >
-          SOBRE
-        </Link>
-        <hr className="my-6 border-white/10" />
-        <Link 
-          to="/login" 
-          className={linkClass}
-          onClick={onToggleMenu}
-        >
-          ENTRAR / CRIAR CONTA
-        </Link>
-        <Link 
-          to="/cart" 
-          className={`${linkClass} flex items-center`}
-          onClick={onToggleMenu}
-        >
-          <ShoppingCart size={18} className="mr-3" />
-          CARRINHO
-        </Link>
-        <div className="pt-6">
-          <Button 
-            className="w-full font-mono font-medium uppercase tracking-wide bg-trailflow-green text-white hover:bg-trailflow-green-dark transition-all duration-300" 
-            onClick={onToggleMenu} 
-            asChild
-          >
-            <Link to="/anunciar">ANUNCIAR</Link>
-          </Button>
+    <div className={`fixed inset-0 z-40 md:hidden transform transition-transform duration-300 ease-out ${
+      isOpen ? 'translate-x-0' : 'translate-x-full'
+    }`}>
+      <div className="absolute inset-0 bg-trailflow-medium/95 backdrop-blur-lg">
+        <div className="flex flex-col h-full">
+          {/* Header */}
+          <div className="flex justify-between items-center p-6 border-b border-white/10">
+            <h2 className="text-white font-mono text-lg uppercase tracking-wide">Menu</h2>
+            <button 
+              onClick={onToggleMenu}
+              className="p-2 text-white hover:text-trailflow-green transition-colors rounded-lg hover:bg-white/5"
+              aria-label="Fechar menu"
+            >
+              <X size={24} />
+            </button>
+          </div>
+          
+          {/* Navigation Links */}
+          <nav className="flex-1 px-6 py-8">
+            <div className="space-y-2">
+              <Link 
+                to="/sobre" 
+                className="block py-4 px-4 text-white font-mono text-sm uppercase tracking-wide hover:text-trailflow-green hover:bg-white/5 rounded-xl transition-all duration-300"
+                onClick={onToggleMenu}
+              >
+                Sobre
+              </Link>
+              
+              <Link 
+                to="/eventos" 
+                className="block py-4 px-4 text-white font-mono text-sm uppercase tracking-wide hover:text-trailflow-green hover:bg-white/5 rounded-xl transition-all duration-300"
+                onClick={onToggleMenu}
+              >
+                Eventos
+              </Link>
+
+              {user && (
+                <Link 
+                  to="/meus-passes" 
+                  className="block py-4 px-4 text-white font-mono text-sm uppercase tracking-wide hover:text-trailflow-green hover:bg-white/5 rounded-xl transition-all duration-300"
+                  onClick={onToggleMenu}
+                >
+                  Meus Passes
+                </Link>
+              )}
+              
+              <Link 
+                to="/marketplace" 
+                className="block py-4 px-4 text-white font-mono text-sm uppercase tracking-wide hover:text-trailflow-green hover:bg-white/5 rounded-xl transition-all duration-300"
+                onClick={onToggleMenu}
+              >
+                Marketplace
+              </Link>
+              
+              <Link 
+                to="/comunidade" 
+                className="block py-4 px-4 text-white font-mono text-sm uppercase tracking-wide hover:text-trailflow-green hover:bg-white/5 rounded-xl transition-all duration-300"
+                onClick={onToggleMenu}
+              >
+                Comunidade
+              </Link>
+            </div>
+          </nav>
+          
+          {/* Footer */}
+          <div className="px-6 py-6 border-t border-white/10">
+            <p className="text-white/60 text-xs">
+              © 2024 TrailFlow. Todos os direitos reservados.
+            </p>
+          </div>
         </div>
       </div>
     </div>

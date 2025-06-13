@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Calendar } from 'lucide-react';
+import { useAuth } from '@/contexts/AuthContext';
 
 interface NavbarDesktopMenuProps {
   scrolled: boolean;
@@ -9,61 +9,47 @@ interface NavbarDesktopMenuProps {
 
 const NavbarDesktopMenu = ({ scrolled }: NavbarDesktopMenuProps) => {
   const location = useLocation();
-  
+  const { user } = useAuth();
+
   const isActive = (path: string) => {
-    return location.pathname === path;
+    return location.pathname === path || location.pathname.startsWith(path + '/');
   };
 
-  const linkClass = "font-mono font-medium text-sm uppercase tracking-[0.12em] transition-all duration-500 ease-out hover:text-white py-3 px-4 relative group";
-  const activeLinkClass = "text-white";
-  const inactiveLinkClass = "text-white/70";
+  const linkClass = (path: string) => `
+    relative px-6 py-4 text-white font-mono text-xs uppercase tracking-wide transition-all duration-300 
+    hover:text-trailflow-green hover:bg-white/5 rounded-xl group
+    ${isActive(path) ? 'text-trailflow-green bg-white/10' : ''}
+  `;
 
   return (
-    <>
-      {/* Left Navigation - Desktop */}
-      <div className="hidden md:flex items-center space-x-4 flex-1">
-        <Link 
-          to="/roles" 
-          className={`${linkClass} ${isActive('/roles') ? activeLinkClass : inactiveLinkClass}`}
-        >
-          TRILHAS
-          <span className="absolute bottom-0 left-0 w-full h-0.5 bg-trailflow-green transform scale-x-0 transition-transform duration-500 ease-out group-hover:scale-x-100 origin-left"></span>
-        </Link>
-        <Link 
-          to="/events" 
-          className={`${linkClass} ${isActive('/events') ? activeLinkClass : inactiveLinkClass} flex items-center`}
-        >
-          <Calendar size={14} className="mr-1.5" />
-          EVENTOS
-          <span className="absolute bottom-0 left-0 w-full h-0.5 bg-trailflow-green transform scale-x-0 transition-transform duration-500 ease-out group-hover:scale-x-100 origin-left"></span>
-        </Link>
-        <Link 
-          to="/market" 
-          className={`${linkClass} ${isActive('/market') ? activeLinkClass : inactiveLinkClass}`}
-        >
-          MARKETPLACE
-          <span className="absolute bottom-0 left-0 w-full h-0.5 bg-trailflow-green transform scale-x-0 transition-transform duration-500 ease-out group-hover:scale-x-100 origin-left"></span>
-        </Link>
-      </div>
+    <div className="hidden md:flex items-center space-x-2">
+      <Link to="/sobre" className={linkClass('/sobre')}>
+        <span className="relative z-10">SOBRE</span>
+        <div className="absolute inset-0 bg-white/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+      </Link>
+      
+      <Link to="/eventos" className={linkClass('/eventos')}>
+        <span className="relative z-10">EVENTOS</span>
+        <div className="absolute inset-0 bg-white/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+      </Link>
 
-      {/* Right Navigation - Desktop */}
-      <div className="hidden md:flex items-center space-x-4 flex-1 justify-end">
-        <Link 
-          to="/comunidade" 
-          className={`${linkClass} ${isActive('/comunidade') ? activeLinkClass : inactiveLinkClass}`}
-        >
-          COMUNIDADE
-          <span className="absolute bottom-0 left-0 w-full h-0.5 bg-trailflow-green transform scale-x-0 transition-transform duration-500 ease-out group-hover:scale-x-100 origin-left"></span>
+      {user && (
+        <Link to="/meus-passes" className={linkClass('/meus-passes')}>
+          <span className="relative z-10">MEUS PASSES</span>
+          <div className="absolute inset-0 bg-white/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
         </Link>
-        <Link 
-          to="/sobre" 
-          className={`${linkClass} ${isActive('/sobre') ? activeLinkClass : inactiveLinkClass}`}
-        >
-          SOBRE
-          <span className="absolute bottom-0 left-0 w-full h-0.5 bg-trailflow-green transform scale-x-0 transition-transform duration-500 ease-out group-hover:scale-x-100 origin-left"></span>
-        </Link>
-      </div>
-    </>
+      )}
+      
+      <Link to="/marketplace" className={linkClass('/marketplace')}>
+        <span className="relative z-10">MARKETPLACE</span>
+        <div className="absolute inset-0 bg-white/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+      </Link>
+      
+      <Link to="/comunidade" className={linkClass('/comunidade')}>
+        <span className="relative z-10">COMUNIDADE</span>
+        <div className="absolute inset-0 bg-white/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+      </Link>
+    </div>
   );
 };
 

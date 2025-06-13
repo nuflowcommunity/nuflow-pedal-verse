@@ -33,6 +33,7 @@ import SharedWishlist from '@/pages/SharedWishlist';
 import NotFound from '@/pages/NotFound';
 import Unauthorized from '@/pages/Unauthorized';
 import Checkout from '@/pages/Checkout';
+import MeusPasses from '@/pages/MeusPasses';
 
 // Admin Pages
 import Dashboard from '@/pages/admin/Dashboard';
@@ -112,6 +113,7 @@ function App() {
                 <Route path="/eventos" element={<EventsCalendar />} />
                 <Route path="/eventos/:id" element={<EventDetail />} />
                 <Route path="/checkout" element={<Checkout />} />
+                <Route path="/meus-passes" element={<MeusPasses />} />
                 <Route path="/anunciar" element={<NewAnnounce />} />
                 <Route path="/comunidade" element={<Comunidade />} />
                 <Route path="/roles" element={<Roles />} />
