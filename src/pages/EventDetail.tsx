@@ -353,6 +353,9 @@ const EventDetail = () => {
               {/* Purchase Section */}
               <PurchaseSection
                 eventId={event.id}
+                eventName={event.title}
+                eventDate={event.date}
+                eventCity={event.location}
                 selectedTicketType={selectedTicketType}
                 ticketTypes={mockTicketTypes}
                 appliedCoupon={appliedCoupon}

@@ -7,10 +7,13 @@ import { useAuth } from '@/contexts/AuthContext';
 import { CouponValidation } from '@/types/coupons';
 import { TicketType } from '@/types/tickets';
 import { LogIn } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 interface PurchaseSectionProps {
   eventId: string;
+  eventName: string;
+  eventDate: string;
+  eventCity: string;
   selectedTicketType: string;
   ticketTypes: TicketType[];
   appliedCoupon: CouponValidation | null;
@@ -22,6 +25,9 @@ interface PurchaseSectionProps {
 
 const PurchaseSection = ({
   eventId,
+  eventName,
+  eventDate,
+  eventCity,
   selectedTicketType,
   ticketTypes,
   appliedCoupon,
@@ -31,11 +37,30 @@ const PurchaseSection = ({
   isProcessing
 }: PurchaseSectionProps) => {
   const { user } = useAuth();
+  const navigate = useNavigate();
   
   const selectedTicket = ticketTypes.find(t => t.id === selectedTicketType);
   const basePrice = selectedTicket?.price || 0;
   const discount = appliedCoupon?.discount_amount || 0;
   const finalPrice = Math.max(0, basePrice - discount);
+
+  const handleProceedToCheckout = () => {
+    if (!selectedTicket) return;
+
+    navigate('/checkout', {
+      state: {
+        eventId,
+        eventName,
+        eventDate,
+        eventCity,
+        selectedTicketType: {
+          id: selectedTicket.id,
+          name: selectedTicket.name,
+          price: selectedTicket.price
+        }
+      }
+    });
+  };
 
   if (!selectedTicket) {
     return (
@@ -111,7 +136,7 @@ const PurchaseSection = ({
             </div>
           ) : (
             <Button 
-              onClick={onPurchase}
+              onClick={handleProceedToCheckout}
               disabled={!selectedTicketType || isProcessing}
               className="w-full bg-trailflow-green hover:bg-trailflow-green-dark"
             >

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -33,6 +32,7 @@ import WishlistDetail from '@/pages/WishlistDetail';
 import SharedWishlist from '@/pages/SharedWishlist';
 import NotFound from '@/pages/NotFound';
 import Unauthorized from '@/pages/Unauthorized';
+import Checkout from '@/pages/Checkout';
 
 // Admin Pages
 import Dashboard from '@/pages/admin/Dashboard';
@@ -111,6 +111,7 @@ function App() {
                 <Route path="/events" element={<Navigate to="/eventos" replace />} />
                 <Route path="/eventos" element={<EventsCalendar />} />
                 <Route path="/eventos/:id" element={<EventDetail />} />
+                <Route path="/checkout" element={<Checkout />} />
                 <Route path="/anunciar" element={<NewAnnounce />} />
                 <Route path="/comunidade" element={<Comunidade />} />
                 <Route path="/roles" element={<Roles />} />
