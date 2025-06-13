@@ -5,7 +5,11 @@ import { Button } from '@/components/ui/button';
 import { User, LogOut } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 
-const NavbarUserActions = () => {
+interface NavbarUserActionsProps {
+  scrolled?: boolean;
+}
+
+const NavbarUserActions: React.FC<NavbarUserActionsProps> = ({ scrolled }) => {
   const { user, signOut } = useAuth();
 
   if (!user) {
