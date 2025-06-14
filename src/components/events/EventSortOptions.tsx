@@ -24,12 +24,12 @@ export const EventSortOptions: React.FC<EventSortOptionsProps> = ({
   onSortChange
 }) => {
   return (
-    <div className="flex items-center gap-4">
-      <span className="polymer-specs text-trailflow-medium uppercase tracking-wider whitespace-nowrap">
+    <div className="flex flex-col sm:flex-row items-center gap-4">
+      <span className="polymer-specs text-trailflow-medium uppercase tracking-wider whitespace-nowrap text-xs sm:text-sm text-center">
         Ordenar por:
       </span>
       <Select value={sortBy || 'relevance'} onValueChange={onSortChange}>
-        <SelectTrigger className="w-auto min-w-[250px] border-trailflow-light/30 focus:border-trailflow-green rounded-none polymer-body">
+        <SelectTrigger className="w-full sm:w-auto min-w-[200px] sm:min-w-[250px] border-trailflow-light/30 focus:border-trailflow-green rounded-none polymer-body">
           <SelectValue placeholder="Selecione a ordenação" />
         </SelectTrigger>
         <SelectContent className="bg-trailflow-white border border-trailflow-light/30 shadow-xl z-50">

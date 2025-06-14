@@ -75,9 +75,9 @@ const EventCard = ({
   const isFull = spotsLeft !== null && spotsLeft <= 0;
   
   return (
-    <Link to={`/eventos/${id}`} className="group block polymer-product-card">
-      <div className="bg-trailflow-white border border-trailflow-light/20 overflow-hidden transition-all duration-500 hover:shadow-2xl h-full flex flex-col">
-        <div className="relative polymer-aspect-editorial overflow-hidden">
+    <Link to={`/eventos/${id}`} className="group block polymer-product-card h-full">
+      <div className="bg-trailflow-white border border-trailflow-light/20 overflow-hidden transition-all duration-500 hover:shadow-2xl h-full flex flex-col min-h-[500px] sm:min-h-[550px]">
+        <div className="relative overflow-hidden" style={{ aspectRatio: '16/10' }}>
           <img 
             src={imageUrl} 
             alt={title} 
@@ -87,73 +87,75 @@ const EventCard = ({
           {/* Polymer overlay */}
           <div className="polymer-video-overlay absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
           
-          {/* Category Badge - Polymer Style */}
+          {/* Category Badge - Fixed positioning */}
           <div className="absolute top-4 left-4">
-            <Badge className={`${getCategoryColor(category)} border polymer-specs tracking-wider`}>
+            <Badge className={`${getCategoryColor(category)} border polymer-specs tracking-wider text-xs`}>
               {category}
             </Badge>
           </div>
           
-          {/* Difficulty Badge */}
+          {/* Difficulty Badge - Fixed positioning */}
           {difficulty && (
             <div className="absolute top-4 right-4">
-              <Badge className={`${getDifficultyColor(difficulty)} border polymer-specs tracking-wider`}>
+              <Badge className={`${getDifficultyColor(difficulty)} border polymer-specs tracking-wider text-xs`}>
                 {difficulty}
               </Badge>
             </div>
           )}
           
-          {/* Status Indicators - Polymer Style */}
+          {/* Status Indicators - Fixed positioning */}
           {isFull && (
-            <div className="absolute bottom-4 left-4 bg-trailflow-dark text-white px-3 py-1 polymer-specs tracking-wider">
+            <div className="absolute bottom-4 left-4 bg-trailflow-dark text-white px-3 py-1 polymer-specs tracking-wider text-xs">
               Esgotado
             </div>
           )}
           {isAlmostFull && !isFull && (
-            <div className="absolute bottom-4 left-4 bg-orange-500 text-white px-3 py-1 polymer-specs tracking-wider">
+            <div className="absolute bottom-4 left-4 bg-orange-500 text-white px-3 py-1 polymer-specs tracking-wider text-xs">
               Últimas vagas
             </div>
           )}
         </div>
         
-        <div className="p-6 flex-grow flex flex-col">
-          <h3 className="polymer-heading text-xl text-trailflow-dark mb-4 leading-tight line-clamp-2 group-hover:text-trailflow-green transition-colors duration-300">
+        <div className="p-4 sm:p-6 flex-grow flex flex-col">
+          <h3 className="polymer-heading text-lg sm:text-xl text-trailflow-dark mb-3 sm:mb-4 leading-tight line-clamp-2 group-hover:text-trailflow-green transition-colors duration-300 font-light tracking-wide">
             {title}
           </h3>
           
-          <div className="space-y-3 mb-6 flex-grow">
-            <div className="flex items-center polymer-specs text-trailflow-medium tracking-wide">
-              <CalendarIcon className="h-4 w-4 mr-3 text-trailflow-light" />
-              <span>{date}</span>
+          <div className="space-y-2 sm:space-y-3 mb-4 sm:mb-6 flex-grow">
+            <div className="flex items-center polymer-specs text-trailflow-medium tracking-wide text-sm">
+              <CalendarIcon className="h-4 w-4 mr-3 text-trailflow-light flex-shrink-0" />
+              <span className="truncate">{date}</span>
             </div>
             
-            <div className="flex items-center polymer-specs text-trailflow-medium tracking-wide">
-              <MapPin className="h-4 w-4 mr-3 text-trailflow-light" />
+            <div className="flex items-center polymer-specs text-trailflow-medium tracking-wide text-sm">
+              <MapPin className="h-4 w-4 mr-3 text-trailflow-light flex-shrink-0" />
               <span className="truncate">{location}</span>
             </div>
             
             {distance && (
-              <div className="flex items-center polymer-specs text-trailflow-medium tracking-wide">
-                <Zap className="h-4 w-4 mr-3 text-trailflow-light" />
-                <span>{distance}</span>
+              <div className="flex items-center polymer-specs text-trailflow-medium tracking-wide text-sm">
+                <Zap className="h-4 w-4 mr-3 text-trailflow-light flex-shrink-0" />
+                <span className="truncate">{distance}</span>
               </div>
             )}
             
             {maxParticipants && (
-              <div className="flex items-center polymer-specs text-trailflow-medium tracking-wide">
-                <Users className="h-4 w-4 mr-3 text-trailflow-light" />
-                <span>{registeredParticipants}/{maxParticipants} inscritos</span>
+              <div className="flex items-center polymer-specs text-trailflow-medium tracking-wide text-sm">
+                <Users className="h-4 w-4 mr-3 text-trailflow-light flex-shrink-0" />
+                <span className="truncate">{registeredParticipants}/{maxParticipants} inscritos</span>
               </div>
             )}
           </div>
           
-          <div className="polymer-editorial-line mb-6"></div>
+          <div className="w-full mb-4 sm:mb-6">
+            <div className="h-px bg-gradient-to-r from-transparent via-trailflow-green to-transparent"></div>
+          </div>
           
-          <div className="flex items-center justify-between">
-            <div className="flex flex-col">
-              <span className="polymer-heading text-2xl text-trailflow-dark mb-1">{price}</span>
+          <div className="flex items-center justify-between gap-4 mt-auto">
+            <div className="flex flex-col min-w-0">
+              <span className="polymer-heading text-xl sm:text-2xl text-trailflow-dark mb-1 font-light truncate">{price}</span>
               {price.toLowerCase().includes('gratuito') && (
-                <span className="polymer-specs text-trailflow-green tracking-wider">
+                <span className="polymer-specs text-trailflow-green tracking-wider text-xs">
                   Inscrição gratuita
                 </span>
               )}
@@ -161,12 +163,13 @@ const EventCard = ({
             
             {showBuyButton && (
               <Button 
-                className="polymer-btn bg-trailflow-green text-white hover:bg-trailflow-green-dark transition-all duration-300 rounded-none px-6 py-2 flex items-center gap-2"
+                className="polymer-btn bg-trailflow-green text-white hover:bg-trailflow-green-dark transition-all duration-300 rounded-none px-4 sm:px-6 py-2 flex items-center gap-2 font-light tracking-wider uppercase text-xs sm:text-sm flex-shrink-0"
                 disabled={isFull}
               >
                 {isFull ? 'Esgotado' : (
                   <>
-                    Inscrever-se
+                    <span className="hidden sm:inline">Inscrever-se</span>
+                    <span className="sm:hidden">Inscrever</span>
                     <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                   </>
                 )}
