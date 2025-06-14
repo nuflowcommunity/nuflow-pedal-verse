@@ -3,11 +3,13 @@ import React, { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import { useAuth } from '@/contexts/AuthContext';
 import { toast } from '@/hooks/use-toast';
 import SEOHead from '@/components/seo/SEOHead';
+import SocialAuthButtons from '@/components/auth/SocialAuthButtons';
 import ForgotPasswordForm from '@/components/auth/ForgotPasswordForm';
-import { Eye, EyeOff, AlertCircle, CheckCircle, Users } from 'lucide-react';
+import { Eye, EyeOff, AlertCircle, CheckCircle, ArrowLeft } from 'lucide-react';
 
 const PartnerLogin = () => {
   const [searchParams] = useSearchParams();
@@ -67,15 +69,25 @@ const PartnerLogin = () => {
           noIndex={true}
         />
         
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-gray-100">
-          <div className="max-w-md w-full mx-4">
-            <div className="bg-white p-8 rounded-lg shadow-lg border border-blue-100">
-              <ForgotPasswordForm 
-                onBackToLogin={() => setShowForgotPassword(false)}
-                userType="partner"
-                title="Recuperar senha - Parceiro"
-                description="Digite seu email de parceiro para receber instruções de recuperação."
-              />
+        <div className="min-h-screen bg-trailflow-white polymer-light-section">
+          <div className="container-editorial py-16 lg:py-24">
+            <div className="max-w-2xl mx-auto">
+              <button
+                onClick={() => setShowForgotPassword(false)}
+                className="polymer-btn inline-flex items-center mb-8 text-trailflow-medium hover:text-trailflow-green transition-colors duration-300"
+              >
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Voltar ao login
+              </button>
+              
+              <div className="bg-trailflow-white border border-trailflow-light/20 rounded-none p-8 lg:p-12">
+                <ForgotPasswordForm 
+                  onBackToLogin={() => setShowForgotPassword(false)}
+                  userType="partner"
+                  title="Recuperar senha - Parceiro"
+                  description="Digite seu email de parceiro para receber instruções de recuperação."
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -86,114 +98,153 @@ const PartnerLogin = () => {
   return (
     <>
       <SEOHead
-        title="Login Parceiro"
-        description="Acesso exclusivo para parceiros do sistema."
+        title="Portal do Parceiro - Acesso"
+        description="Acesse sua conta de parceiro para gerenciar eventos e vendas."
         noIndex={true}
       />
       
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-gray-100">
-        <div className="max-w-md w-full mx-4">
-          <div className="bg-white p-8 rounded-lg shadow-lg border border-blue-100">
-            <div className="text-center mb-6">
-              <div className="flex justify-center mb-4">
-                <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center">
-                  <Users className="w-8 h-8 text-blue-600" />
-                </div>
+      <div className="min-h-screen bg-trailflow-white polymer-light-section">
+        <div className="container-editorial py-16 lg:py-24">
+          <div className="max-w-2xl mx-auto">
+            
+            {/* Header Section */}
+            <div className="text-center mb-12 lg:mb-16">
+              <div className="mb-8">
+                <div className="w-1 h-24 bg-trailflow-green mx-auto mb-8 polymer-editorial-line"></div>
               </div>
-              <h1 className="text-2xl font-heading font-bold text-gray-800">
+              
+              <h1 className="polymer-heading-md text-trailflow-dark mb-6">
                 Portal do Parceiro
               </h1>
-              <p className="text-sm text-gray-600 mt-2">
-                Entre com suas credenciais de parceiro
+              
+              <p className="polymer-body-large text-trailflow-medium max-w-lg mx-auto leading-relaxed">
+                Acesse sua conta para gerenciar eventos, visualizar vendas e acompanhar o desempenho do seu negócio.
               </p>
             </div>
             
-            {/* Success/Error Messages */}
+            {/* Alert Messages */}
             {searchParams.get('message') === 'password_reset_success' && (
-              <div className="mb-4 p-3 bg-green-50 border border-green-200 rounded-md flex items-center space-x-2">
-                <CheckCircle className="w-4 h-4 text-green-600" />
-                <span className="text-sm text-green-800">
-                  Senha redefinida com sucesso! Faça login com sua nova senha.
-                </span>
+              <div className="mb-8 p-4 bg-trailflow-accent border-l-4 border-trailflow-green">
+                <div className="flex items-center">
+                  <CheckCircle className="w-5 h-5 text-trailflow-green mr-3" />
+                  <span className="polymer-body text-trailflow-dark">
+                    Senha redefinida com sucesso! Faça login com sua nova senha.
+                  </span>
+                </div>
               </div>
             )}
             
             {searchParams.get('error') === 'invalid_reset_link' && (
-              <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-md flex items-center space-x-2">
-                <AlertCircle className="w-4 h-4 text-red-600" />
-                <span className="text-sm text-red-800">
-                  Link de redefinição inválido ou expirado.
-                </span>
+              <div className="mb-8 p-4 bg-red-50 border-l-4 border-red-400">
+                <div className="flex items-center">
+                  <AlertCircle className="w-5 h-5 text-red-600 mr-3" />
+                  <span className="polymer-body text-red-800">
+                    Link de redefinição inválido ou expirado.
+                  </span>
+                </div>
               </div>
             )}
             
-            <form className="space-y-4" onSubmit={handleSubmit}>
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium mb-1 text-gray-700">
-                  Email
-                </label>
-                <Input
-                  type="email"
-                  id="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="parceiro@exemplo.com"
-                  required
-                  disabled={isLoading}
-                />
+            {/* Form Container */}
+            <div className="bg-trailflow-white border border-trailflow-light/20 rounded-none p-8 lg:p-12">
+              
+              {/* Social Auth Buttons */}
+              <div className="mb-8">
+                <SocialAuthButtons mode="signin" />
               </div>
               
-              <div>
-                <label htmlFor="password" className="block text-sm font-medium mb-1 text-gray-700">
-                  Senha
-                </label>
-                <div className="relative">
+              {/* Login Form */}
+              <form className="space-y-6" onSubmit={handleSubmit}>
+                <div className="form-floating">
                   <Input
-                    type={showPassword ? "text" : "password"}
-                    id="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className="w-full p-3 pr-10 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    placeholder="••••••••"
+                    type="email"
+                    id="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="seu.email@empresa.com"
+                    className="w-full h-14 px-4 border-0 border-b-2 border-trailflow-light/30 rounded-none bg-transparent focus:border-trailflow-green focus:ring-0 polymer-body transition-all duration-300"
                     required
                     disabled={isLoading}
                   />
+                  <Label 
+                    htmlFor="email" 
+                    className="polymer-specs text-trailflow-medium uppercase tracking-wider"
+                  >
+                    Email corporativo
+                  </Label>
+                </div>
+                
+                <div className="form-floating">
+                  <div className="relative">
+                    <Input
+                      type={showPassword ? "text" : "password"}
+                      id="password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      placeholder="••••••••••••"
+                      className="w-full h-14 px-4 pr-12 border-0 border-b-2 border-trailflow-light/30 rounded-none bg-transparent focus:border-trailflow-green focus:ring-0 polymer-body transition-all duration-300"
+                      required
+                      disabled={isLoading}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute right-0 top-1/2 transform -translate-y-1/2 p-3 text-trailflow-medium hover:text-trailflow-green transition-colors duration-300"
+                      disabled={isLoading}
+                    >
+                      {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                    </button>
+                  </div>
+                  <Label 
+                    htmlFor="password" 
+                    className="polymer-specs text-trailflow-medium uppercase tracking-wider"
+                  >
+                    Senha
+                  </Label>
+                </div>
+                
+                <div className="flex items-center justify-end">
                   <button
                     type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                    onClick={() => setShowForgotPassword(true)}
+                    className="polymer-specs text-trailflow-medium hover:text-trailflow-green transition-colors duration-300 uppercase tracking-wider"
                     disabled={isLoading}
                   >
-                    {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                    Esqueceu a senha?
                   </button>
                 </div>
-              </div>
+                
+                <div className="pt-4">
+                  <Button 
+                    type="submit" 
+                    className="w-full h-14 polymer-btn bg-trailflow-green text-trailflow-white hover:bg-trailflow-green-dark border-0 rounded-none uppercase tracking-wider font-light text-sm transition-all duration-300 hover:scale-[1.02]"
+                    disabled={isLoading}
+                  >
+                    {isLoading ? (
+                      <span className="flex items-center justify-center">
+                        <span className="animate-spin mr-3 w-4 h-4 border-2 border-white border-t-transparent rounded-full"></span>
+                        Processando...
+                      </span>
+                    ) : 'Acessar Portal'}
+                  </Button>
+                </div>
+              </form>
               
-              <div className="flex items-center justify-end">
-                <button
-                  type="button"
-                  onClick={() => setShowForgotPassword(true)}
-                  className="text-sm text-blue-600 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded transition-colors"
-                  disabled={isLoading}
-                >
-                  Esqueceu a senha?
-                </button>
+              {/* Footer */}
+              <div className="mt-8 pt-6 border-t border-trailflow-light/20">
+                <div className="text-center">
+                  <p className="polymer-specs text-trailflow-medium uppercase tracking-wider">
+                    Ainda não é parceiro?{" "}
+                    <a 
+                      href="#" 
+                      className="text-trailflow-green hover:text-trailflow-green-dark transition-colors duration-300"
+                    >
+                      Torne-se um parceiro
+                    </a>
+                  </p>
+                </div>
               </div>
-              
-              <Button 
-                type="submit" 
-                className="w-full bg-blue-600 text-white hover:bg-blue-700"
-                disabled={isLoading}
-              >
-                {isLoading ? (
-                  <span className="flex items-center">
-                    <span className="animate-spin mr-2" aria-hidden="true">○</span>
-                    Entrando...
-                  </span>
-                ) : 'Entrar no Portal'}
-              </Button>
-            </form>
+            </div>
           </div>
         </div>
       </div>
