@@ -3,100 +3,92 @@ import React from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import EventsGrid from '@/components/events/EventsGrid';
-import CityFilter from '@/components/events/CityFilter';
-import SimpleDateFilter from '@/components/events/SimpleDateFilter';
 import BackToTopButton from '@/components/BackToTopButton';
+import { EventFiltersPanel } from '@/components/events/EventFiltersPanel';
+import { EventSortOptions } from '@/components/events/EventSortOptions';
+import { EventsStats } from '@/components/events/EventsStats';
 import { useEventsData } from '@/hooks/useEventsData';
-import { Input } from '@/components/ui/input';
-import { Search } from 'lucide-react';
+import { useAdvancedEventFilters } from '@/hooks/useAdvancedEventFilters';
 
 const EventsCalendar = () => {
+  const { filteredEvents, isLoading } = useEventsData();
+  
   const {
-    searchQuery,
-    setSearchQuery,
-    selectedCity,
-    setSelectedCity,
-    selectedDate,
-    setSelectedDate,
-    filteredEvents,
-    isLoading,
-    handleClearDateFilter
-  } = useEventsData();
+    filters,
+    filteredEvents: finalFilteredEvents,
+    activeFilters,
+    stats,
+    updateFilter,
+    clearFilter,
+    clearAllFilters
+  } = useAdvancedEventFilters(filteredEvents);
 
   return (
-    <div className="min-h-screen flex flex-col bg-white">
+    <div className="min-h-screen flex flex-col bg-gray-50">
       <Navbar />
       
       <main className="flex-grow">
-        {/* Header Section */}
-        <section className="py-20 bg-white">
-          <div className="container mx-auto px-4 max-w-6xl">
-            <h1 className="text-4xl font-light text-gray-900 mb-16 text-center uppercase tracking-widest">
-              Eventos Disponíveis
-            </h1>
-            
-            {/* Search and Filters Section */}
-            <div className="max-w-4xl mx-auto mb-16">
-              {/* Search Bar */}
-              <div className="relative mb-8">
-                <div className="relative">
-                  <Search className="absolute left-0 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
-                  <Input
-                    type="text"
-                    placeholder="Buscar evento..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full pl-8 pr-4 py-4 text-base border-0 border-b border-gray-200 rounded-none bg-transparent focus:border-gray-400 focus:ring-0 placeholder:text-gray-400"
-                  />
-                </div>
-              </div>
-              
-              {/* Filter Row */}
-              <div className="flex flex-col sm:flex-row gap-6 items-start sm:items-center justify-center">
-                <div className="flex flex-col items-center">
-                  <label className="text-xs font-normal text-gray-600 mb-3 uppercase tracking-wider">
-                    Cidade
-                  </label>
-                  <CityFilter 
-                    selectedCity={selectedCity}
-                    onCityChange={setSelectedCity}
-                  />
-                </div>
-                
-                <div className="flex flex-col items-center">
-                  <label className="text-xs font-normal text-gray-600 mb-3 uppercase tracking-wider">
-                    Data
-                  </label>
-                  <SimpleDateFilter
-                    selectedDate={selectedDate}
-                    onDateChange={setSelectedDate}
-                    mode="select"
-                  />
-                </div>
-                
-                {(selectedCity !== 'Todas as cidades' || selectedDate) && (
-                  <div className="flex flex-col justify-end">
-                    <button
-                      onClick={() => {
-                        setSelectedCity('Todas as cidades');
-                        handleClearDateFilter();
-                      }}
-                      className="text-xs text-gray-500 hover:text-gray-700 transition-colors mt-6 uppercase tracking-wide"
-                    >
-                      Limpar filtros
-                    </button>
-                  </div>
-                )}
-              </div>
+        {/* Modern Header Section */}
+        <section className="bg-gradient-to-br from-trailflow-green to-trailflow-green-dark py-20">
+          <div className="container mx-auto px-4 max-w-6xl text-center">
+            <div className="max-w-4xl mx-auto">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
+                Descubra Eventos
+                <span className="block text-trailflow-accent">Incríveis</span>
+              </h1>
+              <p className="text-xl md:text-2xl text-white/90 leading-relaxed max-w-3xl mx-auto">
+                Encontre o evento perfeito para você com nossos filtros inteligentes.
+                Explore, compare e participe dos melhores eventos de ciclismo.
+              </p>
             </div>
           </div>
         </section>
-        
-        {/* Events Grid */}
-        <EventsGrid 
-          events={filteredEvents} 
-          isLoading={isLoading} 
-        />
+
+        <div className="container mx-auto px-4 max-w-7xl py-8">
+          {/* Statistics */}
+          <EventsStats {...stats} />
+
+          {/* Advanced Filters Panel */}
+          <EventFiltersPanel
+            searchQuery={filters.searchQuery}
+            onSearchChange={(value) => updateFilter('searchQuery', value)}
+            selectedCity={filters.selectedCity}
+            onCityChange={(value) => updateFilter('selectedCity', value)}
+            selectedCategory={filters.selectedCategory}
+            onCategoryChange={(value) => updateFilter('selectedCategory', value)}
+            selectedPriceRange={filters.selectedPriceRange}
+            onPriceRangeChange={(value) => updateFilter('selectedPriceRange', value)}
+            selectedDifficulty={filters.selectedDifficulty}
+            onDifficultyChange={(value) => updateFilter('selectedDifficulty', value)}
+            selectedDistance={filters.selectedDistance}
+            onDistanceChange={(value) => updateFilter('selectedDistance', value)}
+            activeFilters={activeFilters}
+            onClearFilter={clearFilter}
+            onClearAllFilters={clearAllFilters}
+            resultsCount={finalFilteredEvents.length}
+            isLoading={isLoading}
+          />
+
+          {/* Sort Options */}
+          <div className="flex justify-between items-center mb-6">
+            <div className="text-lg font-semibold text-gray-900">
+              {finalFilteredEvents.length === 0 && !isLoading ? 
+                'Nenhum evento encontrado' : 
+                `${finalFilteredEvents.length} evento${finalFilteredEvents.length !== 1 ? 's' : ''} encontrado${finalFilteredEvents.length !== 1 ? 's' : ''}`
+              }
+            </div>
+            <EventSortOptions
+              sortBy={filters.sortBy}
+              onSortChange={(value) => updateFilter('sortBy', value)}
+            />
+          </div>
+
+          {/* Events Grid */}
+          <EventsGrid 
+            events={finalFilteredEvents} 
+            isLoading={isLoading} 
+          />
+        </div>
         
         <BackToTopButton />
       </main>

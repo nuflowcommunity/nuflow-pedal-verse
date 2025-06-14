@@ -3,6 +3,7 @@ import React from 'react';
 import EventCard from '@/components/cards/EventCard';
 import { Event } from '@/types/events';
 import { EventCardSkeleton } from '@/components/ui/enhanced-skeleton';
+import { Search, Filter } from 'lucide-react';
 
 interface EventsGridProps {
   events: Event[];
@@ -12,12 +13,42 @@ interface EventsGridProps {
 const EventsGrid = ({ events, isLoading = false }: EventsGridProps) => {
   if (isLoading) {
     return (
-      <section className="py-16 bg-white">
-        <div className="container mx-auto px-4 max-w-7xl">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-            {Array.from({ length: 8 }).map((_, index) => (
-              <EventCardSkeleton key={index} />
-            ))}
+      <section className="py-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {Array.from({ length: 8 }).map((_, index) => (
+            <EventCardSkeleton key={index} />
+          ))}
+        </div>
+      </section>
+    );
+  }
+
+  if (events.length === 0) {
+    return (
+      <section className="py-16">
+        <div className="text-center max-w-lg mx-auto">
+          <div className="w-24 h-24 mx-auto mb-6 bg-gray-100 rounded-full flex items-center justify-center">
+            <Search className="w-12 h-12 text-gray-400" />
+          </div>
+          
+          <h3 className="text-2xl font-semibold text-gray-900 mb-4">
+            Nenhum evento encontrado
+          </h3>
+          
+          <p className="text-gray-600 mb-6 leading-relaxed">
+            Não encontramos eventos que correspondam aos seus critérios de busca. 
+            Tente ajustar os filtros ou fazer uma nova pesquisa.
+          </p>
+          
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <button className="inline-flex items-center px-4 py-2 text-sm font-medium text-trailflow-green bg-trailflow-green/10 rounded-lg hover:bg-trailflow-green/20 transition-colors">
+              <Filter className="w-4 h-4 mr-2" />
+              Limpar filtros
+            </button>
+            <button className="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors">
+              <Search className="w-4 h-4 mr-2" />
+              Ver todos os eventos
+            </button>
           </div>
         </div>
       </section>
@@ -25,24 +56,11 @@ const EventsGrid = ({ events, isLoading = false }: EventsGridProps) => {
   }
 
   return (
-    <section className="py-16 bg-white">
-      <div className="container mx-auto px-4 max-w-7xl">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-          {events.map((event) => (
-            <EventCard key={event.id} {...event} showBuyButton={true} />
-          ))}
-        </div>
-        
-        {events.length === 0 && !isLoading && (
-          <div className="text-center py-20">
-            <h3 className="text-xl font-light text-gray-600 mb-2 uppercase tracking-wide">
-              Nenhum evento encontrado no momento
-            </h3>
-            <p className="text-gray-500 text-sm">
-              Tente ajustar seus filtros ou faça uma nova busca.
-            </p>
-          </div>
-        )}
+    <section className="py-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        {events.map((event) => (
+          <EventCard key={event.id} {...event} showBuyButton={true} />
+        ))}
       </div>
     </section>
   );
