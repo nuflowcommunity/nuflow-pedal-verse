@@ -19,11 +19,13 @@ export const products = [
     title: 'Trek Madone SLR 7 Disc',
     image: 'https://images.unsplash.com/photo-1485965120184-e220f721d03e?auto=format&fit=crop&w=800',
     price: 23500,
+    originalPrice: undefined,
     location: 'Curitiba, PR',
     condition: 'Novo na caixa',
     brand: 'Trek',
     category: 'Speed',
     rating: 5.0,
+    discount: undefined,
     featured: false
   },
   {
@@ -37,18 +39,21 @@ export const products = [
     brand: 'Cannondale',
     category: 'MTB',
     rating: 4.7,
-    discount: 11
+    discount: 11,
+    featured: false
   },
   {
     id: '4',
     title: 'Pinarello Dogma F12',
     image: 'https://images.unsplash.com/photo-1569943228307-a66beab7cd96?auto=format&fit=crop&w=800',
     price: 32000,
+    originalPrice: undefined,
     location: 'Belo Horizonte, MG',
     condition: 'Novo - Edição limitada',
     brand: 'Pinarello',
     category: 'Speed',
     rating: 5.0,
+    discount: undefined,
     featured: false
   }
 ];

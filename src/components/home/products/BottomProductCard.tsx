@@ -7,11 +7,14 @@ interface BottomProductCardProps {
     title: string;
     image: string;
     price: number;
+    originalPrice?: number;
     location: string;
     condition: string;
     brand: string;
     category: string;
     rating: number;
+    discount?: number;
+    featured: boolean;
   };
   animateProducts: boolean;
   formatPrice: (price: number) => string;

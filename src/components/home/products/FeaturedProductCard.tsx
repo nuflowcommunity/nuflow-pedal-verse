@@ -30,12 +30,14 @@ const FeaturedProductCard: React.FC<FeaturedProductCardProps> = ({
     <div className={`lg:col-span-2 transition-all duration-1000 ease-out ${animateProducts ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
       <div className="group bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-700 relative">
         {/* Featured Badge */}
-        <div className="absolute top-6 left-6 z-20">
-          <div className="flex items-center gap-2 bg-trailflow-green text-white px-4 py-2 rounded-full font-medium text-sm uppercase tracking-wide">
-            <Zap size={16} />
-            Destaque
+        {product.featured && (
+          <div className="absolute top-6 left-6 z-20">
+            <div className="flex items-center gap-2 bg-trailflow-green text-white px-4 py-2 rounded-full font-medium text-sm uppercase tracking-wide">
+              <Zap size={16} />
+              Destaque
+            </div>
           </div>
-        </div>
+        )}
         
         {/* Discount Badge */}
         {product.discount && (
