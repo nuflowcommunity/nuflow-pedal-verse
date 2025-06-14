@@ -2,7 +2,7 @@
 /* TrailFlow Base Styles - Polymer Inspired */
 
 /* Import Inter font */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 /* Reset and base styles */
 *,
@@ -44,71 +44,68 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-/* Enhanced Typography Hierarchy - Modular Scale */
+/* Enhanced Typography Hierarchy - Perfect Alignment */
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Inter', system-ui, sans-serif;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--trailflow-dark);
   letter-spacing: -0.025em;
   margin: 0;
-}
-
-h1 {
-  @apply text-6xl sm:text-7xl md:text-8xl lg:text-9xl;
-  font-weight: 700;
-  letter-spacing: -0.04em;
+  text-align: center;
   line-height: 1.1;
 }
 
+h1 {
+  font-size: clamp(2.5rem, 8vw, 6rem);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+}
+
 h2 {
-  @apply text-4xl sm:text-5xl md:text-6xl lg:text-7xl;
-  font-weight: 600;
+  font-size: clamp(2rem, 6vw, 4rem);
+  font-weight: 800;
   letter-spacing: -0.03em;
-  line-height: 1.15;
 }
 
 h3 {
-  @apply text-3xl sm:text-4xl md:text-5xl;
-  font-weight: 600;
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  font-weight: 700;
   letter-spacing: -0.02em;
-  line-height: 1.2;
 }
 
 h4 {
-  @apply text-2xl sm:text-3xl md:text-4xl;
+  font-size: clamp(1.25rem, 3vw, 2rem);
   font-weight: 600;
-  line-height: 1.3;
 }
 
 h5 {
-  @apply text-xl sm:text-2xl md:text-3xl;
-  font-weight: 500;
-  line-height: 1.4;
+  font-size: clamp(1.125rem, 2.5vw, 1.5rem);
+  font-weight: 600;
 }
 
 h6 {
-  @apply text-lg sm:text-xl md:text-2xl;
+  font-size: clamp(1rem, 2vw, 1.25rem);
   font-weight: 500;
-  line-height: 1.4;
 }
 
 /* Enhanced Paragraph Styles */
 p {
-  @apply text-base sm:text-lg md:text-xl;
+  font-size: clamp(1rem, 2vw, 1.125rem);
   line-height: 1.7;
   margin: 0;
   color: var(--trailflow-medium);
   font-weight: 400;
+  text-align: center;
 }
 
 .text-large {
-  @apply text-xl sm:text-2xl md:text-3xl;
+  font-size: clamp(1.25rem, 3vw, 1.875rem);
   line-height: 1.6;
   font-weight: 300;
 }
 
 .text-small {
-  @apply text-sm md:text-base;
+  font-size: clamp(0.875rem, 1.5vw, 1rem);
   line-height: 1.5;
 }
 
@@ -124,57 +121,223 @@ a:hover {
   transform: translateY(-1px);
 }
 
-/* Enhanced Container System - Modular Scale */
+/* Enhanced Container System - Perfect Centering */
 .container-modern {
-  @apply mx-auto px-8 sm:px-12 lg:px-16;
   max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  width: 100%;
+}
+
+@media (min-width: 640px) {
+  .container-modern {
+    padding: 0 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container-modern {
+    padding: 0 3rem;
+  }
 }
 
 .container-narrow {
-  @apply mx-auto px-8 sm:px-12;
   max-width: 800px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  width: 100%;
+}
+
+@media (min-width: 640px) {
+  .container-narrow {
+    padding: 0 2rem;
+  }
 }
 
 .container-wide {
-  @apply mx-auto px-8 sm:px-12 lg:px-16;
   max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  width: 100%;
 }
 
-/* Modular Spacing System - Based on 8px grid */
+@media (min-width: 640px) {
+  .container-wide {
+    padding: 0 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container-wide {
+    padding: 0 3rem;
+  }
+}
+
+/* Perfect Button Alignment */
+.btn-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.btn-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  width: 100%;
+}
+
+@media (min-width: 640px) {
+  .btn-group {
+    flex-direction: row;
+    gap: 1.5rem;
+  }
+}
+
+/* Text Alignment Classes */
+.text-center-responsive {
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .text-left-md {
+    text-align: left;
+  }
+}
+
+/* Enhanced spacing system */
 .section-padding {
-  @apply py-24 sm:py-32 md:py-40 lg:py-48;
+  padding: 3rem 0;
+}
+
+@media (min-width: 640px) {
+  .section-padding {
+    padding: 4rem 0;
+  }
+}
+
+@media (min-width: 768px) {
+  .section-padding {
+    padding: 5rem 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  .section-padding {
+    padding: 6rem 0;
+  }
 }
 
 .section-padding-sm {
-  @apply py-16 sm:py-20 md:py-24;
+  padding: 2rem 0;
+}
+
+@media (min-width: 640px) {
+  .section-padding-sm {
+    padding: 3rem 0;
+  }
 }
 
 .section-padding-lg {
-  @apply py-32 sm:py-40 md:py-48 lg:py-64;
+  padding: 4rem 0;
 }
 
-/* Enhanced spacing system with mathematical progression */
+@media (min-width: 640px) {
+  .section-padding-lg {
+    padding: 6rem 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  .section-padding-lg {
+    padding: 8rem 0;
+  }
+}
+
+/* Perfect spacing utilities */
 .space-modern > * + * {
-  margin-top: 2rem;
-}
-
-.space-modern-sm > * + * {
   margin-top: 1.5rem;
 }
 
+@media (min-width: 768px) {
+  .space-modern > * + * {
+    margin-top: 2rem;
+  }
+}
+
+.space-modern-sm > * + * {
+  margin-top: 1rem;
+}
+
+@media (min-width: 768px) {
+  .space-modern-sm > * + * {
+    margin-top: 1.5rem;
+  }
+}
+
 .space-modern-lg > * + * {
-  margin-top: 3rem;
+  margin-top: 2rem;
+}
+
+@media (min-width: 768px) {
+  .space-modern-lg > * + * {
+    margin-top: 3rem;
+  }
 }
 
 .space-modern-xl > * + * {
-  margin-top: 4rem;
+  margin-top: 3rem;
+}
+
+@media (min-width: 768px) {
+  .space-modern-xl > * + * {
+    margin-top: 4rem;
+  }
 }
 
 /* Breathing room utilities */
-.breathing-room-sm { @apply p-6; }
-.breathing-room { @apply p-8; }
-.breathing-room-lg { @apply p-12; }
-.breathing-room-xl { @apply p-16; }
+.breathing-room-sm { 
+  padding: 1rem;
+}
+
+@media (min-width: 768px) {
+  .breathing-room-sm {
+    padding: 1.5rem;
+  }
+}
+
+.breathing-room { 
+  padding: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .breathing-room {
+    padding: 2rem;
+  }
+}
+
+.breathing-room-lg { 
+  padding: 2rem;
+}
+
+@media (min-width: 768px) {
+  .breathing-room-lg {
+    padding: 3rem;
+  }
+}
+
+.breathing-room-xl { 
+  padding: 3rem;
+}
+
+@media (min-width: 768px) {
+  .breathing-room-xl {
+    padding: 4rem;
+  }
+}
 
 /* Accessibility improvements */
 .sr-only {
@@ -244,4 +407,68 @@ input, textarea, select {
   );
   background-size: 200% 100%;
   animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Perfect Grid Layouts */
+.grid-responsive {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 640px) {
+  .grid-responsive {
+    gap: 2rem;
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid-responsive {
+    gap: 2.5rem;
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1280px) {
+  .grid-responsive {
+    gap: 3rem;
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* Perfect Flex Layouts */
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.flex-col-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Enhanced Text Rendering */
+.text-crisp {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
