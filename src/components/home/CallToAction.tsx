@@ -22,7 +22,7 @@ const CallToAction = () => {
               Acesse um público qualificado de ciclistas e impulsione suas vendas.
             </p>
             <Link 
-              to="/parceiros" 
+              to="/tornar-parceiro" 
               className="inline-flex items-center text-lg font-semibold text-trailflow-green hover:text-trailflow-dark transition-colors duration-300 group"
             >
               Saiba como se tornar parceiro

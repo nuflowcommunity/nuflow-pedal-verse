@@ -241,12 +241,12 @@ const PartnerLogin = () => {
                 <div className="text-center">
                   <p className="text-sm text-gray-600">
                     Ainda não é parceiro?{" "}
-                    <a 
-                      href="#" 
+                    <Link 
+                      to="/tornar-parceiro" 
                       className="text-gray-900 hover:text-gray-700 transition-colors font-medium"
                     >
                       Torne-se um parceiro
-                    </a>
+                    </Link>
                   </p>
                 </div>
               </div>
