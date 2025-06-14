@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams, Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -69,18 +69,18 @@ const PartnerLogin = () => {
           noIndex={true}
         />
         
-        <div className="min-h-screen bg-trailflow-white polymer-light-section">
-          <div className="container-editorial py-16 lg:py-24">
-            <div className="max-w-2xl mx-auto">
+        <div className="min-h-screen bg-gray-50">
+          <div className="flex min-h-screen items-center justify-center px-4 py-12">
+            <div className="w-full max-w-md">
               <button
                 onClick={() => setShowForgotPassword(false)}
-                className="polymer-btn inline-flex items-center mb-8 text-trailflow-medium hover:text-trailflow-green transition-colors duration-300"
+                className="mb-6 flex items-center text-gray-600 hover:text-gray-900 transition-colors"
               >
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Voltar ao login
               </button>
               
-              <div className="bg-trailflow-white border border-trailflow-light/20 rounded-none p-8 lg:p-12">
+              <div className="bg-white shadow-sm border border-gray-200 p-8">
                 <ForgotPasswordForm 
                   onBackToLogin={() => setShowForgotPassword(false)}
                   userType="partner"
@@ -103,31 +103,27 @@ const PartnerLogin = () => {
         noIndex={true}
       />
       
-      <div className="min-h-screen bg-trailflow-white polymer-light-section">
-        <div className="container-editorial py-16 lg:py-24">
-          <div className="max-w-2xl mx-auto">
-            
-            {/* Header Section */}
-            <div className="text-center mb-12 lg:mb-16">
-              <div className="mb-8">
-                <div className="w-1 h-24 bg-trailflow-green mx-auto mb-8 polymer-editorial-line"></div>
-              </div>
-              
-              <h1 className="polymer-heading-md text-trailflow-dark mb-6">
-                Portal do Parceiro
-              </h1>
-              
-              <p className="polymer-body-large text-trailflow-medium max-w-lg mx-auto leading-relaxed">
-                Acesse sua conta para gerenciar eventos, visualizar vendas e acompanhar o desempenho do seu negócio.
-              </p>
-            </div>
+      <div className="min-h-screen bg-gray-50">
+        {/* Logo no canto superior direito */}
+        <div className="absolute top-6 right-6 z-10">
+          <Link to="/">
+            <img 
+              src="/lovable-uploads/adf44db0-c66b-4031-a615-a8e98fe5f77f.png" 
+              alt="NuFlow" 
+              className="w-12 h-12 object-contain opacity-60 hover:opacity-100 transition-opacity" 
+            />
+          </Link>
+        </div>
+
+        <div className="flex min-h-screen items-center justify-center px-4 py-12">
+          <div className="w-full max-w-md">
             
             {/* Alert Messages */}
             {searchParams.get('message') === 'password_reset_success' && (
-              <div className="mb-8 p-4 bg-trailflow-accent border-l-4 border-trailflow-green">
+              <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-sm">
                 <div className="flex items-center">
-                  <CheckCircle className="w-5 h-5 text-trailflow-green mr-3" />
-                  <span className="polymer-body text-trailflow-dark">
+                  <CheckCircle className="w-5 h-5 text-green-600 mr-3" />
+                  <span className="text-sm text-green-800">
                     Senha redefinida com sucesso! Faça login com sua nova senha.
                   </span>
                 </div>
@@ -135,18 +131,28 @@ const PartnerLogin = () => {
             )}
             
             {searchParams.get('error') === 'invalid_reset_link' && (
-              <div className="mb-8 p-4 bg-red-50 border-l-4 border-red-400">
+              <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-sm">
                 <div className="flex items-center">
                   <AlertCircle className="w-5 h-5 text-red-600 mr-3" />
-                  <span className="polymer-body text-red-800">
+                  <span className="text-sm text-red-800">
                     Link de redefinição inválido ou expirado.
                   </span>
                 </div>
               </div>
             )}
             
-            {/* Form Container */}
-            <div className="bg-trailflow-white border border-trailflow-light/20 rounded-none p-8 lg:p-12">
+            {/* Main Form Card */}
+            <div className="bg-white shadow-sm border border-gray-200 p-8">
+              
+              {/* Header */}
+              <div className="text-center mb-8">
+                <h1 className="text-2xl font-light text-gray-900 mb-2">
+                  Portal do Parceiro
+                </h1>
+                <p className="text-gray-600 text-sm leading-relaxed">
+                  Acesse sua conta para gerenciar eventos e visualizar vendas.
+                </p>
+              </div>
               
               {/* Social Auth Buttons */}
               <div className="mb-8">
@@ -155,26 +161,32 @@ const PartnerLogin = () => {
               
               {/* Login Form */}
               <form className="space-y-6" onSubmit={handleSubmit}>
-                <div className="form-floating">
+                <div>
+                  <Label 
+                    htmlFor="email" 
+                    className="block text-sm font-medium text-gray-700 mb-2"
+                  >
+                    Email corporativo
+                  </Label>
                   <Input
                     type="email"
                     id="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="seu.email@empresa.com"
-                    className="w-full h-14 px-4 border-0 border-b-2 border-trailflow-light/30 rounded-none bg-transparent focus:border-trailflow-green focus:ring-0 polymer-body transition-all duration-300"
+                    className="w-full h-11 px-3 border border-gray-300 bg-white text-gray-900 placeholder:text-gray-500 focus:border-gray-400 focus:ring-1 focus:ring-gray-400 transition-all duration-200"
                     required
                     disabled={isLoading}
                   />
-                  <Label 
-                    htmlFor="email" 
-                    className="polymer-specs text-trailflow-medium uppercase tracking-wider"
-                  >
-                    Email corporativo
-                  </Label>
                 </div>
                 
-                <div className="form-floating">
+                <div>
+                  <Label 
+                    htmlFor="password" 
+                    className="block text-sm font-medium text-gray-700 mb-2"
+                  >
+                    Senha
+                  </Label>
                   <div className="relative">
                     <Input
                       type={showPassword ? "text" : "password"}
@@ -182,47 +194,41 @@ const PartnerLogin = () => {
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       placeholder="••••••••••••"
-                      className="w-full h-14 px-4 pr-12 border-0 border-b-2 border-trailflow-light/30 rounded-none bg-transparent focus:border-trailflow-green focus:ring-0 polymer-body transition-all duration-300"
+                      className="w-full h-11 px-3 pr-10 border border-gray-300 bg-white text-gray-900 placeholder:text-gray-500 focus:border-gray-400 focus:ring-1 focus:ring-gray-400 transition-all duration-200"
                       required
                       disabled={isLoading}
                     />
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-0 top-1/2 transform -translate-y-1/2 p-3 text-trailflow-medium hover:text-trailflow-green transition-colors duration-300"
+                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700 transition-colors"
                       disabled={isLoading}
                     >
-                      {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                      {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                     </button>
                   </div>
-                  <Label 
-                    htmlFor="password" 
-                    className="polymer-specs text-trailflow-medium uppercase tracking-wider"
-                  >
-                    Senha
-                  </Label>
                 </div>
                 
                 <div className="flex items-center justify-end">
                   <button
                     type="button"
                     onClick={() => setShowForgotPassword(true)}
-                    className="polymer-specs text-trailflow-medium hover:text-trailflow-green transition-colors duration-300 uppercase tracking-wider"
+                    className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
                     disabled={isLoading}
                   >
                     Esqueceu a senha?
                   </button>
                 </div>
                 
-                <div className="pt-4">
+                <div>
                   <Button 
                     type="submit" 
-                    className="w-full h-14 polymer-btn bg-trailflow-green text-trailflow-white hover:bg-trailflow-green-dark border-0 rounded-none uppercase tracking-wider font-light text-sm transition-all duration-300 hover:scale-[1.02]"
+                    className="w-full h-11 bg-gray-900 text-white hover:bg-gray-800 focus:bg-gray-800 transition-colors duration-200 font-medium"
                     disabled={isLoading}
                   >
                     {isLoading ? (
                       <span className="flex items-center justify-center">
-                        <span className="animate-spin mr-3 w-4 h-4 border-2 border-white border-t-transparent rounded-full"></span>
+                        <span className="animate-spin mr-2 w-4 h-4 border-2 border-white border-t-transparent rounded-full"></span>
                         Processando...
                       </span>
                     ) : 'Acessar Portal'}
@@ -231,13 +237,13 @@ const PartnerLogin = () => {
               </form>
               
               {/* Footer */}
-              <div className="mt-8 pt-6 border-t border-trailflow-light/20">
+              <div className="mt-8 pt-6 border-t border-gray-200">
                 <div className="text-center">
-                  <p className="polymer-specs text-trailflow-medium uppercase tracking-wider">
+                  <p className="text-sm text-gray-600">
                     Ainda não é parceiro?{" "}
                     <a 
                       href="#" 
-                      className="text-trailflow-green hover:text-trailflow-green-dark transition-colors duration-300"
+                      className="text-gray-900 hover:text-gray-700 transition-colors font-medium"
                     >
                       Torne-se um parceiro
                     </a>
