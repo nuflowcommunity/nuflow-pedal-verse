@@ -86,7 +86,8 @@ const EventsCalendar = () => {
           {/* Events Grid */}
           <EventsGrid 
             events={finalFilteredEvents} 
-            isLoading={isLoading} 
+            isLoading={isLoading}
+            onClearFilters={clearAllFilters}
           />
         </div>
         

@@ -26,7 +26,7 @@ export const useAdvancedEventFilters = (events: Event[]) => {
     selectedPriceRange: 'all',
     selectedDifficulty: 'all',
     selectedDistance: 'all',
-    sortBy: ''
+    sortBy: 'relevance'
   });
 
   // Extract price value from price string
@@ -122,7 +122,7 @@ export const useAdvancedEventFilters = (events: Event[]) => {
     }
 
     // Sorting
-    if (filters.sortBy) {
+    if (filters.sortBy && filters.sortBy !== 'relevance') {
       result.sort((a, b) => {
         switch (filters.sortBy) {
           case 'date-asc':
@@ -154,7 +154,7 @@ export const useAdvancedEventFilters = (events: Event[]) => {
 
     if (filters.selectedCity !== 'Todas as cidades') {
       active.push({
-        key: 'city',
+        key: 'selectedCity',
         value: filters.selectedCity,
         label: `Cidade: ${filters.selectedCity}`
       });
@@ -169,7 +169,7 @@ export const useAdvancedEventFilters = (events: Event[]) => {
         'Outro': 'Outros'
       };
       active.push({
-        key: 'category',
+        key: 'selectedCategory',
         value: filters.selectedCategory,
         label: `Categoria: ${categoryLabels[filters.selectedCategory] || filters.selectedCategory}`
       });
@@ -184,7 +184,7 @@ export const useAdvancedEventFilters = (events: Event[]) => {
         '200+': 'Acima de R$ 200'
       };
       active.push({
-        key: 'price',
+        key: 'selectedPriceRange',
         value: filters.selectedPriceRange,
         label: `Preço: ${priceLabels[filters.selectedPriceRange]}`
       });
@@ -192,7 +192,7 @@ export const useAdvancedEventFilters = (events: Event[]) => {
 
     if (filters.selectedDifficulty !== 'all') {
       active.push({
-        key: 'difficulty',
+        key: 'selectedDifficulty',
         value: filters.selectedDifficulty,
         label: `Dificuldade: ${filters.selectedDifficulty.charAt(0).toUpperCase() + filters.selectedDifficulty.slice(1)}`
       });
@@ -207,7 +207,7 @@ export const useAdvancedEventFilters = (events: Event[]) => {
         '100+': 'Acima de 100km'
       };
       active.push({
-        key: 'distance',
+        key: 'selectedDistance',
         value: filters.selectedDistance,
         label: `Distância: ${distanceLabels[filters.selectedDistance]}`
       });
@@ -245,7 +245,7 @@ export const useAdvancedEventFilters = (events: Event[]) => {
       selectedPriceRange: 'all',
       selectedDifficulty: 'all',
       selectedDistance: 'all',
-      sortBy: ''
+      sortBy: 'relevance'
     };
     setFilters(prev => ({ ...prev, [filterKey]: defaultValues[filterKey] }));
   };
@@ -258,7 +258,7 @@ export const useAdvancedEventFilters = (events: Event[]) => {
       selectedPriceRange: 'all',
       selectedDifficulty: 'all',
       selectedDistance: 'all',
-      sortBy: ''
+      sortBy: 'relevance'
     });
   };
 

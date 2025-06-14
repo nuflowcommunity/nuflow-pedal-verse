@@ -4,13 +4,15 @@ import EventCard from '@/components/cards/EventCard';
 import { Event } from '@/types/events';
 import { EventCardSkeleton } from '@/components/ui/enhanced-skeleton';
 import { Search, Filter } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 interface EventsGridProps {
   events: Event[];
   isLoading?: boolean;
+  onClearFilters?: () => void;
 }
 
-const EventsGrid = ({ events, isLoading = false }: EventsGridProps) => {
+const EventsGrid = ({ events, isLoading = false, onClearFilters }: EventsGridProps) => {
   if (isLoading) {
     return (
       <section className="py-8">
@@ -41,14 +43,22 @@ const EventsGrid = ({ events, isLoading = false }: EventsGridProps) => {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <button className="inline-flex items-center px-4 py-2 text-sm font-medium text-trailflow-green bg-trailflow-green/10 rounded-lg hover:bg-trailflow-green/20 transition-colors">
-              <Filter className="w-4 h-4 mr-2" />
-              Limpar filtros
-            </button>
-            <button className="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors">
+            {onClearFilters && (
+              <Button 
+                onClick={onClearFilters}
+                className="inline-flex items-center px-4 py-2 text-sm font-medium text-trailflow-green bg-trailflow-green/10 rounded-lg hover:bg-trailflow-green/20 transition-colors"
+              >
+                <Filter className="w-4 h-4 mr-2" />
+                Limpar filtros
+              </Button>
+            )}
+            <Button 
+              variant="outline"
+              className="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+            >
               <Search className="w-4 h-4 mr-2" />
               Ver todos os eventos
-            </button>
+            </Button>
           </div>
         </div>
       </section>

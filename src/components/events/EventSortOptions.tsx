@@ -9,7 +9,7 @@ interface EventSortOptionsProps {
 }
 
 const sortOptions = [
-  { value: '', label: 'Relevância', icon: Zap },
+  { value: 'relevance', label: 'Relevância', icon: Zap },
   { value: 'date-asc', label: 'Data: Mais próximos', icon: Calendar },
   { value: 'date-desc', label: 'Data: Mais distantes', icon: Calendar },
   { value: 'price-asc', label: 'Preço: Menor para maior', icon: DollarSign },
@@ -28,11 +28,11 @@ export const EventSortOptions: React.FC<EventSortOptionsProps> = ({
       <span className="text-sm font-medium text-gray-700 whitespace-nowrap">
         Ordenar por:
       </span>
-      <Select value={sortBy} onValueChange={onSortChange}>
+      <Select value={sortBy || 'relevance'} onValueChange={onSortChange}>
         <SelectTrigger className="w-auto min-w-[200px] border-gray-200 focus:border-trailflow-green">
-          <SelectValue />
+          <SelectValue placeholder="Selecione a ordenação" />
         </SelectTrigger>
-        <SelectContent>
+        <SelectContent className="bg-white border border-gray-200 shadow-lg z-50">
           {sortOptions.map((option) => {
             const IconComponent = option.icon;
             return (
