@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { QueryClientProvider } from '@tanstack/react-query';
@@ -6,8 +7,8 @@ import { Toaster } from '@/components/ui/toaster';
 import { AuthProvider } from '@/contexts/AuthContext';
 import { ComparisonProvider } from '@/contexts/ComparisonContext';
 import { AccessibilityProvider } from '@/components/accessibility/AccessibilityProvider';
-import { SkipLinks } from '@/components/accessibility/SkipLinks';
-import { ErrorBoundary } from '@/components/error/ErrorBoundary';
+import SkipLinks from '@/components/accessibility/SkipLinks';
+import ErrorBoundary from '@/components/error/ErrorBoundary';
 import { queryClient } from '@/lib/queryClient';
 import BackToTopButton from '@/components/BackToTopButton';
 
@@ -22,14 +23,10 @@ import TornarParceiro from '@/pages/TornarParceiro';
 import Index from '@/pages/Index';
 
 // Marketplace pages
-import Marketplace from '@/pages/Marketplace';
-import ProductDetails from '@/pages/ProductDetails';
-import ComparisonPage from '@/pages/ComparisonPage';
+import MarketplaceHome from '@/pages/marketplace/MarketplaceHome';
 
 // Static pages
 import Sobre from '@/pages/Sobre';
-import Contato from '@/pages/Contato';
-import Anunciar from '@/pages/Anunciar';
 
 function App() {
   return (
@@ -51,13 +48,9 @@ function App() {
                       <Route path="/reset-password" element={<ResetPassword />} />
                       <Route path="/tornar-parceiro" element={<TornarParceiro />} />
                       
-                      <Route path="/marketplace" element={<Marketplace />} />
-                      <Route path="/marketplace/:productId" element={<ProductDetails />} />
-                      <Route path="/marketplace/comparacao" element={<ComparisonPage />} />
+                      <Route path="/marketplace" element={<MarketplaceHome />} />
 
                       <Route path="/sobre" element={<Sobre />} />
-                      <Route path="/contato" element={<Contato />} />
-                      <Route path="/anunciar" element={<Anunciar />} />
                     </Routes>
                     <BackToTopButton />
                   </div>
