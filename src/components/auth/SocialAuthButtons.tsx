@@ -60,24 +60,24 @@ const SocialAuthButtons: React.FC<SocialAuthButtonsProps> = ({
   const actionText = mode === 'signin' ? 'Entrar' : 'Cadastrar';
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <div className="relative">
         <div className="absolute inset-0 flex items-center">
-          <div className="w-full h-px bg-gradient-to-r from-transparent via-trailflow-light/30 to-transparent"></div>
+          <div className="w-full border-t border-gray-200"></div>
         </div>
-        <div className="relative flex justify-center">
-          <span className="bg-trailflow-white px-6 polymer-specs text-trailflow-medium uppercase tracking-wider">
+        <div className="relative flex justify-center text-sm">
+          <span className="bg-white px-4 text-gray-600">
             {actionText} com
           </span>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-4">
+      <div className="space-y-3">
         <Button
           type="button"
           variant="outline"
           onClick={handleGoogleAuth}
-          className="w-full h-12 polymer-btn border border-trailflow-light/30 bg-trailflow-white text-trailflow-dark hover:bg-trailflow-accent hover:border-trailflow-green transition-all duration-300 rounded-none uppercase tracking-wider font-light text-sm"
+          className="w-full h-11 border-gray-300 bg-white text-gray-700 hover:bg-gray-50 focus:bg-gray-50 transition-colors duration-200 font-medium"
           aria-label={`${actionText} com Google`}
         >
           <svg className="w-5 h-5 mr-3" viewBox="0 0 24 24" aria-hidden="true">
@@ -105,7 +105,7 @@ const SocialAuthButtons: React.FC<SocialAuthButtonsProps> = ({
           type="button"
           variant="outline"
           onClick={handleFacebookAuth}
-          className="w-full h-12 polymer-btn border border-trailflow-light/30 bg-trailflow-white text-trailflow-dark hover:bg-trailflow-accent hover:border-trailflow-green transition-all duration-300 rounded-none uppercase tracking-wider font-light text-sm"
+          className="w-full h-11 border-gray-300 bg-white text-gray-700 hover:bg-gray-50 focus:bg-gray-50 transition-colors duration-200 font-medium"
           aria-label={`${actionText} com Facebook`}
         >
           <svg className="w-5 h-5 mr-3" viewBox="0 0 24 24" aria-hidden="true">
@@ -121,7 +121,7 @@ const SocialAuthButtons: React.FC<SocialAuthButtonsProps> = ({
           type="button"
           variant="outline"
           onClick={handleAppleAuth}
-          className="w-full h-12 polymer-btn border border-trailflow-light/30 bg-trailflow-white text-trailflow-dark hover:bg-trailflow-accent hover:border-trailflow-green transition-all duration-300 rounded-none uppercase tracking-wider font-light text-sm"
+          className="w-full h-11 border-gray-300 bg-white text-gray-700 hover:bg-gray-50 focus:bg-gray-50 transition-colors duration-200 font-medium"
           aria-label={`${actionText} com Apple`}
         >
           <svg className="w-5 h-5 mr-3" viewBox="0 0 24 24" aria-hidden="true">
