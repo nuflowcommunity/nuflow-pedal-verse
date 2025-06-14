@@ -1,0 +1,35 @@
+
+/* Polymer Workshop Component Styles */
+
+/* Video background overlay text */
+.polymer-video-overlay {
+  background: linear-gradient(
+    135deg,
+    rgba(0, 0, 0, 0.3) 0%,
+    rgba(0, 0, 0, 0.1) 50%,
+    rgba(0, 0, 0, 0.3) 100%
+  );
+}
+
+/* Editorial line elements */
+.polymer-editorial-line {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--trailflow-green) 50%,
+    transparent 100%
+  );
+}
+
+/* Editorial button styling */
+.polymer-btn {
+  @apply font-light tracking-wider uppercase text-sm;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid transparent;
+}
+
+.polymer-btn:hover {
+  transform: translateY(-1px);
+  border-color: currentColor;
+}

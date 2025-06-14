@@ -13,4 +13,9 @@
 @import './styles/utilities.css';
 @import './styles/accessibility.css';
 @import './styles/editorial-animations.css';
-@import './styles/polymer-aesthetic.css';
+
+/* Polymer Aesthetic - Modularized */
+@import './styles/polymer/containers.css';
+@import './styles/polymer/typography.css';
+@import './styles/polymer/animations.css';
+@import './styles/polymer/components.css';
