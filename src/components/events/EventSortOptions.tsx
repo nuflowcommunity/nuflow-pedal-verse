@@ -24,21 +24,21 @@ export const EventSortOptions: React.FC<EventSortOptionsProps> = ({
   onSortChange
 }) => {
   return (
-    <div className="flex items-center gap-2">
-      <span className="text-sm font-medium text-gray-700 whitespace-nowrap">
+    <div className="flex items-center gap-4">
+      <span className="polymer-specs text-trailflow-medium uppercase tracking-wider whitespace-nowrap">
         Ordenar por:
       </span>
       <Select value={sortBy || 'relevance'} onValueChange={onSortChange}>
-        <SelectTrigger className="w-auto min-w-[200px] border-gray-200 focus:border-trailflow-green">
+        <SelectTrigger className="w-auto min-w-[250px] border-trailflow-light/30 focus:border-trailflow-green rounded-none polymer-body">
           <SelectValue placeholder="Selecione a ordenação" />
         </SelectTrigger>
-        <SelectContent className="bg-white border border-gray-200 shadow-lg z-50">
+        <SelectContent className="bg-trailflow-white border border-trailflow-light/30 shadow-xl z-50">
           {sortOptions.map((option) => {
             const IconComponent = option.icon;
             return (
               <SelectItem key={option.value} value={option.value}>
-                <div className="flex items-center gap-2">
-                  <IconComponent className="h-4 w-4" />
+                <div className="flex items-center gap-3 polymer-body">
+                  <IconComponent className="h-4 w-4 text-trailflow-medium" />
                   {option.label}
                 </div>
               </SelectItem>

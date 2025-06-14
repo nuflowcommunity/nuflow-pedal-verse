@@ -4,9 +4,7 @@ import { Search, Filter, X, MapPin, Calendar, DollarSign } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
-import { Card, CardContent } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Separator } from '@/components/ui/separator';
 
 interface EventFiltersPanelProps {
   searchQuery: string;
@@ -98,34 +96,51 @@ export const EventFiltersPanel: React.FC<EventFiltersPanelProps> = ({
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <Card className="bg-white shadow-sm border border-gray-100 mb-8">
-      <CardContent className="p-6">
-        {/* Search Bar */}
-        <div className="relative mb-6">
-          <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+    <div className="bg-trailflow-white border border-trailflow-light/20">
+      {/* Search Section - Polymer Style */}
+      <div className="p-8 border-b border-trailflow-light/10">
+        <div className="mb-6">
+          <h4 className="polymer-heading text-lg text-trailflow-dark mb-2 tracking-wider">
+            Buscar
+          </h4>
+          <p className="polymer-body text-sm text-trailflow-medium">
+            Digite palavras-chave para encontrar eventos específicos
+          </p>
+        </div>
+        
+        <div className="relative">
+          <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-trailflow-medium h-5 w-5" />
           <Input
             type="text"
-            placeholder="Buscar eventos por nome, local ou organizador..."
+            placeholder="Nome do evento, organizador ou localização..."
             value={searchQuery}
             onChange={(e) => onSearchChange(e.target.value)}
-            className="pl-12 pr-4 py-4 text-base border-gray-200 focus:border-trailflow-green focus:ring-trailflow-green/20 rounded-xl"
+            className="pl-12 pr-4 py-4 text-base border-trailflow-light/30 focus:border-trailflow-green focus:ring-trailflow-green/20 rounded-none bg-trailflow-white polymer-body"
           />
         </div>
+      </div>
 
-        {/* Quick Filters */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
+      {/* Quick Filters - Polymer Grid */}
+      <div className="p-8 border-b border-trailflow-light/10">
+        <div className="mb-6">
+          <h4 className="polymer-heading text-lg text-trailflow-dark mb-2 tracking-wider">
+            Filtros Principais
+          </h4>
+        </div>
+        
+        <div className="polymer-grid-editorial grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
+          <div className="space-y-3">
+            <label className="polymer-specs text-trailflow-medium uppercase tracking-wider flex items-center gap-2">
               <MapPin className="h-4 w-4" />
               Cidade
             </label>
             <Select value={selectedCity} onValueChange={onCityChange}>
-              <SelectTrigger className="border-gray-200 focus:border-trailflow-green">
+              <SelectTrigger className="border-trailflow-light/30 focus:border-trailflow-green rounded-none polymer-body">
                 <SelectValue />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="bg-trailflow-white border border-trailflow-light/30 shadow-xl z-50">
                 {cities.map((city) => (
-                  <SelectItem key={city} value={city}>
+                  <SelectItem key={city} value={city} className="polymer-body">
                     {city}
                   </SelectItem>
                 ))}
@@ -133,17 +148,17 @@ export const EventFiltersPanel: React.FC<EventFiltersPanelProps> = ({
             </Select>
           </div>
 
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-700">
+          <div className="space-y-3">
+            <label className="polymer-specs text-trailflow-medium uppercase tracking-wider">
               Categoria
             </label>
             <Select value={selectedCategory} onValueChange={onCategoryChange}>
-              <SelectTrigger className="border-gray-200 focus:border-trailflow-green">
+              <SelectTrigger className="border-trailflow-light/30 focus:border-trailflow-green rounded-none polymer-body">
                 <SelectValue />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="bg-trailflow-white border border-trailflow-light/30 shadow-xl z-50">
                 {categories.map((category) => (
-                  <SelectItem key={category.value} value={category.value}>
+                  <SelectItem key={category.value} value={category.value} className="polymer-body">
                     {category.label}
                   </SelectItem>
                 ))}
@@ -151,18 +166,18 @@ export const EventFiltersPanel: React.FC<EventFiltersPanelProps> = ({
             </Select>
           </div>
 
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
+          <div className="space-y-3">
+            <label className="polymer-specs text-trailflow-medium uppercase tracking-wider flex items-center gap-2">
               <DollarSign className="h-4 w-4" />
               Preço
             </label>
             <Select value={selectedPriceRange} onValueChange={onPriceRangeChange}>
-              <SelectTrigger className="border-gray-200 focus:border-trailflow-green">
+              <SelectTrigger className="border-trailflow-light/30 focus:border-trailflow-green rounded-none polymer-body">
                 <SelectValue />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="bg-trailflow-white border border-trailflow-light/30 shadow-xl z-50">
                 {priceRanges.map((range) => (
-                  <SelectItem key={range.value} value={range.value}>
+                  <SelectItem key={range.value} value={range.value} className="polymer-body">
                     {range.label}
                   </SelectItem>
                 ))}
@@ -174,90 +189,102 @@ export const EventFiltersPanel: React.FC<EventFiltersPanelProps> = ({
             <Button
               variant={isExpanded ? "default" : "outline"}
               onClick={() => setIsExpanded(!isExpanded)}
-              className="w-full"
+              className="polymer-btn w-full rounded-none border-trailflow-green text-trailflow-green hover:bg-trailflow-green hover:text-white"
             >
               <Filter className="h-4 w-4 mr-2" />
               {isExpanded ? 'Menos Filtros' : 'Mais Filtros'}
             </Button>
           </div>
         </div>
+      </div>
 
-        {/* Advanced Filters */}
-        {isExpanded && (
-          <div className="border-t border-gray-100 pt-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-gray-700">
-                  Nível de Dificuldade
-                </label>
-                <Select value={selectedDifficulty} onValueChange={onDifficultyChange}>
-                  <SelectTrigger className="border-gray-200 focus:border-trailflow-green">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {difficulties.map((difficulty) => (
-                      <SelectItem key={difficulty.value} value={difficulty.value}>
-                        {difficulty.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
+      {/* Advanced Filters */}
+      {isExpanded && (
+        <div className="p-8 border-b border-trailflow-light/10 bg-trailflow-accent/30">
+          <div className="mb-6">
+            <h4 className="polymer-heading text-lg text-trailflow-dark mb-2 tracking-wider">
+              Filtros Avançados
+            </h4>
+          </div>
+          
+          <div className="polymer-grid-editorial grid-cols-1 md:grid-cols-2">
+            <div className="space-y-3">
+              <label className="polymer-specs text-trailflow-medium uppercase tracking-wider">
+                Nível de Dificuldade
+              </label>
+              <Select value={selectedDifficulty} onValueChange={onDifficultyChange}>
+                <SelectTrigger className="border-trailflow-light/30 focus:border-trailflow-green rounded-none polymer-body">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent className="bg-trailflow-white border border-trailflow-light/30 shadow-xl z-50">
+                  {difficulties.map((difficulty) => (
+                    <SelectItem key={difficulty.value} value={difficulty.value} className="polymer-body">
+                      {difficulty.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
 
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-gray-700">
-                  Distância
-                </label>
-                <Select value={selectedDistance} onValueChange={onDistanceChange}>
-                  <SelectTrigger className="border-gray-200 focus:border-trailflow-green">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {distances.map((distance) => (
-                      <SelectItem key={distance.value} value={distance.value}>
-                        {distance.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
+            <div className="space-y-3">
+              <label className="polymer-specs text-trailflow-medium uppercase tracking-wider">
+                Distância
+              </label>
+              <Select value={selectedDistance} onValueChange={onDistanceChange}>
+                <SelectTrigger className="border-trailflow-light/30 focus:border-trailflow-green rounded-none polymer-body">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent className="bg-trailflow-white border border-trailflow-light/30 shadow-xl z-50">
+                  {distances.map((distance) => (
+                    <SelectItem key={distance.value} value={distance.value} className="polymer-body">
+                      {distance.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
           </div>
-        )}
+        </div>
+      )}
 
-        {/* Active Filters */}
-        {activeFilters.length > 0 && (
-          <>
-            <Separator className="my-4" />
-            <div className="flex flex-wrap items-center gap-2 mb-4">
-              <span className="text-sm font-medium text-gray-700">Filtros ativos:</span>
-              {activeFilters.map((filter) => (
-                <Badge
-                  key={filter.key}
-                  variant="secondary"
-                  className="flex items-center gap-1 bg-trailflow-green/10 text-trailflow-green hover:bg-trailflow-green/20"
-                >
-                  {filter.label}
-                  <X
-                    className="h-3 w-3 cursor-pointer hover:text-red-500"
-                    onClick={() => onClearFilter(filter.key)}
-                  />
-                </Badge>
-              ))}
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={onClearAllFilters}
-                className="text-red-600 hover:text-red-800 hover:bg-red-50"
+      {/* Active Filters */}
+      {activeFilters.length > 0 && (
+        <div className="p-8 border-b border-trailflow-light/10">
+          <div className="mb-4">
+            <h4 className="polymer-specs text-trailflow-medium uppercase tracking-wider mb-3">
+              Filtros Ativos
+            </h4>
+          </div>
+          
+          <div className="flex flex-wrap items-center gap-3 mb-4">
+            {activeFilters.map((filter) => (
+              <Badge
+                key={filter.key}
+                variant="secondary"
+                className="flex items-center gap-2 bg-trailflow-green/10 text-trailflow-green hover:bg-trailflow-green/20 border-0 polymer-body px-3 py-1"
               >
-                Limpar todos
-              </Button>
-            </div>
-          </>
-        )}
+                {filter.label}
+                <X
+                  className="h-3 w-3 cursor-pointer hover:text-red-500 polymer-interactive"
+                  onClick={() => onClearFilter(filter.key)}
+                />
+              </Badge>
+            ))}
+          </div>
+          
+          <Button
+            variant="ghost"
+            onClick={onClearAllFilters}
+            className="polymer-btn text-red-600 hover:text-red-800 hover:bg-red-50 rounded-none"
+          >
+            Limpar todos os filtros
+          </Button>
+        </div>
+      )}
 
-        {/* Results Count */}
-        <div className="text-sm text-gray-600 bg-gray-50 rounded-lg px-4 py-2">
+      {/* Results Count */}
+      <div className="p-8">
+        <div className="polymer-specs text-trailflow-medium uppercase tracking-wider">
           {isLoading ? (
             <span>Carregando eventos...</span>
           ) : (
@@ -267,7 +294,7 @@ export const EventFiltersPanel: React.FC<EventFiltersPanelProps> = ({
             </span>
           )}
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 };

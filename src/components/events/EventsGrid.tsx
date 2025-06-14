@@ -3,7 +3,7 @@ import React from 'react';
 import EventCard from '@/components/cards/EventCard';
 import { Event } from '@/types/events';
 import { EventCardSkeleton } from '@/components/ui/enhanced-skeleton';
-import { Search, Filter } from 'lucide-react';
+import { Search, Filter, RefreshCw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 interface EventsGridProps {
@@ -15,10 +15,12 @@ interface EventsGridProps {
 const EventsGrid = ({ events, isLoading = false, onClearFilters }: EventsGridProps) => {
   if (isLoading) {
     return (
-      <section className="py-8">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <section className="py-12">
+        <div className="polymer-grid-editorial grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {Array.from({ length: 8 }).map((_, index) => (
-            <EventCardSkeleton key={index} />
+            <div key={index} className={`polymer-stagger-${(index % 5) + 1}`}>
+              <EventCardSkeleton />
+            </div>
           ))}
         </div>
       </section>
@@ -27,26 +29,28 @@ const EventsGrid = ({ events, isLoading = false, onClearFilters }: EventsGridPro
 
   if (events.length === 0) {
     return (
-      <section className="py-16">
-        <div className="text-center max-w-lg mx-auto">
-          <div className="w-24 h-24 mx-auto mb-6 bg-gray-100 rounded-full flex items-center justify-center">
-            <Search className="w-12 h-12 text-gray-400" />
+      <section className="py-24">
+        <div className="text-center max-w-2xl mx-auto">
+          <div className="w-32 h-32 mx-auto mb-8 bg-trailflow-accent/30 flex items-center justify-center polymer-interactive">
+            <Search className="w-16 h-16 text-trailflow-medium" />
           </div>
           
-          <h3 className="text-2xl font-semibold text-gray-900 mb-4">
+          <h3 className="polymer-heading-sm text-trailflow-dark mb-6">
             Nenhum evento encontrado
           </h3>
           
-          <p className="text-gray-600 mb-6 leading-relaxed">
+          <p className="polymer-body text-trailflow-medium mb-8 leading-relaxed max-w-lg mx-auto">
             Não encontramos eventos que correspondam aos seus critérios de busca. 
-            Tente ajustar os filtros ou fazer uma nova pesquisa.
+            Tente ajustar os filtros ou explorar outras opções.
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+          <div className="polymer-editorial-line mb-8"></div>
+          
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
             {onClearFilters && (
               <Button 
                 onClick={onClearFilters}
-                className="inline-flex items-center px-4 py-2 text-sm font-medium text-trailflow-green bg-trailflow-green/10 rounded-lg hover:bg-trailflow-green/20 transition-colors"
+                className="polymer-btn inline-flex items-center px-6 py-3 text-sm font-light text-trailflow-green bg-trailflow-green/10 hover:bg-trailflow-green hover:text-white transition-all duration-300 rounded-none border border-trailflow-green"
               >
                 <Filter className="w-4 h-4 mr-2" />
                 Limpar filtros
@@ -54,9 +58,9 @@ const EventsGrid = ({ events, isLoading = false, onClearFilters }: EventsGridPro
             )}
             <Button 
               variant="outline"
-              className="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+              className="polymer-btn inline-flex items-center px-6 py-3 text-sm font-light text-trailflow-dark bg-trailflow-white hover:bg-trailflow-accent transition-all duration-300 rounded-none border border-trailflow-light"
             >
-              <Search className="w-4 h-4 mr-2" />
+              <RefreshCw className="w-4 h-4 mr-2" />
               Ver todos os eventos
             </Button>
           </div>
@@ -66,10 +70,12 @@ const EventsGrid = ({ events, isLoading = false, onClearFilters }: EventsGridPro
   }
 
   return (
-    <section className="py-8">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        {events.map((event) => (
-          <EventCard key={event.id} {...event} showBuyButton={true} />
+    <section className="py-12">
+      <div className="polymer-grid-editorial grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        {events.map((event, index) => (
+          <div key={event.id} className={`polymer-stagger-${(index % 5) + 1} polymer-interactive`}>
+            <EventCard {...event} showBuyButton={true} />
+          </div>
         ))}
       </div>
     </section>
