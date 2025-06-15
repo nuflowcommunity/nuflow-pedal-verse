@@ -1,6 +1,6 @@
 
 import React from 'react';
-import CouponsManagement from '@/components/admin/coupons/CouponsManagement';
+import { CouponsManagement } from '@/components/admin/coupons/CouponsManagement';
 
 const CouponsAdmin = () => {
   return (
