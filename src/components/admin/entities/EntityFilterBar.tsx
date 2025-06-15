@@ -66,14 +66,14 @@ export const EntityFilterBar: React.FC<EntityFilterBarProps> = ({
                   placeholder="Buscar por nome ou parceiro..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10"
+                  className="pl-10 text-gray-900 placeholder-gray-500"
                 />
               </div>
             </div>
             
             <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-2 lg:gap-4">
               <Select value={partnerFilter} onValueChange={setPartnerFilter}>
-                <SelectTrigger>
+                <SelectTrigger className="text-gray-900">
                   <SelectValue placeholder="Parceiro" />
                 </SelectTrigger>
                 <SelectContent>
@@ -85,7 +85,7 @@ export const EntityFilterBar: React.FC<EntityFilterBarProps> = ({
               </Select>
 
               <Select value={typeFilter} onValueChange={setTypeFilter}>
-                <SelectTrigger>
+                <SelectTrigger className="text-gray-900">
                   <SelectValue placeholder="Tipo" />
                 </SelectTrigger>
                 <SelectContent>
@@ -98,7 +98,7 @@ export const EntityFilterBar: React.FC<EntityFilterBarProps> = ({
               </Select>
 
               <Select value={statusFilter} onValueChange={setStatusFilter}>
-                <SelectTrigger>
+                <SelectTrigger className="text-gray-900">
                   <SelectValue placeholder="Status" />
                 </SelectTrigger>
                 <SelectContent>
@@ -112,7 +112,7 @@ export const EntityFilterBar: React.FC<EntityFilterBarProps> = ({
               {/* Validation filter - only visible for credits tab */}
               {(activeTab === 'credito' || activeTab === 'todos') && (
                 <Select value={validationFilter} onValueChange={setValidationFilter}>
-                  <SelectTrigger>
+                  <SelectTrigger className="text-gray-900">
                     <SelectValue placeholder="Validação" />
                   </SelectTrigger>
                   <SelectContent>
@@ -128,7 +128,7 @@ export const EntityFilterBar: React.FC<EntityFilterBarProps> = ({
                 variant="outline"
                 onClick={clearFilters}
                 disabled={!hasActiveFilters}
-                className="flex items-center gap-2"
+                className="flex items-center gap-2 text-gray-900"
               >
                 <RotateCcw className="h-4 w-4" />
                 <span className="hidden sm:inline">Limpar</span>
