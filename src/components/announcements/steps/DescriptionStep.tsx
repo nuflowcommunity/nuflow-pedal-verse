@@ -13,10 +13,10 @@ const DescriptionStep: React.FC<DescriptionStepProps> = ({ data, onUpdate }) => 
   return (
     <div className="space-y-6">
       <div>
-        <Label htmlFor="description" className="text-base font-medium">
+        <Label htmlFor="description" className="text-base font-medium text-trailflow-dark drop-shadow-sm">
           Descrição do Produto *
         </Label>
-        <p className="text-sm text-gray-600 mb-3">
+        <p className="text-sm text-trailflow-medium mb-3 drop-shadow-sm">
           Descreva sua bicicleta de forma detalhada para atrair compradores
         </p>
         <Textarea
@@ -24,18 +24,18 @@ const DescriptionStep: React.FC<DescriptionStepProps> = ({ data, onUpdate }) => 
           placeholder="Ex: Bicicleta em excelente estado de conservação, usado apenas em finais de semana. Todas as revisões em dia, pneus novos..."
           value={data.description || ""}
           onChange={(e) => onUpdate({ description: e.target.value })}
-          className="min-h-32 w-full"
+          className="min-h-32 w-full bg-white/60 backdrop-blur-sm border-white/40 hover:bg-white/70 focus:bg-white/80 transition-all duration-200"
         />
-        <p className="text-xs text-gray-500 mt-2">
+        <p className="text-xs text-trailflow-medium mt-2 drop-shadow-sm">
           {data.description?.length || 0}/500 caracteres
         </p>
       </div>
 
       <div>
-        <Label htmlFor="technicalDetails" className="text-base font-medium">
+        <Label htmlFor="technicalDetails" className="text-base font-medium text-trailflow-dark drop-shadow-sm">
           Detalhes Técnicos
         </Label>
-        <p className="text-sm text-gray-600 mb-3">
+        <p className="text-sm text-trailflow-medium mb-3 drop-shadow-sm">
           Informações técnicas como grupo, rodas, freios, etc. (opcional)
         </p>
         <Textarea
@@ -43,15 +43,15 @@ const DescriptionStep: React.FC<DescriptionStepProps> = ({ data, onUpdate }) => 
           placeholder="Ex: Grupo Shimano XT, Rodas DT Swiss, Freios a disco hidráulico, Suspensão Fox 32..."
           value={data.technicalDetails || ""}
           onChange={(e) => onUpdate({ technicalDetails: e.target.value })}
-          className="min-h-24 w-full"
+          className="min-h-24 w-full bg-white/60 backdrop-blur-sm border-white/40 hover:bg-white/70 focus:bg-white/80 transition-all duration-200"
         />
       </div>
 
-      <div className="bg-purple-50 p-4 rounded-lg">
-        <p className="text-sm text-purple-800 font-medium mb-2">
+      <div className="bg-white/50 backdrop-blur-sm p-4 rounded-lg border border-white/30">
+        <p className="text-sm text-trailflow-dark font-medium mb-2 drop-shadow-sm">
           📝 O que incluir na descrição:
         </p>
-        <ul className="text-xs text-purple-700 space-y-1">
+        <ul className="text-xs text-trailflow-medium space-y-1 drop-shadow-sm">
           <li>• Estado geral da bicicleta</li>
           <li>• Histórico de uso (urbano, trilhas, competição)</li>
           <li>• Upgrades e modificações feitas</li>

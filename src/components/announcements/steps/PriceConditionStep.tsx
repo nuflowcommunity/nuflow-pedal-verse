@@ -35,10 +35,10 @@ const PriceConditionStep: React.FC<PriceConditionStepProps> = ({ data, onUpdate 
   return (
     <div className="space-y-6">
       <div>
-        <Label htmlFor="price" className="text-base font-medium">
+        <Label htmlFor="price" className="text-base font-medium text-trailflow-dark drop-shadow-sm">
           Preço de Venda *
         </Label>
-        <p className="text-sm text-gray-600 mb-3">
+        <p className="text-sm text-trailflow-medium mb-3 drop-shadow-sm">
           Digite o valor que você deseja receber pela bicicleta
         </p>
         <Input
@@ -47,27 +47,27 @@ const PriceConditionStep: React.FC<PriceConditionStepProps> = ({ data, onUpdate 
           placeholder="R$ 0,00"
           value={data.price ? formatPrice((data.price * 100).toString()) : ""}
           onChange={handlePriceChange}
-          className="w-full text-lg font-semibold"
+          className="w-full text-lg font-semibold bg-white/60 backdrop-blur-sm border-white/40 hover:bg-white/70 focus:bg-white/80 transition-all duration-200"
         />
-        <p className="text-xs text-gray-500 mt-2">
+        <p className="text-xs text-trailflow-medium mt-2 drop-shadow-sm">
           💡 Pesquise preços similares no marketplace para definir um valor competitivo
         </p>
       </div>
 
       <div>
-        <Label htmlFor="condition" className="text-base font-medium">
+        <Label htmlFor="condition" className="text-base font-medium text-trailflow-dark drop-shadow-sm">
           Estado da Bicicleta *
         </Label>
-        <p className="text-sm text-gray-600 mb-3">
+        <p className="text-sm text-trailflow-medium mb-3 drop-shadow-sm">
           Seja honesto sobre o estado para gerar confiança nos compradores
         </p>
         <Select value={data.condition || ""} onValueChange={(value) => onUpdate({ condition: value })}>
-          <SelectTrigger className="w-full">
+          <SelectTrigger className="w-full bg-white/60 backdrop-blur-sm border-white/40 hover:bg-white/70 focus:bg-white/80 transition-all duration-200">
             <SelectValue placeholder="Selecione o estado" />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent className="bg-white/95 backdrop-blur-lg border-white/50">
             {conditions.map((condition) => (
-              <SelectItem key={condition.value} value={condition.value}>
+              <SelectItem key={condition.value} value={condition.value} className="hover:bg-trailflow-accent/20">
                 <div>
                   <p className="font-medium">{condition.label}</p>
                   <p className="text-xs text-gray-500">{condition.description}</p>
@@ -79,10 +79,10 @@ const PriceConditionStep: React.FC<PriceConditionStepProps> = ({ data, onUpdate 
       </div>
 
       <div>
-        <Label htmlFor="contactPhone" className="text-base font-medium">
+        <Label htmlFor="contactPhone" className="text-base font-medium text-trailflow-dark drop-shadow-sm">
           Telefone para Contato
         </Label>
-        <p className="text-sm text-gray-600 mb-3">
+        <p className="text-sm text-trailflow-medium mb-3 drop-shadow-sm">
           Número de WhatsApp para interessados entrarem em contato (opcional)
         </p>
         <Input
@@ -91,12 +91,12 @@ const PriceConditionStep: React.FC<PriceConditionStepProps> = ({ data, onUpdate 
           placeholder="(11) 99999-9999"
           value={data.contactPhone || ""}
           onChange={(e) => onUpdate({ contactPhone: e.target.value })}
-          className="w-full"
+          className="w-full bg-white/60 backdrop-blur-sm border-white/40 hover:bg-white/70 focus:bg-white/80 transition-all duration-200"
         />
       </div>
 
-      <div className="bg-green-50 p-4 rounded-lg">
-        <p className="text-sm text-green-800 font-medium">
+      <div className="bg-white/50 backdrop-blur-sm p-4 rounded-lg border border-white/30">
+        <p className="text-sm text-trailflow-dark font-medium drop-shadow-sm">
           💰 Dica: Preços justos e descrições honestas aumentam as chances de venda
         </p>
       </div>

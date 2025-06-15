@@ -18,10 +18,10 @@ const ProductDetailsStep: React.FC<ProductDetailsStepProps> = ({ data, onUpdate 
   return (
     <div className="space-y-6">
       <div>
-        <Label htmlFor="model" className="text-base font-medium">
+        <Label htmlFor="model" className="text-base font-medium text-trailflow-dark drop-shadow-sm">
           Modelo *
         </Label>
-        <p className="text-sm text-gray-600 mb-3">
+        <p className="text-sm text-trailflow-medium mb-3 drop-shadow-sm">
           Digite o modelo específico da sua bicicleta
         </p>
         <Input
@@ -30,27 +30,27 @@ const ProductDetailsStep: React.FC<ProductDetailsStepProps> = ({ data, onUpdate 
           placeholder="Ex: Epic Expert Carbon, Tarmac SL7, TCR Advanced..."
           value={data.model || ""}
           onChange={(e) => onUpdate({ model: e.target.value })}
-          className="w-full"
+          className="w-full bg-white/60 backdrop-blur-sm border-white/40 hover:bg-white/70 focus:bg-white/80 transition-all duration-200"
         />
       </div>
 
       <div>
-        <Label htmlFor="year" className="text-base font-medium">
+        <Label htmlFor="year" className="text-base font-medium text-trailflow-dark drop-shadow-sm">
           Ano de Fabricação *
         </Label>
-        <p className="text-sm text-gray-600 mb-3">
+        <p className="text-sm text-trailflow-medium mb-3 drop-shadow-sm">
           Selecione o ano de fabricação da bicicleta
         </p>
         <Select 
           value={data.year?.toString() || ""} 
           onValueChange={(value) => onUpdate({ year: parseInt(value) })}
         >
-          <SelectTrigger className="w-full">
+          <SelectTrigger className="w-full bg-white/60 backdrop-blur-sm border-white/40 hover:bg-white/70 focus:bg-white/80 transition-all duration-200">
             <SelectValue placeholder="Selecione o ano" />
           </SelectTrigger>
-          <SelectContent className="max-h-60">
+          <SelectContent className="max-h-60 bg-white/95 backdrop-blur-lg border-white/50">
             {years.map((year) => (
-              <SelectItem key={year} value={year.toString()}>
+              <SelectItem key={year} value={year.toString()} className="hover:bg-trailflow-accent/20">
                 {year}
               </SelectItem>
             ))}
@@ -59,10 +59,10 @@ const ProductDetailsStep: React.FC<ProductDetailsStepProps> = ({ data, onUpdate 
       </div>
 
       <div>
-        <Label htmlFor="location" className="text-base font-medium">
+        <Label htmlFor="location" className="text-base font-medium text-trailflow-dark drop-shadow-sm">
           Localização *
         </Label>
-        <p className="text-sm text-gray-600 mb-3">
+        <p className="text-sm text-trailflow-medium mb-3 drop-shadow-sm">
           Cidade e estado onde a bicicleta está localizada
         </p>
         <Input
@@ -71,12 +71,12 @@ const ProductDetailsStep: React.FC<ProductDetailsStepProps> = ({ data, onUpdate 
           placeholder="Ex: São Paulo - SP"
           value={data.location || ""}
           onChange={(e) => onUpdate({ location: e.target.value })}
-          className="w-full"
+          className="w-full bg-white/60 backdrop-blur-sm border-white/40 hover:bg-white/70 focus:bg-white/80 transition-all duration-200"
         />
       </div>
 
-      <div className="bg-blue-50 p-4 rounded-lg">
-        <p className="text-sm text-blue-800 font-medium">
+      <div className="bg-white/50 backdrop-blur-sm p-4 rounded-lg border border-white/30">
+        <p className="text-sm text-trailflow-dark font-medium drop-shadow-sm">
           📍 A localização ajuda compradores próximos a encontrar sua bike mais facilmente
         </p>
       </div>
