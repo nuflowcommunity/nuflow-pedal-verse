@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from '@/components/ui/pagination';
 import { useBreakpoint } from '@/hooks/use-breakpoint';
@@ -78,7 +77,7 @@ export const EntityPagination: React.FC<EntityPaginationProps> = ({
               </PaginationItem>
               {startPage > 2 && (
                 <PaginationItem>
-                  <span className="px-2 text-gray-500">...</span>
+                  <span className="px-2 text-gray-600">...</span>
                 </PaginationItem>
               )}
             </>
@@ -104,7 +103,7 @@ export const EntityPagination: React.FC<EntityPaginationProps> = ({
             <>
               {endPage < totalPages - 1 && (
                 <PaginationItem>
-                  <span className="px-2 text-gray-500">...</span>
+                  <span className="px-2 text-gray-600">...</span>
                 </PaginationItem>
               )}
               <PaginationItem>

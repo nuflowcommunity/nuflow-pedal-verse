@@ -37,15 +37,15 @@ export const EntityDetailDrawer: React.FC<EntityDetailDrawerProps> = ({
     <Drawer open={isOpen} onOpenChange={onOpenChange}>
       <DrawerContent className="p-4 sm:p-6">
         <DrawerHeader>
-          <DrawerTitle>{entity.name}</DrawerTitle>
-          <DrawerDescription>
+          <DrawerTitle className="text-gray-900">{entity.name}</DrawerTitle>
+          <DrawerDescription className="text-gray-600">
             Detalhes da entidade
           </DrawerDescription>
         </DrawerHeader>
         <div className="py-4">
           <div className="flex items-center gap-2 mb-6">
             {entityTypeIcons[entity.type]}
-            <span className="text-sm text-muted-foreground">{entityTypeLabels[entity.type]}</span>
+            <span className="text-sm text-gray-600">{entityTypeLabels[entity.type]}</span>
           </div>
           
           <CommonDetails entity={entity} />

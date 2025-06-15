@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Activity, CheckCircle, AlertTriangle, DollarSign, CalendarDays, PiggyBank } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
@@ -74,11 +73,11 @@ export const EntityStats: React.FC<EntityStatsProps> = ({ stats, onViewIssues })
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-lg">Total de Entidades</CardTitle>
+            <CardTitle className="text-lg text-gray-900">Total de Entidades</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold">{stats.total}</div>
-            <div className="text-sm text-muted-foreground mt-2">
+            <div className="text-3xl font-bold text-gray-900">{stats.total}</div>
+            <div className="text-sm text-gray-600 mt-2">
               <span className="inline-flex items-center">
                 <Activity className="h-4 w-4 mr-1" />
                 {stats.ativo} ativos
@@ -89,30 +88,30 @@ export const EntityStats: React.FC<EntityStatsProps> = ({ stats, onViewIssues })
         
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-lg">Por Tipo</CardTitle>
+            <CardTitle className="text-lg text-gray-900">Por Tipo</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-1">
               <div className="flex justify-between items-center">
-                <span className="inline-flex items-center text-sm">
+                <span className="inline-flex items-center text-sm text-gray-700">
                   {entityTypeIcons.evento} Eventos
                 </span>
                 <Badge variant="outline">{stats.eventos}</Badge>
               </div>
               <div className="flex justify-between items-center">
-                <span className="inline-flex items-center text-sm">
+                <span className="inline-flex items-center text-sm text-gray-700">
                   {entityTypeIcons.mensalidade} Mensalidades
                 </span>
                 <Badge variant="outline">{stats.mensalidades}</Badge>
               </div>
               <div className="flex justify-between items-center">
-                <span className="inline-flex items-center text-sm">
+                <span className="inline-flex items-center text-sm text-gray-700">
                   {entityTypeIcons.dayUse} Day Use
                 </span>
                 <Badge variant="outline">{stats.dayUse}</Badge>
               </div>
               <div className="flex justify-between items-center">
-                <span className="inline-flex items-center text-sm">
+                <span className="inline-flex items-center text-sm text-gray-700">
                   {entityTypeIcons.credito} Créditos
                 </span>
                 <Badge variant="outline">{stats.creditos}</Badge>
@@ -123,20 +122,20 @@ export const EntityStats: React.FC<EntityStatsProps> = ({ stats, onViewIssues })
         
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-lg">Por Status</CardTitle>
+            <CardTitle className="text-lg text-gray-900">Por Status</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-1">
               <div className="flex justify-between items-center">
-                <span className="text-sm">Ativos</span>
+                <span className="text-sm text-gray-700">Ativos</span>
                 <Badge className="bg-green-100 text-green-800">{stats.ativo}</Badge>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-sm">Pendentes</span>
+                <span className="text-sm text-gray-700">Pendentes</span>
                 <Badge className="bg-amber-100 text-amber-800">{stats.pendente}</Badge>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-sm">Cancelados</span>
+                <span className="text-sm text-gray-700">Cancelados</span>
                 <Badge className="bg-gray-100 text-gray-800">{stats.cancelado}</Badge>
               </div>
             </div>
@@ -145,7 +144,7 @@ export const EntityStats: React.FC<EntityStatsProps> = ({ stats, onViewIssues })
         
         <Card className={stats.validationIssues > 0 ? "border-red-300" : ""}>
           <CardHeader className="pb-2">
-            <CardTitle className="text-lg flex items-center">
+            <CardTitle className="text-lg flex items-center text-gray-900">
               Alertas
               {stats.validationIssues > 0 && (
                 <AlertTriangle className="h-4 w-4 ml-2 text-red-500" />
@@ -171,7 +170,7 @@ export const EntityStats: React.FC<EntityStatsProps> = ({ stats, onViewIssues })
             ) : (
               <div className="flex flex-col items-center justify-center h-[85px]">
                 <CheckCircle className="h-10 w-10 text-green-500 mb-1" />
-                <span className="text-sm text-muted-foreground">Sem problemas detectados</span>
+                <span className="text-sm text-gray-600">Sem problemas detectados</span>
               </div>
             )}
           </CardContent>
