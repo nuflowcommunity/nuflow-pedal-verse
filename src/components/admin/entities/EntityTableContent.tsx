@@ -8,8 +8,19 @@ import { getTypeSpecificColumns } from '@/components/admin/entities/EntityColumn
 import { getTypeSpecificActions } from '@/components/admin/entities/EntityActions';
 import { entityTypeLabels } from '@/components/admin/entities/types';
 import { Entity } from '@/components/admin/entities/types';
-import { EntitiesFilterState } from '@/hooks/admin/useEntitiesData';
 import LoadingSkeleton from '@/components/ui/loading-skeleton';
+
+interface EntitiesFilterState {
+  searchQuery: string;
+  partnerFilter: string;
+  typeFilter: string;
+  statusFilter: string;
+  validationFilter: string;
+  activeTab: string;
+  sortDirection: 'asc' | 'desc';
+  startDate?: Date;
+  endDate?: Date;
+}
 
 interface EntityTableContentProps {
   activeTab: string;
