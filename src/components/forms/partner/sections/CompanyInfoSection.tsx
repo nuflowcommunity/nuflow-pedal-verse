@@ -41,7 +41,7 @@ export const CompanyInfoSection: React.FC<CompanyInfoSectionProps> = ({
             value={formData.nomeEmpresa}
             onChange={(e) => onInputChange('nomeEmpresa', e.target.value)}
             placeholder="Ex: Bike Park Serra Verde"
-            className={errors.nomeEmpresa ? 'border-red-500' : fieldStatus.nomeEmpresa === 'valid' ? 'border-green-500' : ''}
+            className={errors.nomeEmpresa ? 'border-red-500' : fieldStatus.nomeEmpresa === 'valid' ? 'border-green-500' : 'border-gray-300'}
             disabled={isSubmitting}
           />
           {errors.nomeEmpresa && <p className="text-red-500 text-sm mt-1">{errors.nomeEmpresa}</p>}
@@ -62,7 +62,7 @@ export const CompanyInfoSection: React.FC<CompanyInfoSectionProps> = ({
               value={formData.urlPersonalizada}
               onChange={(e) => onInputChange('urlPersonalizada', e.target.value)}
               placeholder="minha-empresa"
-              className={`rounded-l-none ${errors.urlPersonalizada ? 'border-red-500' : fieldStatus.urlPersonalizada === 'valid' ? 'border-green-500' : ''}`}
+              className={`rounded-l-none ${errors.urlPersonalizada ? 'border-red-500' : fieldStatus.urlPersonalizada === 'valid' ? 'border-green-500' : 'border-gray-300'}`}
               disabled={isSubmitting}
             />
           </div>
@@ -81,7 +81,7 @@ export const CompanyInfoSection: React.FC<CompanyInfoSectionProps> = ({
           value={formData.cnpj}
           onChange={(e) => onInputChange('cnpj', e.target.value)}
           placeholder="00.000.000/0000-00"
-          className={errors.cnpj ? 'border-red-500' : fieldStatus.cnpj === 'valid' ? 'border-green-500' : ''}
+          className={errors.cnpj ? 'border-red-500' : fieldStatus.cnpj === 'valid' ? 'border-green-500' : 'border-gray-300'}
           disabled={isSubmitting}
         />
         {errors.cnpj && <p className="text-red-500 text-sm mt-1">{errors.cnpj}</p>}
@@ -99,7 +99,7 @@ export const CompanyInfoSection: React.FC<CompanyInfoSectionProps> = ({
           onChange={(e) => onInputChange('sobreEmpresa', e.target.value)}
           placeholder="Descreva sua empresa, histórico, principais atividades oferecidas, diferenciais e experiência no setor. Esta informação será importante para nossa análise..."
           rows={4}
-          className={errors.sobreEmpresa ? 'border-red-500' : fieldStatus.sobreEmpresa === 'valid' ? 'border-green-500' : ''}
+          className={errors.sobreEmpresa ? 'border-red-500' : fieldStatus.sobreEmpresa === 'valid' ? 'border-green-500' : 'border-gray-300'}
           disabled={isSubmitting}
         />
         <div className="flex justify-between items-center mt-1">

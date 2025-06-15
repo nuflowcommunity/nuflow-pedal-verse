@@ -42,7 +42,7 @@ export const AddressSection: React.FC<AddressSectionProps> = ({
             value={formData.cep}
             onChange={(e) => onInputChange('cep', e.target.value)}
             placeholder="00000-000"
-            className={errors.cep ? 'border-red-500' : fieldStatus.cep === 'valid' ? 'border-green-500' : ''}
+            className={errors.cep ? 'border-red-500' : fieldStatus.cep === 'valid' ? 'border-green-500' : 'border-gray-300'}
             disabled={isSubmitting}
           />
           {errors.cep && <p className="text-red-500 text-sm mt-1">{errors.cep}</p>}
@@ -55,7 +55,7 @@ export const AddressSection: React.FC<AddressSectionProps> = ({
             onValueChange={(value) => onInputChange('estado', value)}
             disabled={isSubmitting}
           >
-            <SelectTrigger className={errors.estado ? 'border-red-500' : ''}>
+            <SelectTrigger className={errors.estado ? 'border-red-500' : 'border-gray-300'}>
               <SelectValue placeholder="Selecione o estado..." />
             </SelectTrigger>
             <SelectContent>
@@ -79,7 +79,7 @@ export const AddressSection: React.FC<AddressSectionProps> = ({
             value={formData.cidade}
             onChange={(e) => onInputChange('cidade', e.target.value)}
             placeholder="Ex: São Paulo"
-            className={errors.cidade ? 'border-red-500' : fieldStatus.cidade === 'valid' ? 'border-green-500' : ''}
+            className={errors.cidade ? 'border-red-500' : fieldStatus.cidade === 'valid' ? 'border-green-500' : 'border-gray-300'}
             disabled={isSubmitting}
           />
           {errors.cidade && <p className="text-red-500 text-sm mt-1">{errors.cidade}</p>}
@@ -96,7 +96,7 @@ export const AddressSection: React.FC<AddressSectionProps> = ({
           value={formData.logradouro}
           onChange={(e) => onInputChange('logradouro', e.target.value)}
           placeholder="Ex: Rua das Flores, Avenida Paulista"
-          className={errors.logradouro ? 'border-red-500' : fieldStatus.logradouro === 'valid' ? 'border-green-500' : ''}
+          className={errors.logradouro ? 'border-red-500' : fieldStatus.logradouro === 'valid' ? 'border-green-500' : 'border-gray-300'}
           disabled={isSubmitting}
         />
         {errors.logradouro && <p className="text-red-500 text-sm mt-1">{errors.logradouro}</p>}
@@ -113,7 +113,7 @@ export const AddressSection: React.FC<AddressSectionProps> = ({
             value={formData.numero}
             onChange={(e) => onInputChange('numero', e.target.value)}
             placeholder="123 ou 123A"
-            className={errors.numero ? 'border-red-500' : fieldStatus.numero === 'valid' ? 'border-green-500' : ''}
+            className={errors.numero ? 'border-red-500' : fieldStatus.numero === 'valid' ? 'border-green-500' : 'border-gray-300'}
             disabled={isSubmitting}
           />
           {errors.numero && <p className="text-red-500 text-sm mt-1">{errors.numero}</p>}
@@ -129,7 +129,7 @@ export const AddressSection: React.FC<AddressSectionProps> = ({
             value={formData.bairro}
             onChange={(e) => onInputChange('bairro', e.target.value)}
             placeholder="Ex: Centro, Vila Madalena"
-            className={errors.bairro ? 'border-red-500' : fieldStatus.bairro === 'valid' ? 'border-green-500' : ''}
+            className={errors.bairro ? 'border-red-500' : fieldStatus.bairro === 'valid' ? 'border-green-500' : 'border-gray-300'}
             disabled={isSubmitting}
           />
           {errors.bairro && <p className="text-red-500 text-sm mt-1">{errors.bairro}</p>}
@@ -142,6 +142,7 @@ export const AddressSection: React.FC<AddressSectionProps> = ({
             value={formData.complemento}
             onChange={(e) => onInputChange('complemento', e.target.value)}
             placeholder="Apto 101, Bloco A, Sala 203..."
+            className="border-gray-300"
             disabled={isSubmitting}
           />
           <p className="text-gray-500 text-xs mt-1">Opcional - Apartamento, sala, etc.</p>

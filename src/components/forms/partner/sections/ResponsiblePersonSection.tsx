@@ -39,7 +39,7 @@ export const ResponsiblePersonSection: React.FC<ResponsiblePersonSectionProps> =
           value={formData.nomeResponsavel}
           onChange={(e) => onInputChange('nomeResponsavel', e.target.value)}
           placeholder="João Silva Santos"
-          className={errors.nomeResponsavel ? 'border-red-500' : fieldStatus.nomeResponsavel === 'valid' ? 'border-green-500' : ''}
+          className={errors.nomeResponsavel ? 'border-red-500' : fieldStatus.nomeResponsavel === 'valid' ? 'border-green-500' : 'border-gray-300'}
           disabled={isSubmitting}
         />
         {errors.nomeResponsavel && <p className="text-red-500 text-sm mt-1">{errors.nomeResponsavel}</p>}
@@ -57,7 +57,7 @@ export const ResponsiblePersonSection: React.FC<ResponsiblePersonSectionProps> =
             value={formData.cpfResponsavel}
             onChange={(e) => onInputChange('cpfResponsavel', e.target.value)}
             placeholder="000.000.000-00"
-            className={errors.cpfResponsavel ? 'border-red-500' : fieldStatus.cpfResponsavel === 'valid' ? 'border-green-500' : ''}
+            className={errors.cpfResponsavel ? 'border-red-500' : fieldStatus.cpfResponsavel === 'valid' ? 'border-green-500' : 'border-gray-300'}
             disabled={isSubmitting}
           />
           {errors.cpfResponsavel && <p className="text-red-500 text-sm mt-1">{errors.cpfResponsavel}</p>}
@@ -74,7 +74,7 @@ export const ResponsiblePersonSection: React.FC<ResponsiblePersonSectionProps> =
             value={formData.contatoResponsavel}
             onChange={(e) => onInputChange('contatoResponsavel', e.target.value)}
             placeholder="(11) 99999-9999"
-            className={errors.contatoResponsavel ? 'border-red-500' : fieldStatus.contatoResponsavel === 'valid' ? 'border-green-500' : ''}
+            className={errors.contatoResponsavel ? 'border-red-500' : fieldStatus.contatoResponsavel === 'valid' ? 'border-green-500' : 'border-gray-300'}
             disabled={isSubmitting}
           />
           {errors.contatoResponsavel && <p className="text-red-500 text-sm mt-1">{errors.contatoResponsavel}</p>}

@@ -57,7 +57,8 @@ export const useFormValidation = () => {
     const requiredFields = [
       'tipoParceiro', 'nomeEmpresa', 'urlPersonalizada', 'cnpj', 'cep',
       'estado', 'cidade', 'logradouro', 'numero', 'bairro', 'emailContato',
-      'telefone1', 'sobreEmpresa', 'nomeResponsavel', 'cpfResponsavel', 'contatoResponsavel'
+      'telefone1', 'sobreEmpresa', 'comoConheceu', 'horarioPreferencial',
+      'nomeResponsavel', 'cpfResponsavel', 'contatoResponsavel'
     ];
 
     const newErrors: Errors = {};
@@ -72,6 +73,11 @@ export const useFormValidation = () => {
         if (fieldError) newErrors[field] = fieldError;
       }
     });
+
+    // Validate diasDisponiveis array (at least one day must be selected)
+    if (!formData.diasDisponiveis || formData.diasDisponiveis.length === 0) {
+      newErrors.diasDisponiveis = 'Selecione pelo menos um dia';
+    }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;

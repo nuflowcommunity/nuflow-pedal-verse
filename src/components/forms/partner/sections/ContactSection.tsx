@@ -58,7 +58,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
             value={formData.telefone1}
             onChange={(e) => onInputChange('telefone1', e.target.value)}
             placeholder="(11) 99999-9999"
-            className={errors.telefone1 ? 'border-red-500' : fieldStatus.telefone1 === 'valid' ? 'border-green-500' : ''}
+            className={errors.telefone1 ? 'border-red-500' : fieldStatus.telefone1 === 'valid' ? 'border-green-500' : 'border-gray-300'}
             disabled={isSubmitting}
           />
           {errors.telefone1 && <p className="text-red-500 text-sm mt-1">{errors.telefone1}</p>}
@@ -75,7 +75,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
             value={formData.telefone2}
             onChange={(e) => onInputChange('telefone2', e.target.value)}
             placeholder="(11) 99999-9999"
-            className={errors.telefone2 ? 'border-red-500' : fieldStatus.telefone2 === 'valid' ? 'border-green-500' : ''}
+            className={errors.telefone2 ? 'border-red-500' : fieldStatus.telefone2 === 'valid' ? 'border-green-500' : 'border-gray-300'}
             disabled={isSubmitting}
           />
           {errors.telefone2 && <p className="text-red-500 text-sm mt-1">{errors.telefone2}</p>}

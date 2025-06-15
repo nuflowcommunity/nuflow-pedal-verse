@@ -39,7 +39,7 @@ export const PartnerTypeSection: React.FC<PartnerTypeSectionProps> = ({
             <RadioGroupItem value="bike-park" id="bike-park" />
             <Label htmlFor="bike-park" className="flex-1 cursor-pointer">
               <div>
-                <span className="font-medium">Bike Park</span>
+                <span className="font-medium">Bike Park *</span>
                 <p className="text-sm text-gray-500">Trilhas, pistas de downhill, parques de mountain bike</p>
               </div>
             </Label>
@@ -48,7 +48,7 @@ export const PartnerTypeSection: React.FC<PartnerTypeSectionProps> = ({
             <RadioGroupItem value="organizador" id="organizador" />
             <Label htmlFor="organizador" className="flex-1 cursor-pointer">
               <div>
-                <span className="font-medium">Organizador de Eventos</span>
+                <span className="font-medium">Organizador de Eventos *</span>
                 <p className="text-sm text-gray-500">Competições, passeios, eventos de ciclismo</p>
               </div>
             </Label>
