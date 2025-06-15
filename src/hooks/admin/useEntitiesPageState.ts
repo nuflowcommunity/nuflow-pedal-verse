@@ -16,21 +16,36 @@ export const useEntitiesPageState = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const { toast } = useToast();
 
+  console.log('useEntitiesPageState - Current state:', {
+    activeTab,
+    searchQuery,
+    partnerFilter,
+    typeFilter,
+    statusFilter,
+    validationFilter,
+    selectedEntity,
+    isDrawerOpen,
+    isDetailDrawerOpen,
+    currentPage
+  });
+
   const clearFilters = () => {
     setSearchQuery('');
     setPartnerFilter('todos');
     setTypeFilter('todos');
     setStatusFilter('todos');
     setValidationFilter('todos');
+    console.log('Filters cleared');
   };
 
   const handleViewEntity = (entity: Entity) => {
+    console.log('Viewing entity:', entity);
     setSelectedEntity(entity);
     setIsDetailDrawerOpen(true);
   };
 
   const handleEditEntity = (entity: Entity) => {
-    // TODO: Implement edit functionality
+    console.log('Editing entity:', entity);
     toast({
       title: "Editar entidade",
       description: `Editando ${entity.name}`,
@@ -38,12 +53,13 @@ export const useEntitiesPageState = () => {
   };
 
   const handleTabChange = (value: string) => {
+    console.log('Tab changed to:', value);
     setActiveTab(value);
   };
 
   const handleSort = (field: keyof Entity, direction: 'asc' | 'desc') => {
-    // TODO: Implement sorting functionality
     console.log('Sorting by:', field, direction);
+    // TODO: Implement sorting functionality
   };
 
   return {
