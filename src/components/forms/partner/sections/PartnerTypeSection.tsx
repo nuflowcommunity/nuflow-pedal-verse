@@ -27,7 +27,7 @@ export const PartnerTypeSection: React.FC<PartnerTypeSectionProps> = ({
       </p>
       
       <div>
-        <Label className="flex items-center gap-1">
+        <Label className="flex items-center gap-1 text-gray-700">
           Tipo de Parceiro *
         </Label>
         <RadioGroup 
@@ -37,7 +37,7 @@ export const PartnerTypeSection: React.FC<PartnerTypeSectionProps> = ({
         >
           <div className="flex items-center space-x-2 p-3 border border-gray-200 rounded-lg hover:bg-gray-50">
             <RadioGroupItem value="bike-park" id="bike-park" />
-            <Label htmlFor="bike-park" className="flex-1 cursor-pointer">
+            <Label htmlFor="bike-park" className="flex-1 cursor-pointer text-gray-700">
               <div>
                 <span className="font-medium">Bike Park *</span>
                 <p className="text-sm text-gray-500">Trilhas, pistas de downhill, parques de mountain bike</p>
@@ -46,7 +46,7 @@ export const PartnerTypeSection: React.FC<PartnerTypeSectionProps> = ({
           </div>
           <div className="flex items-center space-x-2 p-3 border border-gray-200 rounded-lg hover:bg-gray-50">
             <RadioGroupItem value="organizador" id="organizador" />
-            <Label htmlFor="organizador" className="flex-1 cursor-pointer">
+            <Label htmlFor="organizador" className="flex-1 cursor-pointer text-gray-700">
               <div>
                 <span className="font-medium">Organizador de Eventos *</span>
                 <p className="text-sm text-gray-500">Competições, passeios, eventos de ciclismo</p>

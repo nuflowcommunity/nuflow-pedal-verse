@@ -33,7 +33,7 @@ export const DigitalPresenceSection: React.FC<DigitalPresenceSectionProps> = ({
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <Label htmlFor="instagram">Instagram</Label>
+          <Label htmlFor="instagram" className="text-gray-700">Instagram</Label>
           <Input
             id="instagram"
             value={formData.instagram}
@@ -46,7 +46,7 @@ export const DigitalPresenceSection: React.FC<DigitalPresenceSectionProps> = ({
         </div>
         
         <div>
-          <Label htmlFor="site">Site/Website</Label>
+          <Label htmlFor="site" className="text-gray-700">Site/Website</Label>
           <Input
             id="site"
             value={formData.site}
@@ -60,7 +60,7 @@ export const DigitalPresenceSection: React.FC<DigitalPresenceSectionProps> = ({
       </div>
 
       <div>
-        <Label htmlFor="comoConheceu">Como Conheceu a NuFlow? *</Label>
+        <Label htmlFor="comoConheceu" className="text-gray-700">Como Conheceu a NuFlow? *</Label>
         <Select 
           value={formData.comoConheceu} 
           onValueChange={(value) => onInputChange('comoConheceu', value)}

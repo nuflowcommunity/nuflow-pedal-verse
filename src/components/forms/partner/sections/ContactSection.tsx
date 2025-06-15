@@ -30,7 +30,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
       </p>
       
       <div>
-        <Label htmlFor="emailContato" className="flex items-center gap-1">
+        <Label htmlFor="emailContato" className="flex items-center gap-1 text-gray-700">
           E-mail Comercial *
           <FieldIcon fieldStatus={fieldStatus} field="emailContato" />
         </Label>
@@ -49,7 +49,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <Label htmlFor="telefone1" className="flex items-center gap-1">
+          <Label htmlFor="telefone1" className="flex items-center gap-1 text-gray-700">
             Telefone Principal *
             <FieldIcon fieldStatus={fieldStatus} field="telefone1" />
           </Label>
@@ -66,7 +66,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
         </div>
         
         <div>
-          <Label htmlFor="telefone2" className="flex items-center gap-1">
+          <Label htmlFor="telefone2" className="flex items-center gap-1 text-gray-700">
             Telefone Secundário
             <FieldIcon fieldStatus={fieldStatus} field="telefone2" />
           </Label>

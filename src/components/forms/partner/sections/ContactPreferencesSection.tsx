@@ -29,7 +29,7 @@ export const ContactPreferencesSection: React.FC<ContactPreferencesSectionProps>
       </p>
       
       <div>
-        <Label>Dias Disponíveis para Contato *</Label>
+        <Label className="text-gray-700">Dias Disponíveis para Contato *</Label>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-2">
           {diasSemana.map((dia) => (
             <div key={dia} className="flex items-center space-x-2">
@@ -39,7 +39,7 @@ export const ContactPreferencesSection: React.FC<ContactPreferencesSectionProps>
                 onCheckedChange={(checked) => onDaysChange(dia, checked as boolean)}
                 disabled={isSubmitting}
               />
-              <Label htmlFor={dia} className="text-sm cursor-pointer">
+              <Label htmlFor={dia} className="text-sm cursor-pointer text-gray-700">
                 {dia}
               </Label>
             </div>
@@ -49,7 +49,7 @@ export const ContactPreferencesSection: React.FC<ContactPreferencesSectionProps>
       </div>
 
       <div>
-        <Label htmlFor="horarioPreferencial">Horário Preferencial *</Label>
+        <Label htmlFor="horarioPreferencial" className="text-gray-700">Horário Preferencial *</Label>
         <Select 
           value={formData.horarioPreferencial} 
           onValueChange={(value) => onInputChange('horarioPreferencial', value)}

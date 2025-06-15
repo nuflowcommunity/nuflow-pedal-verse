@@ -33,7 +33,7 @@ export const AddressSection: React.FC<AddressSectionProps> = ({
       
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div>
-          <Label htmlFor="cep" className="flex items-center gap-1">
+          <Label htmlFor="cep" className="flex items-center gap-1 text-gray-700">
             CEP *
             <FieldIcon fieldStatus={fieldStatus} field="cep" />
           </Label>
@@ -49,7 +49,7 @@ export const AddressSection: React.FC<AddressSectionProps> = ({
         </div>
         
         <div>
-          <Label htmlFor="estado">Estado (UF) *</Label>
+          <Label htmlFor="estado" className="text-gray-700">Estado (UF) *</Label>
           <Select 
             value={formData.estado} 
             onValueChange={(value) => onInputChange('estado', value)}
@@ -70,7 +70,7 @@ export const AddressSection: React.FC<AddressSectionProps> = ({
         </div>
         
         <div>
-          <Label htmlFor="cidade" className="flex items-center gap-1">
+          <Label htmlFor="cidade" className="flex items-center gap-1 text-gray-700">
             Cidade *
             <FieldIcon fieldStatus={fieldStatus} field="cidade" />
           </Label>
@@ -87,7 +87,7 @@ export const AddressSection: React.FC<AddressSectionProps> = ({
       </div>
 
       <div>
-        <Label htmlFor="logradouro" className="flex items-center gap-1">
+        <Label htmlFor="logradouro" className="flex items-center gap-1 text-gray-700">
           Logradouro (Rua/Avenida) *
           <FieldIcon fieldStatus={fieldStatus} field="logradouro" />
         </Label>
@@ -104,7 +104,7 @@ export const AddressSection: React.FC<AddressSectionProps> = ({
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div>
-          <Label htmlFor="numero" className="flex items-center gap-1">
+          <Label htmlFor="numero" className="flex items-center gap-1 text-gray-700">
             Número *
             <FieldIcon fieldStatus={fieldStatus} field="numero" />
           </Label>
@@ -120,7 +120,7 @@ export const AddressSection: React.FC<AddressSectionProps> = ({
         </div>
         
         <div>
-          <Label htmlFor="bairro" className="flex items-center gap-1">
+          <Label htmlFor="bairro" className="flex items-center gap-1 text-gray-700">
             Bairro *
             <FieldIcon fieldStatus={fieldStatus} field="bairro" />
           </Label>
@@ -136,7 +136,7 @@ export const AddressSection: React.FC<AddressSectionProps> = ({
         </div>
         
         <div>
-          <Label htmlFor="complemento">Complemento</Label>
+          <Label htmlFor="complemento" className="text-gray-700">Complemento</Label>
           <Input
             id="complemento"
             value={formData.complemento}

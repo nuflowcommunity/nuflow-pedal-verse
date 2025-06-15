@@ -32,7 +32,7 @@ export const CompanyInfoSection: React.FC<CompanyInfoSectionProps> = ({
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <Label htmlFor="nomeEmpresa" className="flex items-center gap-1">
+          <Label htmlFor="nomeEmpresa" className="flex items-center gap-1 text-gray-700">
             Nome da Empresa/Parceiro *
             <FieldIcon fieldStatus={fieldStatus} field="nomeEmpresa" />
           </Label>
@@ -49,7 +49,7 @@ export const CompanyInfoSection: React.FC<CompanyInfoSectionProps> = ({
         </div>
         
         <div>
-          <Label htmlFor="urlPersonalizada" className="flex items-center gap-1">
+          <Label htmlFor="urlPersonalizada" className="flex items-center gap-1 text-gray-700">
             URL Personalizada *
             <FieldIcon fieldStatus={fieldStatus} field="urlPersonalizada" />
           </Label>
@@ -72,7 +72,7 @@ export const CompanyInfoSection: React.FC<CompanyInfoSectionProps> = ({
       </div>
 
       <div>
-        <Label htmlFor="cnpj" className="flex items-center gap-1">
+        <Label htmlFor="cnpj" className="flex items-center gap-1 text-gray-700">
           CNPJ *
           <FieldIcon fieldStatus={fieldStatus} field="cnpj" />
         </Label>
@@ -89,7 +89,7 @@ export const CompanyInfoSection: React.FC<CompanyInfoSectionProps> = ({
       </div>
 
       <div>
-        <Label htmlFor="sobreEmpresa" className="flex items-center gap-1">
+        <Label htmlFor="sobreEmpresa" className="flex items-center gap-1 text-gray-700">
           Sobre a Empresa *
           <FieldIcon fieldStatus={fieldStatus} field="sobreEmpresa" />
         </Label>

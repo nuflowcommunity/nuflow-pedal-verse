@@ -30,7 +30,7 @@ export const ResponsiblePersonSection: React.FC<ResponsiblePersonSectionProps> =
       </p>
       
       <div>
-        <Label htmlFor="nomeResponsavel" className="flex items-center gap-1">
+        <Label htmlFor="nomeResponsavel" className="flex items-center gap-1 text-gray-700">
           Nome Completo do Responsável *
           <FieldIcon fieldStatus={fieldStatus} field="nomeResponsavel" />
         </Label>
@@ -48,7 +48,7 @@ export const ResponsiblePersonSection: React.FC<ResponsiblePersonSectionProps> =
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <Label htmlFor="cpfResponsavel" className="flex items-center gap-1">
+          <Label htmlFor="cpfResponsavel" className="flex items-center gap-1 text-gray-700">
             CPF do Responsável *
             <FieldIcon fieldStatus={fieldStatus} field="cpfResponsavel" />
           </Label>
@@ -65,7 +65,7 @@ export const ResponsiblePersonSection: React.FC<ResponsiblePersonSectionProps> =
         </div>
         
         <div>
-          <Label htmlFor="contatoResponsavel" className="flex items-center gap-1">
+          <Label htmlFor="contatoResponsavel" className="flex items-center gap-1 text-gray-700">
             Contato Direto do Responsável *
             <FieldIcon fieldStatus={fieldStatus} field="contatoResponsavel" />
           </Label>
