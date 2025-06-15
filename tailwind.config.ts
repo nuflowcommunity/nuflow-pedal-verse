@@ -63,18 +63,18 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				// TrailFlow Color System
+				// TrailFlow Color System - cores consistentes
 				trailflow: {
 					green: '#84B067',
 					'green-dark': '#6B8F4A',
 					'green-light': '#A1C285',
-					dark: '#262626',
-					medium: '#595959',
-					light: '#A6A1A1',
-					lighter: '#D9D9D9',
-					accent: '#E9F6F6',
+					dark: '#374151', // gray-700 para melhor legibilidade
+					medium: '#6B7280', // gray-500
+					light: '#9CA3AF', // gray-400
+					lighter: '#E5E7EB', // gray-200
+					accent: '#F0FDF4', // green-50
 					white: '#FFFFFF',
-					black: '#000000',
+					black: '#111827', // gray-900
 				}
 			},
 			fontFamily: {

@@ -28,7 +28,8 @@ export const useEventManagement = () => {
     queryKey: ['events-management', filters],
     queryFn: () => EventManagementService.getEventsByFilters(filters),
     meta: {
-      onError: () => {
+      onError: (error: Error) => {
+        console.error('Erro ao carregar eventos:', error);
         feedback.networkError();
       }
     }
@@ -44,7 +45,8 @@ export const useEventManagement = () => {
       feedback.eventApproved();
       queryClient.invalidateQueries({ queryKey: ['events-management'] });
     },
-    onError: () => {
+    onError: (error: Error) => {
+      console.error('Erro ao aprovar evento:', error);
       feedback.saveError('aprovar evento');
     }
   });
@@ -59,7 +61,8 @@ export const useEventManagement = () => {
       feedback.eventRejected();
       queryClient.invalidateQueries({ queryKey: ['events-management'] });
     },
-    onError: () => {
+    onError: (error: Error) => {
+      console.error('Erro ao rejeitar evento:', error);
       feedback.saveError('rejeitar evento');
     }
   });
@@ -73,7 +76,8 @@ export const useEventManagement = () => {
       feedback.saveSuccess('Evento clonado');
       queryClient.invalidateQueries({ queryKey: ['events-management'] });
     },
-    onError: () => {
+    onError: (error: Error) => {
+      console.error('Erro ao clonar evento:', error);
       feedback.saveError('clonar evento');
     }
   });
@@ -87,7 +91,8 @@ export const useEventManagement = () => {
       feedback.saveSuccess('Evento desativado');
       queryClient.invalidateQueries({ queryKey: ['events-management'] });
     },
-    onError: () => {
+    onError: (error: Error) => {
+      console.error('Erro ao desativar evento:', error);
       feedback.saveError('desativar evento');
     }
   });

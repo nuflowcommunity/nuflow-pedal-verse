@@ -14,8 +14,10 @@ const AdminLayout = () => {
         <AdminSidebar />
         <div className="flex flex-col flex-1 min-w-0">
           <AdminHeader />
-          <main className="p-3 sm:p-4 md:p-6 flex-1 overflow-auto pb-16 md:pb-6">
-            <Outlet />
+          <main className="p-3 sm:p-4 md:p-6 flex-1 overflow-auto pb-16 md:pb-6 bg-gray-50">
+            <div className="max-w-7xl mx-auto">
+              <Outlet />
+            </div>
           </main>
           <MobileBottomNav />
         </div>

@@ -13,10 +13,10 @@ const OrdersAdmin = () => {
 
       {/* Métricas de Pedidos */}
       <div className="grid gap-4 md:grid-cols-4">
-        <Card>
+        <Card className="border border-gray-200">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-gray-600">Total de Pedidos</CardTitle>
-            <Package className="h-4 w-4 text-gray-400" />
+            <CardTitle className="text-sm font-medium text-gray-700">Total de Pedidos</CardTitle>
+            <Package className="h-4 w-4 text-gray-500" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-gray-900">1,247</div>
@@ -24,9 +24,9 @@ const OrdersAdmin = () => {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="border border-gray-200">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-gray-600">Faturamento</CardTitle>
+            <CardTitle className="text-sm font-medium text-gray-700">Faturamento</CardTitle>
             <DollarSign className="h-4 w-4 text-green-500" />
           </CardHeader>
           <CardContent>
@@ -35,9 +35,9 @@ const OrdersAdmin = () => {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="border border-gray-200">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-gray-600">Em Trânsito</CardTitle>
+            <CardTitle className="text-sm font-medium text-gray-700">Em Trânsito</CardTitle>
             <Truck className="h-4 w-4 text-blue-500" />
           </CardHeader>
           <CardContent>
@@ -46,9 +46,9 @@ const OrdersAdmin = () => {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="border border-gray-200">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-gray-600">Pendentes</CardTitle>
+            <CardTitle className="text-sm font-medium text-gray-700">Pendentes</CardTitle>
             <AlertCircle className="h-4 w-4 text-yellow-500" />
           </CardHeader>
           <CardContent>

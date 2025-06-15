@@ -26,7 +26,7 @@ interface Order {
 
 const OrdersDataTable = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [statusFilter, setStatusFilter] = useState('');
+  const [statusFilter, setStatusFilter] = useState('all');
 
   const { data: orders = [], isLoading } = useQuery({
     queryKey: ['admin-orders', searchTerm, statusFilter],
@@ -40,7 +40,7 @@ const OrdersDataTable = () => {
         query = query.or(`id.ilike.%${searchTerm}%,tracking_code.ilike.%${searchTerm}%`);
       }
 
-      if (statusFilter) {
+      if (statusFilter && statusFilter !== 'all') {
         query = query.eq('status', statusFilter);
       }
 
@@ -115,7 +115,7 @@ const OrdersDataTable = () => {
       cell: (order) => (
         <div className="space-y-1">
           <div className="font-medium text-gray-900">#{order.id.slice(0, 8)}</div>
-          <div className="text-sm text-gray-500">Qtd: {order.quantity}</div>
+          <div className="text-sm text-gray-600">Qtd: {order.quantity}</div>
         </div>
       )
     },
@@ -173,8 +173,8 @@ const OrdersDataTable = () => {
         <SelectTrigger className="w-48">
           <SelectValue placeholder="Status" />
         </SelectTrigger>
-        <SelectContent>
-          <SelectItem value="">Todos</SelectItem>
+        <SelectContent className="bg-white border border-gray-200 shadow-lg z-50">
+          <SelectItem value="all">Todos</SelectItem>
           <SelectItem value="pending">Pendente</SelectItem>
           <SelectItem value="confirmed">Confirmado</SelectItem>
           <SelectItem value="shipped">Enviado</SelectItem>
@@ -205,7 +205,7 @@ const OrdersDataTable = () => {
     return (
       <Card>
         <CardContent className="p-6">
-          <div className="text-center text-gray-500">Carregando pedidos...</div>
+          <div className="text-center text-gray-600">Carregando pedidos...</div>
         </CardContent>
       </Card>
     );
@@ -219,7 +219,7 @@ const OrdersDataTable = () => {
       filters={filters}
       actions={actions}
       emptyState={
-        <div className="text-center py-8 text-gray-500">
+        <div className="text-center py-8 text-gray-600">
           Nenhum pedido encontrado
         </div>
       }
