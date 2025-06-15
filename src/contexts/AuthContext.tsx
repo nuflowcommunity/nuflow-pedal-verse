@@ -76,19 +76,28 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+      console.log('Auth state change:', event, session?.user?.email);
+      
       setSession(session);
       setUser(session?.user || null);
       
       if (session?.user) {
         const role = await fetchUserRole(session.user.id);
         setUserRole(role);
+        console.log('User role:', role);
+        
+        // Auto redirect para admin se for admin e estiver em login
+        if (role === 'admin' && (location.pathname === '/admin/login' || event === 'SIGNED_IN')) {
+          console.log('Redirecting admin to /admin');
+          navigate('/admin', { replace: true });
+        }
       } else {
         setUserRole(null);
       }
     });
 
     return () => subscription.unsubscribe();
-  }, []);
+  }, [navigate, location.pathname]);
 
   // Handle sign in
   const signIn = async (email: string, password: string) => {
@@ -108,23 +117,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         description: "Você foi autenticado com sucesso!",
       });
       
-      // Redirect based on user role and current location
-      const role = await fetchUserRole(data.user.id);
-      let redirectPath = '/';
+      // Wait a bit for the auth state change to handle the redirect
+      await new Promise(resolve => setTimeout(resolve, 100));
       
-      // Check if we're coming from an admin login page
-      const isAdminLogin = location.pathname === '/admin/login';
-      
-      if (isAdminLogin && role === 'admin') {
-        redirectPath = '/admin';
-      } else if (role === 'admin') {
-        redirectPath = '/admin';
-      } else if (role === 'partner') {
-        redirectPath = '/parceiro';
-      }
-      
-      const from = location.state?.from?.pathname || redirectPath;
-      navigate(from, { replace: true });
     } catch (error: any) {
       console.error('Sign in error:', error);
       toast({
@@ -132,6 +127,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         description: error.message || "Ocorreu um erro durante o login.",
         variant: "destructive"
       });
+      throw error; // Re-throw to handle in the calling component
     } finally {
       setIsLoading(false);
     }

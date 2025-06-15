@@ -6,6 +6,8 @@ import { Label } from '@/components/ui/label';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
 import { Eye, EyeOff } from 'lucide-react';
+import { useAuth } from '@/contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 interface AdminSignUpFormProps {
   onBackToLogin: () => void;
@@ -18,6 +20,8 @@ const AdminSignUpForm: React.FC<AdminSignUpFormProps> = ({ onBackToLogin }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const { signIn } = useAuth();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -52,7 +56,8 @@ const AdminSignUpForm: React.FC<AdminSignUpFormProps> = ({ onBackToLogin }) => {
     setIsLoading(true);
     
     try {
-      const { data, error } = await supabase.auth.signUp({
+      // Criar a conta
+      const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
         email,
         password,
         options: {
@@ -60,24 +65,54 @@ const AdminSignUpForm: React.FC<AdminSignUpFormProps> = ({ onBackToLogin }) => {
         }
       });
 
-      if (error) {
-        throw error;
+      if (signUpError) {
+        throw signUpError;
       }
 
       toast({
         title: "Conta criada com sucesso!",
-        description: "Sua conta foi criada. Você pode fazer login agora.",
+        description: "Fazendo login automaticamente...",
       });
 
-      // Redirect to login after successful signup
-      onBackToLogin();
+      // Fazer login automaticamente após criar a conta
+      try {
+        await signIn(email, password);
+        // O signIn já faz o redirecionamento para /admin no AuthContext
+      } catch (loginError: any) {
+        console.error('Auto login error:', loginError);
+        toast({
+          title: "Conta criada!",
+          description: "Faça login com suas credenciais.",
+        });
+        onBackToLogin();
+      }
     } catch (error: any) {
       console.error('Admin signup error:', error);
-      toast({
-        title: "Erro ao criar conta",
-        description: error.message || "Ocorreu um erro durante o cadastro.",
-        variant: "destructive"
-      });
+      
+      // Se o erro for de usuário já existente, tentar fazer login
+      if (error.message?.includes('User already registered')) {
+        toast({
+          title: "Usuário já existe",
+          description: "Fazendo login...",
+        });
+        try {
+          await signIn(email, password);
+          // O signIn já faz o redirecionamento para /admin no AuthContext
+        } catch (loginError: any) {
+          console.error('Login after existing user error:', loginError);
+          toast({
+            title: "Usuário já existe",
+            description: "Por favor faça login com suas credenciais.",
+          });
+          onBackToLogin();
+        }
+      } else {
+        toast({
+          title: "Erro ao criar conta",
+          description: error.message || "Ocorreu um erro durante o cadastro.",
+          variant: "destructive"
+        });
+      }
     } finally {
       setIsLoading(false);
     }
