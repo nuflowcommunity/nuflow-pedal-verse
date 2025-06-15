@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -9,7 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Checkbox } from '@/components/ui/checkbox';
 import SEOHead from '@/components/seo/SEOHead';
-import { ArrowLeft, Send, Upload } from 'lucide-react';
+import { ArrowLeft, Send, Upload, Info, CheckCircle2, AlertCircle } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 
 const FormularioParceiro = () => {
@@ -42,16 +41,50 @@ const FormularioParceiro = () => {
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [fieldStatus, setFieldStatus] = useState<Record<string, 'valid' | 'invalid' | 'pending'>>({});
 
   const estadosBrasil = [
-    'AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 
-    'MT', 'MS', 'MG', 'PA', 'PB', 'PR', 'PE', 'PI', 'RJ', 'RN', 
-    'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO'
+    { value: 'AC', label: 'Acre (AC)' },
+    { value: 'AL', label: 'Alagoas (AL)' },
+    { value: 'AP', label: 'Amapá (AP)' },
+    { value: 'AM', label: 'Amazonas (AM)' },
+    { value: 'BA', label: 'Bahia (BA)' },
+    { value: 'CE', label: 'Ceará (CE)' },
+    { value: 'DF', label: 'Distrito Federal (DF)' },
+    { value: 'ES', label: 'Espírito Santo (ES)' },
+    { value: 'GO', label: 'Goiás (GO)' },
+    { value: 'MA', label: 'Maranhão (MA)' },
+    { value: 'MT', label: 'Mato Grosso (MT)' },
+    { value: 'MS', label: 'Mato Grosso do Sul (MS)' },
+    { value: 'MG', label: 'Minas Gerais (MG)' },
+    { value: 'PA', label: 'Pará (PA)' },
+    { value: 'PB', label: 'Paraíba (PB)' },
+    { value: 'PR', label: 'Paraná (PR)' },
+    { value: 'PE', label: 'Pernambuco (PE)' },
+    { value: 'PI', label: 'Piauí (PI)' },
+    { value: 'RJ', label: 'Rio de Janeiro (RJ)' },
+    { value: 'RN', label: 'Rio Grande do Norte (RN)' },
+    { value: 'RS', label: 'Rio Grande do Sul (RS)' },
+    { value: 'RO', label: 'Rondônia (RO)' },
+    { value: 'RR', label: 'Roraima (RR)' },
+    { value: 'SC', label: 'Santa Catarina (SC)' },
+    { value: 'SP', label: 'São Paulo (SP)' },
+    { value: 'SE', label: 'Sergipe (SE)' },
+    { value: 'TO', label: 'Tocantins (TO)' }
   ];
 
   const diasSemana = [
     'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 
     'Sexta-feira', 'Sábado', 'Domingo'
+  ];
+
+  const opcoesComoConheceu = [
+    { value: 'instagram', label: 'Instagram/Redes Sociais' },
+    { value: 'indicacao', label: 'Indicação de amigos/colegas' },
+    { value: 'evento', label: 'Evento ou feira do setor' },
+    { value: 'google', label: 'Pesquisa no Google' },
+    { value: 'parceiro', label: 'Outro parceiro NuFlow' },
+    { value: 'outro', label: 'Outro' }
   ];
 
   // Funções de máscara
@@ -89,78 +122,106 @@ const FormularioParceiro = () => {
       .slice(0, 14);
   };
 
-  // Validações
+  // Enhanced validations with better error messages
   const validateField = (field: string, value: string): string => {
     switch (field) {
       case 'nomeEmpresa':
+        if (!value.trim()) return 'Nome da empresa é obrigatório';
         if (value.length < 3) return 'Nome deve ter pelo menos 3 caracteres';
         if (/\d/.test(value)) return 'Nome não pode conter números';
         return '';
       
       case 'urlPersonalizada':
-        if (!/^[a-zA-Z0-9-_]+$/.test(value)) return 'URL deve conter apenas letras, números, hífens e underscores';
+        if (!value.trim()) return 'URL personalizada é obrigatória';
+        if (value.length < 3) return 'URL deve ter pelo menos 3 caracteres';
+        if (!/^[a-zA-Z0-9-_]+$/.test(value)) return 'URL deve conter apenas letras, números, hífens e underscores (sem espaços)';
+        if (value.startsWith('-') || value.endsWith('-')) return 'URL não pode começar ou terminar com hífen';
         return '';
       
       case 'cnpj':
         const cnpjNumbers = value.replace(/\D/g, '');
+        if (!cnpjNumbers) return 'CNPJ é obrigatório';
         if (cnpjNumbers.length !== 14) return 'CNPJ deve ter 14 dígitos';
         return '';
       
       case 'cep':
         const cepNumbers = value.replace(/\D/g, '');
+        if (!cepNumbers) return 'CEP é obrigatório';
         if (cepNumbers.length !== 8) return 'CEP deve ter 8 dígitos';
         return '';
       
       case 'cidade':
-        if (value.length < 3) return 'Cidade deve ter pelo menos 3 caracteres';
-        if (/\d/.test(value)) return 'Cidade não pode conter números';
+        if (!value.trim()) return 'Cidade é obrigatória';
+        if (value.length < 2) return 'Nome da cidade deve ter pelo menos 2 caracteres';
+        if (/\d/.test(value)) return 'Nome da cidade não pode conter números';
+        return '';
+      
+      case 'logradouro':
+        if (!value.trim()) return 'Logradouro é obrigatório';
+        if (value.length < 5) return 'Logradouro deve ter pelo menos 5 caracteres';
         return '';
       
       case 'numero':
-        if (!/^\d+$/.test(value)) return 'Número deve conter apenas dígitos';
+        if (!value.trim()) return 'Número é obrigatório';
+        if (!/^\d+[a-zA-Z]?$/.test(value)) return 'Número deve conter apenas dígitos (ex: 123 ou 123A)';
         return '';
       
       case 'bairro':
-        if (value.length < 3) return 'Bairro deve ter pelo menos 3 caracteres';
+        if (!value.trim()) return 'Bairro é obrigatório';
+        if (value.length < 3) return 'Nome do bairro deve ter pelo menos 3 caracteres';
         return '';
       
       case 'emailContato':
+        if (!value.trim()) return 'E-mail é obrigatório';
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(value)) return 'E-mail inválido';
+        if (!emailRegex.test(value)) return 'Digite um e-mail válido (ex: contato@empresa.com)';
         return '';
       
       case 'telefone1':
+        const phone1Numbers = value.replace(/\D/g, '');
+        if (!phone1Numbers) return 'Telefone principal é obrigatório';
+        if (phone1Numbers.length < 10) return 'Telefone deve ter pelo menos 10 dígitos';
+        if (phone1Numbers.length > 11) return 'Telefone deve ter no máximo 11 dígitos';
+        return '';
+      
       case 'telefone2':
-        const phoneNumbers = value.replace(/\D/g, '');
-        if (phoneNumbers.length < 10) return 'Telefone deve ter pelo menos 10 dígitos';
+        if (value) {
+          const phone2Numbers = value.replace(/\D/g, '');
+          if (phone2Numbers.length < 10) return 'Telefone deve ter pelo menos 10 dígitos';
+          if (phone2Numbers.length > 11) return 'Telefone deve ter no máximo 11 dígitos';
+        }
         return '';
       
       case 'sobreEmpresa':
-        if (value.length < 20) return 'Descrição deve ter pelo menos 20 caracteres';
+        if (!value.trim()) return 'Descrição da empresa é obrigatória';
+        if (value.length < 50) return 'Descrição deve ter pelo menos 50 caracteres para melhor avaliação';
         return '';
       
       case 'instagram':
         if (value && !value.startsWith('@') && !value.startsWith('http')) {
-          return 'Instagram deve começar com @ ou ser uma URL válida';
+          return 'Instagram deve começar com @ (ex: @empresa) ou ser uma URL completa';
         }
         return '';
       
       case 'site':
-        if (value && !value.startsWith('http')) return 'Site deve ser uma URL válida';
+        if (value && !value.startsWith('http')) return 'Site deve ser uma URL completa (ex: https://www.empresa.com)';
         return '';
 
       case 'nomeResponsavel':
+        if (!value.trim()) return 'Nome do responsável é obrigatório';
         if (value.length < 3) return 'Nome deve ter pelo menos 3 caracteres';
         if (/\d/.test(value)) return 'Nome não pode conter números';
         return '';
 
       case 'cpfResponsavel':
         const cpfNumbers = value.replace(/\D/g, '');
+        if (!cpfNumbers) return 'CPF do responsável é obrigatório';
         if (cpfNumbers.length !== 11) return 'CPF deve ter 11 dígitos';
         return '';
 
       case 'contatoResponsavel':
         const contactNumbers = value.replace(/\D/g, '');
+        if (!contactNumbers) return 'Contato do responsável é obrigatório';
         if (contactNumbers.length < 10) return 'Contato deve ter pelo menos 10 dígitos';
         return '';
       
@@ -172,7 +233,7 @@ const FormularioParceiro = () => {
   const handleInputChange = (field: string, value: string) => {
     let maskedValue = value;
 
-    // Aplicar máscaras
+    // Apply masks
     switch (field) {
       case 'cnpj':
         maskedValue = maskCNPJ(value);
@@ -195,11 +256,17 @@ const FormularioParceiro = () => {
       [field]: maskedValue
     }));
 
-    // Validar campo
+    // Validate field
     const error = validateField(field, maskedValue);
     setErrors(prev => ({
       ...prev,
       [field]: error
+    }));
+
+    // Set field status
+    setFieldStatus(prev => ({
+      ...prev,
+      [field]: error ? 'invalid' : 'valid'
     }));
   };
 
@@ -221,6 +288,7 @@ const FormularioParceiro = () => {
 
     const newErrors: Record<string, string> = {};
 
+    // Check required fields
     requiredFields.forEach(field => {
       const value = formData[field as keyof typeof formData];
       if (!value || (typeof value === 'string' && !value.trim())) {
@@ -240,17 +308,23 @@ const FormularioParceiro = () => {
     
     if (!validateForm()) {
       toast({
-        title: "Erro na validação",
-        description: "Por favor, corrija os campos destacados.",
+        title: "Formulário incompleto",
+        description: "Por favor, corrija os campos destacados em vermelho antes de continuar.",
         variant: "destructive"
       });
+      
+      // Scroll to first error
+      const firstErrorField = document.querySelector('.border-red-500');
+      if (firstErrorField) {
+        firstErrorField.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
       return;
     }
 
     setIsSubmitting(true);
 
     try {
-      // Simulação de envio do formulário
+      // Simulate form submission
       await new Promise(resolve => setTimeout(resolve, 2000));
       
       toast({
@@ -268,6 +342,13 @@ const FormularioParceiro = () => {
     } finally {
       setIsSubmitting(false);
     }
+  };
+
+  const getFieldIcon = (field: string) => {
+    const status = fieldStatus[field];
+    if (status === 'valid') return <CheckCircle2 className="w-4 h-4 text-green-500" />;
+    if (status === 'invalid') return <AlertCircle className="w-4 h-4 text-red-500" />;
+    return null;
   };
 
   return (
@@ -313,6 +394,12 @@ const FormularioParceiro = () => {
                 <p className="text-gray-600 leading-relaxed">
                   Preencha os dados abaixo para iniciar sua jornada como parceiro NuFlow.
                 </p>
+                <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                  <div className="flex items-center gap-2 text-blue-700">
+                    <Info className="w-4 h-4" />
+                    <span className="text-sm font-medium">Campos marcados com * são obrigatórios</span>
+                  </div>
+                </div>
               </div>
               
               {/* Formulário */}
@@ -323,21 +410,36 @@ const FormularioParceiro = () => {
                   <h3 className="text-lg font-medium text-gray-900 border-b border-gray-200 pb-2">
                     Tipo de Parceiro
                   </h3>
+                  <p className="text-sm text-gray-600 -mt-2">
+                    Selecione o tipo que melhor descreve seu negócio
+                  </p>
                   
                   <div>
-                    <Label>Tipo de Parceiro *</Label>
+                    <Label className="flex items-center gap-1">
+                      Tipo de Parceiro *
+                    </Label>
                     <RadioGroup 
                       value={formData.tipoParceiro} 
                       onValueChange={(value) => handleInputChange('tipoParceiro', value)}
                       className="mt-2"
                     >
-                      <div className="flex items-center space-x-2">
+                      <div className="flex items-center space-x-2 p-3 border border-gray-200 rounded-lg hover:bg-gray-50">
                         <RadioGroupItem value="bike-park" id="bike-park" />
-                        <Label htmlFor="bike-park">Bike Park</Label>
+                        <Label htmlFor="bike-park" className="flex-1 cursor-pointer">
+                          <div>
+                            <span className="font-medium">Bike Park</span>
+                            <p className="text-sm text-gray-500">Trilhas, pistas de downhill, parques de mountain bike</p>
+                          </div>
+                        </Label>
                       </div>
-                      <div className="flex items-center space-x-2">
+                      <div className="flex items-center space-x-2 p-3 border border-gray-200 rounded-lg hover:bg-gray-50">
                         <RadioGroupItem value="organizador" id="organizador" />
-                        <Label htmlFor="organizador">Organizador</Label>
+                        <Label htmlFor="organizador" className="flex-1 cursor-pointer">
+                          <div>
+                            <span className="font-medium">Organizador de Eventos</span>
+                            <p className="text-sm text-gray-500">Competições, passeios, eventos de ciclismo</p>
+                          </div>
+                        </Label>
                       </div>
                     </RadioGroup>
                     {errors.tipoParceiro && <p className="text-red-500 text-sm mt-1">{errors.tipoParceiro}</p>}
@@ -347,25 +449,35 @@ const FormularioParceiro = () => {
                 {/* Dados da Empresa */}
                 <div className="space-y-4">
                   <h3 className="text-lg font-medium text-gray-900 border-b border-gray-200 pb-2">
-                    Dados da Empresa
+                    Informações da Empresa
                   </h3>
+                  <p className="text-sm text-gray-600 -mt-2">
+                    Dados básicos sobre sua empresa ou organização
+                  </p>
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <Label htmlFor="nomeEmpresa">Nome da Empresa/Parceiro *</Label>
+                      <Label htmlFor="nomeEmpresa" className="flex items-center gap-1">
+                        Nome da Empresa/Parceiro *
+                        {getFieldIcon('nomeEmpresa')}
+                      </Label>
                       <Input
                         id="nomeEmpresa"
                         value={formData.nomeEmpresa}
                         onChange={(e) => handleInputChange('nomeEmpresa', e.target.value)}
                         placeholder="Ex: Bike Park Serra Verde"
-                        className={errors.nomeEmpresa ? 'border-red-500' : ''}
+                        className={errors.nomeEmpresa ? 'border-red-500' : fieldStatus.nomeEmpresa === 'valid' ? 'border-green-500' : ''}
                         disabled={isSubmitting}
                       />
                       {errors.nomeEmpresa && <p className="text-red-500 text-sm mt-1">{errors.nomeEmpresa}</p>}
+                      {!errors.nomeEmpresa && <p className="text-gray-500 text-xs mt-1">Nome completo da empresa ou marca</p>}
                     </div>
                     
                     <div>
-                      <Label htmlFor="urlPersonalizada">URL Personalizada *</Label>
+                      <Label htmlFor="urlPersonalizada" className="flex items-center gap-1">
+                        URL Personalizada *
+                        {getFieldIcon('urlPersonalizada')}
+                      </Label>
                       <div className="flex">
                         <span className="inline-flex items-center px-3 text-sm text-gray-500 bg-gray-50 border border-r-0 border-gray-300 rounded-l-md">
                           nuflowpass.com.br/
@@ -374,58 +486,77 @@ const FormularioParceiro = () => {
                           id="urlPersonalizada"
                           value={formData.urlPersonalizada}
                           onChange={(e) => handleInputChange('urlPersonalizada', e.target.value)}
-                          placeholder="seu-nome"
-                          className={`rounded-l-none ${errors.urlPersonalizada ? 'border-red-500' : ''}`}
+                          placeholder="minha-empresa"
+                          className={`rounded-l-none ${errors.urlPersonalizada ? 'border-red-500' : fieldStatus.urlPersonalizada === 'valid' ? 'border-green-500' : ''}`}
                           disabled={isSubmitting}
                         />
                       </div>
                       {errors.urlPersonalizada && <p className="text-red-500 text-sm mt-1">{errors.urlPersonalizada}</p>}
+                      {!errors.urlPersonalizada && <p className="text-gray-500 text-xs mt-1">Será sua página personalizada na plataforma</p>}
                     </div>
                   </div>
 
                   <div>
-                    <Label htmlFor="cnpj">CNPJ *</Label>
+                    <Label htmlFor="cnpj" className="flex items-center gap-1">
+                      CNPJ *
+                      {getFieldIcon('cnpj')}
+                    </Label>
                     <Input
                       id="cnpj"
                       value={formData.cnpj}
                       onChange={(e) => handleInputChange('cnpj', e.target.value)}
                       placeholder="00.000.000/0000-00"
-                      className={errors.cnpj ? 'border-red-500' : ''}
+                      className={errors.cnpj ? 'border-red-500' : fieldStatus.cnpj === 'valid' ? 'border-green-500' : ''}
                       disabled={isSubmitting}
                     />
                     {errors.cnpj && <p className="text-red-500 text-sm mt-1">{errors.cnpj}</p>}
+                    {!errors.cnpj && <p className="text-gray-500 text-xs mt-1">CNPJ da empresa registrada</p>}
                   </div>
 
                   <div>
-                    <Label htmlFor="sobreEmpresa">Sobre a Empresa *</Label>
+                    <Label htmlFor="sobreEmpresa" className="flex items-center gap-1">
+                      Sobre a Empresa *
+                      {getFieldIcon('sobreEmpresa')}
+                    </Label>
                     <Textarea
                       id="sobreEmpresa"
                       value={formData.sobreEmpresa}
                       onChange={(e) => handleInputChange('sobreEmpresa', e.target.value)}
-                      placeholder="Conte-nos sobre sua empresa, produtos e serviços oferecidos... (mínimo 20 caracteres)"
+                      placeholder="Descreva sua empresa, histórico, principais atividades oferecidas, diferenciais e experiência no setor. Esta informação será importante para nossa análise..."
                       rows={4}
-                      className={errors.sobreEmpresa ? 'border-red-500' : ''}
+                      className={errors.sobreEmpresa ? 'border-red-500' : fieldStatus.sobreEmpresa === 'valid' ? 'border-green-500' : ''}
                       disabled={isSubmitting}
                     />
-                    {errors.sobreEmpresa && <p className="text-red-500 text-sm mt-1">{errors.sobreEmpresa}</p>}
+                    <div className="flex justify-between items-center mt-1">
+                      {errors.sobreEmpresa && <p className="text-red-500 text-sm">{errors.sobreEmpresa}</p>}
+                      <p className="text-gray-500 text-xs ml-auto">
+                        {formData.sobreEmpresa.length}/50 caracteres mínimos
+                      </p>
+                    </div>
                   </div>
                 </div>
 
                 {/* Localização */}
                 <div className="space-y-4">
                   <h3 className="text-lg font-medium text-gray-900 border-b border-gray-200 pb-2">
-                    Localização
+                    Endereço e Localização
                   </h3>
+                  <p className="text-sm text-gray-600 -mt-2">
+                    Endereço completo da sede ou local principal de operação
+                  </p>
                   
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div>
-                      <Label htmlFor="cep">CEP *</Label>
+                      <Label htmlFor="cep" className="flex items-center gap-1">
+                        CEP *
+                        {getFieldIcon('cep')}
+                      </Label>
                       <Input
                         id="cep"
                         value={formData.cep}
                         onChange={(e) => handleInputChange('cep', e.target.value)}
                         placeholder="00000-000"
-                        className={errors.cep ? 'border-red-500' : ''}
+                        className={errors.cep ? 'border-red-500' : fieldStatus.cep === 'valid' ? 'border-green-500' : ''}
                         disabled={isSubmitting}
                       />
                       {errors.cep && <p className="text-red-500 text-sm mt-1">{errors.cep}</p>}
@@ -439,11 +570,13 @@ const FormularioParceiro = () => {
                         disabled={isSubmitting}
                       >
                         <SelectTrigger className={errors.estado ? 'border-red-500' : ''}>
-                          <SelectValue placeholder="Selecione..." />
+                          <SelectValue placeholder="Selecione o estado..." />
                         </SelectTrigger>
                         <SelectContent>
                           {estadosBrasil.map(estado => (
-                            <SelectItem key={estado} value={estado}>{estado}</SelectItem>
+                            <SelectItem key={estado.value} value={estado.value}>
+                              {estado.label}
+                            </SelectItem>
                           ))}
                         </SelectContent>
                       </Select>
@@ -451,13 +584,16 @@ const FormularioParceiro = () => {
                     </div>
                     
                     <div>
-                      <Label htmlFor="cidade">Cidade *</Label>
+                      <Label htmlFor="cidade" className="flex items-center gap-1">
+                        Cidade *
+                        {getFieldIcon('cidade')}
+                      </Label>
                       <Input
                         id="cidade"
                         value={formData.cidade}
                         onChange={(e) => handleInputChange('cidade', e.target.value)}
                         placeholder="Ex: São Paulo"
-                        className={errors.cidade ? 'border-red-500' : ''}
+                        className={errors.cidade ? 'border-red-500' : fieldStatus.cidade === 'valid' ? 'border-green-500' : ''}
                         disabled={isSubmitting}
                       />
                       {errors.cidade && <p className="text-red-500 text-sm mt-1">{errors.cidade}</p>}
@@ -465,13 +601,16 @@ const FormularioParceiro = () => {
                   </div>
 
                   <div>
-                    <Label htmlFor="logradouro">Logradouro (Rua/Avenida) *</Label>
+                    <Label htmlFor="logradouro" className="flex items-center gap-1">
+                      Logradouro (Rua/Avenida) *
+                      {getFieldIcon('logradouro')}
+                    </Label>
                     <Input
                       id="logradouro"
                       value={formData.logradouro}
                       onChange={(e) => handleInputChange('logradouro', e.target.value)}
-                      placeholder="Ex: Rua das Flores"
-                      className={errors.logradouro ? 'border-red-500' : ''}
+                      placeholder="Ex: Rua das Flores, Avenida Paulista"
+                      className={errors.logradouro ? 'border-red-500' : fieldStatus.logradouro === 'valid' ? 'border-green-500' : ''}
                       disabled={isSubmitting}
                     />
                     {errors.logradouro && <p className="text-red-500 text-sm mt-1">{errors.logradouro}</p>}
@@ -479,26 +618,32 @@ const FormularioParceiro = () => {
 
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div>
-                      <Label htmlFor="numero">Número *</Label>
+                      <Label htmlFor="numero" className="flex items-center gap-1">
+                        Número *
+                        {getFieldIcon('numero')}
+                      </Label>
                       <Input
                         id="numero"
                         value={formData.numero}
                         onChange={(e) => handleInputChange('numero', e.target.value)}
-                        placeholder="123"
-                        className={errors.numero ? 'border-red-500' : ''}
+                        placeholder="123 ou 123A"
+                        className={errors.numero ? 'border-red-500' : fieldStatus.numero === 'valid' ? 'border-green-500' : ''}
                         disabled={isSubmitting}
                       />
                       {errors.numero && <p className="text-red-500 text-sm mt-1">{errors.numero}</p>}
                     </div>
                     
                     <div>
-                      <Label htmlFor="bairro">Bairro *</Label>
+                      <Label htmlFor="bairro" className="flex items-center gap-1">
+                        Bairro *
+                        {getFieldIcon('bairro')}
+                      </Label>
                       <Input
                         id="bairro"
                         value={formData.bairro}
                         onChange={(e) => handleInputChange('bairro', e.target.value)}
-                        placeholder="Ex: Centro"
-                        className={errors.bairro ? 'border-red-500' : ''}
+                        placeholder="Ex: Centro, Vila Madalena"
+                        className={errors.bairro ? 'border-red-500' : fieldStatus.bairro === 'valid' ? 'border-green-500' : ''}
                         disabled={isSubmitting}
                       />
                       {errors.bairro && <p className="text-red-500 text-sm mt-1">{errors.bairro}</p>}
@@ -510,9 +655,10 @@ const FormularioParceiro = () => {
                         id="complemento"
                         value={formData.complemento}
                         onChange={(e) => handleInputChange('complemento', e.target.value)}
-                        placeholder="Apto 101, Bloco A..."
+                        placeholder="Apto 101, Bloco A, Sala 203..."
                         disabled={isSubmitting}
                       />
+                      <p className="text-gray-500 text-xs mt-1">Opcional - Apartamento, sala, etc.</p>
                     </div>
                   </div>
                 </div>
@@ -520,48 +666,63 @@ const FormularioParceiro = () => {
                 {/* Dados de Contato */}
                 <div className="space-y-4">
                   <h3 className="text-lg font-medium text-gray-900 border-b border-gray-200 pb-2">
-                    Dados de Contato
+                    Informações de Contato
                   </h3>
+                  <p className="text-sm text-gray-600 -mt-2">
+                    Formas de contato para comunicação comercial e suporte
+                  </p>
                   
                   <div>
-                    <Label htmlFor="emailContato">E-mail de Contato *</Label>
+                    <Label htmlFor="emailContato" className="flex items-center gap-1">
+                      E-mail Comercial *
+                      {getFieldIcon('emailContato')}
+                    </Label>
                     <Input
                       id="emailContato"
                       type="email"
                       value={formData.emailContato}
                       onChange={(e) => handleInputChange('emailContato', e.target.value)}
                       placeholder="contato@empresa.com"
-                      className={errors.emailContato ? 'border-red-500' : ''}
+                      className={errors.emailContato ? 'border-red-500' : fieldStatus.emailContato === 'valid' ? 'border-green-500' : ''}
                       disabled={isSubmitting}
                     />
                     {errors.emailContato && <p className="text-red-500 text-sm mt-1">{errors.emailContato}</p>}
+                    {!errors.emailContato && <p className="text-gray-500 text-xs mt-1">E-mail principal para comunicações comerciais</p>}
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <Label htmlFor="telefone1">Telefone 1 *</Label>
+                      <Label htmlFor="telefone1" className="flex items-center gap-1">
+                        Telefone Principal *
+                        {getFieldIcon('telefone1')}
+                      </Label>
                       <Input
                         id="telefone1"
                         value={formData.telefone1}
                         onChange={(e) => handleInputChange('telefone1', e.target.value)}
                         placeholder="(11) 99999-9999"
-                        className={errors.telefone1 ? 'border-red-500' : ''}
+                        className={errors.telefone1 ? 'border-red-500' : fieldStatus.telefone1 === 'valid' ? 'border-green-500' : ''}
                         disabled={isSubmitting}
                       />
                       {errors.telefone1 && <p className="text-red-500 text-sm mt-1">{errors.telefone1}</p>}
+                      {!errors.telefone1 && <p className="text-gray-500 text-xs mt-1">WhatsApp ou telefone comercial</p>}
                     </div>
                     
                     <div>
-                      <Label htmlFor="telefone2">Telefone 2</Label>
+                      <Label htmlFor="telefone2" className="flex items-center gap-1">
+                        Telefone Secundário
+                        {getFieldIcon('telefone2')}
+                      </Label>
                       <Input
                         id="telefone2"
                         value={formData.telefone2}
                         onChange={(e) => handleInputChange('telefone2', e.target.value)}
                         placeholder="(11) 99999-9999"
-                        className={errors.telefone2 ? 'border-red-500' : ''}
+                        className={errors.telefone2 ? 'border-red-500' : fieldStatus.telefone2 === 'valid' ? 'border-green-500' : ''}
                         disabled={isSubmitting}
                       />
                       {errors.telefone2 && <p className="text-red-500 text-sm mt-1">{errors.telefone2}</p>}
+                      {!errors.telefone2 && <p className="text-gray-500 text-xs mt-1">Opcional - Telefone alternativo</p>}
                     </div>
                   </div>
                 </div>
@@ -569,34 +730,45 @@ const FormularioParceiro = () => {
                 {/* Informações Adicionais */}
                 <div className="space-y-4">
                   <h3 className="text-lg font-medium text-gray-900 border-b border-gray-200 pb-2">
-                    Informações Adicionais
+                    Presença Digital e Marketing
                   </h3>
+                  <p className="text-sm text-gray-600 -mt-2">
+                    Informações sobre redes sociais e presença online (opcional)
+                  </p>
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <Label htmlFor="instagram">Instagram da Empresa</Label>
+                      <Label htmlFor="instagram" className="flex items-center gap-1">
+                        Instagram da Empresa
+                        {getFieldIcon('instagram')}
+                      </Label>
                       <Input
                         id="instagram"
                         value={formData.instagram}
                         onChange={(e) => handleInputChange('instagram', e.target.value)}
-                        placeholder="@empresa ou https://instagram.com/empresa"
-                        className={errors.instagram ? 'border-red-500' : ''}
+                        placeholder="@minhaempresa ou https://instagram.com/minhaempresa"
+                        className={errors.instagram ? 'border-red-500' : fieldStatus.instagram === 'valid' ? 'border-green-500' : ''}
                         disabled={isSubmitting}
                       />
                       {errors.instagram && <p className="text-red-500 text-sm mt-1">{errors.instagram}</p>}
+                      {!errors.instagram && <p className="text-gray-500 text-xs mt-1">Perfil oficial da empresa no Instagram</p>}
                     </div>
                     
                     <div>
-                      <Label htmlFor="site">Site</Label>
+                      <Label htmlFor="site" className="flex items-center gap-1">
+                        Site Oficial
+                        {getFieldIcon('site')}
+                      </Label>
                       <Input
                         id="site"
                         value={formData.site}
                         onChange={(e) => handleInputChange('site', e.target.value)}
-                        placeholder="https://www.empresa.com"
-                        className={errors.site ? 'border-red-500' : ''}
+                        placeholder="https://www.minhaempresa.com"
+                        className={errors.site ? 'border-red-500' : fieldStatus.site === 'valid' ? 'border-green-500' : ''}
                         disabled={isSubmitting}
                       />
                       {errors.site && <p className="text-red-500 text-sm mt-1">{errors.site}</p>}
+                      {!errors.site && <p className="text-gray-500 text-xs mt-1">Website oficial da empresa</p>}
                     </div>
                   </div>
 
@@ -608,106 +780,128 @@ const FormularioParceiro = () => {
                       disabled={isSubmitting}
                     >
                       <SelectTrigger>
-                        <SelectValue placeholder="Selecione..." />
+                        <SelectValue placeholder="Selecione como nos conheceu..." />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="instagram">Instagram</SelectItem>
-                        <SelectItem value="indicacao">Indicação</SelectItem>
-                        <SelectItem value="evento">Evento</SelectItem>
-                        <SelectItem value="outro">Outro</SelectItem>
+                        {opcoesComoConheceu.map(opcao => (
+                          <SelectItem key={opcao.value} value={opcao.value}>
+                            {opcao.label}
+                          </SelectItem>
+                        ))}
                       </SelectContent>
                     </Select>
+                    <p className="text-gray-500 text-xs mt-1">Isso nos ajuda a entender nossos canais de divulgação</p>
                   </div>
                 </div>
 
                 {/* Disponibilidade para Contato */}
                 <div className="space-y-4">
                   <h3 className="text-lg font-medium text-gray-900 border-b border-gray-200 pb-2">
-                    Disponibilidade para Contato
+                    Preferências de Contato
                   </h3>
+                  <p className="text-sm text-gray-600 -mt-2">
+                    Quando é melhor entrarmos em contato para discutir a parceria
+                  </p>
                   
                   <div>
                     <Label>Dias da Semana Preferenciais</Label>
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-2">
+                    <p className="text-gray-500 text-xs mb-3">Selecione os dias em que prefere receber contato comercial</p>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                       {diasSemana.map(dia => (
-                        <div key={dia} className="flex items-center space-x-2">
+                        <div key={dia} className="flex items-center space-x-2 p-2 border border-gray-200 rounded-lg hover:bg-gray-50">
                           <Checkbox
                             id={dia}
                             checked={formData.diasDisponiveis.includes(dia)}
                             onCheckedChange={(checked) => handleDaysChange(dia, checked as boolean)}
                             disabled={isSubmitting}
                           />
-                          <Label htmlFor={dia} className="text-sm">{dia}</Label>
+                          <Label htmlFor={dia} className="text-sm cursor-pointer">{dia}</Label>
                         </div>
                       ))}
                     </div>
                   </div>
 
                   <div>
-                    <Label htmlFor="horarioPreferencial">Horário Preferencial</Label>
+                    <Label htmlFor="horarioPreferencial">Horário Preferencial para Contato</Label>
                     <Select 
                       value={formData.horarioPreferencial} 
                       onValueChange={(value) => handleInputChange('horarioPreferencial', value)}
                       disabled={isSubmitting}
                     >
                       <SelectTrigger>
-                        <SelectValue placeholder="Selecione..." />
+                        <SelectValue placeholder="Selecione o melhor horário..." />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="manha">Manhã (8h - 12h)</SelectItem>
-                        <SelectItem value="tarde">Tarde (12h - 18h)</SelectItem>
-                        <SelectItem value="noite">Noite (18h - 22h)</SelectItem>
-                        <SelectItem value="comercial">Horário Comercial (8h - 18h)</SelectItem>
+                        <SelectItem value="manha">Manhã (8h às 12h)</SelectItem>
+                        <SelectItem value="tarde">Tarde (12h às 18h)</SelectItem>
+                        <SelectItem value="noite">Noite (18h às 22h)</SelectItem>
+                        <SelectItem value="comercial">Horário Comercial (8h às 18h)</SelectItem>
                         <SelectItem value="qualquer">Qualquer horário</SelectItem>
                       </SelectContent>
                     </Select>
+                    <p className="text-gray-500 text-xs mt-1">Nosso time comercial respeitará sua preferência</p>
                   </div>
                 </div>
 
                 {/* Responsável pelo Espaço */}
                 <div className="space-y-4">
                   <h3 className="text-lg font-medium text-gray-900 border-b border-gray-200 pb-2">
-                    Responsável pelo Espaço
+                    Responsável Legal/Comercial
                   </h3>
+                  <p className="text-sm text-gray-600 -mt-2">
+                    Dados da pessoa responsável pela empresa e assinatura de contratos
+                  </p>
                   
                   <div>
-                    <Label htmlFor="nomeResponsavel">Nome do Responsável *</Label>
+                    <Label htmlFor="nomeResponsavel" className="flex items-center gap-1">
+                      Nome Completo do Responsável *
+                      {getFieldIcon('nomeResponsavel')}
+                    </Label>
                     <Input
                       id="nomeResponsavel"
                       value={formData.nomeResponsavel}
                       onChange={(e) => handleInputChange('nomeResponsavel', e.target.value)}
-                      placeholder="João Silva"
-                      className={errors.nomeResponsavel ? 'border-red-500' : ''}
+                      placeholder="João Silva Santos"
+                      className={errors.nomeResponsavel ? 'border-red-500' : fieldStatus.nomeResponsavel === 'valid' ? 'border-green-500' : ''}
                       disabled={isSubmitting}
                     />
                     {errors.nomeResponsavel && <p className="text-red-500 text-sm mt-1">{errors.nomeResponsavel}</p>}
+                    {!errors.nomeResponsavel && <p className="text-gray-500 text-xs mt-1">Sócio, proprietário ou responsável legal</p>}
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <Label htmlFor="cpfResponsavel">CPF do Responsável *</Label>
+                      <Label htmlFor="cpfResponsavel" className="flex items-center gap-1">
+                        CPF do Responsável *
+                        {getFieldIcon('cpfResponsavel')}
+                      </Label>
                       <Input
                         id="cpfResponsavel"
                         value={formData.cpfResponsavel}
                         onChange={(e) => handleInputChange('cpfResponsavel', e.target.value)}
                         placeholder="000.000.000-00"
-                        className={errors.cpfResponsavel ? 'border-red-500' : ''}
+                        className={errors.cpfResponsavel ? 'border-red-500' : fieldStatus.cpfResponsavel === 'valid' ? 'border-green-500' : ''}
                         disabled={isSubmitting}
                       />
                       {errors.cpfResponsavel && <p className="text-red-500 text-sm mt-1">{errors.cpfResponsavel}</p>}
+                      {!errors.cpfResponsavel && <p className="text-gray-500 text-xs mt-1">Para formalização do contrato</p>}
                     </div>
                     
                     <div>
-                      <Label htmlFor="contatoResponsavel">Contato do Responsável *</Label>
+                      <Label htmlFor="contatoResponsavel" className="flex items-center gap-1">
+                        Contato Direto do Responsável *
+                        {getFieldIcon('contatoResponsavel')}
+                      </Label>
                       <Input
                         id="contatoResponsavel"
                         value={formData.contatoResponsavel}
                         onChange={(e) => handleInputChange('contatoResponsavel', e.target.value)}
                         placeholder="(11) 99999-9999"
-                        className={errors.contatoResponsavel ? 'border-red-500' : ''}
+                        className={errors.contatoResponsavel ? 'border-red-500' : fieldStatus.contatoResponsavel === 'valid' ? 'border-green-500' : ''}
                         disabled={isSubmitting}
                       />
                       {errors.contatoResponsavel && <p className="text-red-500 text-sm mt-1">{errors.contatoResponsavel}</p>}
+                      {!errors.contatoResponsavel && <p className="text-gray-500 text-xs mt-1">WhatsApp preferencial para contato direto</p>}
                     </div>
                   </div>
                 </div>
@@ -715,33 +909,52 @@ const FormularioParceiro = () => {
                 {/* Upload de Logo */}
                 <div className="space-y-4">
                   <h3 className="text-lg font-medium text-gray-900 border-b border-gray-200 pb-2">
-                    Logo/Foto do Local (Opcional)
+                    Identidade Visual (Opcional)
                   </h3>
+                  <p className="text-sm text-gray-600 -mt-2">
+                    Logo da empresa ou fotos do local para enriquecer seu perfil
+                  </p>
                   
-                  <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-gray-400 transition-colors">
+                  <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-gray-400 transition-colors cursor-pointer">
                     <Upload className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                    <p className="text-gray-600 mb-2">Clique para fazer upload ou arraste a imagem aqui</p>
-                    <p className="text-sm text-gray-500">PNG, JPG até 5MB</p>
+                    <p className="text-gray-600 mb-2 font-medium">Clique para fazer upload ou arraste as imagens aqui</p>
+                    <p className="text-sm text-gray-500">PNG, JPG até 5MB por arquivo</p>
+                    <p className="text-xs text-gray-400 mt-2">Recomendado: Logo da empresa, fotos do local, certificações</p>
                   </div>
                 </div>
                 
                 {/* Botão de Envio */}
                 <div className="pt-6 border-t border-gray-200">
+                  <div className="bg-gray-50 p-4 rounded-lg mb-6">
+                    <div className="flex items-start gap-3">
+                      <Info className="w-5 h-5 text-blue-500 mt-0.5 flex-shrink-0" />
+                      <div className="text-sm text-gray-700">
+                        <p className="font-medium mb-1">O que acontece após o envio:</p>
+                        <ul className="space-y-1 text-xs">
+                          <li>• Análise do cadastro em até 72 horas úteis</li>
+                          <li>• Verificação de documentos e informações</li>
+                          <li>• Contato da nossa equipe comercial</li>
+                          <li>• Definição de termos da parceria</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+
                   <Button 
                     type="submit" 
-                    className="w-full border-2 border-green-500 bg-white text-green-500 hover:bg-green-500 hover:text-white transition-all duration-300 font-medium relative overflow-hidden group"
+                    className="w-full border-2 border-green-500 bg-white text-green-500 hover:bg-green-500 hover:text-white transition-all duration-300 font-medium relative overflow-hidden group py-4 text-lg"
                     disabled={isSubmitting}
                   >
                     <span className="relative z-10 flex items-center justify-center">
                       {isSubmitting ? (
                         <>
-                          <span className="animate-spin mr-2 w-4 h-4 border-2 border-current border-t-transparent rounded-full"></span>
+                          <span className="animate-spin mr-2 w-5 h-5 border-2 border-current border-t-transparent rounded-full"></span>
                           Enviando para análise...
                         </>
                       ) : (
                         <>
-                          Enviar para análise
-                          <Send className="w-4 h-4 ml-2" />
+                          Enviar Cadastro para Análise
+                          <Send className="w-5 h-5 ml-2" />
                         </>
                       )}
                     </span>
@@ -749,7 +962,8 @@ const FormularioParceiro = () => {
                   </Button>
                   
                   <p className="text-sm text-gray-500 text-center mt-4">
-                    * Campos obrigatórios
+                    Ao enviar este formulário, você concorda com nossos 
+                    <span className="text-green-600 hover:underline cursor-pointer"> termos de parceria</span>
                   </p>
                 </div>
               </form>
