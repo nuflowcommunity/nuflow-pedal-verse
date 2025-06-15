@@ -2,7 +2,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { User, LogOut } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 
 interface NavbarUserActionsProps {
@@ -21,8 +20,7 @@ const NavbarUserActions: React.FC<NavbarUserActionsProps> = ({ scrolled }) => {
             size="sm" 
             className="text-trailflow-dark hover:text-trailflow-green hover:bg-gray-50/50 text-sm font-medium tracking-wide px-4 py-2 uppercase text-xs"
           >
-            <User size={14} className="mr-2" />
-            Entrar
+            Login
           </Button>
         </Link>
       </div>
@@ -37,7 +35,6 @@ const NavbarUserActions: React.FC<NavbarUserActionsProps> = ({ scrolled }) => {
           size="sm" 
           className="text-trailflow-dark hover:text-trailflow-green hover:bg-gray-50/50 text-sm font-medium tracking-wide px-3 py-2"
         >
-          <User size={14} className="mr-2" />
           Perfil
         </Button>
       </Link>
@@ -47,7 +44,6 @@ const NavbarUserActions: React.FC<NavbarUserActionsProps> = ({ scrolled }) => {
         onClick={signOut}
         className="text-trailflow-dark hover:text-trailflow-green hover:bg-gray-50/50 text-sm font-medium tracking-wide px-3 py-2"
       >
-        <LogOut size={14} className="mr-2" />
         Sair
       </Button>
     </div>
