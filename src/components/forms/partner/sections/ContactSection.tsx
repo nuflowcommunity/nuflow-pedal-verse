@@ -40,7 +40,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
           value={formData.emailContato}
           onChange={(e) => onInputChange('emailContato', e.target.value)}
           placeholder="contato@empresa.com"
-          className={errors.emailContato ? 'border-red-500' : fieldStatus.emailContato === 'valid' ? 'border-green-500' : ''}
+          className={errors.emailContato ? 'border-red-500' : fieldStatus.emailContato === 'valid' ? 'border-green-500' : 'border-gray-300'}
           disabled={isSubmitting}
         />
         {errors.emailContato && <p className="text-red-500 text-sm mt-1">{errors.emailContato}</p>}
