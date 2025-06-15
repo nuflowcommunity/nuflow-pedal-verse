@@ -35,10 +35,10 @@ const PriceConditionStep: React.FC<PriceConditionStepProps> = ({ data, onUpdate 
   return (
     <div className="space-y-6">
       <div>
-        <Label htmlFor="price" className="text-base font-medium text-trailflow-dark drop-shadow-sm">
+        <Label htmlFor="price" className="text-base font-medium text-gray-800">
           Preço de Venda *
         </Label>
-        <p className="text-sm text-trailflow-medium mb-3 drop-shadow-sm">
+        <p className="text-sm text-gray-700 mb-3">
           Digite o valor que você deseja receber pela bicicleta
         </p>
         <Input
@@ -49,16 +49,16 @@ const PriceConditionStep: React.FC<PriceConditionStepProps> = ({ data, onUpdate 
           onChange={handlePriceChange}
           className="w-full text-lg font-semibold bg-gray-100/80 backdrop-blur-sm border-gray-300/60 hover:bg-gray-50/85 focus:bg-gray-50/90 transition-all duration-200"
         />
-        <p className="text-xs text-trailflow-medium mt-2 drop-shadow-sm">
+        <p className="text-xs text-gray-700 mt-2">
           💡 Pesquise preços similares no marketplace para definir um valor competitivo
         </p>
       </div>
 
       <div>
-        <Label htmlFor="condition" className="text-base font-medium text-trailflow-dark drop-shadow-sm">
+        <Label htmlFor="condition" className="text-base font-medium text-gray-800">
           Estado da Bicicleta *
         </Label>
-        <p className="text-sm text-trailflow-medium mb-3 drop-shadow-sm">
+        <p className="text-sm text-gray-700 mb-3">
           Seja honesto sobre o estado para gerar confiança nos compradores
         </p>
         <Select value={data.condition || ""} onValueChange={(value) => onUpdate({ condition: value })}>
@@ -69,8 +69,8 @@ const PriceConditionStep: React.FC<PriceConditionStepProps> = ({ data, onUpdate 
             {conditions.map((condition) => (
               <SelectItem key={condition.value} value={condition.value} className="hover:bg-trailflow-accent/20">
                 <div>
-                  <p className="font-medium">{condition.label}</p>
-                  <p className="text-xs text-gray-500">{condition.description}</p>
+                  <p className="font-medium text-gray-800">{condition.label}</p>
+                  <p className="text-xs text-gray-600">{condition.description}</p>
                 </div>
               </SelectItem>
             ))}
@@ -79,10 +79,10 @@ const PriceConditionStep: React.FC<PriceConditionStepProps> = ({ data, onUpdate 
       </div>
 
       <div>
-        <Label htmlFor="contactPhone" className="text-base font-medium text-trailflow-dark drop-shadow-sm">
+        <Label htmlFor="contactPhone" className="text-base font-medium text-gray-800">
           Telefone para Contato
         </Label>
-        <p className="text-sm text-trailflow-medium mb-3 drop-shadow-sm">
+        <p className="text-sm text-gray-700 mb-3">
           Número de WhatsApp para interessados entrarem em contato (opcional)
         </p>
         <Input
@@ -95,8 +95,8 @@ const PriceConditionStep: React.FC<PriceConditionStepProps> = ({ data, onUpdate 
         />
       </div>
 
-      <div className="bg-white/50 backdrop-blur-sm p-4 rounded-lg border border-white/30">
-        <p className="text-sm text-trailflow-dark font-medium drop-shadow-sm">
+      <div className="bg-white/60 backdrop-blur-sm p-4 rounded-lg border border-gray-300">
+        <p className="text-sm text-gray-800 font-medium">
           💰 Dica: Preços justos e descrições honestas aumentam as chances de venda
         </p>
       </div>

@@ -38,10 +38,10 @@ const ProductTypeStep: React.FC<ProductTypeStepProps> = ({ data, onUpdate }) => 
   return (
     <div className="space-y-6">
       <div>
-        <Label htmlFor="category" className="text-base font-medium text-trailflow-dark drop-shadow-sm">
+        <Label htmlFor="category" className="text-base font-medium text-gray-800">
           Categoria da Bicicleta *
         </Label>
-        <p className="text-sm text-trailflow-medium mb-3 drop-shadow-sm">
+        <p className="text-sm text-gray-700 mb-3">
           Selecione o tipo de bicicleta que você está anunciando
         </p>
         <Select value={data.category || ""} onValueChange={(value) => onUpdate({ category: value })}>
@@ -59,10 +59,10 @@ const ProductTypeStep: React.FC<ProductTypeStepProps> = ({ data, onUpdate }) => 
       </div>
 
       <div>
-        <Label htmlFor="brand" className="text-base font-medium text-trailflow-dark drop-shadow-sm">
+        <Label htmlFor="brand" className="text-base font-medium text-gray-800">
           Marca *
         </Label>
-        <p className="text-sm text-trailflow-medium mb-3 drop-shadow-sm">
+        <p className="text-sm text-gray-700 mb-3">
           Escolha a marca da sua bicicleta
         </p>
         <Select value={data.brand || ""} onValueChange={(value) => onUpdate({ brand: value })}>
@@ -79,8 +79,8 @@ const ProductTypeStep: React.FC<ProductTypeStepProps> = ({ data, onUpdate }) => 
         </Select>
       </div>
 
-      <div className="bg-white/50 backdrop-blur-sm p-4 rounded-lg border border-white/30">
-        <p className="text-sm text-trailflow-dark font-medium drop-shadow-sm">
+      <div className="bg-white/60 backdrop-blur-sm p-4 rounded-lg border border-gray-300">
+        <p className="text-sm text-gray-800 font-medium">
           💡 Dica: Quanto mais específicas as informações, maior a chance de venda!
         </p>
       </div>

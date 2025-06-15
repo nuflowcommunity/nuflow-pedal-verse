@@ -35,7 +35,7 @@ const StepIndicator: React.FC<StepIndicatorProps> = ({ steps, currentStep }) => 
                   ? 'bg-trailflow-green text-white shadow-lg' 
                   : currentStep === step.id 
                   ? 'bg-white text-trailflow-green border-2 border-trailflow-green shadow-lg' 
-                  : 'bg-gray-100 text-gray-400 border border-gray-200'
+                  : 'bg-gray-100 text-gray-600 border border-gray-300'
                 }
               `}
             >
@@ -49,11 +49,11 @@ const StepIndicator: React.FC<StepIndicatorProps> = ({ steps, currentStep }) => 
             {/* Step Text */}
             <div className="mt-3 text-center min-w-0 max-w-32">
               <p className={`text-sm font-medium polymer-body transition-colors duration-300 ${
-                currentStep >= step.id ? 'text-trailflow-dark' : 'text-gray-400'
+                currentStep >= step.id ? 'text-gray-800' : 'text-gray-600'
               }`}>
                 {step.title}
               </p>
-              <p className="text-xs text-gray-500 mt-1 polymer-body">
+              <p className="text-xs text-gray-700 mt-1 polymer-body">
                 {step.description}
               </p>
             </div>
@@ -72,7 +72,7 @@ const StepIndicator: React.FC<StepIndicatorProps> = ({ steps, currentStep }) => 
                   ? 'bg-trailflow-green text-white' 
                   : currentStep === step.id 
                   ? 'bg-white text-trailflow-green border-2 border-trailflow-green' 
-                  : 'bg-gray-100 text-gray-400'
+                  : 'bg-gray-100 text-gray-600'
                 }
               `}
             >
@@ -98,7 +98,7 @@ const StepIndicator: React.FC<StepIndicatorProps> = ({ steps, currentStep }) => 
       <div className="md:hidden">
         {/* Progress Bar */}
         <div className="mb-6">
-          <div className="flex justify-between text-xs text-gray-500 mb-3">
+          <div className="flex justify-between text-xs text-gray-700 mb-3">
             <span className="polymer-body font-medium">Etapa {currentStep}</span>
             <span className="polymer-body">{steps.length} etapas</span>
           </div>
@@ -113,10 +113,10 @@ const StepIndicator: React.FC<StepIndicatorProps> = ({ steps, currentStep }) => 
         {/* Current Step Info */}
         <div className="text-center polymer-text-reveal animate">
           <div className="polymer-text-reveal-inner">
-            <h3 className="text-xl font-semibold text-trailflow-dark mb-2 polymer-heading">
+            <h3 className="text-xl font-semibold text-gray-800 mb-2 polymer-heading">
               {steps[currentStep - 1].title}
             </h3>
-            <p className="text-sm text-trailflow-medium polymer-body">
+            <p className="text-sm text-gray-700 polymer-body">
               {steps[currentStep - 1].description}
             </p>
           </div>

@@ -46,10 +46,10 @@ const PhotoUploadStep: React.FC<PhotoUploadStepProps> = ({ data, onUpdate }) => 
   return (
     <div className="space-y-6">
       <div>
-        <Label className="text-base font-medium text-trailflow-dark drop-shadow-sm">
+        <Label className="text-base font-medium text-gray-800">
           Fotos da Bicicleta *
         </Label>
-        <p className="text-sm text-trailflow-medium mb-4 drop-shadow-sm">
+        <p className="text-sm text-gray-700 mb-4">
           Adicione até 6 fotos de alta qualidade. A primeira foto será a capa do anúncio.
         </p>
 
@@ -59,25 +59,25 @@ const PhotoUploadStep: React.FC<PhotoUploadStepProps> = ({ data, onUpdate }) => 
             className={`
               relative border-2 border-dashed rounded-lg p-8 text-center transition-all duration-300 backdrop-blur-sm
               ${dragOver 
-                ? 'border-trailflow-green bg-trailflow-accent/20 shadow-lg' 
-                : 'border-white/40 hover:border-trailflow-green/60 hover:bg-trailflow-accent/10 bg-white/20'
+                ? 'border-trailflow-green bg-trailflow-accent/30 shadow-lg' 
+                : 'border-gray-400 hover:border-trailflow-green/60 hover:bg-trailflow-accent/20 bg-white/40'
               }
             `}
             onDrop={handleDrop}
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
           >
-            <Upload className="mx-auto h-12 w-12 text-trailflow-medium mb-4" />
-            <p className="text-lg font-medium text-trailflow-dark mb-2 drop-shadow-sm">
+            <Upload className="mx-auto h-12 w-12 text-gray-600 mb-4" />
+            <p className="text-lg font-medium text-gray-800 mb-2">
               Arraste as fotos aqui ou clique para selecionar
             </p>
-            <p className="text-sm text-trailflow-medium mb-4 drop-shadow-sm">
+            <p className="text-sm text-gray-700 mb-4">
               PNG, JPG até 5MB cada
             </p>
             <Button
               type="button"
               variant="outline"
-              className="mx-auto bg-white/50 backdrop-blur-sm border-trailflow-green/70 text-trailflow-green hover:bg-trailflow-green hover:text-white transition-all duration-300"
+              className="mx-auto bg-white/60 backdrop-blur-sm border-trailflow-green/70 text-trailflow-green hover:bg-trailflow-green hover:text-white transition-all duration-300"
               onClick={() => document.getElementById('photo-upload')?.click()}
             >
               Selecionar Fotos
@@ -98,7 +98,7 @@ const PhotoUploadStep: React.FC<PhotoUploadStepProps> = ({ data, onUpdate }) => 
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-4">
             {photos.map((photo, index) => (
               <div key={index} className="relative group">
-                <div className="relative overflow-hidden rounded-lg bg-white/20 backdrop-blur-sm border border-white/20">
+                <div className="relative overflow-hidden rounded-lg bg-white/40 backdrop-blur-sm border border-gray-300">
                   <img
                     src={photo}
                     alt={`Foto ${index + 1}`}
@@ -124,14 +124,14 @@ const PhotoUploadStep: React.FC<PhotoUploadStepProps> = ({ data, onUpdate }) => 
       </div>
 
       {/* Tips section with enhanced styling */}
-      <div className="bg-amber-50/70 backdrop-blur-sm p-4 rounded-lg border border-amber-200/30">
+      <div className="bg-amber-50/80 backdrop-blur-sm p-4 rounded-lg border border-amber-300/50">
         <div className="flex items-start gap-3">
-          <Image className="text-amber-600 mt-0.5" size={20} />
+          <Image className="text-amber-700 mt-0.5" size={20} />
           <div>
-            <p className="text-sm text-amber-800 font-medium mb-1">
+            <p className="text-sm text-amber-900 font-medium mb-1">
               Dicas para fotos que vendem:
             </p>
-            <ul className="text-xs text-amber-700 space-y-1">
+            <ul className="text-xs text-amber-800 space-y-1">
               <li>• Tire fotos em boa iluminação (luz natural é melhor)</li>
               <li>• Mostre a bike completa e detalhes importantes</li>
               <li>• Inclua fotos de diferentes ângulos</li>

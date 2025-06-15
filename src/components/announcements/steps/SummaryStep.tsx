@@ -27,8 +27,8 @@ const SummaryStep: React.FC<SummaryStepProps> = ({ data }) => {
 
   return (
     <div className="space-y-6">
-      <div className="bg-white border border-gray-200 rounded-lg p-6">
-        <h3 className="text-lg font-semibold mb-4 text-nuflow-darkForest">
+      <div className="bg-white/70 border border-gray-300 rounded-lg p-6">
+        <h3 className="text-lg font-semibold mb-4 text-gray-800">
           Resumo do Anúncio
         </h3>
         
@@ -37,22 +37,22 @@ const SummaryStep: React.FC<SummaryStepProps> = ({ data }) => {
           <div className="space-y-4">
             <div>
               <p className="text-sm text-gray-600">Categoria</p>
-              <p className="font-medium">{data.category}</p>
+              <p className="font-medium text-gray-800">{data.category}</p>
             </div>
             
             <div>
               <p className="text-sm text-gray-600">Marca e Modelo</p>
-              <p className="font-medium">{data.brand} {data.model}</p>
+              <p className="font-medium text-gray-800">{data.brand} {data.model}</p>
             </div>
             
             <div>
               <p className="text-sm text-gray-600">Ano</p>
-              <p className="font-medium">{data.year}</p>
+              <p className="font-medium text-gray-800">{data.year}</p>
             </div>
             
             <div>
               <p className="text-sm text-gray-600">Localização</p>
-              <p className="font-medium">{data.location}</p>
+              <p className="font-medium text-gray-800">{data.location}</p>
             </div>
           </div>
           
@@ -60,14 +60,14 @@ const SummaryStep: React.FC<SummaryStepProps> = ({ data }) => {
           <div className="space-y-4">
             <div>
               <p className="text-sm text-gray-600">Preço</p>
-              <p className="text-2xl font-bold text-nuflow-moss">
+              <p className="text-2xl font-bold text-trailflow-green">
                 {data.price ? formatPrice(data.price) : 'R$ 0,00'}
               </p>
             </div>
             
             <div>
               <p className="text-sm text-gray-600">Estado</p>
-              <Badge variant="outline" className="mt-1">
+              <Badge variant="outline" className="mt-1 text-gray-800 border-gray-400">
                 {data.condition ? getConditionLabel(data.condition) : 'Não informado'}
               </Badge>
             </div>
@@ -75,7 +75,7 @@ const SummaryStep: React.FC<SummaryStepProps> = ({ data }) => {
             {data.contactPhone && (
               <div>
                 <p className="text-sm text-gray-600">Contato</p>
-                <p className="font-medium">{data.contactPhone}</p>
+                <p className="font-medium text-gray-800">{data.contactPhone}</p>
               </div>
             )}
           </div>
@@ -83,7 +83,7 @@ const SummaryStep: React.FC<SummaryStepProps> = ({ data }) => {
         
         {/* Description */}
         {data.description && (
-          <div className="mt-6 pt-6 border-t border-gray-200">
+          <div className="mt-6 pt-6 border-t border-gray-300">
             <p className="text-sm text-gray-600 mb-2">Descrição</p>
             <p className="text-sm text-gray-800 leading-relaxed">
               {data.description}
@@ -103,7 +103,7 @@ const SummaryStep: React.FC<SummaryStepProps> = ({ data }) => {
         
         {/* Photos */}
         {data.photos && data.photos.length > 0 && (
-          <div className="mt-6 pt-6 border-t border-gray-200">
+          <div className="mt-6 pt-6 border-t border-gray-300">
             <p className="text-sm text-gray-600 mb-3">Fotos ({data.photos.length})</p>
             <div className="grid grid-cols-3 md:grid-cols-6 gap-2">
               {data.photos.map((photo, index) => (
@@ -119,11 +119,11 @@ const SummaryStep: React.FC<SummaryStepProps> = ({ data }) => {
         )}
       </div>
       
-      <div className="bg-nuflow-lime/10 p-4 rounded-lg border border-nuflow-lime/20">
-        <p className="text-sm text-nuflow-darkForest font-medium">
+      <div className="bg-green-50/80 p-4 rounded-lg border border-green-300/50">
+        <p className="text-sm text-green-800 font-medium">
           ✅ Seu anúncio está pronto para ser publicado!
         </p>
-        <p className="text-xs text-nuflow-darkForest/70 mt-1">
+        <p className="text-xs text-green-700 mt-1">
           Após a publicação, seu anúncio será analisado e estará disponível no marketplace em breve.
         </p>
       </div>

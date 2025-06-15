@@ -31,12 +31,12 @@ const NewAnnounce = () => {
           {/* Polymer-style Header with enhanced contrast */}
           <div className="text-center mb-8 sm:mb-12 lg:mb-16">
             <div className="polymer-text-reveal animate">
-              <h1 className="polymer-text-reveal-inner polymer-heading-md text-trailflow-dark mb-4 sm:mb-6 drop-shadow-sm">
+              <h1 className="polymer-text-reveal-inner polymer-heading-md text-gray-800 mb-4 sm:mb-6 drop-shadow-lg">
                 Anunciar Bicicleta
               </h1>
             </div>
             <div className="polymer-editorial-line w-24 mx-auto mb-6"></div>
-            <p className="polymer-body-large text-trailflow-medium max-w-2xl mx-auto px-4 drop-shadow-sm">
+            <p className="polymer-body-large text-gray-700 max-w-2xl mx-auto px-4 drop-shadow-md">
               Preencha os dados abaixo para anunciar sua bicicleta na maior comunidade de ciclistas do Brasil
             </p>
           </div>

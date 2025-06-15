@@ -126,10 +126,10 @@ const AnnouncementWizard: React.FC = () => {
         
         <CardHeader className="relative z-10 bg-gradient-to-r from-trailflow-accent/30 to-white/20 backdrop-blur-sm px-6 sm:px-8 lg:px-12 py-6 sm:py-8 border-b border-white/10">
           <div className="text-center">
-            <CardTitle className="polymer-heading-sm text-trailflow-dark mb-2 drop-shadow-sm">
+            <CardTitle className="polymer-heading-sm text-gray-800 mb-2 drop-shadow-md">
               {STEPS[currentStep - 1].title}
             </CardTitle>
-            <p className="polymer-body text-trailflow-medium drop-shadow-sm">
+            <p className="polymer-body text-gray-700 drop-shadow-sm">
               {STEPS[currentStep - 1].description}
             </p>
           </div>
@@ -196,7 +196,7 @@ const AnnouncementWizard: React.FC = () => {
               
               {/* Progress Info */}
               <div className="text-center">
-                <p className="polymer-body text-trailflow-medium drop-shadow-sm">
+                <p className="polymer-body text-gray-700 drop-shadow-sm font-medium">
                   Etapa {currentStep} de {STEPS.length}
                 </p>
               </div>

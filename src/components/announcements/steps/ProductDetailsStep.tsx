@@ -18,10 +18,10 @@ const ProductDetailsStep: React.FC<ProductDetailsStepProps> = ({ data, onUpdate 
   return (
     <div className="space-y-6">
       <div>
-        <Label htmlFor="model" className="text-base font-medium text-trailflow-dark drop-shadow-sm">
+        <Label htmlFor="model" className="text-base font-medium text-gray-800">
           Modelo *
         </Label>
-        <p className="text-sm text-trailflow-medium mb-3 drop-shadow-sm">
+        <p className="text-sm text-gray-700 mb-3">
           Digite o modelo específico da sua bicicleta
         </p>
         <Input
@@ -35,10 +35,10 @@ const ProductDetailsStep: React.FC<ProductDetailsStepProps> = ({ data, onUpdate 
       </div>
 
       <div>
-        <Label htmlFor="year" className="text-base font-medium text-trailflow-dark drop-shadow-sm">
+        <Label htmlFor="year" className="text-base font-medium text-gray-800">
           Ano de Fabricação *
         </Label>
-        <p className="text-sm text-trailflow-medium mb-3 drop-shadow-sm">
+        <p className="text-sm text-gray-700 mb-3">
           Selecione o ano de fabricação da bicicleta
         </p>
         <Select 
@@ -59,10 +59,10 @@ const ProductDetailsStep: React.FC<ProductDetailsStepProps> = ({ data, onUpdate 
       </div>
 
       <div>
-        <Label htmlFor="location" className="text-base font-medium text-trailflow-dark drop-shadow-sm">
+        <Label htmlFor="location" className="text-base font-medium text-gray-800">
           Localização *
         </Label>
-        <p className="text-sm text-trailflow-medium mb-3 drop-shadow-sm">
+        <p className="text-sm text-gray-700 mb-3">
           Cidade e estado onde a bicicleta está localizada
         </p>
         <Input
@@ -75,8 +75,8 @@ const ProductDetailsStep: React.FC<ProductDetailsStepProps> = ({ data, onUpdate 
         />
       </div>
 
-      <div className="bg-white/50 backdrop-blur-sm p-4 rounded-lg border border-white/30">
-        <p className="text-sm text-trailflow-dark font-medium drop-shadow-sm">
+      <div className="bg-white/60 backdrop-blur-sm p-4 rounded-lg border border-gray-300">
+        <p className="text-sm text-gray-800 font-medium">
           📍 A localização ajuda compradores próximos a encontrar sua bike mais facilmente
         </p>
       </div>

@@ -13,10 +13,10 @@ const DescriptionStep: React.FC<DescriptionStepProps> = ({ data, onUpdate }) => 
   return (
     <div className="space-y-6">
       <div>
-        <Label htmlFor="description" className="text-base font-medium text-trailflow-dark drop-shadow-sm">
+        <Label htmlFor="description" className="text-base font-medium text-gray-800">
           Descrição do Produto *
         </Label>
-        <p className="text-sm text-trailflow-medium mb-3 drop-shadow-sm">
+        <p className="text-sm text-gray-700 mb-3">
           Descreva sua bicicleta de forma detalhada para atrair compradores
         </p>
         <Textarea
@@ -26,16 +26,16 @@ const DescriptionStep: React.FC<DescriptionStepProps> = ({ data, onUpdate }) => 
           onChange={(e) => onUpdate({ description: e.target.value })}
           className="min-h-32 w-full bg-gray-100/80 backdrop-blur-sm border-gray-300/60 hover:bg-gray-50/85 focus:bg-gray-50/90 transition-all duration-200"
         />
-        <p className="text-xs text-trailflow-medium mt-2 drop-shadow-sm">
+        <p className="text-xs text-gray-700 mt-2">
           {data.description?.length || 0}/500 caracteres
         </p>
       </div>
 
       <div>
-        <Label htmlFor="technicalDetails" className="text-base font-medium text-trailflow-dark drop-shadow-sm">
+        <Label htmlFor="technicalDetails" className="text-base font-medium text-gray-800">
           Detalhes Técnicos
         </Label>
-        <p className="text-sm text-trailflow-medium mb-3 drop-shadow-sm">
+        <p className="text-sm text-gray-700 mb-3">
           Informações técnicas como grupo, rodas, freios, etc. (opcional)
         </p>
         <Textarea
@@ -47,11 +47,11 @@ const DescriptionStep: React.FC<DescriptionStepProps> = ({ data, onUpdate }) => 
         />
       </div>
 
-      <div className="bg-white/50 backdrop-blur-sm p-4 rounded-lg border border-white/30">
-        <p className="text-sm text-trailflow-dark font-medium mb-2 drop-shadow-sm">
+      <div className="bg-white/60 backdrop-blur-sm p-4 rounded-lg border border-gray-300">
+        <p className="text-sm text-gray-800 font-medium mb-2">
           📝 O que incluir na descrição:
         </p>
-        <ul className="text-xs text-trailflow-medium space-y-1 drop-shadow-sm">
+        <ul className="text-xs text-gray-700 space-y-1">
           <li>• Estado geral da bicicleta</li>
           <li>• Histórico de uso (urbano, trilhas, competição)</li>
           <li>• Upgrades e modificações feitas</li>
