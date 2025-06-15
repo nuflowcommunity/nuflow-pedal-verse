@@ -108,11 +108,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         description: "Você foi autenticado com sucesso!",
       });
       
-      // Redirect based on user role
+      // Redirect based on user role and current location
       const role = await fetchUserRole(data.user.id);
       let redirectPath = '/';
       
-      if (role === 'admin') {
+      // Check if we're coming from an admin login page
+      const isAdminLogin = location.pathname === '/admin/login';
+      
+      if (isAdminLogin && role === 'admin') {
+        redirectPath = '/admin';
+      } else if (role === 'admin') {
         redirectPath = '/admin';
       } else if (role === 'partner') {
         redirectPath = '/parceiro';

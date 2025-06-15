@@ -9,7 +9,7 @@ import { ProtectedRoute } from '@/components/auth/ProtectedRoute';
 
 const AdminLayout = () => {
   return (
-    <ProtectedRoute>
+    <ProtectedRoute requiredRole="admin">
       <SidebarProvider>
         <div className="flex min-h-screen w-full bg-gray-50">
           <AdminSidebar />
