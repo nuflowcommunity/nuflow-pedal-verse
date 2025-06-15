@@ -53,8 +53,8 @@ const AdminHeader = () => {
         <SidebarTrigger className="md:hidden" />
         
         <div className="flex flex-col">
-          <h1 className="text-lg md:text-2xl font-bold text-nuflow-charcoal">{pageName}</h1>
-          <div className="hidden sm:flex text-sm text-nuflow-mineral mt-1">
+          <h1 className="text-lg md:text-2xl font-bold text-gray-900">{pageName}</h1>
+          <div className="hidden sm:flex text-sm text-gray-600 mt-1">
             <span>Admin</span>
             <span className="mx-2">/</span>
             <span>{pageName}</span>
@@ -65,16 +65,16 @@ const AdminHeader = () => {
       <div className="flex items-center gap-2 md:gap-3">
         {/* Desktop layout */}
         <div className="hidden md:flex items-center gap-3">
-          <span className="text-nuflow-charcoal">Bem-vindo, {userEmail}</span>
+          <span className="text-gray-900">Bem-vindo, {userEmail}</span>
           <Avatar className="h-10 w-10">
             <AvatarImage src="/placeholder.svg" />
-            <AvatarFallback className="bg-nuflow-emerald text-nuflow-forest">{userInitials}</AvatarFallback>
+            <AvatarFallback className="bg-trailflow-green text-gray-900">{userInitials}</AvatarFallback>
           </Avatar>
           <Button 
             variant="ghost" 
             size="sm" 
             onClick={() => signOut()}
-            className="text-nuflow-charcoal hover:text-nuflow-forest hover:bg-nuflow-mint/50"
+            className="text-gray-900 hover:text-gray-700 hover:bg-gray-100"
           >
             <LogOut className="h-4 w-4 mr-2" />
             Sair
@@ -88,14 +88,14 @@ const AdminHeader = () => {
               <Button variant="ghost" size="sm" className="h-10 w-10 p-0">
                 <Avatar className="h-8 w-8">
                   <AvatarImage src="/placeholder.svg" />
-                  <AvatarFallback className="bg-nuflow-emerald text-nuflow-forest text-xs">{userInitials}</AvatarFallback>
+                  <AvatarFallback className="bg-trailflow-green text-gray-900 text-xs">{userInitials}</AvatarFallback>
                 </Avatar>
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-56">
               <div className="flex flex-col space-y-1 p-2">
-                <p className="text-sm font-medium leading-none">{userEmail}</p>
-                <p className="text-xs leading-none text-muted-foreground">Administrador</p>
+                <p className="text-sm font-medium leading-none text-gray-900">{userEmail}</p>
+                <p className="text-xs leading-none text-gray-600">Administrador</p>
               </div>
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={() => signOut()} className="text-red-600">

@@ -14,45 +14,45 @@ const MessagesAdmin = () => {
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total de Mensagens</CardTitle>
-            <MessageSquare className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-sm font-medium text-gray-900">Total de Mensagens</CardTitle>
+            <MessageSquare className="h-4 w-4 text-gray-600" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">1,847</div>
-            <p className="text-xs text-muted-foreground">+25% desde o mês passado</p>
+            <div className="text-2xl font-bold text-gray-900">1,847</div>
+            <p className="text-xs text-gray-600">+25% desde o mês passado</p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Não Lidas</CardTitle>
-            <Mail className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-sm font-medium text-gray-900">Não Lidas</CardTitle>
+            <Mail className="h-4 w-4 text-gray-600" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">43</div>
-            <p className="text-xs text-muted-foreground">Requer atenção</p>
+            <div className="text-2xl font-bold text-gray-900">43</div>
+            <p className="text-xs text-gray-600">Requer atenção</p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Lidas</CardTitle>
-            <MailOpen className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-sm font-medium text-gray-900">Lidas</CardTitle>
+            <MailOpen className="h-4 w-4 text-gray-600" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">1,804</div>
-            <p className="text-xs text-muted-foreground">97.7% do total</p>
+            <div className="text-2xl font-bold text-gray-900">1,804</div>
+            <p className="text-xs text-gray-600">97.7% do total</p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Urgentes</CardTitle>
-            <AlertCircle className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-sm font-medium text-gray-900">Urgentes</CardTitle>
+            <AlertCircle className="h-4 w-4 text-gray-600" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">5</div>
-            <p className="text-xs text-muted-foreground">Prioridade alta</p>
+            <div className="text-2xl font-bold text-gray-900">5</div>
+            <p className="text-xs text-gray-600">Prioridade alta</p>
           </CardContent>
         </Card>
       </div>
@@ -60,10 +60,10 @@ const MessagesAdmin = () => {
       {/* Messages Table Placeholder */}
       <Card>
         <CardHeader>
-          <CardTitle>Lista de Mensagens</CardTitle>
+          <CardTitle className="text-gray-900">Lista de Mensagens</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="text-center py-8 text-gray-500">
+          <div className="text-center py-8 text-gray-600">
             Funcionalidade de listagem de mensagens em desenvolvimento
           </div>
         </CardContent>

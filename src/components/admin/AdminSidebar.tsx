@@ -153,7 +153,7 @@ const AdminSidebar = () => {
     <Sidebar className="border-r border-gray-200 bg-white">
       <SidebarHeader className="flex items-center justify-center py-4 md:py-6 border-b border-gray-200 bg-white">
         <div className="flex flex-col items-center">
-          <h2 className="text-lg md:text-xl font-bold text-nuflow-forest">NuFlow Admin</h2>
+          <h2 className="text-lg md:text-xl font-bold text-gray-900">NuFlow Admin</h2>
         </div>
       </SidebarHeader>
       
@@ -166,9 +166,9 @@ const AdminSidebar = () => {
                 isActive={currentPath === item.path}
                 tooltip={item.title}
                 className={`
-                  w-full text-gray-700 hover:bg-nuflow-mint/50 hover:text-nuflow-forest
+                  w-full text-gray-700 hover:bg-gray-100 hover:text-gray-900
                   ${currentPath === item.path 
-                    ? 'bg-nuflow-mint text-nuflow-forest font-semibold' 
+                    ? 'bg-gray-100 text-gray-900 font-semibold' 
                     : ''
                   }
                 `}
@@ -185,7 +185,7 @@ const AdminSidebar = () => {
         {/* Marketing Section */}
         <div className="py-2">
           <SidebarSeparator className="bg-gray-200" />
-          <SidebarGroupLabel className="px-2 py-1 mt-2 text-gray-600 font-medium">Marketing</SidebarGroupLabel>
+          <SidebarGroupLabel className="px-2 py-1 mt-2 text-gray-700 font-medium">Marketing</SidebarGroupLabel>
         </div>
         
         <SidebarMenu>
@@ -196,9 +196,9 @@ const AdminSidebar = () => {
                 isActive={currentPath === item.path}
                 tooltip={item.title}
                 className={`
-                  w-full text-gray-700 hover:bg-nuflow-mint/50 hover:text-nuflow-forest
+                  w-full text-gray-700 hover:bg-gray-100 hover:text-gray-900
                   ${currentPath === item.path 
-                    ? 'bg-nuflow-mint text-nuflow-forest font-semibold' 
+                    ? 'bg-gray-100 text-gray-900 font-semibold' 
                     : ''
                   }
                 `}
@@ -215,7 +215,7 @@ const AdminSidebar = () => {
         {/* Finance Section */}
         <div className="py-2">
           <SidebarSeparator className="bg-gray-200" />
-          <SidebarGroupLabel className="px-2 py-1 mt-2 text-gray-600 font-medium">Financeiro</SidebarGroupLabel>
+          <SidebarGroupLabel className="px-2 py-1 mt-2 text-gray-700 font-medium">Financeiro</SidebarGroupLabel>
         </div>
         
         <SidebarMenu>
@@ -226,9 +226,9 @@ const AdminSidebar = () => {
                 isActive={currentPath === item.path || currentPath.startsWith(item.path + '/')}
                 tooltip={item.title}
                 className={`
-                  w-full text-gray-700 hover:bg-nuflow-mint/50 hover:text-nuflow-forest
+                  w-full text-gray-700 hover:bg-gray-100 hover:text-gray-900
                   ${(currentPath === item.path || currentPath.startsWith(item.path + '/'))
-                    ? 'bg-nuflow-mint text-nuflow-forest font-semibold' 
+                    ? 'bg-gray-100 text-gray-900 font-semibold' 
                     : ''
                   }
                 `}
