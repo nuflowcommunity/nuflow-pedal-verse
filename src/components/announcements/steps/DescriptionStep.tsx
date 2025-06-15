@@ -24,7 +24,7 @@ const DescriptionStep: React.FC<DescriptionStepProps> = ({ data, onUpdate }) => 
           placeholder="Ex: Bicicleta em excelente estado de conservação, usado apenas em finais de semana. Todas as revisões em dia, pneus novos..."
           value={data.description || ""}
           onChange={(e) => onUpdate({ description: e.target.value })}
-          className="min-h-32 w-full bg-white/60 backdrop-blur-sm border-white/40 hover:bg-white/70 focus:bg-white/80 transition-all duration-200"
+          className="min-h-32 w-full bg-gray-100/80 backdrop-blur-sm border-gray-300/60 hover:bg-gray-50/85 focus:bg-gray-50/90 transition-all duration-200"
         />
         <p className="text-xs text-trailflow-medium mt-2 drop-shadow-sm">
           {data.description?.length || 0}/500 caracteres
@@ -43,7 +43,7 @@ const DescriptionStep: React.FC<DescriptionStepProps> = ({ data, onUpdate }) => 
           placeholder="Ex: Grupo Shimano XT, Rodas DT Swiss, Freios a disco hidráulico, Suspensão Fox 32..."
           value={data.technicalDetails || ""}
           onChange={(e) => onUpdate({ technicalDetails: e.target.value })}
-          className="min-h-24 w-full bg-white/60 backdrop-blur-sm border-white/40 hover:bg-white/70 focus:bg-white/80 transition-all duration-200"
+          className="min-h-24 w-full bg-gray-100/80 backdrop-blur-sm border-gray-300/60 hover:bg-gray-50/85 focus:bg-gray-50/90 transition-all duration-200"
         />
       </div>
 

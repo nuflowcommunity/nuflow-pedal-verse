@@ -45,7 +45,7 @@ const ProductTypeStep: React.FC<ProductTypeStepProps> = ({ data, onUpdate }) => 
           Selecione o tipo de bicicleta que você está anunciando
         </p>
         <Select value={data.category || ""} onValueChange={(value) => onUpdate({ category: value })}>
-          <SelectTrigger className="w-full bg-white/60 backdrop-blur-sm border-white/40 hover:bg-white/70 focus:bg-white/80 transition-all duration-200">
+          <SelectTrigger className="w-full bg-gray-100/80 backdrop-blur-sm border-gray-300/60 hover:bg-gray-50/85 focus:bg-gray-50/90 transition-all duration-200">
             <SelectValue placeholder="Selecione a categoria" />
           </SelectTrigger>
           <SelectContent className="bg-white/95 backdrop-blur-lg border-white/50">
@@ -66,7 +66,7 @@ const ProductTypeStep: React.FC<ProductTypeStepProps> = ({ data, onUpdate }) => 
           Escolha a marca da sua bicicleta
         </p>
         <Select value={data.brand || ""} onValueChange={(value) => onUpdate({ brand: value })}>
-          <SelectTrigger className="w-full bg-white/60 backdrop-blur-sm border-white/40 hover:bg-white/70 focus:bg-white/80 transition-all duration-200">
+          <SelectTrigger className="w-full bg-gray-100/80 backdrop-blur-sm border-gray-300/60 hover:bg-gray-50/85 focus:bg-gray-50/90 transition-all duration-200">
             <SelectValue placeholder="Selecione a marca" />
           </SelectTrigger>
           <SelectContent className="bg-white/95 backdrop-blur-lg border-white/50">

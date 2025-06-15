@@ -30,7 +30,7 @@ const ProductDetailsStep: React.FC<ProductDetailsStepProps> = ({ data, onUpdate 
           placeholder="Ex: Epic Expert Carbon, Tarmac SL7, TCR Advanced..."
           value={data.model || ""}
           onChange={(e) => onUpdate({ model: e.target.value })}
-          className="w-full bg-white/60 backdrop-blur-sm border-white/40 hover:bg-white/70 focus:bg-white/80 transition-all duration-200"
+          className="w-full bg-gray-100/80 backdrop-blur-sm border-gray-300/60 hover:bg-gray-50/85 focus:bg-gray-50/90 transition-all duration-200"
         />
       </div>
 
@@ -45,7 +45,7 @@ const ProductDetailsStep: React.FC<ProductDetailsStepProps> = ({ data, onUpdate 
           value={data.year?.toString() || ""} 
           onValueChange={(value) => onUpdate({ year: parseInt(value) })}
         >
-          <SelectTrigger className="w-full bg-white/60 backdrop-blur-sm border-white/40 hover:bg-white/70 focus:bg-white/80 transition-all duration-200">
+          <SelectTrigger className="w-full bg-gray-100/80 backdrop-blur-sm border-gray-300/60 hover:bg-gray-50/85 focus:bg-gray-50/90 transition-all duration-200">
             <SelectValue placeholder="Selecione o ano" />
           </SelectTrigger>
           <SelectContent className="max-h-60 bg-white/95 backdrop-blur-lg border-white/50">
@@ -71,7 +71,7 @@ const ProductDetailsStep: React.FC<ProductDetailsStepProps> = ({ data, onUpdate 
           placeholder="Ex: São Paulo - SP"
           value={data.location || ""}
           onChange={(e) => onUpdate({ location: e.target.value })}
-          className="w-full bg-white/60 backdrop-blur-sm border-white/40 hover:bg-white/70 focus:bg-white/80 transition-all duration-200"
+          className="w-full bg-gray-100/80 backdrop-blur-sm border-gray-300/60 hover:bg-gray-50/85 focus:bg-gray-50/90 transition-all duration-200"
         />
       </div>
 
