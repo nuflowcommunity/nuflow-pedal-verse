@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useNavigate, useSearchParams, Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -10,7 +9,7 @@ import SEOHead from '@/components/seo/SEOHead';
 import SocialAuthButtons from '@/components/auth/SocialAuthButtons';
 import ForgotPasswordForm from '@/components/auth/ForgotPasswordForm';
 import AdminSignUpForm from '@/components/auth/AdminSignUpForm';
-import { Eye, EyeOff, AlertCircle, CheckCircle, ArrowLeft, Shield } from 'lucide-react';
+import { Eye, EyeOff, AlertCircle, CheckCircle, ArrowLeft, Shield, Code } from 'lucide-react';
 
 const AdminLogin = () => {
   const [searchParams] = useSearchParams();
@@ -60,6 +59,15 @@ const AdminLogin = () => {
     } catch (error) {
       console.error('Admin login error:', error);
     }
+  };
+
+  // Função de desenvolvimento para acessar sem login
+  const handleDevAccess = () => {
+    toast({
+      title: "Acesso de desenvolvimento",
+      description: "Redirecionando para o painel admin...",
+    });
+    navigate('/admin');
   };
 
   if (showForgotPassword) {
@@ -179,6 +187,19 @@ const AdminLogin = () => {
               className="w-12 h-12 object-contain opacity-60 hover:opacity-100 transition-opacity" 
             />
           </Link>
+        </div>
+
+        {/* Botão de desenvolvimento no canto superior esquerdo */}
+        <div className="absolute top-6 left-6 z-10">
+          <Button
+            onClick={handleDevAccess}
+            variant="outline"
+            size="sm"
+            className="bg-yellow-100 border-yellow-300 text-yellow-800 hover:bg-yellow-200"
+          >
+            <Code className="w-4 h-4 mr-2" />
+            Dev Access
+          </Button>
         </div>
 
         <div className="flex min-h-screen items-center justify-center px-4 py-12">
