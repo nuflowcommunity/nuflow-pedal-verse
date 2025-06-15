@@ -151,7 +151,7 @@ const AnnouncementWizard: React.FC = () => {
                 <Button
                   onClick={nextStep}
                   disabled={!canProceedToNext()}
-                  className="w-full polymer-btn bg-trailflow-green/90 backdrop-blur-sm text-white hover:bg-trailflow-green hover:shadow-lg border border-white/20 h-12 text-base font-medium transition-all duration-300"
+                  className="w-full polymer-btn bg-trailflow-green/90 backdrop-blur-sm text-gray-800 hover:bg-trailflow-green hover:text-gray-900 hover:shadow-lg border border-white/20 h-12 text-base font-medium transition-all duration-300"
                 >
                   Próximo
                   <ArrowRight size={20} className="ml-2" />
@@ -160,7 +160,7 @@ const AnnouncementWizard: React.FC = () => {
                 <Button
                   onClick={handleSubmit}
                   disabled={!canProceedToNext() || isSubmitting}
-                  className="w-full polymer-btn bg-trailflow-green/90 backdrop-blur-sm text-white hover:bg-trailflow-green hover:shadow-lg border border-white/20 h-12 text-base font-medium transition-all duration-300"
+                  className="w-full polymer-btn bg-trailflow-green/90 backdrop-blur-sm text-gray-800 hover:bg-trailflow-green hover:text-gray-900 hover:shadow-lg border border-white/20 h-12 text-base font-medium transition-all duration-300"
                 >
                   {isSubmitting ? (
                     <span className="animate-spin mr-2">○</span>
@@ -175,7 +175,7 @@ const AnnouncementWizard: React.FC = () => {
                 variant="outline"
                 onClick={prevStep}
                 disabled={currentStep === 1}
-                className="w-full polymer-btn bg-white/50 backdrop-blur-sm border-trailflow-green/70 text-trailflow-green hover:bg-trailflow-green hover:text-white hover:shadow-lg h-12 text-base font-medium transition-all duration-300"
+                className="w-full polymer-btn bg-white/50 backdrop-blur-sm border-trailflow-green/70 text-gray-700 hover:bg-trailflow-green hover:text-gray-800 hover:shadow-lg h-12 text-base font-medium transition-all duration-300"
               >
                 <ArrowLeft size={20} className="mr-2" />
                 Voltar
@@ -188,7 +188,7 @@ const AnnouncementWizard: React.FC = () => {
                 variant="outline"
                 onClick={prevStep}
                 disabled={currentStep === 1}
-                className="polymer-btn bg-white/50 backdrop-blur-sm border-trailflow-green/70 text-trailflow-green hover:bg-trailflow-green hover:text-white hover:shadow-lg px-8 h-12 text-base font-medium transition-all duration-300"
+                className="polymer-btn bg-white/50 backdrop-blur-sm border-trailflow-green/70 text-gray-700 hover:bg-trailflow-green hover:text-gray-800 hover:shadow-lg px-8 h-12 text-base font-medium transition-all duration-300"
               >
                 <ArrowLeft size={20} className="mr-2" />
                 Voltar
@@ -205,7 +205,7 @@ const AnnouncementWizard: React.FC = () => {
                 <Button
                   onClick={nextStep}
                   disabled={!canProceedToNext()}
-                  className="polymer-btn bg-trailflow-green/90 backdrop-blur-sm text-white hover:bg-trailflow-green hover:shadow-lg border border-white/20 px-8 h-12 text-base font-medium transition-all duration-300"
+                  className="polymer-btn bg-trailflow-green/90 backdrop-blur-sm text-gray-800 hover:bg-trailflow-green hover:text-gray-900 hover:shadow-lg border border-white/20 px-8 h-12 text-base font-medium transition-all duration-300"
                 >
                   Próximo
                   <ArrowRight size={20} className="ml-2" />
@@ -214,7 +214,7 @@ const AnnouncementWizard: React.FC = () => {
                 <Button
                   onClick={handleSubmit}
                   disabled={!canProceedToNext() || isSubmitting}
-                  className="polymer-btn bg-trailflow-green/90 backdrop-blur-sm text-white hover:bg-trailflow-green hover:shadow-lg border border-white/20 px-8 h-12 text-base font-medium transition-all duration-300"
+                  className="polymer-btn bg-trailflow-green/90 backdrop-blur-sm text-gray-800 hover:bg-trailflow-green hover:text-gray-900 hover:shadow-lg border border-white/20 px-8 h-12 text-base font-medium transition-all duration-300"
                 >
                   {isSubmitting ? (
                     <span className="animate-spin mr-2">○</span>

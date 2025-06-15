@@ -10,15 +10,15 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-trailflow-green text-white hover:bg-trailflow-green-dark hover:shadow-xl hover:scale-[1.02] focus:bg-trailflow-green-dark active:scale-[0.98] font-medium",
-        destructive: "bg-red-500 text-white hover:bg-red-600 hover:shadow-xl hover:scale-[1.02] focus:bg-red-600 active:scale-[0.98] font-medium",
-        outline: "border-2 border-trailflow-green bg-white text-trailflow-green hover:bg-trailflow-green hover:text-white hover:shadow-lg hover:scale-[1.02] focus:bg-trailflow-green focus:text-white active:scale-[0.98] font-medium",
-        secondary: "bg-gray-100 text-gray-900 hover:bg-gray-200 hover:shadow-lg hover:scale-[1.02] focus:bg-gray-200 active:scale-[0.98] font-medium",
-        ghost: "text-gray-700 hover:bg-gray-100 hover:text-gray-900 hover:scale-[1.02] focus:bg-gray-100 active:scale-[0.98] font-medium",
+        default: "bg-trailflow-green text-gray-800 hover:bg-trailflow-green-dark hover:shadow-xl hover:scale-[1.02] focus:bg-trailflow-green-dark active:scale-[0.98] font-medium",
+        destructive: "bg-red-500 text-gray-800 hover:bg-red-600 hover:shadow-xl hover:scale-[1.02] focus:bg-red-600 active:scale-[0.98] font-medium",
+        outline: "border-2 border-trailflow-green bg-white text-gray-700 hover:bg-trailflow-green hover:text-gray-800 hover:shadow-lg hover:scale-[1.02] focus:bg-trailflow-green focus:text-gray-800 active:scale-[0.98] font-medium",
+        secondary: "bg-gray-100 text-gray-800 hover:bg-gray-200 hover:shadow-lg hover:scale-[1.02] focus:bg-gray-200 active:scale-[0.98] font-medium",
+        ghost: "text-gray-800 hover:bg-gray-100 hover:text-gray-900 hover:scale-[1.02] focus:bg-gray-100 active:scale-[0.98] font-medium",
         link: "text-trailflow-green underline-offset-4 hover:underline hover:text-trailflow-green-dark hover:scale-[1.02] focus:scale-[1.02] active:scale-[0.98] font-medium",
-        accent: "bg-trailflow-accent text-trailflow-dark hover:bg-trailflow-accent/80 hover:shadow-lg hover:scale-[1.02] focus:bg-trailflow-accent/80 active:scale-[0.98] font-medium",
-        minimal: "bg-white text-gray-900 border border-gray-200 hover:bg-gray-50 hover:shadow-lg hover:scale-[1.02] focus:bg-gray-50 active:scale-[0.98] font-medium",
-        dark: "bg-trailflow-dark text-white hover:bg-trailflow-medium hover:shadow-xl hover:scale-[1.02] focus:bg-trailflow-medium active:scale-[0.98] font-medium",
+        accent: "bg-trailflow-accent text-gray-800 hover:bg-trailflow-accent/80 hover:shadow-lg hover:scale-[1.02] focus:bg-trailflow-accent/80 active:scale-[0.98] font-medium",
+        minimal: "bg-white text-gray-800 border border-gray-200 hover:bg-gray-50 hover:shadow-lg hover:scale-[1.02] focus:bg-gray-50 active:scale-[0.98] font-medium",
+        dark: "bg-trailflow-dark text-gray-300 hover:bg-trailflow-medium hover:shadow-xl hover:scale-[1.02] focus:bg-trailflow-medium active:scale-[0.98] font-medium",
       },
       size: {
         default: "h-11 px-6 py-2.5 min-w-[120px]",
