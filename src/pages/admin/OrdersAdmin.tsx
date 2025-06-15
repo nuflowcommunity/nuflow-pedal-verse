@@ -1,7 +1,8 @@
 
 import React from 'react';
+import OrdersDataTable from '@/components/admin/orders/OrdersDataTable';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { ShoppingCart, Package, Truck, CheckCircle } from 'lucide-react';
+import { Package, DollarSign, Truck, AlertCircle } from 'lucide-react';
 
 const OrdersAdmin = () => {
   return (
@@ -10,64 +11,55 @@ const OrdersAdmin = () => {
         <h1 className="text-2xl font-bold text-gray-900">Gerenciamento de Pedidos</h1>
       </div>
 
-      {/* Stats Cards */}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+      {/* Métricas de Pedidos */}
+      <div className="grid gap-4 md:grid-cols-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total de Pedidos</CardTitle>
-            <ShoppingCart className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-sm font-medium text-gray-600">Total de Pedidos</CardTitle>
+            <Package className="h-4 w-4 text-gray-400" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">456</div>
-            <p className="text-xs text-muted-foreground">+15% desde o mês passado</p>
+            <div className="text-2xl font-bold text-gray-900">1,247</div>
+            <p className="text-xs text-green-600">+8% desde o mês passado</p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Processando</CardTitle>
-            <Package className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-sm font-medium text-gray-600">Faturamento</CardTitle>
+            <DollarSign className="h-4 w-4 text-green-500" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">23</div>
-            <p className="text-xs text-muted-foreground">Aguardando envio</p>
+            <div className="text-2xl font-bold text-gray-900">R$ 89.547</div>
+            <p className="text-xs text-green-600">Este mês</p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Em Transporte</CardTitle>
-            <Truck className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-sm font-medium text-gray-600">Em Trânsito</CardTitle>
+            <Truck className="h-4 w-4 text-blue-500" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">34</div>
-            <p className="text-xs text-muted-foreground">A caminho do destino</p>
+            <div className="text-2xl font-bold text-gray-900">67</div>
+            <p className="text-xs text-blue-600">Sendo entregues</p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Entregues</CardTitle>
-            <CheckCircle className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-sm font-medium text-gray-600">Pendentes</CardTitle>
+            <AlertCircle className="h-4 w-4 text-yellow-500" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">399</div>
-            <p className="text-xs text-muted-foreground">+18% desde o mês passado</p>
+            <div className="text-2xl font-bold text-gray-900">23</div>
+            <p className="text-xs text-yellow-600">Precisam atenção</p>
           </CardContent>
         </Card>
       </div>
 
-      {/* Orders Table Placeholder */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Lista de Pedidos</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="text-center py-8 text-gray-500">
-            Funcionalidade de listagem de pedidos em desenvolvimento
-          </div>
-        </CardContent>
-      </Card>
+      {/* Tabela de Pedidos */}
+      <OrdersDataTable />
     </div>
   );
 };
