@@ -21,6 +21,9 @@ import FormularioParceiro from '@/pages/FormularioParceiro';
 // Main pages
 import Index from '@/pages/Index';
 import NewAnnounce from '@/pages/NewAnnounce';
+import EventsCalendar from '@/pages/EventsCalendar';
+import Comunidade from '@/pages/Comunidade';
+import FAQ from '@/pages/FAQ';
 
 // Marketplace pages
 import MarketplaceHome from '@/pages/marketplace/MarketplaceHome';
@@ -70,6 +73,15 @@ function App() {
                   <Route path="/tornar-parceiro" element={<TornarParceiro />} />
                   <Route path="/formulario-parceiro" element={<FormularioParceiro />} />
                   <Route path="/anunciar" element={<NewAnnounce />} />
+                  
+                  {/* Event pages */}
+                  <Route path="/eventos" element={<EventsCalendar />} />
+                  
+                  {/* Community page */}
+                  <Route path="/comunidade" element={<Comunidade />} />
+                  
+                  {/* FAQ page */}
+                  <Route path="/faq" element={<FAQ />} />
                   
                   <Route path="/marketplace" element={<MarketplaceHome />} />
 

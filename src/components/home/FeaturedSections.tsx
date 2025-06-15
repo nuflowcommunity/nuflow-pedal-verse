@@ -13,7 +13,7 @@ const FeaturedSections = () => {
       icon: <Calendar size={48} className="text-nuflow-lime" />,
       title: 'Rolês & Passes',
       description: 'Descubra experiências incríveis e trilhas selecionadas pelos melhores guias.',
-      link: '/roles',
+      link: '/eventos',
       linkText: 'Ver Calendário'
     },
     {
@@ -21,7 +21,7 @@ const FeaturedSections = () => {
       icon: <Bike size={48} className="text-nuflow-lime" />,
       title: 'Marketplace',
       description: 'Compre e venda bikes e acessórios de maneira simples e segura.',
-      link: '/market',
+      link: '/marketplace',
       linkText: 'Explorar Produtos'
     },
     {

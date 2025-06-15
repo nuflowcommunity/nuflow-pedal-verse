@@ -54,7 +54,7 @@ const FeaturedEvents = () => {
             <p className="text-nuflow-charcoal/70">Descubra experiências incríveis para pedalar</p>
           </div>
           <Link 
-            to="/roles" 
+            to="/eventos" 
             className="mt-4 md:mt-0 group flex items-center font-medium text-nuflow-moss transition-colors hover:text-nuflow-neon"
           >
             Ver todos os rolês

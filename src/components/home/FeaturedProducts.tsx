@@ -53,7 +53,7 @@ const FeaturedProducts = () => {
             <h2 className="text-3xl font-heading font-bold mb-2">Destaques no Marketplace</h2>
             <p className="text-nuflow-charcoal/70">As melhores ofertas de bikes e acessórios</p>
           </div>
-          <Link to="/market" className="mt-4 md:mt-0 flex items-center text-nuflow-moss font-medium hover:text-[#0aea3e] transition-colors">
+          <Link to="/marketplace" className="mt-4 md:mt-0 flex items-center text-nuflow-moss font-medium hover:text-[#0aea3e] transition-colors">
             Ver todos os produtos
             <ArrowRight size={18} className="ml-2 transition-transform duration-300 group-hover:translate-x-1" />
           </Link>

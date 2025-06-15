@@ -38,20 +38,20 @@ const EditorialHero = () => {
         />
       </div>
       
-      <div className="container-polymer-narrow relative z-10">
+      <div className="container-polymer-narrow relative z-10 px-4 sm:px-6 lg:px-8">
         <div className="text-center polymer-center-massive">
           
           {/* Dramatic Typography with Perfect Spacing - Polymer Style */}
           <div className={`transition-all duration-1500 ease-out ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-16'}`}>
             <div className="polymer-text-reveal animate mb-8 md:mb-12 lg:mb-16">
-              <h1 className="polymer-text-reveal-inner polymer-heading-xl text-white polymer-ultra-light">
+              <h1 className="polymer-text-reveal-inner polymer-heading-xl text-white polymer-ultra-light text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-bold leading-none tracking-tight">
                 NuFlow
               </h1>
             </div>
             
             {/* Dynamic Phrase with Perfect Alignment */}
-            <div className="relative overflow-hidden mb-16 md:mb-20 lg:mb-24">
-              <h2 className={`polymer-heading-md text-white polymer-thin transition-all duration-800 ease-out ${visible ? 'opacity-100 transform-none' : 'opacity-0 translate-y-8'}`}>
+            <div className="relative overflow-hidden mb-16 md:mb-20 lg:mb-24 min-h-[4rem] flex items-center justify-center">
+              <h2 className={`polymer-heading-md text-white polymer-thin transition-all duration-800 ease-out text-3xl sm:text-4xl md:text-5xl lg:text-6xl ${visible ? 'opacity-100 transform-none' : 'opacity-0 translate-y-8'}`}>
                 {phrases[currentPhrase]}
               </h2>
             </div>
@@ -59,8 +59,8 @@ const EditorialHero = () => {
           
           {/* Description with Perfect Typography */}
           <div className={`transition-all duration-1500 ease-out delay-300 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-16'}`}>
-            <div className="container-polymer-ultra-narrow mb-20 md:mb-24 lg:mb-32">
-              <p className="polymer-body-large text-white/95 polymer-light text-center">
+            <div className="container-polymer-ultra-narrow mb-20 md:mb-24 lg:mb-32 max-w-4xl mx-auto">
+              <p className="polymer-body-large text-white/95 polymer-light text-center text-lg sm:text-xl md:text-2xl lg:text-3xl leading-relaxed">
                 A plataforma completa para ciclistas.{' '}
                 <span className="text-white polymer-thin">
                   Descubra trilhas épicas, equipamentos únicos e uma comunidade apaixonada.
@@ -69,15 +69,15 @@ const EditorialHero = () => {
             </div>
           </div>
           
-          {/* CTAs with Perfect Touch Targets */}
-          <div className={`flex flex-col gap-6 sm:gap-8 mb-20 md:mb-24 lg:mb-32 transition-all duration-1500 ease-out delay-500 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-16'}`}>
+          {/* CTAs with Perfect Touch Targets - Corrigindo roteamento */}
+          <div className={`flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center mb-20 md:mb-24 lg:mb-32 transition-all duration-1500 ease-out delay-500 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-16'}`}>
             <Button 
               variant="accent" 
               size="xl" 
               className="font-semibold shadow-xl hover:shadow-2xl transform hover:scale-[1.02] transition-all duration-300 w-full sm:w-auto min-w-[240px] h-14 text-lg polymer-thin" 
               asChild
             >
-              <a href="/roles" className="flex items-center justify-center gap-4">
+              <a href="/eventos" className="flex items-center justify-center gap-4">
                 Explorar Trilhas
                 <ArrowRight size={24} className="transition-transform duration-300 group-hover:translate-x-1" />
               </a>
@@ -89,7 +89,7 @@ const EditorialHero = () => {
               className="font-semibold border-white/50 text-white hover:bg-white/20 hover:border-white backdrop-blur-sm transition-all duration-300 w-full sm:w-auto min-w-[240px] h-14 text-lg polymer-thin" 
               asChild
             >
-              <a href="/market" className="flex items-center justify-center gap-4">
+              <a href="/marketplace" className="flex items-center justify-center gap-4">
                 <Play size={20} />
                 Ver Marketplace
               </a>
@@ -98,22 +98,22 @@ const EditorialHero = () => {
           
           {/* Stats with Perfect Grid - Polymer Minimal */}
           <div className={`transition-all duration-1500 ease-out delay-700 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-16'}`}>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 lg:gap-16">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 lg:gap-16 max-w-4xl mx-auto">
               <div className="text-center polymer-breathe-xs">
-                <div className="polymer-heading-md text-white mb-4 md:mb-6 polymer-ultra-light">500+</div>
-                <div className="polymer-body-small text-white/80 polymer-light tracking-widest uppercase">Trilhas</div>
+                <div className="polymer-heading-md text-white mb-4 md:mb-6 polymer-ultra-light text-2xl sm:text-3xl md:text-4xl font-bold">500+</div>
+                <div className="polymer-body-small text-white/80 polymer-light tracking-widest uppercase text-xs sm:text-sm">Trilhas</div>
               </div>
               <div className="text-center polymer-breathe-xs">
-                <div className="polymer-heading-md text-white mb-4 md:mb-6 polymer-ultra-light">2k+</div>
-                <div className="polymer-body-small text-white/80 polymer-light tracking-widest uppercase">Ciclistas</div>
+                <div className="polymer-heading-md text-white mb-4 md:mb-6 polymer-ultra-light text-2xl sm:text-3xl md:text-4xl font-bold">2k+</div>
+                <div className="polymer-body-small text-white/80 polymer-light tracking-widest uppercase text-xs sm:text-sm">Ciclistas</div>
               </div>
               <div className="text-center polymer-breathe-xs">
-                <div className="polymer-heading-md text-white mb-4 md:mb-6 polymer-ultra-light">1k+</div>
-                <div className="polymer-body-small text-white/80 polymer-light tracking-widest uppercase">Produtos</div>
+                <div className="polymer-heading-md text-white mb-4 md:mb-6 polymer-ultra-light text-2xl sm:text-3xl md:text-4xl font-bold">1k+</div>
+                <div className="polymer-body-small text-white/80 polymer-light tracking-widest uppercase text-xs sm:text-sm">Produtos</div>
               </div>
               <div className="text-center polymer-breathe-xs">
-                <div className="polymer-heading-md text-white mb-4 md:mb-6 polymer-ultra-light">50+</div>
-                <div className="polymer-body-small text-white/80 polymer-light tracking-widest uppercase">Eventos</div>
+                <div className="polymer-heading-md text-white mb-4 md:mb-6 polymer-ultra-light text-2xl sm:text-3xl md:text-4xl font-bold">50+</div>
+                <div className="polymer-body-small text-white/80 polymer-light tracking-widest uppercase text-xs sm:text-sm">Eventos</div>
               </div>
             </div>
           </div>
@@ -123,7 +123,7 @@ const EditorialHero = () => {
       {/* Enhanced Scroll Indicator - Mobile Optimized */}
       <div className={`absolute bottom-8 md:bottom-12 left-1/2 transform -translate-x-1/2 transition-all duration-1800 ease-out delay-1000 ${isLoaded ? 'opacity-100' : 'opacity-0'} ${isMobile ? 'hidden' : 'block'}`}>
         <div className="flex flex-col items-center space-y-6">
-          <div className="polymer-body-small text-white/70 polymer-light uppercase tracking-[0.3em] text-center">Descubra mais</div>
+          <div className="polymer-body-small text-white/70 polymer-light uppercase tracking-[0.3em] text-center text-xs">Descubra mais</div>
           <div className="w-px h-20 md:h-24 bg-white/40"></div>
           <div className="w-3 h-3 bg-white/60 rounded-full animate-pulse"></div>
         </div>

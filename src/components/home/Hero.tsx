@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import { ArrowRight, MapPin, Users, Package, Calendar } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -29,17 +30,17 @@ const Hero = () => {
       {/* Background Pattern */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(132,176,103,0.1),transparent_50%)]"></div>
       
-      <div className="container-modern relative z-10 text-center">
+      <div className="container-modern relative z-10 text-center px-4 sm:px-6 lg:px-8">
         <div className="max-w-5xl mx-auto space-y-8">
           
           {/* Main Heading */}
           <div className={`transition-all duration-700 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-            <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-bold text-trailflow-dark leading-none tracking-tight mb-4">
+            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold text-trailflow-dark leading-none tracking-tight mb-4">
               <span className="block animate-fade-in">
                 TrailFlow
               </span>
               <span 
-                className={`block text-trailflow-green transition-all duration-500 ease-in-out ${
+                className={`block text-trailflow-green transition-all duration-500 ease-in-out min-h-[1.2em] flex items-center justify-center ${
                   visible ? 'opacity-100 transform-none' : 'opacity-0 -translate-y-4'
                 }`}
               >
@@ -58,21 +59,21 @@ const Hero = () => {
             </p>
           </div>
           
-          {/* CTA Buttons - Improved Design */}
+          {/* CTA Buttons - Corrigindo roteamento */}
           <div className={`flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 pt-12 transition-all duration-700 delay-500 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-            {/* Primary Button - More Prominent */}
+            {/* Primary Button - Corrigindo rota */}
             <Button 
               size="xl" 
               className="group font-semibold text-lg px-12 py-5 h-auto hover:shadow-2xl bg-trailflow-green text-gray-900 hover:bg-trailflow-green-dark border-2 border-trailflow-green hover:border-trailflow-green-dark transition-all duration-300 hover:scale-[1.02] w-full sm:w-auto"
               asChild
             >
-              <a href="/roles">
+              <a href="/eventos">
                 Explorar Trilhas
                 <ArrowRight size={20} className="ml-3 transition-transform duration-300 group-hover:translate-x-1" />
               </a>
             </Button>
             
-            {/* Secondary Button - More Subtle */}
+            {/* Secondary Button - Corrigindo rota */}
             <Button 
               variant="outline" 
               size="xl"
@@ -122,7 +123,7 @@ const Hero = () => {
       </div>
       
       {/* Scroll Indicator */}
-      <div className={`absolute bottom-8 left-1/2 transform -translate-x-1/2 transition-all duration-700 delay-1000 ${isLoaded ? 'opacity-100' : 'opacity-0'} hide-mobile`}>
+      <div className={`absolute bottom-8 left-1/2 transform -translate-x-1/2 transition-all duration-700 delay-1000 ${isLoaded ? 'opacity-100' : 'opacity-0'} ${isMobile ? 'hidden' : 'block'}`}>
         <div className="flex flex-col items-center space-y-2">
           <div className="text-xs text-trailflow-light font-medium uppercase tracking-wider">Scroll</div>
           <div className="w-px h-12 bg-trailflow-lighter"></div>
