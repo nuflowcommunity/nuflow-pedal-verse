@@ -54,21 +54,9 @@ const AdminSignUpForm: React.FC<AdminSignUpFormProps> = ({ onBackToLogin }) => {
     setIsLoading(true);
     
     try {
-      // Primeiro, verificar se o usuário já existe tentando fazer login
-      console.log('Tentando fazer login primeiro...');
-      try {
-        await signIn(email, password);
-        toast({
-          title: "Login realizado com sucesso!",
-          description: "Usuário já existia, fazendo login...",
-        });
-        return; // Se conseguiu fazer login, não precisa criar conta
-      } catch (loginError) {
-        console.log('Login falhou, tentando criar conta...', loginError);
-      }
-
-      // Se o login falhou, tentar criar a conta
-      console.log('Criando nova conta...');
+      console.log('Tentando criar conta para:', email);
+      
+      // Tentar criar a conta
       const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
         email,
         password,
@@ -77,63 +65,55 @@ const AdminSignUpForm: React.FC<AdminSignUpFormProps> = ({ onBackToLogin }) => {
         }
       });
 
+      console.log('Resultado do signup:', { signUpData, signUpError });
+
+      // Se houve erro no signup, pode ser que o usuário já existe
       if (signUpError) {
-        throw signUpError;
-      }
-
-      console.log('Conta criada com sucesso:', signUpData);
-
-      if (signUpData.user && !signUpData.session) {
-        toast({
-          title: "Verificação de email necessária",
-          description: "Verifique seu email para ativar a conta, depois faça login.",
-        });
-        onBackToLogin();
-      } else if (signUpData.session) {
-        toast({
-          title: "Conta criada e login realizado!",
-          description: "Redirecionando para o painel administrativo...",
-        });
-        // A redireção será feita pelo AuthContext
-      } else {
-        toast({
-          title: "Conta criada!",
-          description: "Faça login com suas credenciais.",
-        });
-        onBackToLogin();
-      }
-
-    } catch (error: any) {
-      console.error('Erro no processo de signup/login:', error);
-      
-      // Se o erro for relacionado ao usuário já existir, tentar fazer login
-      if (error.message?.includes('User already registered') || 
-          error.message?.includes('already registered') ||
-          error.message?.includes('Database error saving new user')) {
+        console.log('Erro no signup, tentando fazer login:', signUpError);
         
-        console.log('Usuário já existe, tentando fazer login...');
-        try {
+        if (signUpError.message?.includes('already registered') || 
+            signUpError.message?.includes('User already registered') ||
+            signUpError.message?.includes('Database error saving new user')) {
+          
+          // Usuário já existe, tentar fazer login
+          console.log('Usuário já existe, fazendo login...');
           await signIn(email, password);
+          
           toast({
             title: "Login realizado!",
             description: "O usuário já existia, fazendo login...",
           });
-        } catch (finalLoginError: any) {
-          console.error('Erro final no login:', finalLoginError);
+          
+        } else {
+          throw signUpError;
+        }
+      } else {
+        // Signup bem-sucedido
+        if (signUpData.session) {
+          // Usuário logado automaticamente
+          console.log('Conta criada e usuário logado automaticamente');
           toast({
-            title: "Problema com as credenciais",
-            description: "Usuário pode já existir com senha diferente. Tente fazer login ou use a opção de recuperar senha.",
-            variant: "destructive"
+            title: "Conta criada!",
+            description: "Redirecionando para o painel administrativo...",
+          });
+        } else {
+          // Precisa confirmar email
+          console.log('Conta criada, mas precisa confirmar email');
+          toast({
+            title: "Conta criada!",
+            description: "Verifique seu email para ativar a conta, depois faça login.",
           });
           onBackToLogin();
         }
-      } else {
-        toast({
-          title: "Erro ao processar solicitação",
-          description: error.message || "Tente novamente ou use a opção de login.",
-          variant: "destructive"
-        });
       }
+
+    } catch (error: any) {
+      console.error('Erro final:', error);
+      toast({
+        title: "Erro ao processar solicitação",
+        description: error.message || "Tente novamente.",
+        variant: "destructive"
+      });
     } finally {
       setIsLoading(false);
     }

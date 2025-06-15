@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { Session, User } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
@@ -86,10 +85,23 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setUserRole(role);
         console.log('User role:', role);
         
-        // Auto redirect para admin se for admin e estiver em login
-        if (role === 'admin' && (location.pathname === '/admin/login' || event === 'SIGNED_IN')) {
-          console.log('Redirecting admin to /admin');
-          navigate('/admin', { replace: true });
+        // Redirecionamento após login bem-sucedido
+        if (event === 'SIGNED_IN') {
+          console.log('User signed in, current location:', location.pathname);
+          
+          if (role === 'admin') {
+            console.log('Redirecting admin to /admin');
+            setTimeout(() => {
+              navigate('/admin', { replace: true });
+            }, 100);
+          } else {
+            // Para outros usuários, redirecionar para home se estiver em páginas de login
+            if (location.pathname.includes('/login')) {
+              setTimeout(() => {
+                navigate('/', { replace: true });
+              }, 100);
+            }
+          }
         }
       } else {
         setUserRole(null);
@@ -103,6 +115,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const signIn = async (email: string, password: string) => {
     setIsLoading(true);
     try {
+      console.log('Attempting sign in for:', email);
+      
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
@@ -112,13 +126,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         throw error;
       }
 
+      console.log('Sign in successful:', data);
+
       toast({
         title: "Login realizado com sucesso",
         description: "Você foi autenticado com sucesso!",
       });
-      
-      // Wait a bit for the auth state change to handle the redirect
-      await new Promise(resolve => setTimeout(resolve, 100));
       
     } catch (error: any) {
       console.error('Sign in error:', error);
@@ -127,7 +140,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         description: error.message || "Ocorreu um erro durante o login.",
         variant: "destructive"
       });
-      throw error; // Re-throw to handle in the calling component
+      throw error;
     } finally {
       setIsLoading(false);
     }
