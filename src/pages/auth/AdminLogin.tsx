@@ -9,6 +9,7 @@ import { toast } from '@/hooks/use-toast';
 import SEOHead from '@/components/seo/SEOHead';
 import SocialAuthButtons from '@/components/auth/SocialAuthButtons';
 import ForgotPasswordForm from '@/components/auth/ForgotPasswordForm';
+import AdminSignUpForm from '@/components/auth/AdminSignUpForm';
 import { Eye, EyeOff, AlertCircle, CheckCircle, ArrowLeft, Shield } from 'lucide-react';
 
 const AdminLogin = () => {
@@ -17,6 +18,7 @@ const AdminLogin = () => {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [showForgotPassword, setShowForgotPassword] = useState(false);
+  const [showSignUp, setShowSignUp] = useState(false);
   const { signIn, isLoading } = useAuth();
   const navigate = useNavigate();
 
@@ -87,6 +89,70 @@ const AdminLogin = () => {
                   title="Recuperar senha - Admin"
                   description="Digite seu email de administrador para receber instruções de recuperação."
                 />
+              </div>
+            </div>
+          </div>
+        </div>
+      </>
+    );
+  }
+
+  if (showSignUp) {
+    return (
+      <>
+        <SEOHead
+          title="Criar conta administrativa"
+          description="Criar nova conta de administrador do sistema."
+          noIndex={true}
+        />
+        
+        <div className="min-h-screen bg-gray-50">
+          {/* Logo no canto superior direito */}
+          <div className="absolute top-6 right-6 z-10">
+            <Link to="/">
+              <img 
+                src="/lovable-uploads/adf44db0-c66b-4031-a615-a8e98fe5f77f.png" 
+                alt="NuFlow" 
+                className="w-12 h-12 object-contain opacity-60 hover:opacity-100 transition-opacity" 
+              />
+            </Link>
+          </div>
+
+          <div className="flex min-h-screen items-center justify-center px-4 py-12">
+            <div className="w-full max-w-md">
+              
+              {/* Main Form Card */}
+              <div className="bg-white shadow-sm border border-gray-200 p-8">
+                
+                {/* Header */}
+                <div className="text-center mb-8">
+                  <div className="w-12 h-12 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
+                    <Shield className="w-6 h-6 text-gray-600" />
+                  </div>
+                  <h1 className="text-2xl font-light text-gray-900 mb-2">
+                    Criar Conta Administrativa
+                  </h1>
+                  <p className="text-gray-600 text-sm leading-relaxed">
+                    Criar nova conta para administradores do sistema.
+                  </p>
+                </div>
+                
+                {/* Sign Up Form */}
+                <AdminSignUpForm onBackToLogin={() => setShowSignUp(false)} />
+                
+                {/* Footer */}
+                <div className="mt-8 pt-6 border-t border-gray-200">
+                  <div className="text-center">
+                    <p className="text-sm text-gray-600">
+                      Já tem conta? <button 
+                        onClick={() => setShowSignUp(false)}
+                        className="text-gray-900 hover:underline font-medium"
+                      >
+                        Fazer login
+                      </button>
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -212,7 +278,16 @@ const AdminLogin = () => {
                   </div>
                 </div>
                 
-                <div className="flex items-center justify-end">
+                <div className="flex items-center justify-between">
+                  <button
+                    type="button"
+                    onClick={() => setShowSignUp(true)}
+                    className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
+                    disabled={isLoading}
+                  >
+                    Criar conta
+                  </button>
+                  
                   <button
                     type="button"
                     onClick={() => setShowForgotPassword(true)}
