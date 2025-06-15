@@ -46,38 +46,38 @@ const PhotoUploadStep: React.FC<PhotoUploadStepProps> = ({ data, onUpdate }) => 
   return (
     <div className="space-y-6">
       <div>
-        <Label className="text-base font-medium">
+        <Label className="text-base font-medium text-trailflow-dark drop-shadow-sm">
           Fotos da Bicicleta *
         </Label>
-        <p className="text-sm text-gray-600 mb-4">
+        <p className="text-sm text-trailflow-medium mb-4 drop-shadow-sm">
           Adicione até 6 fotos de alta qualidade. A primeira foto será a capa do anúncio.
         </p>
 
-        {/* Upload Area */}
+        {/* Upload Area - Enhanced with glassmorphism */}
         {photos.length < 6 && (
           <div
             className={`
-              relative border-2 border-dashed rounded-lg p-8 text-center transition-colors
+              relative border-2 border-dashed rounded-lg p-8 text-center transition-all duration-300 backdrop-blur-sm
               ${dragOver 
-                ? 'border-nuflow-moss bg-nuflow-mint/10' 
-                : 'border-gray-300 hover:border-nuflow-moss hover:bg-nuflow-mint/5'
+                ? 'border-trailflow-green bg-trailflow-accent/20 shadow-lg' 
+                : 'border-white/40 hover:border-trailflow-green/60 hover:bg-trailflow-accent/10 bg-white/20'
               }
             `}
             onDrop={handleDrop}
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
           >
-            <Upload className="mx-auto h-12 w-12 text-gray-400 mb-4" />
-            <p className="text-lg font-medium text-gray-900 mb-2">
+            <Upload className="mx-auto h-12 w-12 text-trailflow-medium mb-4" />
+            <p className="text-lg font-medium text-trailflow-dark mb-2 drop-shadow-sm">
               Arraste as fotos aqui ou clique para selecionar
             </p>
-            <p className="text-sm text-gray-500 mb-4">
+            <p className="text-sm text-trailflow-medium mb-4 drop-shadow-sm">
               PNG, JPG até 5MB cada
             </p>
             <Button
               type="button"
               variant="outline"
-              className="mx-auto"
+              className="mx-auto bg-white/50 backdrop-blur-sm border-trailflow-green/70 text-trailflow-green hover:bg-trailflow-green hover:text-white transition-all duration-300"
               onClick={() => document.getElementById('photo-upload')?.click()}
             >
               Selecionar Fotos
@@ -93,35 +93,38 @@ const PhotoUploadStep: React.FC<PhotoUploadStepProps> = ({ data, onUpdate }) => 
           </div>
         )}
 
-        {/* Photo Grid */}
+        {/* Photo Grid - Enhanced with glassmorphism */}
         {photos.length > 0 && (
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-4">
             {photos.map((photo, index) => (
               <div key={index} className="relative group">
-                <img
-                  src={photo}
-                  alt={`Foto ${index + 1}`}
-                  className="w-full h-40 object-cover rounded-lg"
-                />
-                <button
-                  type="button"
-                  onClick={() => handleRemovePhoto(index)}
-                  className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity"
-                >
-                  <X size={16} />
-                </button>
-                {index === 0 && (
-                  <div className="absolute bottom-2 left-2 bg-nuflow-moss text-white text-xs py-1 px-2 rounded-full">
-                    Capa
-                  </div>
-                )}
+                <div className="relative overflow-hidden rounded-lg bg-white/20 backdrop-blur-sm border border-white/20">
+                  <img
+                    src={photo}
+                    alt={`Foto ${index + 1}`}
+                    className="w-full h-40 object-cover"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => handleRemovePhoto(index)}
+                    className="absolute top-2 right-2 bg-red-500/90 backdrop-blur-sm text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-red-600"
+                  >
+                    <X size={16} />
+                  </button>
+                  {index === 0 && (
+                    <div className="absolute bottom-2 left-2 bg-trailflow-green/90 backdrop-blur-sm text-white text-xs py-1 px-2 rounded-full border border-white/20">
+                      Capa
+                    </div>
+                  )}
+                </div>
               </div>
             ))}
           </div>
         )}
       </div>
 
-      <div className="bg-amber-50 p-4 rounded-lg">
+      {/* Tips section with enhanced styling */}
+      <div className="bg-amber-50/70 backdrop-blur-sm p-4 rounded-lg border border-amber-200/30">
         <div className="flex items-start gap-3">
           <Image className="text-amber-600 mt-0.5" size={20} />
           <div>

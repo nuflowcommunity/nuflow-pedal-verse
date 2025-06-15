@@ -47,7 +47,6 @@ const AnnouncementWizard: React.FC = () => {
   const nextStep = () => {
     if (currentStep < STEPS.length) {
       setCurrentStep(currentStep + 1);
-      // Smooth scroll to top on mobile
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
@@ -55,7 +54,6 @@ const AnnouncementWizard: React.FC = () => {
   const prevStep = () => {
     if (currentStep > 1) {
       setCurrentStep(currentStep - 1);
-      // Smooth scroll to top on mobile
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
@@ -82,7 +80,6 @@ const AnnouncementWizard: React.FC = () => {
   const handleSubmit = async () => {
     setIsSubmitting(true);
     
-    // Simulate API call
     setTimeout(() => {
       setIsSubmitting(false);
       toast({
@@ -90,7 +87,6 @@ const AnnouncementWizard: React.FC = () => {
         description: "Seu anúncio está em análise e será publicado em breve.",
       });
       
-      // Reset form
       setData({});
       setCurrentStep(1);
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -123,20 +119,23 @@ const AnnouncementWizard: React.FC = () => {
         <StepIndicator steps={STEPS} currentStep={currentStep} />
       </div>
       
-      {/* Main Content Card - Polymer Style */}
-      <Card className="polymer-product-card border-0 shadow-xl bg-white overflow-hidden">
-        <CardHeader className="bg-gradient-to-r from-trailflow-accent to-white px-6 sm:px-8 lg:px-12 py-6 sm:py-8">
+      {/* Main Content Card - Enhanced Polymer Style with Glassmorphism */}
+      <Card className="polymer-product-card border-0 overflow-hidden relative">
+        {/* Glassmorphism background */}
+        <div className="absolute inset-0 bg-white/70 backdrop-blur-xl border border-white/20 rounded-xl shadow-2xl" />
+        
+        <CardHeader className="relative z-10 bg-gradient-to-r from-trailflow-accent/30 to-white/20 backdrop-blur-sm px-6 sm:px-8 lg:px-12 py-6 sm:py-8 border-b border-white/10">
           <div className="text-center">
-            <CardTitle className="polymer-heading-sm text-trailflow-dark mb-2">
+            <CardTitle className="polymer-heading-sm text-trailflow-dark mb-2 drop-shadow-sm">
               {STEPS[currentStep - 1].title}
             </CardTitle>
-            <p className="polymer-body text-trailflow-medium">
+            <p className="polymer-body text-trailflow-medium drop-shadow-sm">
               {STEPS[currentStep - 1].description}
             </p>
           </div>
         </CardHeader>
         
-        <CardContent className="px-6 sm:px-8 lg:px-12 py-8 sm:py-12">
+        <CardContent className="relative z-10 px-6 sm:px-8 lg:px-12 py-8 sm:py-12">
           {/* Step Content */}
           <div className="min-h-[400px] sm:min-h-[500px] lg:min-h-[600px] flex items-start">
             <div className="w-full animate-fade-in">
@@ -144,15 +143,15 @@ const AnnouncementWizard: React.FC = () => {
             </div>
           </div>
           
-          {/* Navigation Buttons - Polymer Style */}
-          <div className="mt-8 sm:mt-12 pt-8 border-t border-gray-100">
+          {/* Navigation Buttons - Enhanced Polymer Style */}
+          <div className="mt-8 sm:mt-12 pt-8 border-t border-white/20">
             {/* Mobile Navigation */}
             <div className="block sm:hidden space-y-4">
               {currentStep < STEPS.length ? (
                 <Button
                   onClick={nextStep}
                   disabled={!canProceedToNext()}
-                  className="w-full polymer-btn bg-trailflow-green text-white hover:bg-trailflow-green-dark h-12 text-base font-medium"
+                  className="w-full polymer-btn bg-trailflow-green/90 backdrop-blur-sm text-white hover:bg-trailflow-green hover:shadow-lg border border-white/20 h-12 text-base font-medium transition-all duration-300"
                 >
                   Próximo
                   <ArrowRight size={20} className="ml-2" />
@@ -161,7 +160,7 @@ const AnnouncementWizard: React.FC = () => {
                 <Button
                   onClick={handleSubmit}
                   disabled={!canProceedToNext() || isSubmitting}
-                  className="w-full polymer-btn bg-trailflow-green text-white hover:bg-trailflow-green-dark h-12 text-base font-medium"
+                  className="w-full polymer-btn bg-trailflow-green/90 backdrop-blur-sm text-white hover:bg-trailflow-green hover:shadow-lg border border-white/20 h-12 text-base font-medium transition-all duration-300"
                 >
                   {isSubmitting ? (
                     <span className="animate-spin mr-2">○</span>
@@ -176,7 +175,7 @@ const AnnouncementWizard: React.FC = () => {
                 variant="outline"
                 onClick={prevStep}
                 disabled={currentStep === 1}
-                className="w-full polymer-btn border-trailflow-green text-trailflow-green hover:bg-trailflow-green hover:text-white h-12 text-base font-medium"
+                className="w-full polymer-btn bg-white/50 backdrop-blur-sm border-trailflow-green/70 text-trailflow-green hover:bg-trailflow-green hover:text-white hover:shadow-lg h-12 text-base font-medium transition-all duration-300"
               >
                 <ArrowLeft size={20} className="mr-2" />
                 Voltar
@@ -189,7 +188,7 @@ const AnnouncementWizard: React.FC = () => {
                 variant="outline"
                 onClick={prevStep}
                 disabled={currentStep === 1}
-                className="polymer-btn border-trailflow-green text-trailflow-green hover:bg-trailflow-green hover:text-white px-8 h-12 text-base font-medium"
+                className="polymer-btn bg-white/50 backdrop-blur-sm border-trailflow-green/70 text-trailflow-green hover:bg-trailflow-green hover:text-white hover:shadow-lg px-8 h-12 text-base font-medium transition-all duration-300"
               >
                 <ArrowLeft size={20} className="mr-2" />
                 Voltar
@@ -197,7 +196,7 @@ const AnnouncementWizard: React.FC = () => {
               
               {/* Progress Info */}
               <div className="text-center">
-                <p className="polymer-body text-trailflow-medium">
+                <p className="polymer-body text-trailflow-medium drop-shadow-sm">
                   Etapa {currentStep} de {STEPS.length}
                 </p>
               </div>
@@ -206,7 +205,7 @@ const AnnouncementWizard: React.FC = () => {
                 <Button
                   onClick={nextStep}
                   disabled={!canProceedToNext()}
-                  className="polymer-btn bg-trailflow-green text-white hover:bg-trailflow-green-dark px-8 h-12 text-base font-medium"
+                  className="polymer-btn bg-trailflow-green/90 backdrop-blur-sm text-white hover:bg-trailflow-green hover:shadow-lg border border-white/20 px-8 h-12 text-base font-medium transition-all duration-300"
                 >
                   Próximo
                   <ArrowRight size={20} className="ml-2" />
@@ -215,7 +214,7 @@ const AnnouncementWizard: React.FC = () => {
                 <Button
                   onClick={handleSubmit}
                   disabled={!canProceedToNext() || isSubmitting}
-                  className="polymer-btn bg-trailflow-green text-white hover:bg-trailflow-green-dark px-8 h-12 text-base font-medium"
+                  className="polymer-btn bg-trailflow-green/90 backdrop-blur-sm text-white hover:bg-trailflow-green hover:shadow-lg border border-white/20 px-8 h-12 text-base font-medium transition-all duration-300"
                 >
                   {isSubmitting ? (
                     <span className="animate-spin mr-2">○</span>
