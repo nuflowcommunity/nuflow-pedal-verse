@@ -1,13 +1,15 @@
 
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import SEOHead from '@/components/seo/SEOHead';
 import { ArrowRight, Users, TrendingUp, Shield, Clock } from 'lucide-react';
 
 const TornarParceiro = () => {
+  const navigate = useNavigate();
+
   const handleBecomePartner = () => {
-    window.open('https://polymerworkshop.turis.app/forms/b2b', '_blank');
+    navigate('/formulario-parceiro');
   };
 
   return (

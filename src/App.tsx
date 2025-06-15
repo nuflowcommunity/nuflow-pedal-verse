@@ -18,6 +18,7 @@ import PartnerLogin from '@/pages/auth/PartnerLogin';
 import AdminLogin from '@/pages/auth/AdminLogin';
 import ResetPassword from '@/pages/auth/ResetPassword';
 import TornarParceiro from '@/pages/TornarParceiro';
+import FormularioParceiro from '@/pages/FormularioParceiro';
 
 // Main pages
 import Index from '@/pages/Index';
@@ -47,6 +48,7 @@ function App() {
                       <Route path="/admin/login" element={<AdminLogin />} />
                       <Route path="/reset-password" element={<ResetPassword />} />
                       <Route path="/tornar-parceiro" element={<TornarParceiro />} />
+                      <Route path="/formulario-parceiro" element={<FormularioParceiro />} />
                       
                       <Route path="/marketplace" element={<MarketplaceHome />} />
 
