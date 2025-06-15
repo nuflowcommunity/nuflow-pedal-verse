@@ -32,12 +32,14 @@ const PolymerEditorialSection = () => {
       {/* Hero Video Section with Overlay Text */}
       <PolymerVideoHero isVisible={isVisible} />
 
-      {/* Editorial Grid Section */}
-      <div className="container-editorial py-32">
-        <PolymerEngineeringSection isVisible={isVisible} />
-        <PolymerFeaturedCollection isVisible={isVisible} />
-        <PolymerPerformanceSection />
-        <PolymerDesignPhilosophy />
+      {/* Editorial Grid Section with Massive Polymer Spacing */}
+      <div className="container-editorial polymer-section-massive">
+        <div className="polymer-grid-editorial">
+          <PolymerEngineeringSection isVisible={isVisible} />
+          <PolymerFeaturedCollection isVisible={isVisible} />
+          <PolymerPerformanceSection />
+          <PolymerDesignPhilosophy />
+        </div>
       </div>
     </section>
   );

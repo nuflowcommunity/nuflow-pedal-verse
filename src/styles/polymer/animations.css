@@ -1,47 +1,72 @@
 
-/* Polymer Workshop Animation Effects */
+/* Polymer Workshop Animation Effects - Enhanced */
 
 /* Polymer-style hover effects */
 .polymer-blur-hover {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .polymer-blur-hover:hover {
-  filter: blur(2px);
-  transform: scale(0.98);
+  filter: blur(1px);
+  transform: scale(0.99);
 }
 
 /* Interactive elements with subtle animations */
 .polymer-interactive {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateZ(0);
 }
 
 .polymer-interactive:hover {
-  transform: translateY(-2px);
+  transform: translateY(-2px) translateZ(0);
+}
+
+/* Touch-friendly hover states */
+@media (hover: none) and (pointer: coarse) {
+  .polymer-interactive:hover {
+    transform: none;
+  }
+  
+  .polymer-interactive:active {
+    transform: scale(0.98) translateZ(0);
+  }
 }
 
 /* Subtle parallax effect */
 .polymer-parallax {
   transform: translateZ(0);
-  transition: transform 0.6s cubic-bezier(0.23, 1, 0.320, 1);
+  transition: transform 0.8s cubic-bezier(0.23, 1, 0.320, 1);
+  will-change: transform;
 }
 
-/* Product card hover states */
+/* Product card hover states - Enhanced */
 .polymer-product-card {
   transition: all 0.5s cubic-bezier(0.23, 1, 0.320, 1);
+  transform: translateZ(0);
 }
 
 .polymer-product-card:hover {
-  transform: translateY(-8px);
+  transform: translateY(-8px) translateZ(0);
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+/* Touch-friendly product cards */
+@media (hover: none) and (pointer: coarse) {
+  .polymer-product-card:hover {
+    transform: none;
+  }
+  
+  .polymer-product-card:active {
+    transform: scale(0.98) translateZ(0);
+  }
 }
 
 /* Scroll indicator animation */
 .polymer-scroll-indicator {
-  animation: polymericScroll 2s infinite;
+  animation: polymerScroll 2.5s infinite;
 }
 
-@keyframes polymericScroll {
+@keyframes polymerScroll {
   0%, 20% {
     transform: translateY(0);
     opacity: 0;
@@ -50,14 +75,108 @@
     opacity: 1;
   }
   80%, 100% {
-    transform: translateY(10px);
+    transform: translateY(12px);
     opacity: 0;
   }
 }
 
-/* Staggered animations */
-.polymer-stagger-1 { transition-delay: 100ms; }
-.polymer-stagger-2 { transition-delay: 200ms; }
-.polymer-stagger-3 { transition-delay: 300ms; }
-.polymer-stagger-4 { transition-delay: 400ms; }
-.polymer-stagger-5 { transition-delay: 500ms; }
+/* Staggered animations with longer delays */
+.polymer-stagger-1 { 
+  transition-delay: 150ms; 
+  animation-delay: 150ms;
+}
+.polymer-stagger-2 { 
+  transition-delay: 300ms; 
+  animation-delay: 300ms;
+}
+.polymer-stagger-3 { 
+  transition-delay: 450ms; 
+  animation-delay: 450ms;
+}
+.polymer-stagger-4 { 
+  transition-delay: 600ms; 
+  animation-delay: 600ms;
+}
+.polymer-stagger-5 { 
+  transition-delay: 750ms; 
+  animation-delay: 750ms;
+}
+
+/* Enhanced fade in animations */
+.polymer-fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: polymerFadeIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes polymerFadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Scale animations for cards */
+.polymer-scale-in {
+  opacity: 0;
+  transform: scale(0.95);
+  animation: polymerScaleIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes polymerScaleIn {
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Slide animations for sections */
+.polymer-slide-up {
+  opacity: 0;
+  transform: translateY(40px);
+  animation: polymerSlideUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes polymerSlideUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Performance optimizations */
+.polymer-will-change {
+  will-change: transform, opacity;
+}
+
+.polymer-no-will-change {
+  will-change: auto;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .polymer-interactive,
+  .polymer-product-card,
+  .polymer-parallax {
+    transition: none;
+  }
+  
+  .polymer-scroll-indicator {
+    animation: none;
+  }
+  
+  .polymer-fade-in,
+  .polymer-scale-in,
+  .polymer-slide-up {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .polymer-blur-hover:hover {
+    filter: none;
+  }
+}

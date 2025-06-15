@@ -1,65 +1,166 @@
 
-/* Polymer Workshop Typography Styles */
+/* Polymer Workshop Typography Styles - Enhanced Extreme Version */
 
-/* Typography inspired by Polymer's letter-spaced headings */
+/* Typography inspired by Polymer's ultra-spaced headings */
 .polymer-heading {
   font-family: 'Inter', system-ui, sans-serif;
-  font-weight: 300;
-  letter-spacing: 0.2em;
+  font-weight: 100;
+  letter-spacing: 0.4em;
   text-transform: uppercase;
-  line-height: 1.1;
+  line-height: 0.9;
+  word-spacing: 0.2em;
+}
+
+.polymer-heading-xl {
+  @apply polymer-heading;
+  font-size: clamp(4rem, 12vw, 12rem);
+  letter-spacing: 0.5em;
+  font-weight: 100;
 }
 
 .polymer-heading-lg {
-  @apply polymer-heading text-6xl md:text-8xl lg:text-9xl;
-  letter-spacing: 0.25em;
+  @apply polymer-heading;
+  font-size: clamp(3rem, 8vw, 8rem);
+  letter-spacing: 0.4em;
+  font-weight: 100;
 }
 
 .polymer-heading-md {
-  @apply polymer-heading text-4xl md:text-6xl;
-  letter-spacing: 0.15em;
+  @apply polymer-heading;
+  font-size: clamp(2rem, 6vw, 6rem);
+  letter-spacing: 0.3em;
+  font-weight: 200;
 }
 
 .polymer-heading-sm {
-  @apply polymer-heading text-2xl md:text-4xl;
-  letter-spacing: 0.1em;
+  @apply polymer-heading;
+  font-size: clamp(1.5rem, 4vw, 4rem);
+  letter-spacing: 0.2em;
+  font-weight: 200;
 }
 
-/* Editorial text styling */
+.polymer-heading-xs {
+  @apply polymer-heading;
+  font-size: clamp(1rem, 3vw, 2rem);
+  letter-spacing: 0.15em;
+  font-weight: 300;
+}
+
+/* Editorial text styling with extreme minimalism */
 .polymer-body {
   font-family: 'Inter', system-ui, sans-serif;
-  font-weight: 300;
-  line-height: 1.7;
+  font-weight: 200;
+  line-height: 1.8;
   color: var(--trailflow-medium);
+  letter-spacing: 0.02em;
+}
+
+.polymer-body-xl {
+  @apply polymer-body;
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  line-height: 1.6;
+  font-weight: 100;
 }
 
 .polymer-body-large {
-  @apply polymer-body text-xl md:text-2xl;
+  @apply polymer-body;
+  font-size: clamp(1.25rem, 2.5vw, 2rem);
   line-height: 1.6;
+  font-weight: 200;
 }
 
 .polymer-body-regular {
-  @apply polymer-body text-lg;
+  @apply polymer-body;
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  line-height: 1.7;
 }
 
-/* Text reveal animation for headings */
+.polymer-body-small {
+  @apply polymer-body;
+  font-size: clamp(0.875rem, 1.5vw, 1rem);
+  line-height: 1.6;
+  font-weight: 300;
+}
+
+/* Text reveal animation for headings - Enhanced */
 .polymer-text-reveal {
   overflow: hidden;
+  position: relative;
 }
 
 .polymer-text-reveal-inner {
-  transform: translateY(100%);
-  transition: transform 0.8s cubic-bezier(0.215, 0.610, 0.355, 1);
+  transform: translateY(120%);
+  transition: transform 1.2s cubic-bezier(0.215, 0.610, 0.355, 1);
+  display: inline-block;
 }
 
 .polymer-text-reveal.animate .polymer-text-reveal-inner {
   transform: translateY(0);
 }
 
+.polymer-text-reveal-stagger-1 .polymer-text-reveal-inner {
+  transition-delay: 0.1s;
+}
+
+.polymer-text-reveal-stagger-2 .polymer-text-reveal-inner {
+  transition-delay: 0.2s;
+}
+
+.polymer-text-reveal-stagger-3 .polymer-text-reveal-inner {
+  transition-delay: 0.3s;
+}
+
 /* Specs table styling */
 .polymer-specs {
   font-family: 'Inter', monospace;
+  font-weight: 200;
+  font-size: clamp(0.75rem, 1.5vw, 0.875rem);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* Ultra-light weight classes */
+.polymer-ultra-light {
+  font-weight: 100;
+  letter-spacing: 0.3em;
+}
+
+.polymer-thin {
+  font-weight: 200;
+  letter-spacing: 0.2em;
+}
+
+.polymer-light {
   font-weight: 300;
-  font-size: 0.875rem;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.1em;
+}
+
+/* Responsive typography scaling */
+@media (max-width: 640px) {
+  .polymer-heading {
+    letter-spacing: 0.2em;
+    line-height: 1.1;
+  }
+  
+  .polymer-body {
+    line-height: 1.6;
+  }
+}
+
+@media (max-width: 480px) {
+  .polymer-heading {
+    letter-spacing: 0.15em;
+  }
+}
+
+/* Touch-friendly text sizes */
+@media (hover: none) and (pointer: coarse) {
+  .polymer-body-regular {
+    font-size: clamp(1.125rem, 2.5vw, 1.375rem);
+    line-height: 1.8;
+  }
+  
+  .polymer-body-small {
+    font-size: clamp(1rem, 2vw, 1.125rem);
+  }
 }

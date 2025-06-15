@@ -14,8 +14,11 @@
 @import './styles/accessibility.css';
 @import './styles/editorial-animations.css';
 
-/* Polymer Aesthetic - Modularized */
+/* Polymer Aesthetic - Enhanced */
 @import './styles/polymer/containers.css';
 @import './styles/polymer/typography.css';
 @import './styles/polymer/animations.css';
 @import './styles/polymer/components.css';
+
+/* Mobile-First Optimizations */
+@import './styles/mobile-optimizations.css';

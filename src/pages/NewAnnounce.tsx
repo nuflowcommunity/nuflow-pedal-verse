@@ -7,9 +7,9 @@ import AnnouncementWizard from '@/components/announcements/AnnouncementWizard';
 const NewAnnounce = () => {
   return (
     <div className="min-h-screen flex flex-col relative overflow-hidden">
-      {/* Polymer-style Background */}
+      {/* Polymer-style Background with Better Mobile Optimization */}
       <div className="fixed inset-0 -z-10">
-        {/* Main background image */}
+        {/* Main background image with better mobile performance */}
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
@@ -26,19 +26,21 @@ const NewAnnounce = () => {
 
       <Navbar />
       
-      <main className="flex-grow py-8 sm:py-12 lg:py-16 relative z-10">
-        <div className="container-modern">
-          {/* Polymer-style Header with enhanced contrast */}
-          <div className="text-center mb-8 sm:mb-12 lg:mb-16">
+      <main className="flex-grow polymer-section-large relative z-10">
+        <div className="container-editorial">
+          {/* Polymer-style Header with enhanced contrast and mobile optimization */}
+          <div className="text-center polymer-center-massive">
             <div className="polymer-text-reveal animate">
-              <h1 className="polymer-text-reveal-inner polymer-heading-md text-gray-800 mb-4 sm:mb-6 drop-shadow-lg">
+              <h1 className="polymer-text-reveal-inner polymer-heading-lg text-gray-800 mb-8 sm:mb-12 lg:mb-16 drop-shadow-lg polymer-thin">
                 Anunciar Bicicleta
               </h1>
             </div>
-            <div className="polymer-editorial-line w-24 mx-auto mb-6"></div>
-            <p className="polymer-body-large text-gray-700 max-w-2xl mx-auto px-4 drop-shadow-md">
-              Preencha os dados abaixo para anunciar sua bicicleta na maior comunidade de ciclistas do Brasil
-            </p>
+            <div className="polymer-editorial-line w-32 mx-auto mb-8 sm:mb-12"></div>
+            <div className="container-polymer-ultra-narrow">
+              <p className="polymer-body-large text-gray-700 px-4 drop-shadow-md polymer-light">
+                Preencha os dados abaixo para anunciar sua bicicleta na maior comunidade de ciclistas do Brasil
+              </p>
+            </div>
           </div>
 
           <AnnouncementWizard />
