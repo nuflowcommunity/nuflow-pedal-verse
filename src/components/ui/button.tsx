@@ -48,6 +48,41 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant, size, asChild = false, loading = false, children, disabled, ...props }, ref) => {
     const Comp = asChild ? Slot : "button"
     
+    // When using asChild, we need to ensure only one child is passed to Slot
+    if (asChild) {
+      return (
+        <Comp
+          className={cn(buttonVariants({ variant, size, className }))}
+          ref={ref}
+          disabled={disabled || loading}
+          aria-busy={loading}
+          {...props}
+        >
+          {React.cloneElement(
+            React.Children.only(children as React.ReactElement),
+            {
+              style: { 
+                position: 'relative',
+                ...(React.Children.only(children as React.ReactElement).props.style || {})
+              },
+              children: (
+                <>
+                  {loading && (
+                    <div className="absolute inset-0 flex items-center justify-center bg-inherit rounded-lg">
+                      <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
+                    </div>
+                  )}
+                  <span className={cn("transition-opacity duration-200", loading && "opacity-0")}>
+                    {(React.Children.only(children as React.ReactElement).props.children)}
+                  </span>
+                </>
+              )
+            }
+          )}
+        </Comp>
+      )
+    }
+    
     return (
       <Comp
         className={cn(buttonVariants({ variant, size, className }))}
