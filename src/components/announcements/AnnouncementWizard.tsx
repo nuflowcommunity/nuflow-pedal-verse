@@ -47,12 +47,16 @@ const AnnouncementWizard: React.FC = () => {
   const nextStep = () => {
     if (currentStep < STEPS.length) {
       setCurrentStep(currentStep + 1);
+      // Smooth scroll to top on mobile
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
   const prevStep = () => {
     if (currentStep > 1) {
       setCurrentStep(currentStep - 1);
+      // Smooth scroll to top on mobile
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
@@ -89,6 +93,7 @@ const AnnouncementWizard: React.FC = () => {
       // Reset form
       setData({});
       setCurrentStep(1);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }, 2000);
   };
 
@@ -112,58 +117,115 @@ const AnnouncementWizard: React.FC = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-      <StepIndicator steps={STEPS} currentStep={currentStep} />
+    <div className="w-full max-w-5xl mx-auto">
+      {/* Step Indicator */}
+      <div className="mb-8 sm:mb-12">
+        <StepIndicator steps={STEPS} currentStep={currentStep} />
+      </div>
       
-      <Card className="mt-6 sm:mt-8 border-0 sm:border shadow-sm">
-        <CardHeader className="px-4 sm:px-6 py-4 sm:py-6">
-          <CardTitle className="text-xl sm:text-2xl font-heading text-center sm:text-left">
-            {STEPS[currentStep - 1].title}
-          </CardTitle>
-          <p className="text-gray-600 text-sm sm:text-base text-center sm:text-left">
-            {STEPS[currentStep - 1].description}
-          </p>
+      {/* Main Content Card - Polymer Style */}
+      <Card className="polymer-product-card border-0 shadow-xl bg-white overflow-hidden">
+        <CardHeader className="bg-gradient-to-r from-trailflow-accent to-white px-6 sm:px-8 lg:px-12 py-6 sm:py-8">
+          <div className="text-center">
+            <CardTitle className="polymer-heading-sm text-trailflow-dark mb-2">
+              {STEPS[currentStep - 1].title}
+            </CardTitle>
+            <p className="polymer-body text-trailflow-medium">
+              {STEPS[currentStep - 1].description}
+            </p>
+          </div>
         </CardHeader>
-        <CardContent className="px-4 sm:px-6 pb-4 sm:pb-6">
-          <div className="min-h-[300px] sm:min-h-[400px]">
-            {renderStep()}
+        
+        <CardContent className="px-6 sm:px-8 lg:px-12 py-8 sm:py-12">
+          {/* Step Content */}
+          <div className="min-h-[400px] sm:min-h-[500px] lg:min-h-[600px] flex items-start">
+            <div className="w-full animate-fade-in">
+              {renderStep()}
+            </div>
           </div>
           
-          {/* Navigation Buttons */}
-          <div className="flex flex-col sm:flex-row justify-between gap-3 sm:gap-0 mt-6 sm:mt-8 pt-4 sm:pt-6 border-t border-gray-200">
-            <Button
-              variant="outline"
-              onClick={prevStep}
-              disabled={currentStep === 1}
-              className="flex items-center justify-center gap-2 w-full sm:w-auto order-2 sm:order-1"
-            >
-              <ArrowLeft size={16} />
-              Voltar
-            </Button>
+          {/* Navigation Buttons - Polymer Style */}
+          <div className="mt-8 sm:mt-12 pt-8 border-t border-gray-100">
+            {/* Mobile Navigation */}
+            <div className="block sm:hidden space-y-4">
+              {currentStep < STEPS.length ? (
+                <Button
+                  onClick={nextStep}
+                  disabled={!canProceedToNext()}
+                  className="w-full polymer-btn bg-trailflow-green text-white hover:bg-trailflow-green-dark h-12 text-base font-medium"
+                >
+                  Próximo
+                  <ArrowRight size={20} className="ml-2" />
+                </Button>
+              ) : (
+                <Button
+                  onClick={handleSubmit}
+                  disabled={!canProceedToNext() || isSubmitting}
+                  className="w-full polymer-btn bg-trailflow-green text-white hover:bg-trailflow-green-dark h-12 text-base font-medium"
+                >
+                  {isSubmitting ? (
+                    <span className="animate-spin mr-2">○</span>
+                  ) : (
+                    <Check size={20} className="mr-2" />
+                  )}
+                  {isSubmitting ? 'Publicando...' : 'Publicar Anúncio'}
+                </Button>
+              )}
+              
+              <Button
+                variant="outline"
+                onClick={prevStep}
+                disabled={currentStep === 1}
+                className="w-full polymer-btn border-trailflow-green text-trailflow-green hover:bg-trailflow-green hover:text-white h-12 text-base font-medium"
+              >
+                <ArrowLeft size={20} className="mr-2" />
+                Voltar
+              </Button>
+            </div>
             
-            {currentStep < STEPS.length ? (
+            {/* Desktop Navigation */}
+            <div className="hidden sm:flex justify-between items-center">
               <Button
-                onClick={nextStep}
-                disabled={!canProceedToNext()}
-                className="bg-nuflow-moss text-white hover:bg-nuflow-darkForest flex items-center justify-center gap-2 w-full sm:w-auto order-1 sm:order-2"
+                variant="outline"
+                onClick={prevStep}
+                disabled={currentStep === 1}
+                className="polymer-btn border-trailflow-green text-trailflow-green hover:bg-trailflow-green hover:text-white px-8 h-12 text-base font-medium"
               >
-                Próximo
-                <ArrowRight size={16} />
+                <ArrowLeft size={20} className="mr-2" />
+                Voltar
               </Button>
-            ) : (
-              <Button
-                onClick={handleSubmit}
-                disabled={!canProceedToNext() || isSubmitting}
-                className="bg-nuflow-moss text-white hover:bg-nuflow-darkForest flex items-center justify-center gap-2 w-full sm:w-auto order-1 sm:order-2"
-              >
-                {isSubmitting ? (
-                  <span className="animate-spin">○</span>
-                ) : (
-                  <Check size={16} />
-                )}
-                {isSubmitting ? 'Publicando...' : 'Publicar Anúncio'}
-              </Button>
-            )}
+              
+              {/* Progress Info */}
+              <div className="text-center">
+                <p className="polymer-body text-trailflow-medium">
+                  Etapa {currentStep} de {STEPS.length}
+                </p>
+              </div>
+              
+              {currentStep < STEPS.length ? (
+                <Button
+                  onClick={nextStep}
+                  disabled={!canProceedToNext()}
+                  className="polymer-btn bg-trailflow-green text-white hover:bg-trailflow-green-dark px-8 h-12 text-base font-medium"
+                >
+                  Próximo
+                  <ArrowRight size={20} className="ml-2" />
+                </Button>
+              ) : (
+                <Button
+                  onClick={handleSubmit}
+                  disabled={!canProceedToNext() || isSubmitting}
+                  className="polymer-btn bg-trailflow-green text-white hover:bg-trailflow-green-dark px-8 h-12 text-base font-medium"
+                >
+                  {isSubmitting ? (
+                    <span className="animate-spin mr-2">○</span>
+                  ) : (
+                    <Check size={20} className="mr-2" />
+                  )}
+                  {isSubmitting ? 'Publicando...' : 'Publicar Anúncio'}
+                </Button>
+              )}
+            </div>
           </div>
         </CardContent>
       </Card>
