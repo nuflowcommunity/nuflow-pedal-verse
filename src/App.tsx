@@ -42,6 +42,14 @@ import EntidadesAdminContainer from '@/pages/admin/EntidadesAdminContainer';
 import FilterManagement from '@/pages/admin/FilterManagement';
 import MarketingAdmin from '@/pages/admin/MarketingAdmin';
 import FinanceOverview from '@/pages/admin/finance/FinanceOverview';
+import CashFlow from '@/pages/admin/finance/CashFlow';
+import Income from '@/pages/admin/finance/Income';
+import Expenses from '@/pages/admin/finance/Expenses';
+import AccountsPage from '@/pages/admin/finance/AccountsPage';
+import FinancialReports from '@/pages/admin/finance/FinancialReports';
+import Accounting from '@/pages/admin/finance/Accounting';
+import GoogleAdsPage from '@/pages/admin/marketing/GoogleAdsPage';
+import MetaAdsPage from '@/pages/admin/marketing/MetaAdsPage';
 
 function App() {
   return (
@@ -71,16 +79,28 @@ function App() {
                   <Route path="/admin" element={<AdminLayout />}>
                     <Route index element={<Dashboard />} />
                     <Route path="eventos" element={<EventsAdmin />} />
+                    <Route path="entidades" element={<EntidadesAdminContainer />} />
+                    <Route path="cupons" element={<CouponsAdmin />} />
                     <Route path="usuarios" element={<UsersAdmin />} />
                     <Route path="pedidos" element={<OrdersAdmin />} />
                     <Route path="mensagens" element={<MessagesAdmin />} />
                     <Route path="relatorios" element={<ReportsAdmin />} />
                     <Route path="configuracoes" element={<SettingsAdmin />} />
-                    <Route path="cupons" element={<CouponsAdmin />} />
-                    <Route path="entidades" element={<EntidadesAdminContainer />} />
                     <Route path="filtros" element={<FilterManagement />} />
+                    
+                    {/* Marketing Routes */}
                     <Route path="marketing" element={<MarketingAdmin />} />
+                    <Route path="marketing/google-ads" element={<GoogleAdsPage />} />
+                    <Route path="marketing/meta-ads" element={<MetaAdsPage />} />
+                    
+                    {/* Finance Routes */}
                     <Route path="financeiro" element={<FinanceOverview />} />
+                    <Route path="financeiro/fluxo-caixa" element={<CashFlow />} />
+                    <Route path="financeiro/receitas" element={<Income />} />
+                    <Route path="financeiro/despesas" element={<Expenses />} />
+                    <Route path="financeiro/contas" element={<AccountsPage />} />
+                    <Route path="financeiro/relatorios" element={<FinancialReports />} />
+                    <Route path="financeiro/contabilidade" element={<Accounting />} />
                   </Route>
                 </Routes>
                 <BackToTopButton />
