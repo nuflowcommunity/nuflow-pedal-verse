@@ -10,21 +10,21 @@ export const getDayUseColumns = (): FinanceTableColumn<Entity>[] => [
   {
     id: 'validFor',
     header: 'Validade',
-    accessorKey: 'type' as keyof Entity, // Use a valid key from Entity
+    accessorKey: 'type' as keyof Entity,
     cell: (item: Entity) => {
       if (item.type !== 'dayUse') return '-';
       const dayUseItem = item as DayUseEntity;
-      return dayUseItem.validFor || '-';
+      return <span className="text-gray-900">{dayUseItem.validFor || '-'}</span>;
     },
   },
   {
     id: 'accessDate',
     header: 'Data de Acesso',
-    accessorKey: 'type' as keyof Entity, // Use a valid key from Entity
+    accessorKey: 'type' as keyof Entity,
     cell: (item: Entity) => {
       if (item.type !== 'dayUse') return '-';
       const dayUseItem = item as DayUseEntity;
-      return dayUseItem.accessDate || '-';
+      return <span className="text-gray-900">{dayUseItem.accessDate || '-'}</span>;
     }
   }
 ];

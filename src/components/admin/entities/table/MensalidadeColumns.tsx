@@ -10,31 +10,31 @@ export const getMensalidadeColumns = (): FinanceTableColumn<Entity>[] => [
   {
     id: 'duration',
     header: 'Duração',
-    accessorKey: 'type' as keyof Entity, // Use a valid key from Entity
+    accessorKey: 'type' as keyof Entity,
     cell: (item: Entity) => {
       if (item.type !== 'mensalidade') return '-';
       const mensalidadeItem = item as MensalidadeEntity;
-      return mensalidadeItem.duration || '-';
+      return <span className="text-gray-900">{mensalidadeItem.duration || '-'}</span>;
     },
   },
   {
     id: 'renewalDate',
     header: 'Renovação',
-    accessorKey: 'type' as keyof Entity, // Use a valid key from Entity
+    accessorKey: 'type' as keyof Entity,
     cell: (item: Entity) => {
       if (item.type !== 'mensalidade') return '-';
       const mensalidadeItem = item as MensalidadeEntity;
-      return mensalidadeItem.renewalDate || '-';
+      return <span className="text-gray-900">{mensalidadeItem.renewalDate || '-'}</span>;
     },
   },
   {
     id: 'includedCredits',
     header: 'Créditos Incluídos',
-    accessorKey: 'type' as keyof Entity, // Use a valid key from Entity
+    accessorKey: 'type' as keyof Entity,
     cell: (item: Entity) => {
       if (item.type !== 'mensalidade') return '-';
       const mensalidadeItem = item as MensalidadeEntity;
-      return mensalidadeItem.includedCredits !== undefined ? mensalidadeItem.includedCredits : '-';
+      return <span className="text-gray-900">{mensalidadeItem.includedCredits !== undefined ? mensalidadeItem.includedCredits : '-'}</span>;
     }
   }
 ];

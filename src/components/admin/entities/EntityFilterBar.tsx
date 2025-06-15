@@ -61,7 +61,7 @@ export const EntityFilterBar: React.FC<EntityFilterBarProps> = ({
           <div className="flex flex-col lg:flex-row gap-4">
             <div className="flex-1">
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 h-4 w-4" />
                 <Input
                   placeholder="Buscar por nome ou parceiro..."
                   value={searchQuery}
@@ -77,9 +77,9 @@ export const EntityFilterBar: React.FC<EntityFilterBarProps> = ({
                   <SelectValue placeholder="Parceiro" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="todos">Todos os parceiros</SelectItem>
+                  <SelectItem value="todos" className="text-gray-900">Todos os parceiros</SelectItem>
                   {partners.filter(partner => partner && partner.trim() !== '').map(partner => (
-                    <SelectItem key={partner} value={partner}>{partner}</SelectItem>
+                    <SelectItem key={partner} value={partner} className="text-gray-900">{partner}</SelectItem>
                   ))}
                 </SelectContent>
               </Select>
@@ -89,11 +89,11 @@ export const EntityFilterBar: React.FC<EntityFilterBarProps> = ({
                   <SelectValue placeholder="Tipo" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="todos">Todos os tipos</SelectItem>
-                  <SelectItem value="evento">Evento</SelectItem>
-                  <SelectItem value="mensalidade">Mensalidade</SelectItem>
-                  <SelectItem value="dayUse">Day Use</SelectItem>
-                  <SelectItem value="credito">Crédito</SelectItem>
+                  <SelectItem value="todos" className="text-gray-900">Todos os tipos</SelectItem>
+                  <SelectItem value="evento" className="text-gray-900">Evento</SelectItem>
+                  <SelectItem value="mensalidade" className="text-gray-900">Mensalidade</SelectItem>
+                  <SelectItem value="dayUse" className="text-gray-900">Day Use</SelectItem>
+                  <SelectItem value="credito" className="text-gray-900">Crédito</SelectItem>
                 </SelectContent>
               </Select>
 
@@ -102,10 +102,10 @@ export const EntityFilterBar: React.FC<EntityFilterBarProps> = ({
                   <SelectValue placeholder="Status" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="todos">Todos os status</SelectItem>
-                  <SelectItem value="ativo">Ativo</SelectItem>
-                  <SelectItem value="pendente">Pendente</SelectItem>
-                  <SelectItem value="cancelado">Cancelado</SelectItem>
+                  <SelectItem value="todos" className="text-gray-900">Todos os status</SelectItem>
+                  <SelectItem value="ativo" className="text-gray-900">Ativo</SelectItem>
+                  <SelectItem value="pendente" className="text-gray-900">Pendente</SelectItem>
+                  <SelectItem value="cancelado" className="text-gray-900">Cancelado</SelectItem>
                 </SelectContent>
               </Select>
 
@@ -116,10 +116,10 @@ export const EntityFilterBar: React.FC<EntityFilterBarProps> = ({
                     <SelectValue placeholder="Validação" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="todos">Todos</SelectItem>
-                    <SelectItem value="validated">Validados</SelectItem>
-                    <SelectItem value="pending">Pendentes</SelectItem>
-                    <SelectItem value="failed">Com falha</SelectItem>
+                    <SelectItem value="todos" className="text-gray-900">Todos</SelectItem>
+                    <SelectItem value="validated" className="text-gray-900">Validados</SelectItem>
+                    <SelectItem value="pending" className="text-gray-900">Pendentes</SelectItem>
+                    <SelectItem value="failed" className="text-gray-900">Com falha</SelectItem>
                   </SelectContent>
                 </Select>
               )}
@@ -149,8 +149,8 @@ export const EntityFilterBar: React.FC<EntityFilterBarProps> = ({
           {/* Active Filters Summary */}
           {hasActiveFilters && (
             <div className="flex flex-wrap items-center gap-2 pt-2 border-t">
-              <Filter className="h-4 w-4 text-gray-500" />
-              <span className="text-sm text-gray-600">
+              <Filter className="h-4 w-4 text-gray-600" />
+              <span className="text-sm text-gray-700">
                 Filtros ativos - {hasActiveFilters ? 'clique em "Limpar" para remover' : 'nenhum filtro aplicado'}
               </span>
             </div>

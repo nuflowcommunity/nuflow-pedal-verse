@@ -18,9 +18,9 @@ export const getBaseColumns = (): FinanceTableColumn<Entity>[] => {
       header: 'Tipo',
       accessorKey: 'type',
       cell: (item: Entity) => (
-        <div className="flex items-center">
+        <div className="flex items-center text-gray-900">
           {entityTypeIcons[item.type]}
-          <span>{entityTypeLabels[item.type]}</span>
+          <span className="text-gray-900">{entityTypeLabels[item.type]}</span>
         </div>
       ),
       sortable: true,
@@ -29,12 +29,14 @@ export const getBaseColumns = (): FinanceTableColumn<Entity>[] => {
       id: 'partner',
       header: 'Parceiro',
       accessorKey: 'partner',
+      cell: (item: Entity) => <span className="text-gray-900">{item.partner}</span>,
       sortable: true,
     },
     {
       id: 'name',
       header: 'Nome',
       accessorKey: 'name',
+      cell: (item: Entity) => <span className="text-gray-900">{item.name}</span>,
       sortable: true,
     },
     {
@@ -44,7 +46,6 @@ export const getBaseColumns = (): FinanceTableColumn<Entity>[] => {
       cell: (item: Entity) => getStatusBadge(item.status === 'ativo' ? 'Ativo' : item.status === 'pendente' ? 'Pendente' : 'Cancelado'),
       sortable: true,
     },
-    // Price column removed
     // Enhanced financial columns with sorting
     {
       id: 'salesLast24h',

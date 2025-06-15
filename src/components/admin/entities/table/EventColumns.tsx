@@ -11,17 +11,17 @@ export const getEventColumns = (): FinanceTableColumn<Entity>[] => [
   {
     id: 'date',
     header: 'Data',
-    accessorKey: 'type' as keyof Entity, // Use a valid key from Entity
+    accessorKey: 'type' as keyof Entity,
     cell: (item: Entity) => {
       if (item.type !== 'evento') return '-';
       const eventoItem = item as EventoEntity;
-      return eventoItem.date || '-';
+      return <span className="text-gray-900">{eventoItem.date || '-'}</span>;
     },
   },
   {
     id: 'capacity',
     header: 'Capacidade',
-    accessorKey: 'type' as keyof Entity, // Use a valid key from Entity
+    accessorKey: 'type' as keyof Entity,
     cell: (item: Entity) => {
       if (item.type !== 'evento') return '-';
       const eventoItem = item as EventoEntity;
@@ -30,14 +30,14 @@ export const getEventColumns = (): FinanceTableColumn<Entity>[] => [
         const percentage = (eventoItem.registrations / eventoItem.capacity) * 100;
         return (
           <div className="flex items-center">
-            <span className="mr-2">{`${eventoItem.registrations}/${eventoItem.capacity}`}</span>
+            <span className="mr-2 text-gray-900">{`${eventoItem.registrations}/${eventoItem.capacity}`}</span>
             <Badge className={`${percentage > 80 ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800'}`}>
               {`${Math.round(percentage)}%`}
             </Badge>
           </div>
         );
       }
-      return eventoItem.capacity || '-';
+      return <span className="text-gray-900">{eventoItem.capacity || '-'}</span>;
     }
   }
 ];

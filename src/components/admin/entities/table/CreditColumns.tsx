@@ -12,17 +12,17 @@ export const getCreditColumns = (): FinanceTableColumn<Entity>[] => [
   {
     id: 'totalCredits',
     header: 'Total de Créditos',
-    accessorKey: 'type' as keyof Entity, // Use a valid key from Entity
+    accessorKey: 'type' as keyof Entity,
     cell: (item: Entity) => {
       if (item.type !== 'credito') return '-';
       const creditoItem = item as CreditoEntity;
-      return creditoItem.totalCredits !== undefined ? creditoItem.totalCredits : '-';
+      return <span className="text-gray-900">{creditoItem.totalCredits !== undefined ? creditoItem.totalCredits : '-'}</span>;
     },
   },
   {
     id: 'usedCredits',
     header: 'Créditos Usados',
-    accessorKey: 'type' as keyof Entity, // Use a valid key from Entity
+    accessorKey: 'type' as keyof Entity,
     cell: (item: Entity) => {
       if (item.type !== 'credito') return '-';
       const creditoItem = item as CreditoEntity;
@@ -32,30 +32,30 @@ export const getCreditColumns = (): FinanceTableColumn<Entity>[] => [
         const percentage = (creditoItem.usedCredits / creditoItem.totalCredits) * 100;
         return (
           <div className="flex items-center">
-            <span className="mr-2">{`${creditoItem.usedCredits}/${creditoItem.totalCredits}`}</span>
+            <span className="mr-2 text-gray-900">{`${creditoItem.usedCredits}/${creditoItem.totalCredits}`}</span>
             <Badge className={`${percentage > 80 ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800'}`}>
               {`${remaining} restantes`}
             </Badge>
           </div>
         );
       }
-      return creditoItem.usedCredits !== undefined ? creditoItem.usedCredits : '-';
+      return <span className="text-gray-900">{creditoItem.usedCredits !== undefined ? creditoItem.usedCredits : '-'}</span>;
     }
   },
   {
     id: 'expiryDate',
     header: 'Validade',
-    accessorKey: 'type' as keyof Entity, // Use a valid key from Entity
+    accessorKey: 'type' as keyof Entity,
     cell: (item: Entity) => {
       if (item.type !== 'credito') return '-';
       const creditoItem = item as CreditoEntity;
-      return creditoItem.expiryDate || '-';
+      return <span className="text-gray-900">{creditoItem.expiryDate || '-'}</span>;
     },
   },
   {
     id: 'validationStatus',
     header: 'Validação',
-    accessorKey: 'type' as keyof Entity, // Use a valid key from Entity
+    accessorKey: 'type' as keyof Entity,
     cell: (item: Entity) => {
       if (item.type !== 'credito') return '-';
       const creditoItem = item as CreditoEntity;
