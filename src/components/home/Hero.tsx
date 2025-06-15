@@ -1,6 +1,5 @@
-
 import React, { useEffect, useState } from 'react';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, MapPin, Users, Package, Calendar } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useIsMobile } from '@/hooks/use-mobile';
 
@@ -90,19 +89,31 @@ const Hero = () => {
           <div className={`pt-16 transition-all duration-700 delay-700 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-2xl mx-auto">
               <div className="text-center">
-                <div className="text-3xl sm:text-4xl font-bold text-trailflow-green">500+</div>
+                <div className="flex items-center justify-center gap-2 mb-2">
+                  <MapPin size={20} className="text-trailflow-green" />
+                  <div className="text-3xl sm:text-4xl font-bold text-trailflow-green">500+</div>
+                </div>
                 <div className="text-sm sm:text-base text-trailflow-light font-medium">Trilhas</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl sm:text-4xl font-bold text-trailflow-green">2k+</div>
+                <div className="flex items-center justify-center gap-2 mb-2">
+                  <Users size={20} className="text-trailflow-green" />
+                  <div className="text-3xl sm:text-4xl font-bold text-trailflow-green">2k+</div>
+                </div>
                 <div className="text-sm sm:text-base text-trailflow-light font-medium">Ciclistas</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl sm:text-4xl font-bold text-trailflow-green">1k+</div>
+                <div className="flex items-center justify-center gap-2 mb-2">
+                  <Package size={20} className="text-trailflow-green" />
+                  <div className="text-3xl sm:text-4xl font-bold text-trailflow-green">1k+</div>
+                </div>
                 <div className="text-sm sm:text-base text-trailflow-light font-medium">Produtos</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl sm:text-4xl font-bold text-trailflow-green">50+</div>
+                <div className="flex items-center justify-center gap-2 mb-2">
+                  <Calendar size={20} className="text-trailflow-green" />
+                  <div className="text-3xl sm:text-4xl font-bold text-trailflow-green">50+</div>
+                </div>
                 <div className="text-sm sm:text-base text-trailflow-light font-medium">Eventos</div>
               </div>
             </div>
