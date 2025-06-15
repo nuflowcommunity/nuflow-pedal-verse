@@ -140,3 +140,6 @@ export const mockEntities: Entity[] = [
     validationStatus: 'failed'
   }
 ];
+
+// Export as 'entities' for backward compatibility
+export const entities = mockEntities;

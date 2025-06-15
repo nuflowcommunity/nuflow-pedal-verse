@@ -3,7 +3,8 @@ import React from 'react';
 import { useEntitiesPageState } from '@/hooks/admin/useEntitiesPageState';
 import { useEntitiesFiltering } from '@/hooks/admin/useEntitiesFiltering';
 import { EntitiesPageLayout } from './EntitiesPageLayout';
-import { entities } from './mockData';
+import { EntityTableContent } from './EntityTableContent';
+import { mockEntities } from './mockData';
 
 const EntitiesContainer = () => {
   const {
@@ -35,7 +36,7 @@ const EntitiesContainer = () => {
     toast,
   } = useEntitiesPageState();
 
-  const { filteredEntities } = useEntitiesFiltering(entities, {
+  const { filteredEntities } = useEntitiesFiltering(mockEntities, {
     activeTab,
     searchQuery,
     partnerFilter,
@@ -45,45 +46,66 @@ const EntitiesContainer = () => {
   });
 
   // Get unique partners for filter dropdown
-  const partners = Array.from(new Set(entities.map(entity => entity.partner)));
+  const partners = Array.from(new Set(mockEntities.map(entity => entity.partner)));
+
+  const mockStats = {
+    total: mockEntities.length,
+    ativo: mockEntities.filter(e => e.status === 'ativo').length,
+    pendente: mockEntities.filter(e => e.status === 'pendente').length,
+    cancelado: mockEntities.filter(e => e.status === 'cancelado').length,
+    eventos: mockEntities.filter(e => e.type === 'evento').length,
+    mensalidades: mockEntities.filter(e => e.type === 'mensalidade').length,
+    dayUse: mockEntities.filter(e => e.type === 'dayUse').length,
+    creditos: mockEntities.filter(e => e.type === 'credito').length,
+    validationIssues: mockEntities.filter(e => e.type === 'credito' && (e as any).validationStatus === 'failed').length,
+    salesLast24h: 0,
+    salesCurrentMonth: 0,
+    salesTotal: 0,
+  };
+
+  const onFilterChange = {
+    setSearchQuery,
+    setPartnerFilter,
+    setTypeFilter,
+    setStatusFilter,
+    setValidationFilter,
+    handleDateChange: () => {},
+    filterLast24Hours: () => {},
+    filterCurrentMonth: () => {},
+    filterAllTime: () => {},
+    clearFilters,
+  };
 
   return (
     <EntitiesPageLayout
-      // State
-      entities={filteredEntities}
-      selectedEntity={selectedEntity}
+      loading={false}
       activeTab={activeTab}
-      searchQuery={searchQuery}
-      partnerFilter={partnerFilter}
-      typeFilter={typeFilter}
-      statusFilter={statusFilter}
-      validationFilter={validationFilter}
-      isDrawerOpen={isDrawerOpen}
-      isDetailDrawerOpen={isDetailDrawerOpen}
-      currentPage={currentPage}
-      
-      // Actions
-      setActiveTab={setActiveTab}
-      setSearchQuery={setSearchQuery}
-      setPartnerFilter={setPartnerFilter}
-      setTypeFilter={setTypeFilter}
-      setStatusFilter={setStatusFilter}
-      setValidationFilter={setValidationFilter}
-      setSelectedEntity={setSelectedEntity}
-      setIsDrawerOpen={setIsDrawerOpen}
-      setIsDetailDrawerOpen={setIsDetailDrawerOpen}
-      setCurrentPage={setCurrentPage}
-      
-      // Handlers
-      handleViewEntity={handleViewEntity}
-      handleEditEntity={handleEditEntity}
-      handleTabChange={handleTabChange}
-      handleSort={handleSort}
-      clearFilters={clearFilters}
-      
-      // Data
-      partners={partners}
-    />
+      stats={mockStats}
+      onTabChange={handleTabChange}
+      onRefresh={() => {}}
+      onViewIssues={() => {}}
+    >
+      <EntityTableContent
+        activeTab={activeTab}
+        filters={{
+          searchQuery,
+          partnerFilter,
+          typeFilter,
+          statusFilter,
+          validationFilter,
+          activeTab,
+          sortDirection: 'desc'
+        }}
+        filteredEntities={filteredEntities}
+        partners={partners}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        onFilterChange={onFilterChange}
+        onViewEntity={handleViewEntity}
+        onSort={handleSort}
+        toast={toast}
+      />
+    </EntitiesPageLayout>
   );
 };
 

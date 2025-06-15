@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { EntitiesContainer } from '@/components/admin/entities/EntitiesContainer';
+import EntitiesContainer from '@/components/admin/entities/EntitiesContainer';
 
 const EntidadesAdminContainer = () => {
   return (
