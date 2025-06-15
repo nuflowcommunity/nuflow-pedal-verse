@@ -122,9 +122,9 @@ const AnnouncementWizard: React.FC = () => {
       {/* Main Content Card - Enhanced Polymer Style with Glassmorphism */}
       <Card className="polymer-product-card border-0 overflow-hidden relative">
         {/* Glassmorphism background */}
-        <div className="absolute inset-0 bg-white/70 backdrop-blur-xl border border-white/20 rounded-xl shadow-2xl" />
+        <div className="absolute inset-0 bg-white/95 backdrop-blur-xl border border-white/30 rounded-xl shadow-2xl" />
         
-        <CardHeader className="relative z-10 bg-gradient-to-r from-trailflow-accent/30 to-white/20 backdrop-blur-sm px-6 sm:px-8 lg:px-12 py-6 sm:py-8 border-b border-white/10">
+        <CardHeader className="relative z-10 bg-gradient-to-r from-trailflow-accent/20 to-white/10 backdrop-blur-sm px-6 sm:px-8 lg:px-12 py-6 sm:py-8 border-b border-white/20">
           <div className="text-center">
             <CardTitle className="polymer-heading-sm text-gray-800 mb-2 drop-shadow-md">
               {STEPS[currentStep - 1].title}
@@ -143,7 +143,7 @@ const AnnouncementWizard: React.FC = () => {
             </div>
           </div>
           
-          {/* Navigation Buttons - Enhanced Polymer Style */}
+          {/* Navigation Buttons - Enhanced with better UX */}
           <div className="mt-8 sm:mt-12 pt-8 border-t border-white/20">
             {/* Mobile Navigation */}
             <div className="block sm:hidden space-y-4">
@@ -151,23 +151,26 @@ const AnnouncementWizard: React.FC = () => {
                 <Button
                   onClick={nextStep}
                   disabled={!canProceedToNext()}
-                  className="w-full polymer-btn bg-trailflow-green/90 backdrop-blur-sm text-gray-800 hover:bg-trailflow-green hover:text-gray-900 hover:shadow-lg border border-white/20 h-12 text-base font-medium transition-all duration-300"
+                  variant="default"
+                  size="lg"
+                  className="w-full h-12 text-base font-semibold"
+                  aria-label={`Continuar para ${STEPS[currentStep]?.title || 'próxima etapa'}`}
                 >
-                  Próximo
+                  Continuar
                   <ArrowRight size={20} className="ml-2" />
                 </Button>
               ) : (
                 <Button
                   onClick={handleSubmit}
-                  disabled={!canProceedToNext() || isSubmitting}
-                  className="w-full polymer-btn bg-trailflow-green/90 backdrop-blur-sm text-gray-800 hover:bg-trailflow-green hover:text-gray-900 hover:shadow-lg border border-white/20 h-12 text-base font-medium transition-all duration-300"
+                  disabled={!canProceedToNext()}
+                  loading={isSubmitting}
+                  variant="success"
+                  size="lg"
+                  className="w-full h-12 text-base font-semibold"
+                  aria-label="Finalizar e publicar anúncio"
                 >
-                  {isSubmitting ? (
-                    <span className="animate-spin mr-2">○</span>
-                  ) : (
-                    <Check size={20} className="mr-2" />
-                  )}
-                  {isSubmitting ? 'Publicando...' : 'Publicar Anúncio'}
+                  {!isSubmitting && <Check size={20} className="mr-2" />}
+                  {isSubmitting ? 'Finalizando...' : 'Finalizar Anúncio'}
                 </Button>
               )}
               
@@ -175,10 +178,12 @@ const AnnouncementWizard: React.FC = () => {
                 variant="outline"
                 onClick={prevStep}
                 disabled={currentStep === 1}
-                className="w-full polymer-btn bg-white/50 backdrop-blur-sm border-trailflow-green/70 text-gray-700 hover:bg-trailflow-green hover:text-gray-800 hover:shadow-lg h-12 text-base font-medium transition-all duration-300"
+                size="lg"
+                className="w-full h-12 text-base font-semibold"
+                aria-label={`Voltar para ${STEPS[currentStep - 2]?.title || 'etapa anterior'}`}
               >
                 <ArrowLeft size={20} className="mr-2" />
-                Voltar
+                Anterior
               </Button>
             </div>
             
@@ -188,40 +193,51 @@ const AnnouncementWizard: React.FC = () => {
                 variant="outline"
                 onClick={prevStep}
                 disabled={currentStep === 1}
-                className="polymer-btn bg-white/50 backdrop-blur-sm border-trailflow-green/70 text-gray-700 hover:bg-trailflow-green hover:text-gray-800 hover:shadow-lg px-8 h-12 text-base font-medium transition-all duration-300"
+                size="lg"
+                className="px-8 h-12 text-base font-semibold"
+                aria-label={`Voltar para ${STEPS[currentStep - 2]?.title || 'etapa anterior'}`}
               >
                 <ArrowLeft size={20} className="mr-2" />
-                Voltar
+                Anterior
               </Button>
               
               {/* Progress Info */}
-              <div className="text-center">
-                <p className="polymer-body text-gray-700 drop-shadow-sm font-medium">
+              <div className="text-center px-4">
+                <p className="polymer-body text-gray-800 drop-shadow-sm font-semibold text-base">
                   Etapa {currentStep} de {STEPS.length}
                 </p>
+                <div className="w-24 h-1 bg-gray-200 rounded-full mx-auto mt-2 overflow-hidden">
+                  <div 
+                    className="h-full bg-trailflow-green transition-all duration-500 rounded-full"
+                    style={{ width: `${(currentStep / STEPS.length) * 100}%` }}
+                  />
+                </div>
               </div>
               
               {currentStep < STEPS.length ? (
                 <Button
                   onClick={nextStep}
                   disabled={!canProceedToNext()}
-                  className="polymer-btn bg-trailflow-green/90 backdrop-blur-sm text-gray-800 hover:bg-trailflow-green hover:text-gray-900 hover:shadow-lg border border-white/20 px-8 h-12 text-base font-medium transition-all duration-300"
+                  variant="default"
+                  size="lg"
+                  className="px-8 h-12 text-base font-semibold"
+                  aria-label={`Continuar para ${STEPS[currentStep]?.title || 'próxima etapa'}`}
                 >
-                  Próximo
+                  Continuar
                   <ArrowRight size={20} className="ml-2" />
                 </Button>
               ) : (
                 <Button
                   onClick={handleSubmit}
-                  disabled={!canProceedToNext() || isSubmitting}
-                  className="polymer-btn bg-trailflow-green/90 backdrop-blur-sm text-gray-800 hover:bg-trailflow-green hover:text-gray-900 hover:shadow-lg border border-white/20 px-8 h-12 text-base font-medium transition-all duration-300"
+                  disabled={!canProceedToNext()}
+                  loading={isSubmitting}
+                  variant="success"
+                  size="lg"
+                  className="px-8 h-12 text-base font-semibold"
+                  aria-label="Finalizar e publicar anúncio"
                 >
-                  {isSubmitting ? (
-                    <span className="animate-spin mr-2">○</span>
-                  ) : (
-                    <Check size={20} className="mr-2" />
-                  )}
-                  {isSubmitting ? 'Publicando...' : 'Publicar Anúncio'}
+                  {!isSubmitting && <Check size={20} className="mr-2" />}
+                  {isSubmitting ? 'Finalizando...' : 'Finalizar Anúncio'}
                 </Button>
               )}
             </div>
