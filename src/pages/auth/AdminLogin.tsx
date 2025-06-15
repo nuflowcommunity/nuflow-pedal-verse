@@ -63,11 +63,17 @@ const AdminLogin = () => {
 
   // Função de desenvolvimento para acessar sem login
   const handleDevAccess = () => {
+    console.log('Dev Access button clicked');
+    
     toast({
       title: "Acesso de desenvolvimento",
       description: "Redirecionando para o painel admin...",
     });
-    navigate('/admin');
+    
+    // Redirecionar diretamente para o admin sem autenticação
+    setTimeout(() => {
+      navigate('/admin', { replace: true });
+    }, 500);
   };
 
   if (showForgotPassword) {
@@ -196,6 +202,7 @@ const AdminLogin = () => {
             variant="outline"
             size="sm"
             className="bg-yellow-100 border-yellow-300 text-yellow-800 hover:bg-yellow-200"
+            type="button"
           >
             <Code className="w-4 h-4 mr-2" />
             Dev Access
