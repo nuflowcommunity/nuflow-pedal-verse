@@ -83,85 +83,6 @@
   }
 }
 
-/* Tablet optimizations */
-@media (min-width: 641px) and (max-width: 1024px) {
-  .container,
-  .container-editorial {
-    padding: 0 2rem;
-  }
-  
-  /* Touch-friendly buttons on tablet */
-  button,
-  .btn {
-    min-height: 48px;
-    padding: 14px 20px;
-  }
-}
-
-/* High DPI displays */
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-  /* Ensure crisp borders */
-  .border {
-    border-width: 0.5px;
-  }
-  
-  /* Optimize images */
-  img {
-    image-rendering: -webkit-optimize-contrast;
-    image-rendering: crisp-edges;
-  }
-}
-
-/* Dark mode considerations */
-@media (prefers-color-scheme: dark) {
-  .polymer-light-section {
-    background: var(--trailflow-dark);
-    color: var(--trailflow-white);
-  }
-  
-  .polymer-dark-section {
-    background: var(--trailflow-white);
-    color: var(--trailflow-dark);
-  }
-}
-
-/* Landscape mobile optimization */
-@media (max-height: 500px) and (orientation: landscape) {
-  .section,
-  .polymer-section-massive,
-  .polymer-section-large {
-    padding: 1rem 0;
-  }
-  
-  .polymer-center-massive {
-    margin: 2rem auto;
-  }
-  
-  /* Reduce hero heights in landscape */
-  .min-h-screen {
-    min-height: 80vh;
-  }
-}
-
-/* Safe areas for notched devices */
-@supports (padding: max(0px)) {
-  .safe-top {
-    padding-top: max(1rem, env(safe-area-inset-top));
-  }
-  
-  .safe-bottom {
-    padding-bottom: max(1rem, env(safe-area-inset-bottom));
-  }
-  
-  .safe-left {
-    padding-left: max(1rem, env(safe-area-inset-left));
-  }
-  
-  .safe-right {
-    padding-right: max(1rem, env(safe-area-inset-right));
-  }
-}
-
 /* Performance optimizations for mobile */
 @media (max-width: 768px) {
   /* Reduce animations on mobile for performance */
@@ -189,6 +110,25 @@
   }
 }
 
+/* Safe areas for notched devices */
+@supports (padding: max(0px)) {
+  .safe-top {
+    padding-top: max(1rem, env(safe-area-inset-top));
+  }
+  
+  .safe-bottom {
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+  
+  .safe-left {
+    padding-left: max(1rem, env(safe-area-inset-left));
+  }
+  
+  .safe-right {
+    padding-right: max(1rem, env(safe-area-inset-right));
+  }
+}
+
 /* Focus improvements for keyboard navigation */
 @media (hover: hover) and (pointer: fine) {
   button:focus,
@@ -201,21 +141,13 @@
   }
 }
 
-/* Print styles */
-@media print {
-  .polymer-section-massive,
-  .polymer-section-large {
-    padding: 1rem 0;
-  }
-  
-  .polymer-heading-xl,
-  .polymer-heading-lg {
-    font-size: 2rem;
-  }
-  
-  .bg-gradient-to-br,
-  .bg-gradient-to-r {
-    background: white !important;
-    color: black !important;
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }

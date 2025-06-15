@@ -8,12 +8,6 @@
   padding: 0 1rem;
 }
 
-@media (min-width: 480px) {
-  .container-editorial {
-    padding: 0 1.5rem;
-  }
-}
-
 @media (min-width: 640px) {
   .container-editorial {
     padding: 0 2rem;
@@ -21,22 +15,10 @@
   }
 }
 
-@media (min-width: 768px) {
-  .container-editorial {
-    padding: 0 3rem;
-  }
-}
-
 @media (min-width: 1024px) {
   .container-editorial {
     padding: 0 4rem;
     max-width: 1400px;
-  }
-}
-
-@media (min-width: 1280px) {
-  .container-editorial {
-    padding: 0 6rem;
   }
 }
 
@@ -50,12 +32,6 @@
 @media (min-width: 640px) {
   .container-polymer-narrow {
     padding: 0 2rem;
-  }
-}
-
-@media (min-width: 1024px) {
-  .container-polymer-narrow {
-    padding: 0 4rem;
   }
 }
 
@@ -77,12 +53,6 @@
   gap: 3rem;
 }
 
-@media (min-width: 480px) {
-  .polymer-grid-editorial {
-    gap: 4rem;
-  }
-}
-
 @media (min-width: 768px) {
   .polymer-grid-editorial {
     gap: 6rem;
@@ -92,12 +62,6 @@
 @media (min-width: 1024px) {
   .polymer-grid-editorial {
     gap: 8rem;
-  }
-}
-
-@media (min-width: 1280px) {
-  .polymer-grid-editorial {
-    gap: 12rem;
   }
 }
 
@@ -122,91 +86,36 @@
   }
 }
 
-/* High contrast sections */
-.polymer-dark-section {
-  background: var(--trailflow-dark);
-  color: var(--trailflow-white);
-  padding: 4rem 0;
-}
-
-@media (min-width: 768px) {
-  .polymer-dark-section {
-    padding: 6rem 0;
-  }
-}
-
-@media (min-width: 1024px) {
-  .polymer-dark-section {
-    padding: 10rem 0;
-  }
-}
-
-.polymer-light-section {
-  background: var(--trailflow-white);
-  color: var(--trailflow-dark);
-  padding: 4rem 0;
-}
-
-@media (min-width: 768px) {
-  .polymer-light-section {
-    padding: 6rem 0;
-  }
-}
-
-@media (min-width: 1024px) {
-  .polymer-light-section {
-    padding: 10rem 0;
-  }
-}
-
-/* Massive section spacing - Polymer style */
+/* Section spacing - Polymer style */
 .polymer-section-massive {
-  padding: 6rem 0;
+  padding: 4rem 0;
 }
 
-@media (min-width: 640px) {
+@media (min-width: 768px) {
   .polymer-section-massive {
     padding: 8rem 0;
   }
 }
 
-@media (min-width: 768px) {
-  .polymer-section-massive {
-    padding: 12rem 0;
-  }
-}
-
 @media (min-width: 1024px) {
   .polymer-section-massive {
-    padding: 16rem 0;
-  }
-}
-
-@media (min-width: 1280px) {
-  .polymer-section-massive {
-    padding: 24rem 0;
+    padding: 12rem 0;
   }
 }
 
 .polymer-section-large {
-  padding: 4rem 0;
+  padding: 3rem 0;
 }
 
-@media (min-width: 640px) {
+@media (min-width: 768px) {
   .polymer-section-large {
     padding: 6rem 0;
   }
 }
 
-@media (min-width: 768px) {
-  .polymer-section-large {
-    padding: 8rem 0;
-  }
-}
-
 @media (min-width: 1024px) {
   .polymer-section-large {
-    padding: 12rem 0;
+    padding: 8rem 0;
   }
 }
 
@@ -227,75 +136,21 @@
   }
 }
 
-.polymer-aspect-portrait {
-  aspect-ratio: 4/5;
-  overflow: hidden;
-}
-
-.polymer-aspect-square {
-  aspect-ratio: 1/1;
-  overflow: hidden;
-}
-
-/* Breathing room utilities */
-.polymer-breathe-xs {
-  padding: 1.5rem;
-}
-
-.polymer-breathe-sm {
-  padding: 2rem;
+/* Center alignment with massive spacing */
+.polymer-center-massive {
+  text-align: center;
+  margin: 4rem auto;
 }
 
 @media (min-width: 768px) {
-  .polymer-breathe-sm {
-    padding: 3rem;
-  }
-}
-
-.polymer-breathe-md {
-  padding: 3rem;
-}
-
-@media (min-width: 768px) {
-  .polymer-breathe-md {
-    padding: 4rem;
+  .polymer-center-massive {
+    margin: 6rem auto;
   }
 }
 
 @media (min-width: 1024px) {
-  .polymer-breathe-md {
-    padding: 6rem;
-  }
-}
-
-.polymer-breathe-lg {
-  padding: 4rem;
-}
-
-@media (min-width: 768px) {
-  .polymer-breathe-lg {
-    padding: 6rem;
-  }
-}
-
-@media (min-width: 1024px) {
-  .polymer-breathe-lg {
-    padding: 8rem;
-  }
-}
-
-/* Touch-friendly spacing for mobile */
-@media (hover: none) and (pointer: coarse) {
-  .polymer-grid-editorial {
-    gap: 4rem;
-  }
-  
-  .polymer-section-massive {
-    padding: 4rem 0;
-  }
-  
-  .polymer-section-large {
-    padding: 3rem 0;
+  .polymer-center-massive {
+    margin: 8rem auto;
   }
 }
 
@@ -309,30 +164,5 @@
 @media (min-width: 640px) {
   .polymer-content-minimal {
     padding: 0 2rem;
-  }
-}
-
-/* Full-bleed sections */
-.polymer-full-bleed {
-  width: 100vw;
-  margin-left: calc(-50vw + 50%);
-  position: relative;
-}
-
-/* Center alignment with massive spacing */
-.polymer-center-massive {
-  text-align: center;
-  margin: 6rem auto;
-}
-
-@media (min-width: 768px) {
-  .polymer-center-massive {
-    margin: 8rem auto;
-  }
-}
-
-@media (min-width: 1024px) {
-  .polymer-center-massive {
-    margin: 12rem auto;
   }
 }
