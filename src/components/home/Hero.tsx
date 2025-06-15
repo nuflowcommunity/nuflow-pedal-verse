@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
-import { ArrowRight, Play } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useIsMobile } from '@/hooks/use-mobile';
 
@@ -59,28 +59,29 @@ const Hero = () => {
             </p>
           </div>
           
-          {/* CTA Buttons */}
-          <div className={`flex flex-col sm:flex-row items-center justify-center gap-6 pt-8 transition-all duration-700 delay-500 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+          {/* CTA Buttons - Improved Design */}
+          <div className={`flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 pt-12 transition-all duration-700 delay-500 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+            {/* Primary Button - More Prominent */}
             <Button 
               size="xl" 
-              className="group font-medium text-lg px-10 py-4 h-auto hover:shadow-xl"
+              className="group font-semibold text-lg px-12 py-5 h-auto hover:shadow-2xl bg-trailflow-green text-gray-900 hover:bg-trailflow-green-dark border-2 border-trailflow-green hover:border-trailflow-green-dark transition-all duration-300 hover:scale-[1.02] w-full sm:w-auto"
               asChild
             >
               <a href="/roles">
                 Explorar Trilhas
-                <ArrowRight size={20} className="ml-2 transition-transform duration-300 group-hover:translate-x-1" />
+                <ArrowRight size={20} className="ml-3 transition-transform duration-300 group-hover:translate-x-1" />
               </a>
             </Button>
             
+            {/* Secondary Button - More Subtle */}
             <Button 
               variant="outline" 
               size="xl"
-              className="group font-medium text-lg px-10 py-4 h-auto border-2 hover:shadow-xl"
+              className="group font-medium text-lg px-12 py-5 h-auto border-2 border-trailflow-green text-trailflow-green bg-white/90 hover:bg-trailflow-green hover:text-gray-900 hover:shadow-lg backdrop-blur-sm transition-all duration-300 hover:scale-[1.01] w-full sm:w-auto"
               asChild
             >
-              <a href="/market">
-                <Play size={18} className="mr-2" />
-                Ver Demo
+              <a href="/marketplace">
+                Ver Marketplace
               </a>
             </Button>
           </div>
