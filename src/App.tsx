@@ -35,9 +35,9 @@ function App() {
         <AccessibilityProvider>
           <SkipLinks />
           <QueryClientProvider client={queryClient}>
-            <AuthProvider>
-              <ComparisonProvider>
-                <Router>
+            <Router>
+              <AuthProvider>
+                <ComparisonProvider>
                   <div className="flex flex-col min-h-screen">
                     <Toaster />
                     <Routes>
@@ -54,9 +54,9 @@ function App() {
                     </Routes>
                     <BackToTopButton />
                   </div>
-                </Router>
-              </ComparisonProvider>
-            </AuthProvider>
+                </ComparisonProvider>
+              </AuthProvider>
+            </Router>
           </QueryClientProvider>
         </AccessibilityProvider>
       </ErrorBoundary>
