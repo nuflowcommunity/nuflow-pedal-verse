@@ -1,48 +1,41 @@
 
-import { useState, useCallback } from 'react';
-import { useToast } from '@/hooks/use-toast';
-import { Entity } from '@/components/admin/entities/types';
+import { useState } from 'react';
 
 export const useEntitiesPageState = () => {
-  const { toast } = useToast();
   const [activeTab, setActiveTab] = useState('todos');
-  const [selectedEntity, setSelectedEntity] = useState<Entity | null>(null);
-  const [isDetailDrawerOpen, setIsDetailDrawerOpen] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [partnerFilter, setPartnerFilter] = useState('todos');
+  const [typeFilter, setTypeFilter] = useState('todos');
+  const [statusFilter, setStatusFilter] = useState('todos');
+  const [validationFilter, setValidationFilter] = useState('todos');
+  const [selectedEntity, setSelectedEntity] = useState<any>(null);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
-  const handleViewEntity = useCallback((entity: Entity) => {
-    setSelectedEntity(entity);
-    setIsDetailDrawerOpen(true);
-  }, []);
-
-  const handleEditEntity = useCallback((entity: Entity) => {
-    toast({
-      title: "Editar Entidade",
-      description: `Funcionalidade de edição para ${entity.name} será implementada`,
-    });
-    setIsDetailDrawerOpen(false);
-  }, [toast]);
-
-  const handleTabChange = useCallback((value: string) => {
-    setActiveTab(value);
-    setCurrentPage(1);
-  }, []);
-
-  const handleSort = useCallback((field: keyof Entity, direction: 'asc' | 'desc') => {
-    console.log('Sorting by:', field, direction);
-  }, []);
+  const clearFilters = () => {
+    setSearchQuery('');
+    setPartnerFilter('todos');
+    setTypeFilter('todos');
+    setStatusFilter('todos');
+    setValidationFilter('todos');
+  };
 
   return {
     activeTab,
+    setActiveTab,
+    searchQuery,
+    setSearchQuery,
+    partnerFilter,
+    setPartnerFilter,
+    typeFilter,
+    setTypeFilter,
+    statusFilter,
+    setStatusFilter,
+    validationFilter,
+    setValidationFilter,
     selectedEntity,
-    isDetailDrawerOpen,
-    currentPage,
-    setCurrentPage,
-    setIsDetailDrawerOpen,
-    handleViewEntity,
-    handleEditEntity,
-    handleTabChange,
-    handleSort,
-    toast
+    setSelectedEntity,
+    isDrawerOpen,
+    setIsDrawerOpen,
+    clearFilters,
   };
 };

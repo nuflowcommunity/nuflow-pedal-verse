@@ -52,7 +52,7 @@ export const EntityFiltersPanel: React.FC<EntityFiltersPanelProps> = ({
             <SelectValue placeholder="Parceiro" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="_all">Todos os parceiros</SelectItem>
+            <SelectItem value="todos">Todos os parceiros</SelectItem>
             {partners.map(partner => (
               <SelectItem key={partner} value={partner}>{partner}</SelectItem>
             ))}
@@ -63,7 +63,7 @@ export const EntityFiltersPanel: React.FC<EntityFiltersPanelProps> = ({
             <SelectValue placeholder="Tipo" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="_all">Todos os tipos</SelectItem>
+            <SelectItem value="todos">Todos os tipos</SelectItem>
             <SelectItem value="evento">Evento</SelectItem>
             <SelectItem value="mensalidade">Mensalidade</SelectItem>
             <SelectItem value="dayUse">Day Use</SelectItem>
@@ -75,7 +75,7 @@ export const EntityFiltersPanel: React.FC<EntityFiltersPanelProps> = ({
             <SelectValue placeholder="Status" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="_all">Todos os status</SelectItem>
+            <SelectItem value="todos">Todos os status</SelectItem>
             <SelectItem value="ativo">Ativo</SelectItem>
             <SelectItem value="pendente">Pendente</SelectItem>
             <SelectItem value="cancelado">Cancelado</SelectItem>
@@ -93,7 +93,7 @@ export const EntityFiltersPanel: React.FC<EntityFiltersPanelProps> = ({
                 <SelectValue placeholder="Status de validação" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="_all">Todos</SelectItem>
+                <SelectItem value="todos">Todos</SelectItem>
                 <SelectItem value="validated">Validados</SelectItem>
                 <SelectItem value="pending">Pendentes</SelectItem>
                 <SelectItem value="failed">Com falha</SelectItem>
