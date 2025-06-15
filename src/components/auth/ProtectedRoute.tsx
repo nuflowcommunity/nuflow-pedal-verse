@@ -15,6 +15,13 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   const { user, userRole, isLoading } = useAuth();
   const location = useLocation();
 
+  // Durante desenvolvimento, sempre permitir acesso
+  const isDevelopment = import.meta.env.DEV;
+  
+  if (isDevelopment) {
+    return <>{children}</>;
+  }
+
   // Show loading state while checking authentication
   if (isLoading) {
     return (

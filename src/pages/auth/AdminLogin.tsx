@@ -61,20 +61,25 @@ const AdminLogin = () => {
     }
   };
 
-  // Função de desenvolvimento para acessar sem login
+  // Função de desenvolvimento para acessar diretamente
   const handleDevAccess = () => {
-    console.log('Dev Access button clicked');
-    
-    toast({
-      title: "Acesso de desenvolvimento",
-      description: "Redirecionando para o painel admin...",
-    });
-    
-    // Redirecionar diretamente para o admin sem autenticação
-    setTimeout(() => {
-      navigate('/admin', { replace: true });
-    }, 500);
+    console.log('Dev Access: Redirecionando para /admin');
+    navigate('/admin', { replace: true });
   };
+
+  // Durante desenvolvimento, sempre mostrar botão de acesso direto
+  React.useEffect(() => {
+    const isDevelopment = import.meta.env.DEV;
+    if (isDevelopment) {
+      // Auto-redirecionar para admin em desenvolvimento se não houver parâmetros específicos
+      const hasParams = searchParams.toString().length > 0;
+      if (!hasParams) {
+        setTimeout(() => {
+          navigate('/admin', { replace: true });
+        }, 1000);
+      }
+    }
+  }, [navigate, searchParams]);
 
   if (showForgotPassword) {
     return (
@@ -195,23 +200,33 @@ const AdminLogin = () => {
           </Link>
         </div>
 
-        {/* Botão de desenvolvimento no canto superior esquerdo */}
+        {/* Botão de desenvolvimento - sempre visível */}
         <div className="absolute top-6 left-6 z-10">
           <Button
             onClick={handleDevAccess}
             variant="outline"
             size="sm"
-            className="bg-yellow-100 border-yellow-300 text-yellow-800 hover:bg-yellow-200"
+            className="bg-green-100 border-green-300 text-green-800 hover:bg-green-200"
             type="button"
           >
             <Code className="w-4 h-4 mr-2" />
-            Dev Access
+            Entrar no Admin
           </Button>
         </div>
 
         <div className="flex min-h-screen items-center justify-center px-4 py-12">
           <div className="w-full max-w-md">
             
+            {/* Alert de desenvolvimento */}
+            <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-sm">
+              <div className="flex items-center">
+                <CheckCircle className="w-5 h-5 text-blue-600 mr-3" />
+                <span className="text-sm text-blue-800">
+                  Modo desenvolvimento: Acesso livre ao admin ativado
+                </span>
+              </div>
+            </div>
+
             {/* Alert Messages */}
             {searchParams.get('message') === 'password_reset_success' && (
               <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-sm">
@@ -247,7 +262,7 @@ const AdminLogin = () => {
                   Sistema Administrativo
                 </h1>
                 <p className="text-gray-600 text-sm leading-relaxed">
-                  Acesso restrito para administradores do sistema.
+                  Modo desenvolvimento - Acesso direto habilitado
                 </p>
               </div>
               
@@ -272,7 +287,6 @@ const AdminLogin = () => {
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="admin@sistema.com"
                     className="w-full h-11 px-3 border border-gray-300 bg-white text-gray-900 placeholder:text-gray-500 focus:border-gray-400 focus:ring-1 focus:ring-gray-400 transition-all duration-200"
-                    required
                     disabled={isLoading}
                   />
                 </div>
@@ -292,7 +306,6 @@ const AdminLogin = () => {
                       onChange={(e) => setPassword(e.target.value)}
                       placeholder="••••••••••••"
                       className="w-full h-11 px-3 pr-10 border border-gray-300 bg-white text-gray-900 placeholder:text-gray-500 focus:border-gray-400 focus:ring-1 focus:ring-gray-400 transition-all duration-200"
-                      required
                       disabled={isLoading}
                     />
                     <button
@@ -346,7 +359,7 @@ const AdminLogin = () => {
               <div className="mt-8 pt-6 border-t border-gray-200">
                 <div className="text-center">
                   <p className="text-sm text-gray-600">
-                    Acesso restrito • Apenas administradores autorizados
+                    Modo desenvolvimento • Acesso livre
                   </p>
                 </div>
               </div>
