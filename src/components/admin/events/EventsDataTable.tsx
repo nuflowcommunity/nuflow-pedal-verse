@@ -14,7 +14,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 const EventsDataTable = () => {
   const { events, isLoading, updateFilters, approveEvent, rejectEvent, cloneEvent, deactivateEvent } = useEventManagement();
   const [searchTerm, setSearchTerm] = useState('');
-  const [statusFilter, setStatusFilter] = useState('');
+  const [statusFilter, setStatusFilter] = useState('all');
 
   const getStatusBadge = (status: string) => {
     const statusConfig = {
@@ -114,7 +114,7 @@ const EventsDataTable = () => {
 
   const handleStatusFilter = (value: string) => {
     setStatusFilter(value);
-    updateFilters({ status: value || undefined });
+    updateFilters({ status: value === 'all' ? undefined : value });
   };
 
   const filters = (
@@ -130,7 +130,7 @@ const EventsDataTable = () => {
           <SelectValue placeholder="Status" />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="">Todos</SelectItem>
+          <SelectItem value="all">Todos</SelectItem>
           <SelectItem value="pending">Pendente</SelectItem>
           <SelectItem value="approved">Aprovado</SelectItem>
           <SelectItem value="active">Ativo</SelectItem>
