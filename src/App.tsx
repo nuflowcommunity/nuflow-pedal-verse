@@ -22,6 +22,7 @@ import FormularioParceiro from '@/pages/FormularioParceiro';
 
 // Main pages
 import Index from '@/pages/Index';
+import NewAnnounce from '@/pages/NewAnnounce';
 
 // Marketplace pages
 import MarketplaceHome from '@/pages/marketplace/MarketplaceHome';
@@ -49,6 +50,7 @@ function App() {
                       <Route path="/reset-password" element={<ResetPassword />} />
                       <Route path="/tornar-parceiro" element={<TornarParceiro />} />
                       <Route path="/formulario-parceiro" element={<FormularioParceiro />} />
+                      <Route path="/anunciar" element={<NewAnnounce />} />
                       
                       <Route path="/marketplace" element={<MarketplaceHome />} />
 

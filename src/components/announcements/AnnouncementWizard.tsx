@@ -112,28 +112,30 @@ const AnnouncementWizard: React.FC = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
       <StepIndicator steps={STEPS} currentStep={currentStep} />
       
-      <Card className="mt-8">
-        <CardHeader>
-          <CardTitle className="text-2xl font-heading">
+      <Card className="mt-6 sm:mt-8 border-0 sm:border shadow-sm">
+        <CardHeader className="px-4 sm:px-6 py-4 sm:py-6">
+          <CardTitle className="text-xl sm:text-2xl font-heading text-center sm:text-left">
             {STEPS[currentStep - 1].title}
           </CardTitle>
-          <p className="text-gray-600">
+          <p className="text-gray-600 text-sm sm:text-base text-center sm:text-left">
             {STEPS[currentStep - 1].description}
           </p>
         </CardHeader>
-        <CardContent>
-          {renderStep()}
+        <CardContent className="px-4 sm:px-6 pb-4 sm:pb-6">
+          <div className="min-h-[300px] sm:min-h-[400px]">
+            {renderStep()}
+          </div>
           
           {/* Navigation Buttons */}
-          <div className="flex justify-between mt-8 pt-6 border-t border-gray-200">
+          <div className="flex flex-col sm:flex-row justify-between gap-3 sm:gap-0 mt-6 sm:mt-8 pt-4 sm:pt-6 border-t border-gray-200">
             <Button
               variant="outline"
               onClick={prevStep}
               disabled={currentStep === 1}
-              className="flex items-center gap-2"
+              className="flex items-center justify-center gap-2 w-full sm:w-auto order-2 sm:order-1"
             >
               <ArrowLeft size={16} />
               Voltar
@@ -143,7 +145,7 @@ const AnnouncementWizard: React.FC = () => {
               <Button
                 onClick={nextStep}
                 disabled={!canProceedToNext()}
-                className="bg-nuflow-moss text-white hover:bg-nuflow-darkForest flex items-center gap-2"
+                className="bg-nuflow-moss text-white hover:bg-nuflow-darkForest flex items-center justify-center gap-2 w-full sm:w-auto order-1 sm:order-2"
               >
                 Próximo
                 <ArrowRight size={16} />
@@ -152,7 +154,7 @@ const AnnouncementWizard: React.FC = () => {
               <Button
                 onClick={handleSubmit}
                 disabled={!canProceedToNext() || isSubmitting}
-                className="bg-nuflow-moss text-white hover:bg-nuflow-darkForest flex items-center gap-2"
+                className="bg-nuflow-moss text-white hover:bg-nuflow-darkForest flex items-center justify-center gap-2 w-full sm:w-auto order-1 sm:order-2"
               >
                 {isSubmitting ? (
                   <span className="animate-spin">○</span>
