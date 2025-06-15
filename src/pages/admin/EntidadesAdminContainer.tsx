@@ -1,9 +1,16 @@
 
 import React from 'react';
-import { EntitiesContainer } from '@/components/admin/entities/EntitiesContainer';
+import EntitiesContainer from '@/components/admin/entities/EntitiesContainer';
 
-const EntidadesAdminContainer: React.FC = () => {
-  return <EntitiesContainer />;
+const EntidadesAdminContainer = () => {
+  return (
+    <div className="space-y-6">
+      <div className="flex items-center justify-between">
+        <h1 className="text-2xl font-bold text-gray-900">Gerenciamento de Entidades</h1>
+      </div>
+      <EntitiesContainer />
+    </div>
+  );
 };
 
 export default EntidadesAdminContainer;
