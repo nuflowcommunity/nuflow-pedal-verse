@@ -56,11 +56,11 @@ const EventFilters: React.FC<EventFiltersProps> = ({
   ];
 
   const handleStatusChange = (value: string) => {
-    onFilterChange({ status: value === 'all' ? undefined : value });
+    onFilterChange({ status: value === 'todos' ? undefined : value });
   };
 
   const handleEventTypeChange = (value: string) => {
-    onFilterChange({ event_type: value === 'all' ? undefined : value });
+    onFilterChange({ event_type: value === 'todos' ? undefined : value });
   };
 
   return (
@@ -81,14 +81,14 @@ const EventFilters: React.FC<EventFiltersProps> = ({
           {/* Filtros em linha */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
             <Select
-              value={filters.status || 'all'}
+              value={filters.status || 'todos'}
               onValueChange={handleStatusChange}
             >
               <SelectTrigger>
                 <SelectValue placeholder="Status" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">Todos os status</SelectItem>
+                <SelectItem value="todos">Todos os status</SelectItem>
                 {statusOptions.map((status) => (
                   <SelectItem key={status.value} value={status.value}>
                     <div className="flex items-center gap-2">
@@ -101,14 +101,14 @@ const EventFilters: React.FC<EventFiltersProps> = ({
             </Select>
 
             <Select
-              value={filters.event_type || 'all'}
+              value={filters.event_type || 'todos'}
               onValueChange={handleEventTypeChange}
             >
               <SelectTrigger>
                 <SelectValue placeholder="Categoria" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">Todas as categorias</SelectItem>
+                <SelectItem value="todos">Todas as categorias</SelectItem>
                 {eventTypes.map((type) => (
                   <SelectItem key={type.value} value={type.value}>
                     {type.label}
