@@ -114,13 +114,13 @@ const FormularioParceiro = () => {
       />
       
       <div className="min-h-screen bg-gray-50">
-        {/* Logo no canto superior direito */}
-        <div className="absolute top-6 right-6 z-10">
+        {/* Logo centralizado no topo */}
+        <div className="flex justify-center pt-8 pb-6">
           <Link to="/">
             <img 
-              src="/lovable-uploads/adf44db0-c66b-4031-a615-a8e98fe5f77f.png" 
+              src="/lovable-uploads/4844f3e9-29b2-4ee7-a4bd-9dc393f63113.png" 
               alt="NuFlow" 
-              className="w-12 h-12 object-contain opacity-60 hover:opacity-100 transition-opacity" 
+              className="w-16 h-16 object-contain hover:opacity-80 transition-opacity" 
             />
           </Link>
         </div>
