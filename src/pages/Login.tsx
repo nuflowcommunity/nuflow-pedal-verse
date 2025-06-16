@@ -10,11 +10,13 @@ import LoginAlerts from '@/components/auth/LoginAlerts';
 import LoginHeader from '@/components/auth/LoginHeader';
 import LoginForm from '@/components/auth/LoginForm';
 import LoginFooter from '@/components/auth/LoginFooter';
+import LoginTypeSelector from '@/components/auth/LoginTypeSelector';
 import { ArrowLeft } from 'lucide-react';
 
 const Login = () => {
   const [searchParams] = useSearchParams();
   const [showForgotPassword, setShowForgotPassword] = useState(false);
+  const [showLoginOptions, setShowLoginOptions] = useState(true);
   const { isLoading } = useAuth();
   const navigate = useNavigate();
 
@@ -96,28 +98,62 @@ const Login = () => {
         </div>
 
         <div className="flex min-h-screen items-center justify-center px-4 py-12">
-          <div className="w-full max-w-md">
+          <div className="w-full max-w-4xl">
             
             {/* Alert Messages */}
             <LoginAlerts />
             
-            {/* Main Form Card */}
-            <div className="bg-white shadow-sm border border-gray-200 p-8">
-              
-              {/* Header */}
-              <LoginHeader />
-              
-              {/* Social Auth Buttons */}
-              <div className="mb-8">
-                <SocialAuthButtons mode="signin" />
+            {showLoginOptions ? (
+              // Seletor de tipo de login
+              <div className="bg-white shadow-sm border border-gray-200 p-8">
+                <div className="text-center mb-8">
+                  <h1 className="text-3xl font-light text-gray-900 mb-4">
+                    Escolha seu tipo de acesso
+                  </h1>
+                  <p className="text-gray-600 text-lg leading-relaxed">
+                    Selecione o portal adequado para sua necessidade
+                  </p>
+                </div>
+                
+                <LoginTypeSelector />
+                
+                <div className="text-center">
+                  <button
+                    onClick={() => setShowLoginOptions(false)}
+                    className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
+                  >
+                    Ou faça login direto como consumidor
+                  </button>
+                </div>
               </div>
-              
-              {/* Login Form */}
-              <LoginForm onForgotPassword={() => setShowForgotPassword(true)} />
-              
-              {/* Footer */}
-              <LoginFooter />
-            </div>
+            ) : (
+              // Formulário de login tradicional
+              <div className="w-full max-w-md mx-auto">
+                <button
+                  onClick={() => setShowLoginOptions(true)}
+                  className="mb-6 flex items-center text-gray-600 hover:text-gray-900 transition-colors"
+                >
+                  <ArrowLeft className="w-4 h-4 mr-2" />
+                  Voltar às opções de login
+                </button>
+                
+                <div className="bg-white shadow-sm border border-gray-200 p-8">
+                  {/* Header */}
+                  <LoginHeader />
+                  
+                  {/* Social Auth Buttons */}
+                  <div className="mb-8">
+                    <SocialAuthButtons mode="signin" />
+                  </div>
+                  
+                  {/* Login Form */}
+                  <LoginForm onForgotPassword={() => setShowForgotPassword(true)} />
+                  
+                  {/* Footer */}
+                  <LoginFooter />
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>

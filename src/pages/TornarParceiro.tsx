@@ -3,6 +3,7 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import SEOHead from '@/components/seo/SEOHead';
+import Navbar from '@/components/Navbar';
 import { ArrowRight, Users, TrendingUp, Shield, Clock } from 'lucide-react';
 
 const TornarParceiro = () => {
@@ -21,18 +22,9 @@ const TornarParceiro = () => {
         url="/tornar-parceiro"
       />
       
-      <div className="min-h-screen bg-gray-50">
-        {/* Logo no canto superior direito */}
-        <div className="absolute top-6 right-6 z-10">
-          <Link to="/">
-            <img 
-              src="/lovable-uploads/adf44db0-c66b-4031-a615-a8e98fe5f77f.png" 
-              alt="NuFlow" 
-              className="w-12 h-12 object-contain opacity-60 hover:opacity-100 transition-opacity" 
-            />
-          </Link>
-        </div>
-
+      <Navbar />
+      
+      <div className="min-h-screen bg-gray-50 pt-16">
         <div className="flex min-h-screen items-center justify-center px-4 py-12">
           <div className="w-full max-w-4xl">
             
